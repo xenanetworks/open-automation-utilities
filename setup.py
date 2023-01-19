@@ -8,10 +8,8 @@ def main():
     setuptools.setup(
         name="xoa-driver",
         description=(
-            "Xena Utility is a driver providing user-friendly communication"
-            " interfaces to Xena's physical and virtual Traffic Generation and Analysis (TGA) testers."
-            " It provides a rich collection of programming interfaces that can be used to either write"
-            " test scripts or develop applications."
+            "Xena OpenAutomation Utilities provides a shell-like command-line interface for users to do explorative"
+            " tests interactively, such as ANLT test."
         ),
         long_description=long_description,
         long_description_content_type="text/markdown",
@@ -22,7 +20,7 @@ def main():
         url="https://github.com/xenanetworks/open-automation-utility",
         packages=setuptools.find_packages(),
         license='Apache 2.0',
-        install_requires=["typing_extensions", "loguru"],
+        install_requires=["typing_extensions>=4.3.0", "loguru"],
         classifiers=[
             "Development Status :: 4 - Beta",
             "Intended Audience :: Developers",

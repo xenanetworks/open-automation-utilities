@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Upload xoa-utility Python Package
+name: Upload xoa-utilities Python Package
 
 on:
   release:
