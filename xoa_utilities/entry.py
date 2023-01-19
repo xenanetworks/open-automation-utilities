@@ -5,7 +5,7 @@ import sys
 import os
 from cli_utils import ReadConfig
 from hub import Hub
-from xena_ssh_server import XenaSSHServer
+from xoa_utilities.xena_ssh_server import XenaSSHServer
 from cmd_worker import CmdWorker
 
 
