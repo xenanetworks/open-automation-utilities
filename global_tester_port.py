@@ -3,7 +3,7 @@ import typing as t
 from xoa_driver.testers import L23Tester
 from xoa_driver.ports import GenericL23Port
 from exceptions import NoSuchPortError, NotConnectedError
-import anlt_utils
+from xoa_driver.hlfuncs import anlt as anlt_utils
 
 TP = t.TypeVar("TP", bound="TesterPortStorage")
 

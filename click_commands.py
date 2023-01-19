@@ -1,7 +1,7 @@
 from __future__ import annotations
 import asyncclick as ac
 import click_backend as cb
-import anlt_utils
+from xoa_driver.hlfuncs import anlt as anlt_utils
 from global_tester_port import tp_storage
 from cli_utils import try_wrapper, validate_choices
 from exceptions import CannotConvertError, NotSameLengthError
