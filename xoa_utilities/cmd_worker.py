@@ -2,7 +2,7 @@ from __future__ import annotations
 from asyncclick.shell_completion import ShellComplete, CompletionItem
 from asyncclick import BaseCommand
 import typing as t
-from click_commands import xena_cli
+from click_commands import xoa_utils
 from click_entry import cmd_main
 from hub import HubManager
 from cli_utils import ReadConfig, run_coroutine_as_sync
@@ -65,7 +65,7 @@ async def shell_complete(cli: BaseCommand, args_raw: list[str]) -> str:
 
     :return: String after completion
     """
-    prog_name = "xena_cli"
+    prog_name = "xoa_utils"
     ctx_args = {}
     completer = AutoCompleter(cli, ctx_args, prog_name, "", args_raw)
     completed = await completer.complete()
@@ -90,7 +90,7 @@ class CmdWorker:
         if not line:
             return line, pos
         args_raw = line.split()
-        coro = shell_complete(xena_cli, args_raw)
+        coro = shell_complete(xoa_utils, args_raw)
         completed = str(run_coroutine_as_sync(coro))
         if not completed:
             pass

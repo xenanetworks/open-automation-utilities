@@ -1,7 +1,7 @@
 import typing as t
 import asyncclick as ac
 from click_backend import error_str
-from click_commands import xena_cli
+from click_commands import xoa_utils
 from cli_utils import format_error
 
 
@@ -9,7 +9,7 @@ async def cmd_main(cmd_str: str) -> t.Any:
     error_str.clear()
     args = cmd_str.split()
     try:
-        result = await xena_cli.main(args=args, standalone_mode=False)
+        result = await xoa_utils.main(args=args, standalone_mode=False)
         if isinstance(result, int):
             result = error_str.err_str
     except ac.UsageError as error:
@@ -18,7 +18,7 @@ async def cmd_main(cmd_str: str) -> t.Any:
 
 
 if __name__ == "__main__":
-    xena_cli()
+    xoa_utils()
     # loop = asyncio.get_event_loop()
     # a = loop.run_until_complete(cmd_main("connect"))
     # print("S" + "#" * 100 + "\n" + str(a) + "\n" + "E" + "#" * 100)
