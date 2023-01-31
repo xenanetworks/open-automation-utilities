@@ -41,7 +41,7 @@ While Link Training can be essential to make some electrical interfaces work, Au
 
 Auto negotiation and Link Training are in principle two independent processes. However, when both are done, Auto negotiation must be done first to determine the overall mode for a link and then perform the Link Training. Hereby you get the sequence shown in the figure below.
 
-.. figure:: ../_static/aneg_lt_seq.png
+.. figure:: /_static/aneg_lt_seq.png
     :scale: 70 %
     :align: center
 
@@ -105,5 +105,8 @@ Test Resource Management
 ------------------------------------
 
 1. Connect to tester
-2. Reserve/Release/Reset ports
-5. Disconnect
+2. Reserve port
+3. Show port status
+4. Release port
+5. Reset port
+6. Disconnect

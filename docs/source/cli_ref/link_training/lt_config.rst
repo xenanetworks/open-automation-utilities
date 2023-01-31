@@ -29,7 +29,8 @@ Options
 ``-m, --mode`` (text)
     
     The mode for link training on the working port, default to `autocomplete`.
-    Allowed values: 
+    Allowed values:
+    
         `interactive`: to set the port to manually perform link training procedure.
         `autostart`: to set the port to start link training automatically after auto-negotiation. Requires auto-negotiation is enabled. 
         `autocomplete`: to set the port to start link training without performing auto-negotiation.
