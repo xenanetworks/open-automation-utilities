@@ -6,7 +6,7 @@ def main():
         long_description = fh.read()
 
     setuptools.setup(
-        name="xoa-driver",
+        name="xoa-utils",
         description=(
             "Xena OpenAutomation Utilities provides a shell-like command-line interface for users to do explorative"
             " tests interactively, such as ANLT test."
@@ -17,7 +17,7 @@ def main():
         author_email="rdi@xenanetworks.com, hyu@xenanetworks.com",
         maintainer="Xena Networks",
         maintainer_email="support@xenanetworks.com",
-        url="https://github.com/xenanetworks/open-automation-utility",
+        url="https://github.com/xenanetworks/open-automation-utilities",
         packages=setuptools.find_packages(),
         license='Apache 2.0',
         install_requires=["typing_extensions>=4.3.0", "loguru"],
