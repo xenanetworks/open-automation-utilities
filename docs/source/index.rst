@@ -2,16 +2,8 @@
 Xena OpenAutomation Utilities Documentation
 ===========================================
 
-Xena OpenAutomation Core (:term:`XOA Core`) is a framework for executing Xena automated test suites and managing Xena Xena's physical and virtual Traffic Generation and Analysis (:term:`TGA`) testers.
+Xena OpenAutomation Utilities (:term:`XOA Util`) provides an **interactive shell** for users to control Xena testers via **command-line interface** (CLI) commands to performance operations such as :term:`ANLT` testing and resource management (more will be added in future releases) in an interactive fashion.
 
-The *Xena OpenAutomation Core Documentation* describes the basic architecture and how to run Xena's automated test suites.
-
-The target audience of this document is test specialists who develop and run automated test scripts/programs using Xena :term:`TGA` hardware and software. Users of this document should have the following knowledge and experience:
-
-* Ability to program with Python language.
-* Familiarity with the operating system of your development environment.
-* Familiarity with Xena test equipment.
-* Working knowledge of data communications theory and practice.
 
 -----------
 
@@ -21,8 +13,7 @@ The target audience of this document is test specialists who develop and run aut
 
    introduction
    getting_started/index
-   understand_xoa_util/index
-   api_ref/index
+   cli_ref/index
    glossary
 
 

@@ -17,3 +17,15 @@ Glossary of Terms
 
     XOA
         Xena OpenAutomation
+
+    ANLT
+        Auto-Negotiation and Link Training
+
+    AN
+        Auto-Negotiation
+
+    LT
+        Link Training
+
+    XOA Util
+        Xena OpenAutomation Utilities
