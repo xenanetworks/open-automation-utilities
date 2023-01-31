@@ -6,6 +6,7 @@ from xoa_driver.hlfuncs import mgmt as mgmt_utils
 from global_tester_port import tp_storage
 from cli_utils import try_wrapper, validate_choices
 from exceptions import *
+import json
 
 cs = {"help_option_names": ["-h", "--help"]}
 
@@ -28,7 +29,7 @@ def xoa_utils():
 )
 @ac.option(
     "-p",
-    "--port-list",
+    "--ports",
     type=ac.STRING,
     help="Specifies the ports on the specified device host, default to null. "
     "Specify a port using the format slot/port, no spaces between. "
@@ -36,8 +37,8 @@ def xoa_utils():
     default="",
 )
 @ac.option(
-    "-r",
-    "--reset",
+    '--reset/--no-reset',
+    '-t /',
     is_flag=True,
     help="Removes all port configurations of the ports in --port_list after "
     "reservation, default to False. "
@@ -62,12 +63,12 @@ def xoa_utils():
     default="xena",
 )
 @ac.option(
-    "-p",
-    "--tcp-port",
+    "-t",
+    "--tcp",
     type=ac.INT,
     help="The TCP port number on the chassis for the client to establish "
     "a session, default to 22606. "
-    "e.g. --tcp-port 22606",
+    "e.g. --tcp 22606",
     default=22606,
 )
 @try_wrapper(False)
@@ -199,7 +200,7 @@ async def port(
 #--------------------------
 @xoa_utils.command(cls=cb.XenaCommand)
 @try_wrapper(True)
-async def show_ports() -> str:
+async def ports() -> str:
     """
     List all the ports under control.\n
 
@@ -208,19 +209,19 @@ async def show_ports() -> str:
 
 
 #--------------------------
-# command: anlt
+# command: an
 #--------------------------
 @xoa_utils.group(cls=cb.XenaGroup)
-def anlt():
+def an():
     """
-    Configures auto-negotiation and link training of the working port.\n
+    To enter auto-negotiation context.\n
 
     """
 
 #**************************
-# sub-command: an
+# sub-command: an config
 #**************************
-@anlt.command(cls=cb.XenaGroup)
+@an.command(cls=cb.XenaGroup)
 @ac.option(
     '--enable/--disable', 
     ' /-d', 
@@ -238,7 +239,7 @@ def anlt():
     default=False,
 )
 @try_wrapper(False)
-async def an(
+async def an_config(
     enable: bool, 
     loopback: bool
     ) -> None:
@@ -251,9 +252,9 @@ async def an(
     return None
 
 #**************************
-# sub-command: an_status
+# sub-command: an status
 #**************************
-@anlt.command(cls=cb.XenaGroup)
+@an.command(cls=cb.XenaGroup)
 async def an_status() -> str:
     """
     Show the auto-negotiation status.\n
@@ -264,9 +265,9 @@ async def an_status() -> str:
     return status #TODO: need to beautify the status output
 
 #**************************
-# sub-command: an_log
+# sub-command: an log
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@an.command(cls=cb.XenaCommand)
 async def an_log() -> str:
     """
     Show the auto-negotiation log trace.\n
@@ -277,16 +278,26 @@ async def an_log() -> str:
     return log #TODO: need to beautify the log message output
 
 
+#--------------------------
+# command: lt
+#--------------------------
+@xoa_utils.group(cls=cb.XenaGroup)
+def lt():
+    """
+    To enter link training context.\n
+
+    """
+
 #**************************
-# sub-command: lt
+# sub-command: lt config
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand)
 @ac.option(
     '--mode', 
     '-m', 
-    type=ac.CHOICE(['mission', 'disable', 'interactive', 'auto']),
-    help="The mode for link training on the working port, default to disable. "
-    "e.g. lt --mode=auto",
+    type=ac.CHOICE(['autocomplete', 'disable', 'interactive', 'autostart']),
+    help="The mode for link training on the working port, default to autocomplete. "
+    "e.g. lt config --mode=auto",
     default="interactive",
 )
 @ac.option(
@@ -295,7 +306,7 @@ async def an_log() -> str:
     is_flag=True,
     help="Should the preset0 (out-of-sync) use existing tap values or standard values, "
     "default to False. "
-    "e.g. lt --preset0",
+    "e.g. lt config--preset0",
     default=False,
 )
 @ac.option(
@@ -304,11 +315,11 @@ async def an_log() -> str:
     is_flag=True,
     help="Should link training run with or without timeout, "
     "default to True. "
-    "e.g. lt --timeout",
+    "e.g. lt config--timeout",
     default=False,
 )
 @try_wrapper(False)
-async def lt(
+async def lt_config(
     mode: str,
     preset0: bool,
     timeout: bool
@@ -323,9 +334,9 @@ async def lt(
 
 
 #**************************
-# sub-command: lt_inc
+# sub-command: lt inc
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand)
 @ac.argument(
     "lane", 
     type=ac.INT
@@ -356,9 +367,9 @@ async def lt_inc(
     
 
 #**************************
-# sub-command: lt_dec
+# sub-command: lt dec
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand)
 @ac.argument(
     "lane", 
     type=ac.INT
@@ -389,9 +400,9 @@ async def lt_dec(
 
 
 #**************************
-# sub-command: lt_preset
+# sub-command: lt preset
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand)
 @ac.argument(
     "lane", 
     type=ac.INT
@@ -421,9 +432,9 @@ async def lt_preset(
 
 
 #**************************
-# sub-command: lt_encoding
+# sub-command: lt encoding
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand)
 @ac.argument(
     "lane", 
     type=ac.INT
@@ -438,7 +449,7 @@ async def lt_encoding(
     encoding: str
 ) -> str:
     """
-    Ask the remote port to use the specified encoding in link training of the specified lane.
+    Set the port to use the specified encoding in link training of the specified lane.
     
         LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
         ENCODING TEXT: Specifies the encoding. Allowed values: nrz/pam2, pam4, pam4pre\n
@@ -452,11 +463,43 @@ async def lt_encoding(
     except NotInChoicesError as e:
         return e.msg
 
+#**************************
+# sub-command: lt im
+#**************************
+@lt.command(cls=cb.XenaCommand)
+@ac.argument(
+    "lane", 
+    type=ac.INT
+)
+@ac.argument(
+    "encoding", 
+    type=ac.STRING
+)
+@try_wrapper(False)
+async def lt_im(
+    lane: int, 
+    encoding: str
+) -> str:
+    """
+    Set the initial modulation for the specified lane.
+    
+        LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
+        ENCODING TEXT: Specifies the initial modulation. Allowed values: nrz/pam2, pam4, pam4pre\n
+
+    """
+    port_obj = tp_storage.get_working_port()
+    try:
+        validate_choices(encoding, ["nrz", "pam2", "pam4", "pam4pre"])
+        await anlt_utils.lt_im(port_obj, lane, encoding)
+        return f""
+    except NotInChoicesError as e:
+        return e.msg
+
 
 #**************************
-# sub-command: lt_trained
+# sub-command: lt trained
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand)
 @ac.argument(
     "lane", 
     type=ac.INT
@@ -476,9 +519,9 @@ async def lt_trained(
 
 
 #**************************
-# sub-command: lt_log
+# sub-command: lt log
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand)
 @ac.argument(
     "lane", 
     type=ac.INT
@@ -499,7 +542,7 @@ async def lt_log(
     """
     Show the link training trace log for the specified lane.
     
-        LANE INT: The lane index for the announcement.\n
+        LANE INT: The lane index.\n
 
     """
     port_obj = tp_storage.get_working_port()
@@ -509,9 +552,9 @@ async def lt_log(
 
 
 #**************************
-# sub-command: lt_status
+# sub-command: lt status
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand)
 @ac.argument(
     "lane", 
     type=ac.INT
@@ -533,14 +576,14 @@ async def lt_status(
 
 
 #**************************
-# sub-command: txtap_get
+# sub-command: txtapget
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand)
 @ac.argument(
     "lane", 
     type=ac.INT
 )
-async def txtap_get(
+async def txtapget(
     lane: int
 ) -> str:
     """
@@ -556,9 +599,9 @@ async def txtap_get(
 
 
 #**************************
-# sub-command: txtap_set
+# sub-command: txtapset
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand)
 @ac.argument(
     "lane", 
     type=ac.INT
@@ -583,7 +626,7 @@ async def txtap_get(
     "post1", 
     type=ac.INT
 )
-async def txtap_set(
+async def txtapset(
     lane: int,
     pre3: int,
     pre2: int,
@@ -592,7 +635,7 @@ async def txtap_set(
     post1: int
 ) -> str:
     """
-    Read the tap values of the specified lane of the local port.
+    Write the tap values of the specified lane of the local port.
     
         LANE INT: The lane index to read tap values from.\n
         PRE3 INT: c(-3) value of the tap.\n
@@ -609,9 +652,9 @@ async def txtap_set(
 
 
 #**************************
-# sub-command: link_recover
+# sub-command: lt recovery
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand)
 @ac.option(
     '--on/--off',
     '-o/ ',
@@ -622,11 +665,11 @@ async def txtap_set(
     default=False,
 )
 @try_wrapper(False)
-async def link_recover(
+async def recovery(
     on: bool
     ) -> None:
     """
-    Configures link training on the working port.
+    To set the port's link recovery.
     """
     port_obj = tp_storage.get_working_port()
     await anlt_utils.link_recovery(port_obj, on)
@@ -636,7 +679,7 @@ async def link_recover(
 #**************************
 # sub-command: status
 #**************************
-@anlt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand)
 async def status(
 ) -> str:
     """
@@ -645,8 +688,8 @@ async def status(
     """
     port_obj = tp_storage.get_working_port()
     status = await anlt_utils.status(port_obj)
-    return status
-    #TODO: Needs to be implemented for display
+    port_id = list(status.keys())[list(status.values()).index(port_obj)]
+    return f"Port {port_id}\nAuto-negotiation        : {status['autoneg_enabled']}\nLink training           : {status['link_training_mode']}\nLink training timeout   : {status['link_training_timeout']}\nLink recovery           : {status['link_recovery']}\n"
 
 
 
