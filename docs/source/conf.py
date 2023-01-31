@@ -49,10 +49,10 @@ author = u'Xena Networks'
 title = u'Xena OpenAutomation Core Documentation'
 
 # The full version, including alpha/beta/rc tags.
-release = get_version("../../xoa_core/__init__.py")
+release = get_version("../../xoa_utilities/__init__.py")
 
 # The short X.Y version.
-version = get_short_version("../../xoa_core/__init__.py")
+version = get_short_version("../../xoa_utilities/__init__.py")
 
 
 # -- General configuration -----------------------------------------------------
@@ -109,7 +109,7 @@ templates_path = ['_templates']
 html_theme = 'sphinx_book_theme'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'xoa_core_doc'
+htmlhelp_basename = 'xoa_utilities_doc'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -130,7 +130,7 @@ html_show_copyright = True
 html_show_sphinx = False
 
 html_theme_options = {
-    "repository_url": "https://github.com/xenanetworks/open-automation-core",
+    "repository_url": "https://github.com/xenanetworks/open-automation-utilities",
     "use_repository_button": True,
     "home_page_in_toc": True,
     "show_toc_level": 1,
@@ -155,7 +155,7 @@ intersphinx_disabled_domains = ['std']
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'xoa_core_doc', title, author, 'xoa_core_doc', 'Xena OpenAutomation Core', 'Miscellaneous'),
+    (master_doc, 'xoa_utilities_doc', title, author, 'xoa_utilities_doc', 'Xena OpenAutomation Core', 'Miscellaneous'),
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -184,7 +184,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-latex_documents = [(master_doc, 'xoa_core_doc.tex', title, author, 'manual'),
+latex_documents = [(master_doc, 'xoa_utilities_doc.tex', title, author, 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -196,7 +196,7 @@ latex_logo = './_static/pdf_logo.png'
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'xoa_core_doc', title, [author], 1)
+    (master_doc, 'xoa_utilities_doc', title, [author], 1)
 ]
 
 
@@ -206,7 +206,7 @@ epub_author = author
 epub_publisher = 'https://xenanetworks.com'
 epub_copyright = copyright
 epub_show_urls = 'footnote'
-epub_basename = 'xoa_core_doc'
+epub_basename = 'xoa_utilities_doc'
 
 # Remove auto-generated API docs from sidebars. They take too long to build.
-remove_from_toctrees = ["api_doc/_autosummary/*"]
+remove_from_toctrees = ["cli_ref/_autosummary/*"]
