@@ -1,11 +1,10 @@
-Resource Management
+Port Commands
 ===================
 
 .. toctree::
 
-    connect
     port
     ports
     status
     back
-    exit
+    do_anlt

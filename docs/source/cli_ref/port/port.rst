@@ -34,7 +34,7 @@ Options
 
 ``--reset/--no-reset`` 
     
-    Removes all port configurations of the ports in `--ports` after reservation, default to `--reset`.
+    Removes the port configurations, default to `--no-reset`.
 
 ``--force/--no-force``
 

@@ -14,7 +14,7 @@ Synopsis
 .. code-block:: console
     
     an config
-    [--enable/--disable]
+    [--on/--off]
     [--loopback/--no-loopback]
 
 
@@ -25,14 +25,13 @@ Arguments
 Options
 -------
 
-``--enable/--disable``
+``--on/--off``
     
-    Enable or disable auto-negotiation on the working port, default to `--enable`.
+    Enable or disable auto-negotiation on the working port, default to `--on`.
 
 ``--loopback/--no-loopback``
 
     Should loopback be allowed in auto-negotiation, default to `--no-loopback`.
-    Allowed values: `true | false`.
 
 
 Examples

@@ -3,7 +3,7 @@ Command Reference
 
 .. toctree::
 
-    resource_mgmt/index
+    port_level/index
     auto_negotiation/index
     link_training/index
     
