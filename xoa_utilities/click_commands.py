@@ -3,6 +3,7 @@ import asyncclick as ac
 import click_backend as cb
 from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
+from xoa_driver.testers import L23Tester, L47Tester, GenericAnyTester
 from global_tester_port import tp_storage
 from cli_utils import try_wrapper, validate_choices
 from exceptions import *
@@ -38,28 +39,23 @@ def xoa_utils():
 )
 @ac.option(
     '--reset/--no-reset',
-    '-t /',
     is_flag=True,
     help="Removes all port configurations of the ports in --port_list after "
-    "reservation, default to False. "
-    "e.g. --reset\n",
-    default=False,
+    "reservation, default to --reset.\n",
+    default=True,
 )
 @ac.option(
-    "-f",
-    "--force",
+    "--force/--no-force",
     is_flag=True,
     help="Breaks port locks established by another user, aka. force "
-    "reservation, default to True. "
-    "e.g. --force",
+    "reservation, default to --force.\n",
     default=True,
 )
 @ac.option(
     "-P",
     "--password",
     type=ac.STRING,
-    help="The login password of the tester, default to xena. "
-    "e.g. --password xena",
+    help="The login password of the tester, default to 'xena'.\n",
     default="xena",
 )
 @ac.option(
@@ -67,8 +63,7 @@ def xoa_utils():
     "--tcp",
     type=ac.INT,
     help="The TCP port number on the chassis for the client to establish "
-    "a session, default to 22606. "
-    "e.g. --tcp 22606",
+    "a session, default to 22606. \n",
     default=22606,
 )
 @try_wrapper(False)
@@ -80,48 +75,48 @@ async def connect(
     tcp_port: int,
     reset: bool,
     force: bool,
-    ) -> None:
+    ) -> str:
     """
     Connect to a tester for the current session.
 
-        DEVICE TEXT: Specifies the chassis address for connection. You can specify the IP addresses in IPv4 format, or a host name. e.g. 10.10.10.10, demo.xenanetworks.com\n
-        USERNAME TEXT: Specifies the name of the user, default to xena. Specifies the name of the user. e.g. openautomation\n
+        DEVICE TEXT: Specifies the chassis address for connection. You can specify the IP addresses in IPv4 format, or a host name, e.g. 10.10.10.10 or demo.xenanetworks.com\n
+
+        USERNAME TEXT: Specifies the name of the user, default to 'xena'.\n
 
     """
     real_port_list = [i.strip() for i in port_list.split(",")] if port_list else []
     tester = await mgmt_utils.connect("l23", device, username, password, tcp_port)
-    tp_storage.store_tester(f"{device}:{tcp_port}", tester)
-    for id_str in real_port_list:
-        for port_id, port_obj in tp_storage.obtain_physical_ports(id_str).items():
-            if force:
-                await mgmt_utils.reserve_port(port_obj, force)
-            if reset:
-                await mgmt_utils.reset_port(port_obj)
-            tp_storage.store_port(port_id, port_obj)
+    if isinstance(tester, L23Tester):
+        tp_storage.store_tester(f"{device}:{tcp_port}", tester)
+        for id_str in real_port_list:
+            for port_id, port_obj in tp_storage.obtain_physical_ports(id_str).items():
+                if force:
+                    await mgmt_utils.reserve_port(port_obj, force)
+                if reset:
+                    await mgmt_utils.reset_port(port_obj)
+                tp_storage.store_port(port_id, port_obj)
 
-    tp_storage.update_working_port_id(real_port_list[0])
-    return None
+        tp_storage.update_working_port_id(real_port_list[0])
+        return f"OK\n\nTester:             {device}:{tcp_port}\nUsername:           {username}\n"
+    else:
+        return "This type of tester is not yet supported."
 
 #--------------------------
 # command: exit
 #--------------------------
 @xoa_utils.command(cls=cb.XenaCommand)
 @ac.option(
-    "-r",
-    "--reset",
+    "--reset/--no-reset",
     is_flag=True,
     help="Removes all port configurations of the reserved ports, "
-    "default to False. "
-    "e.g. --reset\n",
-    default=False,
+    "default to --reset.\n",
+    default=True,
 )
 @ac.option(
-    "-R",
-    "--release",
+    "--release/--no-release",
     is_flag=True,
     help="Determines whether the ports will be released before exiting, "
-    "default to True. "
-    "e.g. --release\n",
+    "default to --release.\n",
     default=True,
 )
 @try_wrapper(False)
@@ -152,21 +147,17 @@ async def exit(
     type=ac.STRING,
 )
 @ac.option(
-    "-r",
-    "--reset",
-    type=ac.BOOL,
-    help="Removes all port configurations of the ports in --port_list after"
-    " reservation, default to true. Allowed values: true | false. "
-    "e.g. --reset true",
+    "--reset/--no-reset",
+    is_flag=True,
+    help="Removes all port configurations of the ports, "
+    "default to --no-reset.\n",
     default=False,
 )
 @ac.option(
-    "-f",
-    "--force",
+    "--force/--no-force",
     is_flag=True,
     help="Breaks port locks established by another user, aka. force "
-    "reservation, default to True. "
-    "e.g. --force",
+    "reservation, default to --force.\n",
     default=True,
 )
 @try_wrapper(False)
@@ -207,6 +198,65 @@ async def ports() -> str:
     """
     return ",".join((tp_storage.list_ports()))
 
+#--------------------------
+# command: do_anlt
+#--------------------------
+@xoa_utils.command(cls=cb.XenaCommand)
+@try_wrapper(True)
+async def do_anlt() -> str:
+    """
+    Start autoneg and link training according the previous configuration.\n
+
+    """
+    port_obj = tp_storage.get_working_port()
+
+    should_an = tp_storage.should_do_an
+    should_lt = tp_storage.should_do_lt
+    
+    return ",".join((tp_storage.list_ports()))
+
+    ## NOT FINISHED!!!!!!
+
+#--------------------------
+# command: recovery
+#--------------------------
+@xoa_utils.command(cls=cb.XenaCommand)
+@ac.option(
+    '--on/--off',
+    is_flag=True,
+    help="Should the port automatically does link recovery, "
+    "default to --off.\n",
+    default=False,
+)
+@try_wrapper(False)
+async def recovery(
+    on: bool
+    ) -> None:
+    """
+    Enable/disable link recovery on the specified port. If on, the port will keep trying ANLT when no link-up signal is detected after five seconds of waiting.\n
+
+    """
+    port_obj = tp_storage.get_working_port()
+    await anlt_utils.link_recovery(port_obj, on)
+    return None
+
+
+#--------------------------
+# command: status
+#--------------------------
+@xoa_utils.command(cls=cb.XenaCommand)
+async def status(
+) -> str:
+    """
+    Show the overview of ANLT status of the port.\n
+
+    """
+    port_obj = tp_storage.get_working_port()
+    status = await anlt_utils.status(port_obj)
+    port_id = list(status.keys())[list(status.values()).index(port_obj)]
+    return f"Port {port_id}\nAuto-negotiation        : {status['autoneg_enabled']}\nLink training           : {status['link_training_mode']}\nLink training timeout   : {status['link_training_timeout']}\nLink recovery           : {status['link_recovery']}\n"
+
+
 
 #--------------------------
 # command: an
@@ -219,23 +269,24 @@ def an():
     """
 
 #**************************
+# Type: Config
+#**************************
+#**************************
 # sub-command: an config
 #**************************
 @an.command(cls=cb.XenaGroup)
 @ac.option(
-    '--enable/--disable', 
-    ' /-d', 
+    '--on/--off',
     is_flag=True,
-    help="Enable or disable auto-negotiation on the working port, default to True. "
-    "e.g. an --enable.",
+    help="Should do auto-negotiation be on the working port, "
+    "default to --on.\n",
     default=True,
 )
 @ac.option(
-    '--loopback/--no-loopback', 
-    '-l/ ', 
+    '--loopback/--no-loopback',
     is_flag=True,
-    help="Should loopback be allowed in auto-negotiation, default to False. "
-    "e.g. an --no-loopback",
+    help="Should loopback be allowed in auto-negotiation, "
+    "default to --no-loopback.\n",
     default=False,
 )
 @try_wrapper(False)
@@ -244,13 +295,19 @@ async def an_config(
     loopback: bool
     ) -> None:
     """
-    Configure auto-negotiation on the working port.\n
+    Configure auto-negotiation for the working port.\n
 
     """
-    port_obj = tp_storage.get_working_port()
-    await anlt_utils.autoneg_config(port_obj, enable, loopback)
+    # port_obj = tp_storage.get_working_port()
+    # await anlt_utils.autoneg_config(port_obj, enable, loopback)
+    tp_storage.an_allow_loopback = loopback
+    tp_storage.should_do_an = enable
     return None
 
+
+#**************************
+# Type: Statistics
+#**************************
 #**************************
 # sub-command: an status
 #**************************
@@ -262,7 +319,9 @@ async def an_status() -> str:
     """
     port_obj = tp_storage.get_working_port()
     status = await anlt_utils.autoneg_status(port_obj)
-    return status #TODO: need to beautify the status output
+    return status
+    #TODO: need to beautify the status output
+
 
 #**************************
 # sub-command: an log
@@ -275,7 +334,8 @@ async def an_log() -> str:
     """
     port_obj = tp_storage.get_working_port()
     log = await anlt_utils.autoneg_log(port_obj)
-    return log #TODO: need to beautify the log message output
+    return log
+    #TODO: need to beautify the log message output
 
 
 #--------------------------
@@ -289,15 +349,25 @@ def lt():
     """
 
 #**************************
+# Type: Config
+#**************************
+#**************************
 # sub-command: lt config
 #**************************
 @lt.command(cls=cb.XenaCommand)
 @ac.option(
-    '--mode', 
-    '-m', 
-    type=ac.CHOICE(['autocomplete', 'disable', 'interactive', 'autostart']),
-    help="The mode for link training on the working port, default to autocomplete. "
-    "e.g. lt config --mode=auto",
+    '--on/--off',
+    is_flag=True,
+    help="Should link training be enabled on the working port, "
+    "default to --on.\n", 
+    default=True,
+)
+@ac.option(
+    '--mode',
+    type=ac.STRING,
+    help="The mode for link training on the working port, "
+    "allowed values: interactive | auto "
+    "default to interactive.\n", 
     default="interactive",
 )
 @ac.option(
@@ -305,34 +375,64 @@ def lt():
     '-p/ ',
     is_flag=True,
     help="Should the preset0 (out-of-sync) use existing tap values or standard values, "
-    "default to False. "
-    "e.g. lt config--preset0",
-    default=False,
-)
-@ac.option(
-    '--timeout/--no-timeout',
-    '-t /',
-    is_flag=True,
-    help="Should link training run with or without timeout, "
-    "default to True. "
-    "e.g. lt config--timeout",
+    "default to --no-preset0.\n",
     default=False,
 )
 @try_wrapper(False)
 async def lt_config(
+    on: bool,
     mode: str,
-    preset0: bool,
-    timeout: bool
+    preset0: bool
     ) -> None:
     """
     Configures link training on the working port.\n
 
     """
-    port_obj = tp_storage.get_working_port()
-    await anlt_utils.lt_config(port_obj, mode, preset0, timeout)
+    # port_obj = tp_storage.get_working_port()
+    # await anlt_utils.lt_config(port_obj, mode, preset0, timeout)
+    tp_storage.should_do_lt = on
+    tp_storage.lt_preset0_std = not preset0
+    tp_storage.lt_interactive = True if mode=="interactive" else False
+    
     return None
 
 
+#**************************
+# sub-command: lt im
+#**************************
+@lt.command(cls=cb.XenaCommand)
+@ac.argument(
+    "lane", 
+    type=ac.INT
+)
+@ac.argument(
+    "encoding", 
+    type=ac.STRING
+)
+@try_wrapper(False)
+async def lt_im(
+    lane: int, 
+    encoding: str
+) -> str:
+    """
+    Set the initial modulation for the specified lane.
+    
+        LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
+        ENCODING TEXT: Specifies the initial modulation. Allowed values: nrz/pam2, pam4, pam4pre\n
+
+    """
+    try:
+        validate_choices(encoding, ["nrz", "pam2", "pam4", "pam4pre"])
+        tp_storage.lt_initial_mod.update({str(lane): "encoding"})
+        # await anlt_utils.lt_im(port_obj, lane, encoding)
+        return f""
+    except NotInChoicesError as e:
+        return e.msg
+
+
+#**************************
+# Type: Control
+#**************************
 #**************************
 # sub-command: lt inc
 #**************************
@@ -463,37 +563,7 @@ async def lt_encoding(
     except NotInChoicesError as e:
         return e.msg
 
-#**************************
-# sub-command: lt im
-#**************************
-@lt.command(cls=cb.XenaCommand)
-@ac.argument(
-    "lane", 
-    type=ac.INT
-)
-@ac.argument(
-    "encoding", 
-    type=ac.STRING
-)
-@try_wrapper(False)
-async def lt_im(
-    lane: int, 
-    encoding: str
-) -> str:
-    """
-    Set the initial modulation for the specified lane.
-    
-        LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
-        ENCODING TEXT: Specifies the initial modulation. Allowed values: nrz/pam2, pam4, pam4pre\n
 
-    """
-    port_obj = tp_storage.get_working_port()
-    try:
-        validate_choices(encoding, ["nrz", "pam2", "pam4", "pam4pre"])
-        await anlt_utils.lt_im(port_obj, lane, encoding)
-        return f""
-    except NotInChoicesError as e:
-        return e.msg
 
 
 #**************************
@@ -651,45 +721,8 @@ async def txtapset(
     #TODO: Needs to be implemented for display
 
 
-#**************************
-# sub-command: lt recovery
-#**************************
-@lt.command(cls=cb.XenaCommand)
-@ac.option(
-    '--on/--off',
-    '-o/ ',
-    is_flag=True,
-    help="Should xenaserver automatically do link recovery when detecting down signal, "
-    "default to False. "
-    "e.g. lt --on",
-    default=False,
-)
-@try_wrapper(False)
-async def recovery(
-    on: bool
-    ) -> None:
-    """
-    To set the port's link recovery.
-    """
-    port_obj = tp_storage.get_working_port()
-    await anlt_utils.link_recovery(port_obj, on)
-    return None
 
 
-#**************************
-# sub-command: status
-#**************************
-@lt.command(cls=cb.XenaCommand)
-async def status(
-) -> str:
-    """
-    Show the overview of ANLT status.\n
-
-    """
-    port_obj = tp_storage.get_working_port()
-    status = await anlt_utils.status(port_obj)
-    port_id = list(status.keys())[list(status.values()).index(port_obj)]
-    return f"Port {port_id}\nAuto-negotiation        : {status['autoneg_enabled']}\nLink training           : {status['link_training_mode']}\nLink training timeout   : {status['link_training_timeout']}\nLink recovery           : {status['link_recovery']}\n"
 
 
 

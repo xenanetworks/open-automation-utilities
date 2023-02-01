@@ -1,7 +1,8 @@
 from __future__ import annotations
 import typing as t
-from xoa_driver.testers import L23Tester
+from xoa_driver.testers import L23Tester, L47Tester, GenericAnyTester
 from xoa_driver.ports import GenericL23Port
+from xoa_driver.enums import LinkTrainEncoding
 from exceptions import NoSuchPortError, NotConnectedError
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
 
@@ -14,6 +15,14 @@ class TesterPortStorage:
         self.ports: dict[str, GenericL23Port] = {}
         self.error = None
         self.working_port_id: str = ""
+
+        self.should_do_an: bool = False
+        self.should_do_lt: bool= False
+        self.an_allow_loopback: bool = False
+        self.lt_preset0_std: bool = False
+        self.lt_initial_mod: dict = {}
+        self.lt_interactive: bool = True
+
 
     def store_tester(self, ip_port: str, tester: L23Tester) -> None:
         self.tester_ip_port = ip_port
@@ -86,6 +95,15 @@ class TesterPortStorage:
 
     def list_tester(self) -> str:
         return self.tester_ip_port
+
+    def show_local_anlt_config(self) -> dict:
+        return {
+            "should_do_an": self.should_do_an,
+        "should_do_lt": self.should_do_lt,
+        "an_allow_loopback": self.an_allow_loopback,
+        "lt_preset0_std": self.lt_preset0_std,
+        "lt_interactive": self.lt_interactive
+        }
 
 
 tp_storage = TesterPortStorage()
