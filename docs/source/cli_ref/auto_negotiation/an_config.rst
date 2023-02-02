@@ -5,7 +5,7 @@ Description
 -----------
 
 To configure auto-negotiation on the working port.
-This command also enter `an` context from the port.
+
 
 
 Synopsis

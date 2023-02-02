@@ -82,9 +82,26 @@ Examples
 
     xoa_util[port0/2]$
 
+
 .. code-block:: console
 
     xoa_util[port0/0][lt]$ port 0/1
+    Ports       Sync
+    0/0         yes
+    *0/1        yes
+
+    Port 0/1
+    Auto-negotiation        : on
+    Link training           : interactive
+    Link training timeout   : default
+    Link recovery           : on
+
+    xoa_util[port0/1][lt]$ 
+
+
+.. code-block:: console
+
+    xoa_util[port0/1][lt]$ port 0/2 --no-force
     Ports       Sync
     0/0         yes
     *0/1        yes

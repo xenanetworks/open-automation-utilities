@@ -22,18 +22,30 @@ Arguments
 Options
 -------
 
+``--all/--no-all`` 
+    
+    Show all ports of the tester, default to ``--no-all``
 
 Examples
 --------
 
 .. code-block:: console
 
-    xoa_util[port0/0]$ ports
-    Ports       Sync
-    *0/0        yes
-    0/1         yes
-    0/2         yes
+    xoa_util[port0/0]$ ports --all
+    Ports       Sync        Owner
+    *0/0        yes         You
+    0/1         yes         You
+    0/2         yes         You
+    0/3         yes         Others
+    0/4         yes         Others
+    0/5         yes         Others
 
-    xoa_util[port0/0]$
+.. code-block:: console
+    
+    xoa_util[port0/0]$ ports
+    Ports       Sync        Owner
+    *0/0        yes         You
+    0/1         yes         You
+    0/2         yes         You
 
 

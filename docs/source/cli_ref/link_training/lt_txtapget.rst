@@ -5,7 +5,7 @@ Description
 -----------
 
 Read the tap values of the specified lane of the local port.
-This command also enter `lt` context from the port.
+
 
 
 Synopsis
@@ -33,12 +33,11 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2][lt]$ txtapget 0
-    0 7 0 0 0
+    xoa_util[port0/2]$ lt txtapget 0
     Local Coefficient Lane(0)   :           c(-3)       c(-2)       c(-1)       c(0)       c(+1)
         Current level           :              0           7           0           0           0
 
-    xoa_util[port0/2][lt]$
+    xoa_util[port0/2]$
 
 
 

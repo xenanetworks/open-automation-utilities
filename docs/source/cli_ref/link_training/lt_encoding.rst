@@ -5,7 +5,7 @@ Description
 -----------
 
 To request the remote link training partner to use the specified encoding on the specified lane.
-This command also enter `lt` context from the port.
+
 
 
 Synopsis

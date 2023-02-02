@@ -5,7 +5,7 @@ Description
 -----------
 
 To announce that the specified lane is trained.
-This command also enter `lt` context from the port.
+
 
 
 Synopsis
@@ -34,7 +34,7 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2][lt]$ trained 0
+    xoa_util[port0/2]$ lt trained 0
     Port 0/2 requests: Lane 0 is trained
 
     xoa_util[port0/2][lt]$

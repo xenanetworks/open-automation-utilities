@@ -5,7 +5,7 @@ Description
 -----------
 
 To request the remote link training partner to decrease its emphasis value by 1 bit.
-This command also enter `lt` context from the port.
+
 
 
 Synopsis
@@ -58,6 +58,7 @@ Examples
     Port 0/2 requests: decrease c(-3) by 1 on Lane 0
 
     xoa_util[port0/2][lt]$
+
 
 
 

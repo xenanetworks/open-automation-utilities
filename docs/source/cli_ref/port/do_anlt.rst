@@ -26,7 +26,7 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/0]$ do_anlt
+    xoa_util[port0/0]$ do anlt
 
     xoa_util[port0/0]$
 

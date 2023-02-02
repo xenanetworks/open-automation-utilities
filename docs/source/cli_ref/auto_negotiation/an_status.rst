@@ -5,7 +5,7 @@ Description
 -----------
 
 To show the auto-negotiation status
-This command also enter `an` context from the port.
+
 
 
 Synopsis

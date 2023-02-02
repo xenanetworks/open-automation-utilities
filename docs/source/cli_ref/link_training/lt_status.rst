@@ -5,7 +5,7 @@ Description
 -----------
 
 To show the link training status of the specified lane.
-This command also enter `lt` context from the port.
+
 
 
 Synopsis
@@ -33,7 +33,7 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2][lt]$ status 0
+    xoa_util[port0/2]$ lt status 0
     Is Enabled        : true
     Is Trained        : false
     Failure           : no_failure
@@ -63,7 +63,7 @@ Examples
         coeff not supported     :          0   0       0   0       0   0       0   0       0   0
         coeff at limit          :          0   0       0   0       0   0       0   0       0   0
 
-    xoa_util[port0/2][lt]$
+    xoa_util[port0/2]$
 
 
 

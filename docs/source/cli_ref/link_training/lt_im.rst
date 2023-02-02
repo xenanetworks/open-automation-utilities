@@ -5,7 +5,7 @@ Description
 -----------
 
 To set the initial modulation for the lane.
-This command also enter `lt` context from the port.
+
 
 
 Synopsis

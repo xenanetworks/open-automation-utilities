@@ -1,11 +1,11 @@
-lt log
+lt log show
 ============
 
 Description
 -----------
 
 To show the link training trace log for the specified lane.
-This command also enter `lt` context from the port.
+
 
 
 Synopsis
@@ -13,8 +13,7 @@ Synopsis
 
 .. code-block:: console
     
-    lt log <LANE>
-    [--live/--no-live]
+    lt log show <LANE>
 
 
 Arguments
@@ -25,12 +24,10 @@ Arguments
     Specifies the lane index.
 
 
+
 Options
 -------
 
-``--live/--no-live``
-
-    Should show the live link training log, default to `--no-live`.
 
 
 Examples
@@ -38,7 +35,15 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2][lt]$ log 0
+    xoa_util[port0/2]$ lt log show 0
+    ...
+    ...
+    ...
+    ...
+    ...
+
+
+
 
 
 

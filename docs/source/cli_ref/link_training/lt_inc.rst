@@ -5,7 +5,7 @@ Description
 -----------
 
 To request the remote link training partner to increase its emphasis value by 1 bit.
-This command also enter `lt` context from the port.
+
 
 
 Synopsis
@@ -40,24 +40,24 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2][lt]$ inc 0 pre3
+    xoa_util[port0/2]$ lt inc 0 pre3
     Port 0/2 requests: increase c(-3) by 1 on Lane 0
 
-    xoa_util[port0/2][lt]$
+    xoa_util[port0/2]$
 
 .. code-block:: console
 
-    xoa_util[port0/2][lt]$ inc 1 main
+    xoa_util[port0/2]$ lt inc 1 main
     Port 0/2 requests: increase c(0) by 1 on Lane 1
 
-    xoa_util[port0/2][lt]$
+    xoa_util[port0/2]$
 
 .. code-block:: console
 
     xoa_util[port0/2]$ lt inc 0 pre3
     Port 0/2 requests: increase c(-3) by 1 on Lane 0
 
-    xoa_util[port0/2][lt]$
+    xoa_util[port0/2]$
 
 
 

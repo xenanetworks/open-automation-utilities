@@ -68,14 +68,31 @@ Examples
 
 .. code-block:: console
 
-    xoa_util$ connect 10.10.10.10 automation --ports 0/0,0/1,0/2,0/3 --reset true --forcre true --password xena --tcp 22606
+    xoa_util$ connect 10.10.10.10 automation --ports 0/0,0/1,0/2,0/3 --reset --force --password xena --tcp 22606
     OK
 
-    Tester:             10.10.10.10:22606
+    Tester:             12345
+                        10.10.10.10:22606
     Username:           xoa
 
-    Ports       Sync
-    *0/0        yes
-    0/1         yes
+    Ports       Sync    Owner
+    *0/0        yes     You
+    0/1         yes     You
+    0/2         yes     You
+    0/3         yes     You
 
     xoa_util[port0/0]$
+
+
+.. code-block:: console
+
+    xoa_util$ connect 10.10.10.10 automation 
+    OK
+
+    Tester:             12345
+                        10.10.10.10:22606
+    Username:           xoa
+
+    Ports       Sync    Owner
+
+    xoa_util[]$

@@ -13,7 +13,7 @@ Synopsis
 
 .. code-block:: console
     
-    lt recovery
+    recovery
     [--on/--off]
 
 

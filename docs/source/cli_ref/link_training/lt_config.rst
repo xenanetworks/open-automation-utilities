@@ -5,7 +5,7 @@ Description
 -----------
 
 To configure link training on the working port.
-This command also enter `lt` context from the port.
+
 
 
 Synopsis
