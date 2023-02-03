@@ -21,7 +21,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-    Specifies the transceiver lane index.
+Specifies the transceiver lane index.
 
 
 Options
@@ -37,7 +37,7 @@ Examples
     xoa_util[port0/2]$ lt trained 0
     Port 0/2 requests: Lane 0 is trained
 
-    xoa_util[port0/2][lt]$
+    xoa_util[port0/2]$
 
 
 

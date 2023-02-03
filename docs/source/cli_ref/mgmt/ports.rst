@@ -24,7 +24,7 @@ Options
 
 ``--all/--no-all`` 
     
-    Show all ports of the tester, default to ``--no-all``
+Show all ports of the tester, default to ``--no-all``
 
 Examples
 --------

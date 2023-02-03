@@ -21,31 +21,31 @@ Arguments
 
 ``<LANE>`` (integer)
 
-    Specifies the lane index.
-
-``<PRE3>`` (integer)
-
-    Specifies c(-3) value of the tap.
-
-``<PRE2>`` (integer)
-
-    Specifies c(-2) value of the tap.
-
-``<PRE1>`` (integer)
-
-    Specifies c(-1) value of the tap.
-
-``<MAIN>`` (integer)
-
-    Specifies c(0) value of the tap.
-
-``<POST1>`` (integer)
-
-    Specifies c(+1) value of the tap.
+Specifies the lane index.
 
 
 Options
 -------
+
+``--pre3``
+    
+Specifies c(-3) value of the tap.
+
+``--pre2``
+    
+Specifies c(-2) value of the tap.
+
+``--pre1``
+    
+Specifies c(-1) value of the tap.
+
+``--main``
+    
+Specifies c(0) value of the tap.
+
+``--post1``
+    
+Specifies c(+1) value of the tap.
 
 
 Examples
@@ -71,7 +71,7 @@ Examples
     Local Coefficient Lane(5)   :           c(-3)       c(-2)       c(-1)       c(0)       c(+1)
         Current level           :              1           6           5          80           0
 
-    xoa_util[port0/2][lt]$
+    xoa_util[port0/2]$
 
 
 

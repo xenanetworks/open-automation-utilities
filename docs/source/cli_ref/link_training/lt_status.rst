@@ -21,7 +21,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-    Specifies the lane index.
+Specifies the lane index.
 
 
 Options

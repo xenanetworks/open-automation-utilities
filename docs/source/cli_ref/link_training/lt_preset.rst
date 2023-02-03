@@ -21,13 +21,14 @@ Arguments
 
 ``<LANE>`` (integer)
 
-    Specifies the transceiver lane index.
+Specifies the transceiver lane index.
 
 
 ``<PRESET>`` (integer)
     
-    Specifies the preset index. 
-    Allowed values: `1, 2, 3, 4, 5`
+Specifies the preset index. 
+
+Allowed values: `1, 2, 3, 4, 5`
 
 
 Options

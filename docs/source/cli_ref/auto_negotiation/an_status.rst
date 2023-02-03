@@ -29,7 +29,7 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2][an]$ status
+    xoa_util[port0/2]$ an status
     Loopback              : not allowed
     Duration              : 10 us
     Successful runs       : 2
@@ -42,7 +42,7 @@ Examples
     Next-page messages    : 2       2
     Unformatted pages     : 2       2
 
-    xoa_util[port0/2][an]$
+    xoa_util[port0/2]$
 
 
 

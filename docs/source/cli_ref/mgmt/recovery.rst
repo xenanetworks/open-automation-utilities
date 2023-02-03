@@ -26,7 +26,7 @@ Options
 
 ``--on/--off``
 
-    Should xenaserver automatically do link recovery when detecting down signal, default to `--on`.
+Should xenaserver automatically do link recovery when detecting down signal, default to `--on`.
 
 
 Examples
@@ -36,6 +36,14 @@ Examples
 
     xoa_util[port0/2]$ recovery
     Port 0/2 link recovery enabled
+
+    xoa_util[port0/2]$
+
+
+.. code-block:: console
+
+    xoa_util[port0/2]$ recovery --off
+    Port 0/2 link recovery disable
 
     xoa_util[port0/2]$
 

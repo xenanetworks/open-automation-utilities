@@ -27,11 +27,12 @@ Options
 
 ``--reset/--no-reset`` 
     
-    Removes all port configurations of the ports in `--ports` after reservation, default to `--reset`.
+Removes all port configurations of the ports in `--ports` after reservation, default to `--reset`.
+
 
 ``--release/--no-release``
 
-    Determines whether the ports should be released before exiting, default to `--release`.
+Determines whether the ports should be released before exiting, default to `--release`.
 
 
 
@@ -40,6 +41,6 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2][lt]$ exit
+    xoa_util[port0/2]$ exit
 
     xoa_util[port0/0]$

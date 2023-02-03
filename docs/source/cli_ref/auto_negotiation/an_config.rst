@@ -38,32 +38,21 @@ Examples
 --------
 
 .. code-block:: console
+    :caption: Autoneg should be enabled and allow loopback
 
-    xoa_util[port0/2]$ an config --enable --loopback
+    xoa_util[port0/2]$ an config --on --loopback
     Port 0/2 auto-negotiation enabled loopback-allowed
 
-    xoa_util[port0/2][an]$
+    xoa_util[port0/2]$
     
 .. code-block:: console
+    :caption: Autoneg should be disabled
 
-    xoa_util[port0/2][an]$ config --disable
+    xoa_util[port0/2]$ an config --off
     Port 0/2 auto-negotiation disabled no-loopback-allowed
 
-    xoa_util[port0/2][an]$
+    xoa_util[port0/2]$
 
-.. code-block:: console
-
-    xoa_util[port0/2][an]$ config --enable --loopback
-    Port 0/2 auto-negotiation enabled loopback-allowed
-
-    xoa_util[port0/2][an]$
-
-.. code-block:: console
-
-    xoa_util[port0/2][an]$ config --enable --no-loopback
-    Port 0/2 auto-negotiation enabled no-loopback-allowed
-
-    xoa_util[port0/2][an]$
 
 
 

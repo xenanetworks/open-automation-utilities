@@ -21,11 +21,12 @@ Arguments
 
 ``<LANE>`` (integer)
 
-    Specifies the lane index.
+Specifies the lane index.
+
 
 ``<FILEPATH>`` (text)
 
-    Log file name.
+Log file name.
 
 
 Options

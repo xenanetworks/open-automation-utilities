@@ -13,7 +13,7 @@ Synopsis
 
 .. code-block:: console
     
-    lt dec <LANE> <EMPHASIS>
+lt dec <LANE> <EMPHASIS>
 
 
 Arguments
@@ -21,13 +21,24 @@ Arguments
 
 ``<LANE>`` (integer)
 
-    Specifies the transceiver lane index.
+Specifies the transceiver lane index.
 
 
 ``<EMPHASIS>`` (text)
     
-    The emphasis (coefficient) of the link partner.
-    Allowed values: `pre3 | pre2 | pre | main | post`
+The emphasis (coefficient) of the link partner.
+
+Allowed values:
+
+* `pre3`
+
+* `pre2`
+
+* `pre``
+
+* `main`
+
+* `post`
 
 
 Options
@@ -40,24 +51,24 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2][lt]$ dec 0 pre3
+    xoa_util[port0/2]$ lt dec 0 pre3
     Port 0/2 requests: decrease c(-3) by 1 on Lane 0
 
-    xoa_util[port0/2][lt]$
+    xoa_util[port0/2]$
 
 .. code-block:: console
 
-    xoa_util[port0/2][lt]$ dec 1 main
+    xoa_util[port0/2]$ lt dec 1 main
     Port 0/2 requests: decrease c(0) by 1 on Lane 1
 
-    xoa_util[port0/2][lt]$
+    xoa_util[port0/2]$
 
 .. code-block:: console
 
     xoa_util[port0/2]$ lt dec 0 pre3
     Port 0/2 requests: decrease c(-3) by 1 on Lane 0
 
-    xoa_util[port0/2][lt]$
+    xoa_util[port0/2]$
 
 
 

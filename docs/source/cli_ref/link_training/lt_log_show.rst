@@ -21,7 +21,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-    Specifies the lane index.
+Specifies the lane index.
 
 
 
@@ -36,11 +36,7 @@ Examples
 .. code-block:: console
 
     xoa_util[port0/2]$ lt log show 0
-    ...
-    ...
-    ...
-    ...
-    ...
+
 
 
 

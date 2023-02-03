@@ -5,7 +5,6 @@ Description
 -----------
 
 To switch the working port. If the port is not yet reserved, reserve the port. 
-This command works in all context.
 This command changes the working port and will stay in the same context.
 
 Synopsis
@@ -23,9 +22,9 @@ Arguments
 
 ``<PORT>`` (text)
 
-    Specifies the port on the specified device host.
-    Specify a port using the format slot/port.
-    e.g. 0/0
+Specifies the port on the specified device host.
+
+Specify a port using the format slot/port, e.g. 0/0
 
 
 
@@ -34,11 +33,11 @@ Options
 
 ``--reset/--no-reset`` 
     
-    Removes the port configurations, default to `--no-reset`.
+Removes the port configurations, default to `--no-reset`.
 
 ``--force/--no-force``
 
-    Breaks port locks established by another user, aka. force reservation, default to `--force`.
+Breaks port locks established by another user, aka. force reservation, default to `--force`.
 
 
 Examples

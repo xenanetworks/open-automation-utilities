@@ -43,10 +43,10 @@ def get_short_version(rel_path):
 
 # -- Project information -----------------------------------------------------
 
-project = u'Xena OpenAutomation Core'
+project = u'Xena OpenAutomation Utilities'
 copyright = u'2023, Xena Networks'
 author = u'Xena Networks'
-title = u'Xena OpenAutomation Core Documentation'
+title = u'Xena OpenAutomation Utilities Documentation'
 
 # The full version, including alpha/beta/rc tags.
 release = get_version("../../xoa_utilities/__init__.py")
@@ -135,7 +135,7 @@ html_theme_options = {
     "home_page_in_toc": True,
     "show_toc_level": 1,
     "use_download_button": True,
-    "show_navbar_depth": 1,
+    "show_navbar_depth": 2,
     "announcement": "XOA ANLT Utilities is still in development. Content is subject to changes without notification.",
 }
 
@@ -156,7 +156,7 @@ intersphinx_disabled_domains = ['std']
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'xoa_utilities_doc', title, author, 'xoa_utilities_doc', 'Xena OpenAutomation Core', 'Miscellaneous'),
+    (master_doc, 'xoa_utilities_doc', title, author, 'xoa_utilities_doc', 'Xena OpenAutomation Utilities', 'Miscellaneous'),
 ]
 
 # Add any paths that contain templates here, relative to this directory.

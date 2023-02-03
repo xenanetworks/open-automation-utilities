@@ -21,13 +21,24 @@ Arguments
 
 ``<LANE>`` (integer)
 
-    Specifies the transceiver lane index.
+Specifies the transceiver lane index.
 
 
 ``<EMPHASIS>`` (text)
     
-    The emphasis (coefficient) of the link partner.
-    Allowed values: `pre3 | pre2 | pre | main | post`
+The emphasis (coefficient) of the link partner.
+
+Allowed values:
+
+* `pre3`
+
+* `pre2`
+
+* `pre``
+
+* `main`
+
+* `post`
 
 
 Options

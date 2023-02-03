@@ -13,7 +13,7 @@ Synopsis
 
 .. code-block:: console
     
-    lt log start <LANE> <FILEPATH>
+    lt log start <LANE> <FILENAME>
 
 
 Arguments
@@ -21,11 +21,12 @@ Arguments
 
 ``<LANE>`` (integer)
 
-    Specifies the lane index.
+Specifies the lane index.
 
-``<FILEPATH>`` (text)
 
-    Log file name.
+``<FILENAME>`` (text)
+
+Filename of the log.
 
 
 Options
