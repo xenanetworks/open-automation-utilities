@@ -20,7 +20,7 @@ def main():
         url="https://github.com/xenanetworks/open-automation-utilities",
         packages=setuptools.find_packages(),
         license='Apache 2.0',
-        install_requires=["typing_extensions>=4.3.0", "loguru"],
+        install_requires=["xoa_driver>=1.1", "typing_extensions>=4.3.0", "loguru"],
         classifiers=[
             "Development Status :: 4 - Beta",
             "Intended Audience :: Developers",
