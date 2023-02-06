@@ -6,10 +6,6 @@ Description
 
 To start ANLT according to the configuration from :doc:`../an/an_config`, :doc:`../lt/lt_config`, and :doc:`../lt/lt_im`
 
-.. figure:: ../../../_static/anlt_scenarios.png
-    :scale: 70 %
-    :align: center
-
 
 Synopsis
 --------

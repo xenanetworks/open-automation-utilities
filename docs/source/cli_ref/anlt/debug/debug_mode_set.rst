@@ -1,6 +1,11 @@
 debug mode_set
 ======================
 
+.. important::
+    
+    To debug on a lane, you must always use :doc:`debug_init` command prior to all the other debug commands.
+
+    
 Description
 -----------
 

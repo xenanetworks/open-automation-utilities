@@ -1,6 +1,11 @@
 debug lt_rx_analyzer_trig_mask_get
 ==================================
 
+.. important::
+    
+    To debug on a lane, you must always use :doc:`debug_init` command prior to all the other debug commands.
+
+    
 Description
 -----------
 

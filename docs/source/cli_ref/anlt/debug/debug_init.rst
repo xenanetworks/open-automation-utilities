@@ -1,11 +1,15 @@
 debug init
 ==========
 
+.. important::
+    
+    To debug on a lane, you must always use :doc:`debug_init` command prior to all the other debug commands.
+
+
 Description
 -----------
 
 Initialize debug
-
 
 
 Synopsis
@@ -21,7 +25,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-Specifies the transceiver lane index.
+Specifies the transceiver lane index
 
 
 Options

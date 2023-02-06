@@ -1,11 +1,15 @@
 debug lt_prbs
 ======================
 
+.. important::
+    
+    To debug on a lane, you must always use :doc:`debug_init` command prior to all the other debug commands.
+
+
 Description
 -----------
 
 Debug lt_prbs
-
 
 
 Synopsis
