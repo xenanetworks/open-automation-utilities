@@ -102,23 +102,23 @@ def format_tester_status(storage: "CmdContext") -> str:
     return result_str
 
 
-def format_port_status(storage: "CmdContext") -> str:
-    result_str = _port_dic_status(storage.retrieve_port_str(), storage.retrieve_ports())
+# def format_port_status(storage: "CmdContext") -> str:
+#     result_str = _port_dic_status(storage.retrieve_port_str(), storage.retrieve_ports())
 
-    port_obj = storage.retrieve_port()
-    an_status = "on"
-    lt_status = "interactive"
-    lt_timeout = "default"
-    lt_recovery = "on"
-    result_str += f"""
-Port {storage.retrieve_port_str()}
-Auto-negotiation        : {an_status}
-Link training           : {lt_status}
-Link training timeout   : {lt_timeout}
-Link recovery           : {lt_recovery}
-"""
+#     port_obj = storage.retrieve_port()
+#     an_status = "on"
+#     lt_status = "interactive"
+#     lt_timeout = "default"
+#     lt_recovery = "on"
+#     result_str += f"""
+# Port {storage.retrieve_port_str()}
+# Auto-negotiation        : {an_status}
+# Link training           : {lt_status}
+# Link training timeout   : {lt_timeout}
+# Link recovery           : {lt_recovery}
+# """
 
-    return result_str
+#     return result_str
 
 
 def format_ports_status(storage: "CmdContext", all: bool) -> str:
@@ -136,7 +136,8 @@ Port {port_id}
 Auto-negotiation      : {status['autoneg_enabled']}
 Link training         : {status['link_training_mode']}
 Link training timeout : {status['link_training_timeout']}
-Link recovery         : {status['link_recovery']}"""
+Link recovery         : {status['link_recovery']}
+"""
 
 
 def format_an_status(dic: dict) -> str:

@@ -12,7 +12,6 @@ import asyncclick as ac
 from ..clis import (
     format_error,
     format_tester_status,
-    format_port_status,
     format_ports_status,
     format_an_status,
     format_status,
@@ -146,7 +145,10 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
     if force or reset:
         await asyncio.sleep(3)
         # status will change when you reserve_port or reset_port, need to wait
-    return format_port_status(storage)
+    port_obj = storage.retrieve_port()
+    port_id = storage.retrieve_port_str()
+    status_dic = await anlt_utils.status(port_obj)
+    return format_status(port_id, status_dic)
 
 
 # --------------------------
@@ -198,7 +200,7 @@ async def recovery(context: ac.Context, on: bool) -> str:
     enable = "enable" if on else "disable"
     port_obj = storage.retrieve_port()
     await anlt_utils.link_recovery(port_obj, on)
-    return f"Port {storage.retrieve_port_str()} link recovery: {enable}"
+    return f"Port {storage.retrieve_port_str()} link recovery: {enable}\n"
 
 
 # --------------------------
