@@ -33,3 +33,5 @@ reservation, default to true. Allowed values: true | false. \
 e.g. --break_locks true"
 
 HELP_EXIT_RELEASE = "Determines whether the ports should be released before exiting, default to --release"
+
+HELP_PORTS_ALL = "Show all ports of the tester, default to --no-all"

@@ -10,6 +10,7 @@ from xoa_driver.exceptions import BadStatus
 
 if t.TYPE_CHECKING:
     from xoa_driver.ports import GenericL23Port
+    from ..cmds.cmd_context import CmdContext
 
 
 class ReadConfig:
@@ -78,23 +79,52 @@ def validate_choices(input_str: str, choices: list[str]) -> None:
         raise NotInChoicesError(input_str, choices)
 
 
-def format_tester_status(
-    serial_number: str,
-    con_info: str,
-    username: str,
-    first_id: str,
-    port_dic: dict[str, GenericL23Port],
-) -> str:
-    result_str = f"""
-Tester  :      {serial_number}
-ConInfo :      {con_info}
-Username:      {username}
-
-Port      Sync      Owner
-"""
+def _port_dic_status(current_id: str, port_dic: dict[str, GenericL23Port]) -> str:
+    string = f"Port      Sync      Owner     \n"
     for name, port in port_dic.items():
-        new_name = f"*{name}" if first_id == name else name
+        new_name = f"*{name}" if current_id == name else name
         owner = "You" if port.is_reserved_by_me() else "Others"
         sync_status = str(port.info.sync_status.name)
-        result_str += f"{new_name:10s}{sync_status:10s}{owner:10s}\n"
+        string += f"{new_name:10s}{sync_status:10s}{owner:10s}\n"
+
+    return string
+
+
+def format_tester_status(storage: "CmdContext") -> str:
+    serial_number = storage.retrieve_tester_serial()
+    con_info = storage.retrieve_tester_con_info()
+    username = storage.retrieve_tester_username()
+    port_dic = storage.retrieve_ports()
+    result_str = f"\nTester  :      {serial_number}\nConInfo :      {con_info}\nUsername:      {username}\n\n"
+    result_str += _port_dic_status(
+        storage.retrieve_port_str(), storage.retrieve_ports()
+    )
+    return result_str
+
+
+def format_port_status(storage: "CmdContext") -> str:
+    result_str = _port_dic_status(storage.retrieve_port_str(), storage.retrieve_ports())
+
+    port_obj = storage.retrieve_port()
+    an_status = "on"
+    lt_status = "interactive"
+    lt_timeout = "default"
+    lt_recovery = "on"
+    result_str += f"""
+Port {storage.retrieve_port_str()}
+Auto-negotiation        : {an_status}
+Link training           : {lt_status}
+Link training timeout   : {lt_timeout}
+Link recovery           : {lt_recovery}
+"""
+
+    return result_str
+
+
+def format_ports_status(storage: "CmdContext", all: bool) -> str:
+    if all:
+        port_dic = storage.get_all_ports()
+    else:
+        port_dic = storage.retrieve_ports()
+    result_str = _port_dic_status(storage.retrieve_port_str(), port_dic)
     return result_str

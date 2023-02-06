@@ -2,7 +2,7 @@ from __future__ import annotations
 import typing as t
 from xoa_driver.testers import L23Tester
 from xoa_driver.ports import GenericL23Port
-from ..exceptions import NoSuchPortError, NotConnectedError
+from ..exceptions import NotInStoreError, NotConnectedError, NoSuchIDError
 from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
 from functools import partialmethod
@@ -28,24 +28,12 @@ class CmdContext:
         self.function: str = ""
         self.error: ErrorString = ErrorString()
 
-    def back(self) -> None:
-        if self.function:
-            self.function = ""
-        elif self.port_str:
-            self.port_str = ""
-        elif self.tester:
-            self.tester = None
-            self.tester_serial: str = ""
-            self.tester_con_info: str = ""
-            self.ports = {}
-            self.port_str = ""
-
-    def set_current_port_str(self, current_port_str: str) -> None:
+    def store_current_port_str(self, current_port_str: str) -> None:
         if current_port_str not in self.ports:
-            raise NoSuchPortError(current_port_str)
+            raise NotInStoreError(current_port_str)
         self.port_str = current_port_str
 
-    def set_current_tester(
+    def store_current_tester(
         self, username: str, con_info: str, tester: L23Tester
     ) -> None:
         self.tester_con_info = con_info
@@ -55,11 +43,40 @@ class CmdContext:
         self.port_str = ""
         self.ports = {}
 
-    def get_tester(self) -> t.Optional[L23Tester]:
+    def get_all_ports(self) -> dict[str, GenericL23Port]:
+        return self.obtain_physical_ports("*", False)
+
+    def retrieve_ports(self) -> dict[str, GenericL23Port]:
+        return self.ports
+
+    def retrieve_tester_username(self) -> str:
+        return self.tester_username
+
+    def retrieve_tester_con_info(self) -> str:
+        return self.tester_con_info
+
+    def retrieve_tester_serial(self) -> str:
+        return self.tester_serial
+
+    def retrieve_tester(self) -> t.Optional[L23Tester]:
         return self.tester
+
+    def retrieve_port_str(self) -> str:
+        return self.port_str
 
     def store_port(self, exact_port_id: str, port_obj: GenericL23Port) -> None:
         self.ports[exact_port_id] = port_obj
+
+    def retrieve_port(self, exact_port_id: str = "current") -> GenericL23Port:
+        if exact_port_id == "current":
+            exact_port_id = self.port_str
+        if exact_port_id in self.ports:
+            return self.ports[exact_port_id]
+        raise NotInStoreError(exact_port_id)
+
+    def remove_port(self, exact_port_id: str) -> None:
+        if exact_port_id in self.ports:
+            del self.ports[exact_port_id]
 
     def set_error(self, error_str: str) -> None:
         self.error.set_val(error_str)
@@ -69,7 +86,9 @@ class CmdContext:
     def get_error(self) -> str:
         return self.error.err_str
 
-    def obtain_physical_ports(self, id_str: str = "*") -> dict[str, GenericL23Port]:
+    def obtain_physical_ports(
+        self, id_str: str = "*", update: bool = True
+    ) -> dict[str, GenericL23Port]:
         if self.tester is None:
             raise NotConnectedError()
         if id_str == "*":
@@ -82,11 +101,12 @@ class CmdContext:
             elif len(splitted) == 2:
                 m_id, p_id = splitted
             else:
-                raise NoSuchPortError(id_str)
+                raise NoSuchIDError(id_str)
 
         p_dics = {
             f"{i.kind.module_id}/{i.kind.port_id}": i
             for i in mgmt_utils.get_ports(self.tester, int(m_id), int(p_id))
         }
-        self.ports.update(p_dics)
+        if update:
+            self.ports.update(p_dics)
         return p_dics

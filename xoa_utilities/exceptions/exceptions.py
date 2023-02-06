@@ -34,6 +34,12 @@ class NoSuchIDError(ConfigError):
         self.msg = f"No such ID {general_id}!"
 
 
+class NotInStoreError(ConfigError):
+    def __init__(self, general_id: str) -> None:
+        self.name = "Not in store Error"
+        self.msg = f"Not in store {general_id}!"
+
+
 class NoSuchPortError(ConfigError):
     def __init__(self, port_id: int) -> None:
         self.name = "No Such Port Error"

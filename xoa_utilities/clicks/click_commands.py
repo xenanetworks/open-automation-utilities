@@ -9,7 +9,7 @@ from ..exceptions import *
 import json
 import typing as t
 import asyncclick as ac
-from ..clis import format_error, format_tester_status
+from ..clis import format_error, format_tester_status, format_port_status, format_ports_status
 from ..cmds import CmdContext
 from . import click_help as h
 import asyncio
@@ -26,12 +26,7 @@ def xoa_utils():
 async def cmd_main(context: CmdContext, cmd_str: str) -> t.Any:
     context.clear_error()
     args = cmd_str.split()
-    try:
-        result = await xoa_utils.main(args=args, standalone_mode=False, obj=context)
-        if isinstance(result, int):
-            result = context.get_error()
-    except ac.UsageError as error:
-        result = format_error(error)
+    result = await xoa_utils.main(args=args, standalone_mode=False, obj=context)
     return result
 
 
@@ -58,7 +53,7 @@ async def connect(
     tcp: int,
 ) -> str:
     """
-    Connect to a tester for the current session.
+    To connect to a tester for the current session.
 
         DEVICE TEXT: Specifies the chassis address for connection. You can specify the IP addresses in IPv4 format, or a host name, e.g. 10.10.10.10 or demo.xenanetworks.com\n
 
@@ -69,13 +64,11 @@ async def connect(
     real_port_list = [i.strip() for i in ports.split(",")] if ports else []
     tester = await L23Tester(device, username, password, tcp, debug=True)
     con_info = f"{device}:{tcp}"
-    storage.set_current_tester(username, con_info, tester)
-    port_dic = {}
+    storage.store_current_tester(username, con_info, tester)
     count = 0
     first_id = ""
     for id_str in real_port_list:
         this_port_dic = storage.obtain_physical_ports(id_str)
-        port_dic.update(this_port_dic)
         for port_id, port_obj in this_port_dic.items():
             if force:
                 await mgmt_utils.reserve_port(port_obj, force)
@@ -87,104 +80,81 @@ async def connect(
             count += 1
 
     if real_port_list:
-        storage.set_current_port_str(first_id)
+        storage.store_current_port_str(first_id)
     if force or reset:
         await asyncio.sleep(3)
         # status will change when you reserve_port or reset_port, need to wait
-    return format_tester_status(
-        tester.info.serial_number, con_info, username, first_id, port_dic
-    )
+    return format_tester_status(storage)
 
 
-# # --------------------------
-# # command: exit
-# # --------------------------
-# @xoa_utils.command(cls=cb.XenaCommand)
-# @ac.option(
-#     "--reset/--no-reset",
-#     is_flag=True,
-#     help="Removes all port configurations of the reserved ports, "
-#     "default to --reset.\n",
-#     default=True,
-# )
-# @ac.option(
-#     "--release/--no-release",
-#     is_flag=True,
-#     help="Determines whether the ports will be released before exiting, "
-#     "default to --release.\n",
-#     default=True,
-# )
-# @try_wrapper(False)
-# async def exit(reset: bool, release: bool) -> None:
-#     """
-#     Exit by terminating port reservations, disconnecting from the chassis, releasing system resources, and removing the specified port configurations.\n
-
-#     """
-#     for port_id, port_obj in tp_storage.ports:
-#         if reset:
-#             await mgmt_utils.reset_port(port_obj)
-#         if release:
-#             await mgmt_utils.free_port(port_obj)
-#         tp_storage.remove_port(port_id)
-
-#     tp_storage.clean_working_port_id()
-#     return None
+# --------------------------
+# command: exit
+# --------------------------
+@xoa_utils.command(cls=cb.XenaCommand)
+@ac.option("--reset/--no-reset", is_flag=True, help=h.HELP_CONNECT_RESET, default=True)
+@ac.option(
+    "--release/--no-release", is_flag=True, help=h.HELP_EXIT_RELEASE, default=True
+)
+@ac.pass_context
+async def exit(context: ac.Context, reset: bool, release: bool) -> str:
+    """
+    To exit the session by terminating port reservations, disconnecting from the chassis, releasing system resources, and removing the specified port configurations. This command works in all context.
+    """
+    storage: CmdContext = context.obj
+    for port_id, port_obj in storage.ports.copy().items():
+        if reset:
+            await mgmt_utils.reset_port(port_obj)
+        if release:
+            await mgmt_utils.free_port(port_obj)
+        storage.remove_port(port_id)
+    return ""
 
 
-# # --------------------------
-# # command: port
-# # --------------------------
-# @xoa_utils.command(cls=cb.XenaCommand)
-# @ac.argument(
-#     "port",
-#     type=ac.STRING,
-# )
-# @ac.option(
-#     "--reset/--no-reset",
-#     is_flag=True,
-#     help="Removes all port configurations of the ports, " "default to --no-reset.\n",
-#     default=False,
-# )
-# @ac.option(
-#     "--force/--no-force",
-#     is_flag=True,
-#     help="Breaks port locks established by another user, aka. force "
-#     "reservation, default to --force.\n",
-#     default=True,
-# )
-# @try_wrapper(False)
-# async def port(port: str, reset: bool, force: bool):
-#     """
-#     Switch the working port. If the port is not yet reserved, reserve the port. Update the working port in the cache.
+# --------------------------
+# command: port
+# --------------------------
+@xoa_utils.command(cls=cb.XenaCommand)
+@ac.argument("port", type=ac.STRING)
+@ac.option("--reset/--no-reset", is_flag=True, help=h.HELP_CONNECT_RESET, default=False)
+@ac.option("--force/--no-force", is_flag=True, help=h.HELP_CONNECT_FORCE, default=True)
+@ac.pass_context
+async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
+    """
+    Switch the working port. If the port is not yet reserved, reserve the port. Update the working port in the cache.
 
-#         PORT TEXT: Specifies the port on the specified device host. Specify a port using the format slot/port, e.g. 0/0\n
-
-#     """
-#     try:
-#         tp_storage.get_reserved_port(port)
-#     except NoSuchPortError:
-#         port_dic = tp_storage.obtain_physical_ports(port)
-#         for port_id, port_obj in port_dic.items():
-#             if force:
-#                 await mgmt_utils.reserve_port(port_obj, force)
-#             if reset:
-#                 await mgmt_utils.reset_port(port_obj)
-#             tp_storage.store_port(port_id, port_obj)
-#     tp_storage.update_working_port_id(port)
-#     return None
+        PORT TEXT: Specifies the port on the specified device host. Specify a port using the format slot/port, e.g. 0/0\n
+    """
+    storage: CmdContext = context.obj
+    try:
+        storage.store_current_port_str(port)
+    except NotInStoreError:
+        port_dic = storage.obtain_physical_ports(port)
+        for port_id, port_obj in port_dic.items():
+            if force:
+                await mgmt_utils.reserve_port(port_obj, force)
+            if reset:
+                await mgmt_utils.reset_port(port_obj)
+            storage.store_port(port_id, port_obj)
+            storage.store_current_port_str(port_id)
+    if force or reset:
+        await asyncio.sleep(3)
+        # status will change when you reserve_port or reset_port, need to wait
+    return format_port_status(storage)
 
 
-# # --------------------------
-# # command: show_ports
-# # --------------------------
-# @xoa_utils.command(cls=cb.XenaCommand)
-# @try_wrapper(True)
-# async def ports() -> str:
-#     """
-#     List all the ports under control.\n
+# --------------------------
+# command: ports
+# --------------------------
+@xoa_utils.command(cls=cb.XenaCommand)
+@ac.option("--all/--no-all", is_flag=True, help=h.HELP_PORTS_ALL, default=False)
+@ac.pass_context
+async def ports(context: ac.Context, all: bool) -> str:
+    """
+    To list all the ports reserved by the current session. This command works in all context.\n
 
-#     """
-#     return ",".join((tp_storage.list_ports()))
+    """
+    storage: CmdContext = context.obj
+    return format_ports_status(storage, all)  
 
 
 # # --------------------------

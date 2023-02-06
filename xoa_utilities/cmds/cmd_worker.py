@@ -5,8 +5,9 @@ import typing as t
 from ..clicks import xoa_utils
 from ..clicks import cmd_main
 from ..hub import HubManager
-from ..clis import ReadConfig, run_coroutine_as_sync
-import asyncssh
+from ..clis import ReadConfig, run_coroutine_as_sync, format_error
+import asyncssh as ah
+import asyncclick as ac
 import os
 from .cmd_context import CmdContext
 
@@ -115,29 +116,41 @@ class CmdWorker:
     def write(self, msg: str) -> None:
         self.process.stdout.write(msg)
 
-    def put_hub_record(self, request: str, response: str) -> None:
+    def put_hub_record(self, request: str, response: str, success: bool) -> None:
         if self.hub_enable and self.hub_manager:
-            self.hub_msg_list.append((os.getpid(), request, response))  # type: ignore
+            self.hub_msg_list.append((os.getpid(), request, response, success))  # type: ignore
 
     def make_prompt(self) -> str:
-        serial = f"[{self.context.tester_serial}]" if self.context.tester_serial else ""
-        port_str = f"[{self.context.port_str}]" if self.context.port_str else ""
+        s = self.context.retrieve_tester_serial()
+        serial = f"[{s}]" if s else ""
+        p = self.context.retrieve_port_str()
+        port_str = f"[{p}]" if p else ""
         return f"{self.base_prompt}{serial}{port_str} > "
 
     async def run(self) -> None:
         self.connect_hub()
         self.write(f"\n{self.make_prompt()}")
         while not self.process.stdin.at_eof():
+            response = None
+            success = False
             try:
                 request = (await self.process.stdin.readline()).strip()
                 response = await self.dispatch(request)
-                self.write(f"{response}\n{self.make_prompt()}")
-                self.put_hub_record(request, response)
-            except asyncssh.TerminalSizeChanged:
+                success = True
+                if isinstance(response, int):
+                    response = self.context.get_error()
+                    success = False
+            except ah.TerminalSizeChanged:
                 pass
+            except ac.UsageError as error:
+                response = format_error(error)
+                success = False
             except Exception as e:
-                self.write(f"{type(e).__name__}: {e}\n")
-                raise e
+                response = f"{type(e).__name__}: {e}\n"
+                success = False
+            if response is not None:
+                self.write(f"{response}\n{self.make_prompt()}")
+                self.put_hub_record(request, response, success)
 
     def connect_hub(self) -> None:
         config = ReadConfig()
