@@ -28,10 +28,22 @@ class NoSuchModuleError(ConfigError):
         self.msg = f"No such module {module_id}!"
 
 
+class NoSuchIDError(ConfigError):
+    def __init__(self, general_id: int) -> None:
+        self.name = "No Such ID Error"
+        self.msg = f"No such ID {general_id}!"
+
+
 class NoSuchPortError(ConfigError):
     def __init__(self, port_id: int) -> None:
         self.name = "No Such Port Error"
         self.msg = f"No such port {port_id}!"
+
+
+class NoSuchIDError(ConfigError):
+    def __init__(self, ids: int) -> None:
+        self.name = "No Such ID Error"
+        self.msg = f"No such ID {ids}!"
 
 
 class NotSupportPcsPmaError(ConfigError):

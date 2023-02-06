@@ -2,12 +2,13 @@ from __future__ import annotations
 from asyncclick.shell_completion import ShellComplete, CompletionItem
 from asyncclick import BaseCommand
 import typing as t
-from click_commands import xoa_utils
-from click_entry import cmd_main
-from hub import HubManager
-from cli_utils import ReadConfig, run_coroutine_as_sync
+from ..clicks import xoa_utils
+from ..clicks import cmd_main
+from ..hub import HubManager
+from ..clis import ReadConfig, run_coroutine_as_sync
 import asyncssh
 import os
+from .cmd_context import CmdContext
 
 if t.TYPE_CHECKING:
     from asyncssh.process import SSHServerProcess
@@ -76,14 +77,15 @@ class CmdWorker:
     def __init__(
         self,
         process: "SSHServerProcess",
-        prompt: str = "xena:> ",
+        base_prompt: str = "xoa_util",
     ) -> None:
         self.process: "SSHServerProcess" = process
-        self.prompt: str = prompt
+        self.base_prompt: str = base_prompt
         self.channel: "SSHLineEditorChannel" = self.process.channel  # type: ignore
         self.hub_manager: t.Optional["HubManager"] = None
         self.hub_enable: bool = False
-        self.hub_msg_list = []
+        self.hub_msg_list: list = []
+        self.context = CmdContext()
         self.register_keys()
 
     def autocomplete(self, line: str, pos: int) -> t.Tuple[str, int]:
@@ -95,7 +97,7 @@ class CmdWorker:
         if not completed:
             pass
         elif completed.startswith("-"):
-            self.write(f"{line}\n{completed}\n\n{self.prompt}")
+            self.write(f"{line}\n{completed}\n\n{self.make_prompt()}")
         elif args_raw and completed.startswith(args_raw[-1]):
             new_l = args_raw[:-1] + [completed]
             line = " ".join(new_l)
@@ -113,23 +115,31 @@ class CmdWorker:
     def write(self, msg: str) -> None:
         self.process.stdout.write(msg)
 
-    def put_record(self, request: str, response: str) -> None:
+    def put_hub_record(self, request: str, response: str) -> None:
         if self.hub_enable and self.hub_manager:
             self.hub_msg_list.append((os.getpid(), request, response))  # type: ignore
 
+    def make_prompt(self) -> str:
+        serial = f"[{self.context.tester_serial}]" if self.context.tester_serial else ""
+        port_str = f"[{self.context.port_str}]" if self.context.port_str else ""
+        return f"{self.base_prompt}{serial}{port_str} > "
+
     async def run(self) -> None:
-        self.connect()
-        self.write(f"\n{self.prompt}")
+        self.connect_hub()
+        self.write(f"\n{self.make_prompt()}")
         while not self.process.stdin.at_eof():
             try:
                 request = (await self.process.stdin.readline()).strip()
                 response = await self.dispatch(request)
-                self.write(f"{response}\n{self.prompt}")
-                self.put_record(request, response)
+                self.write(f"{response}\n{self.make_prompt()}")
+                self.put_hub_record(request, response)
             except asyncssh.TerminalSizeChanged:
                 pass
+            except Exception as e:
+                self.write(f"{type(e).__name__}: {e}\n")
+                raise e
 
-    def connect(self) -> None:
+    def connect_hub(self) -> None:
         config = ReadConfig()
         self.hub_enable = config.hub_enabled
         if config.hub_enabled:
@@ -140,6 +150,10 @@ class CmdWorker:
             self.hub_msg_list = self.hub_manager.get_list()  # type: ignore
 
     async def dispatch(self, msg: str) -> str:
+        if not msg:
+            return ""
         if msg.lower() == "exit":
+            await cmd_main(self.context, msg)
             self.finish()
-        return await cmd_main(msg)
+            return ""
+        return await cmd_main(self.context, msg)

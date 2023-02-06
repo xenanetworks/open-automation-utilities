@@ -5,8 +5,11 @@ import typing as t
 import asyncclick as ac
 import json
 from functools import wraps
-from exceptions import ConfigError, NotInChoicesError
+from ..exceptions import ConfigError, NotInChoicesError
 from xoa_driver.exceptions import BadStatus
+
+if t.TYPE_CHECKING:
+    from xoa_driver.ports import GenericL23Port
 
 
 class ReadConfig:
@@ -70,27 +73,28 @@ def format_error(error: ac.UsageError) -> str:
     return result
 
 
-def try_wrapper(return_result: bool) -> t.Callable:
-    def outer(func: t.Callable) -> t.Callable:
-        @wraps(func)
-        async def execute(*args: t.Any, **kw: dict[str, t.Any]) -> str:
-            try:
-                func_result = await func(*args, **kw)
-                error = None
-            except ConfigError as e:
-                error = f"{e.name}: {e}"
-            except BadStatus as e1:
-                error = str(e1).split("\n")[0]
-            result = {"status": 1 if error else 0, "response": error if error else None}
-            if return_result:
-                result["result"] = func_result
-            return json.dumps(result, indent=2)
-
-        return execute
-
-    return outer
-
-
 def validate_choices(input_str: str, choices: list[str]) -> None:
     if input_str not in choices:
         raise NotInChoicesError(input_str, choices)
+
+
+def format_tester_status(
+    serial_number: str,
+    con_info: str,
+    username: str,
+    first_id: str,
+    port_dic: dict[str, GenericL23Port],
+) -> str:
+    result_str = f"""
+Tester  :      {serial_number}
+ConInfo :      {con_info}
+Username:      {username}
+
+Port      Sync      Owner
+"""
+    for name, port in port_dic.items():
+        new_name = f"*{name}" if first_id == name else name
+        owner = "You" if port.is_reserved_by_me() else "Others"
+        sync_status = str(port.info.sync_status.name)
+        result_str += f"{new_name:10s}{sync_status:10s}{owner:10s}\n"
+    return result_str

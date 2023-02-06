@@ -6,7 +6,7 @@ import os
 import sys
 from typing import Optional
 import psutil
-from cli_utils import ReadConfig
+from ..clis import ReadConfig
 
 global_list = []
 
