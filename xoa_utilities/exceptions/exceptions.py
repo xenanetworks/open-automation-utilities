@@ -46,10 +46,6 @@ class NoSuchPortError(ConfigError):
         self.msg = f"No such port {port_id}!"
 
 
-class NoSuchIDError(ConfigError):
-    def __init__(self, ids: int) -> None:
-        self.name = "No Such ID Error"
-        self.msg = f"No such ID {ids}!"
 
 
 class NotSupportPcsPmaError(ConfigError):

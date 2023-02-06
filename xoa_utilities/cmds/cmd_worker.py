@@ -121,11 +121,7 @@ class CmdWorker:
             self.hub_msg_list.append((os.getpid(), request, response, success))  # type: ignore
 
     def make_prompt(self) -> str:
-        s = self.context.retrieve_tester_serial()
-        serial = f"[{s}]" if s else ""
-        p = self.context.retrieve_port_str()
-        port_str = f"[{p}]" if p else ""
-        return f"{self.base_prompt}{serial}{port_str} > "
+        return self.context.prompt(self.base_prompt)
 
     async def run(self) -> None:
         self.connect_hub()

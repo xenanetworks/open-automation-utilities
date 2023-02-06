@@ -28,10 +28,18 @@ HELP_CONNECT = """
 HELP_PORT_RESET = "Removes all port configurations of the ports in --port_list after \
 reservation, default to true. Allowed values: true | false. e.g. --reset true"
 
-HELP_PORT_FORCE ="Breaks port locks established by another user, aka. force \
+HELP_PORT_FORCE = "Breaks port locks established by another user, aka. force \
 reservation, default to true. Allowed values: true | false. \
 e.g. --break_locks true"
 
 HELP_EXIT_RELEASE = "Determines whether the ports should be released before exiting, default to --release"
 
 HELP_PORTS_ALL = "Show all ports of the tester, default to --no-all"
+
+HELP_RECOVERY_ON = "Should xenaserver automatically do link recovery when detecting down signal, default to --on."
+
+HELP_AN_CONFIG_ON = "Enable or disable auto-negotiation on the working port, \
+default to --on."
+
+HELP_AN_CONFIG_LOOPBACK = "Should loopback be allowed in auto-negotiation, \
+default to --no-loopback."

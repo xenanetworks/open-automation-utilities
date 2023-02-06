@@ -23,10 +23,25 @@ class CmdContext:
         self.tester_serial: str = ""
         self.tester_con_info: str = ""
         self.tester: t.Optional[L23Tester] = None
+
         self.ports: dict[str, GenericL23Port] = {}
         self.port_str: str = ""
-        self.function: str = ""
+
+        # self.functionality: str = ""
         self.error: ErrorString = ErrorString()
+
+        self.an_allow_loopback = False
+        self.should_do_an = False
+
+    def prompt(self, base_prompt: str = "") -> str:
+        s = self.retrieve_tester_serial()
+        serial = f"[{s}]" if s else ""
+        p = self.retrieve_port_str()
+        port_str = f"[{p}]" if p else ""
+        return f"{base_prompt}{serial}{port_str} > "
+
+    # def store_functionality(self, functionality: str) -> None:
+    #     self.functionality = functionality
 
     def store_current_port_str(self, current_port_str: str) -> None:
         if current_port_str not in self.ports:
@@ -45,6 +60,9 @@ class CmdContext:
 
     def get_all_ports(self) -> dict[str, GenericL23Port]:
         return self.obtain_physical_ports("*", False)
+
+    # def retrieve_functionality(self) -> str:
+    #     return self.functionality
 
     def retrieve_ports(self) -> dict[str, GenericL23Port]:
         return self.ports

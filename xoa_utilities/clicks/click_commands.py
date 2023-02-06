@@ -9,7 +9,12 @@ from ..exceptions import *
 import json
 import typing as t
 import asyncclick as ac
-from ..clis import format_error, format_tester_status, format_port_status, format_ports_status
+from ..clis import (
+    format_error,
+    format_tester_status,
+    format_port_status,
+    format_ports_status,
+)
 from ..cmds import CmdContext
 from . import click_help as h
 import asyncio
@@ -154,7 +159,7 @@ async def ports(context: ac.Context, all: bool) -> str:
 
     """
     storage: CmdContext = context.obj
-    return format_ports_status(storage, all)  
+    return format_ports_status(storage, all)
 
 
 # # --------------------------
@@ -177,25 +182,21 @@ async def ports(context: ac.Context, all: bool) -> str:
 #     ## NOT FINISHED!!!!!!
 
 
-# # --------------------------
-# # command: recovery
-# # --------------------------
-# @xoa_utils.command(cls=cb.XenaCommand)
-# @ac.option(
-#     "--on/--off",
-#     is_flag=True,
-#     help="Should the port automatically does link recovery, " "default to --off.\n",
-#     default=False,
-# )
-# @try_wrapper(False)
-# async def recovery(on: bool) -> None:
-#     """
-#     Enable/disable link recovery on the specified port. If on, the port will keep trying ANLT when no link-up signal is detected after five seconds of waiting.\n
-
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     await anlt_utils.link_recovery(port_obj, on)
-#     return None
+# --------------------------
+# command: recovery
+# --------------------------
+@xoa_utils.command(cls=cb.XenaCommand)
+@ac.option("--on/--off", is_flag=True, help=h.HELP_RECOVERY_ON, default=False)
+@ac.pass_context
+async def recovery(context: ac.Context, on: bool) -> str:
+    """
+    Enable/disable link recovery on the specified port. If enable, the port will keep trying ANLT when no link-up signal is detected after five seconds of waiting.
+    """
+    storage: CmdContext = context.obj
+    enable = "enable" if on else "disable"
+    port_obj = storage.retrieve_port()
+    await anlt_utils.link_recovery(port_obj, on)
+    return f"Port {storage.retrieve_port_str()} link recovery: {enable}"
 
 
 # # --------------------------
@@ -213,48 +214,42 @@ async def ports(context: ac.Context, all: bool) -> str:
 #     return f"Port {port_id}\nAuto-negotiation        : {status['autoneg_enabled']}\nLink training           : {status['link_training_mode']}\nLink training timeout   : {status['link_training_timeout']}\nLink recovery           : {status['link_recovery']}\n"
 
 
-# # --------------------------
-# # command: an
-# # --------------------------
-# @xoa_utils.group(cls=cb.XenaGroup)
-# def an():
-#     """
-#     To enter auto-negotiation context.\n
+# --------------------------
+# command: an
+# --------------------------
+@xoa_utils.group(cls=cb.XenaGroup)
+def an():
+    """
+    To enter auto-negotiation context.\n
 
-#     """
+    """
 
 
-# # **************************
-# # Type: Config
-# # **************************
-# # **************************
-# # sub-command: an config
-# # **************************
-# @an.command(cls=cb.XenaGroup)
-# @ac.option(
-#     "--on/--off",
-#     is_flag=True,
-#     help="Should do auto-negotiation be on the working port, " "default to --on.\n",
-#     default=True,
-# )
-# @ac.option(
-#     "--loopback/--no-loopback",
-#     is_flag=True,
-#     help="Should loopback be allowed in auto-negotiation, "
-#     "default to --no-loopback.\n",
-#     default=False,
-# )
-# @try_wrapper(False)
-# async def an_config(enable: bool, loopback: bool) -> None:
-#     """
-#     Configure auto-negotiation for the working port.\n
+# **************************
+# Type: Config
+# **************************
+# **************************
+# sub-command: an config
+# **************************
+@an.command(cls=cb.XenaGroup)
+@ac.option("--on/--off", is_flag=True, help=h.HELP_AN_CONFIG_ON, default=True)
+@ac.option(
+    "--loopback/--no-loopback",
+    is_flag=True,
+    help=h.HELP_AN_CONFIG_LOOPBACK,
+    default=False,
+)
+@ac.pass_context
+async def an_config(context: ac.Context, enable: bool, loopback: bool) -> None:
+    """
+    Configure auto-negotiation for the working port.\n
 
-#     """
-#     # port_obj = tp_storage.get_working_port()
-#     # await anlt_utils.autoneg_config(port_obj, enable, loopback)
-#     tp_storage.an_allow_loopback = loopback
-#     tp_storage.should_do_an = enable
-#     return None
+    """
+    storage: CmdContext = context.obj
+    on = "enable" if enable else "disable"
+    storage.an_allow_loopback = loopback
+    storage.should_do_an = enable
+    return f"Port {storage.retrieve_port_str()} auto-negotiation:{on} loopback-allowed:{loopback}"
 
 
 # # **************************
