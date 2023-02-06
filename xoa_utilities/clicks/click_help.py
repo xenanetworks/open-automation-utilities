@@ -43,3 +43,9 @@ default to --on."
 
 HELP_AN_CONFIG_LOOPBACK = "Should loopback be allowed in auto-negotiation, \
 default to --no-loopback."
+
+HELP_LT_CONFIG_MODE = "The mode for link training on the working port, default to interactive."
+
+HELP_LT_CONFIG_ON = "Enable or disable link training on the working port, default to --on."
+
+HELP_LT_CONFIG_PRESET0 = "Should the preset0 (out-of-sync) use existing tap values or standard values, default to --no-preset0."

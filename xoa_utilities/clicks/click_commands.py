@@ -14,6 +14,8 @@ from ..clis import (
     format_tester_status,
     format_port_status,
     format_ports_status,
+    format_an_status,
+    format_status,
 )
 from ..cmds import CmdContext
 from . import click_help as h
@@ -199,19 +201,21 @@ async def recovery(context: ac.Context, on: bool) -> str:
     return f"Port {storage.retrieve_port_str()} link recovery: {enable}"
 
 
-# # --------------------------
-# # command: status
-# # --------------------------
-# @xoa_utils.command(cls=cb.XenaCommand)
-# async def status() -> str:
-#     """
-#     Show the overview of ANLT status of the port.\n
+# --------------------------
+# command: status
+# --------------------------
+@xoa_utils.command(cls=cb.XenaCommand)
+@ac.pass_context
+async def status(context: ac.Context) -> str:
+    """
+    Show the overview of ANLT status of the port.\n
 
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     status = await anlt_utils.status(port_obj)
-#     port_id = list(status.keys())[list(status.values()).index(port_obj)]
-#     return f"Port {port_id}\nAuto-negotiation        : {status['autoneg_enabled']}\nLink training           : {status['link_training_mode']}\nLink training timeout   : {status['link_training_timeout']}\nLink recovery           : {status['link_recovery']}\n"
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    status_dic = await anlt_utils.status(port_obj)
+    port_id = storage.retrieve_port_str()
+    return format_status(port_id, status_dic)
 
 
 # --------------------------
@@ -240,7 +244,7 @@ def an():
     default=False,
 )
 @ac.pass_context
-async def an_config(context: ac.Context, enable: bool, loopback: bool) -> None:
+async def config(context: ac.Context, enable: bool, loopback: bool) -> str:
     """
     Configure auto-negotiation for the working port.\n
 
@@ -252,92 +256,82 @@ async def an_config(context: ac.Context, enable: bool, loopback: bool) -> None:
     return f"Port {storage.retrieve_port_str()} auto-negotiation:{on} loopback-allowed:{loopback}"
 
 
-# # **************************
-# # Type: Statistics
-# # **************************
-# # **************************
-# # sub-command: an status
-# # **************************
-# @an.command(cls=cb.XenaGroup)
-# async def an_status() -> str:
-#     """
-#     Show the auto-negotiation status.\n
+# **************************
+# Type: Statistics
+# **************************
+# **************************
+# sub-command: an status
+# **************************
+@an.command(cls=cb.XenaGroup)
+@ac.pass_context
+async def an_status(context: ac.Context) -> str:
+    """
+    Show the auto-negotiation status.\n
 
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     status = await anlt_utils.autoneg_status(port_obj)
-#     return status
-#     # TODO: need to beautify the status output
-
-
-# # **************************
-# # sub-command: an log
-# # **************************
-# @an.command(cls=cb.XenaCommand)
-# async def an_log() -> str:
-#     """
-#     Show the auto-negotiation log trace.\n
-
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     log = await anlt_utils.autoneg_log(port_obj)
-#     return log
-#     # TODO: need to beautify the log message output
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    status_dic = await anlt_utils.autoneg_status(port_obj)
+    return format_an_status(status_dic)
+    # TODO: need to beautify the status output
 
 
-# # --------------------------
-# # command: lt
-# # --------------------------
-# @xoa_utils.group(cls=cb.XenaGroup)
-# def lt():
-#     """
-#     To enter link training context.\n
+# **************************
+# sub-command: an log
+# **************************
+@an.command(cls=cb.XenaCommand)
+@ac.pass_context
+async def log(context: ac.Context) -> str:
+    """
+    Show the auto-negotiation log trace.\n
 
-#     """
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    log = await anlt_utils.autoneg_log(port_obj)
+    return log
+    # TODO: need to beautify the log message output
 
 
-# # **************************
-# # Type: Config
-# # **************************
-# # **************************
-# # sub-command: lt config
-# # **************************
-# @lt.command(cls=cb.XenaCommand)
-# @ac.option(
-#     "--on/--off",
-#     is_flag=True,
-#     help="Should link training be enabled on the working port, " "default to --on.\n",
-#     default=True,
-# )
-# @ac.option(
-#     "--mode",
-#     type=ac.STRING,
-#     help="The mode for link training on the working port, "
-#     "allowed values: interactive | auto "
-#     "default to interactive.\n",
-#     default="interactive",
-# )
-# @ac.option(
-#     "--preset0/--no-preset0",
-#     "-p/ ",
-#     is_flag=True,
-#     help="Should the preset0 (out-of-sync) use existing tap values or standard values, "
-#     "default to --no-preset0.\n",
-#     default=False,
-# )
-# @try_wrapper(False)
-# async def lt_config(on: bool, mode: str, preset0: bool) -> None:
-#     """
-#     Configures link training on the working port.\n
+# --------------------------
+# command: lt
+# --------------------------
+@xoa_utils.group(cls=cb.XenaGroup)
+def lt():
+    """
+    To enter link training context.\n
 
-#     """
-#     # port_obj = tp_storage.get_working_port()
-#     # await anlt_utils.lt_config(port_obj, mode, preset0, timeout)
-#     tp_storage.should_do_lt = on
-#     tp_storage.lt_preset0_std = not preset0
-#     tp_storage.lt_interactive = True if mode == "interactive" else False
+    """
 
-#     return None
+
+# **************************
+# Type: Config
+# **************************
+# **************************
+# sub-command: lt config
+# **************************
+@lt.command(cls=cb.XenaCommand)
+@ac.option("--mode", type=ac.STRING, help=h.HELP_LT_CONFIG_MODE, default="interactive")
+@ac.option("--on/--off", is_flag=True, help=h.HELP_LT_CONFIG_ON, default=True)
+@ac.option(
+    "--preset0/--no-preset0",
+    "-p/ ",
+    is_flag=True,
+    help=h.HELP_LT_CONFIG_PRESET0,
+    default=False,
+)
+@ac.pass_context
+async def lt_config(context: ac.Context, mode: str, on: bool, preset0: bool) -> None:
+    """
+    To configure link training on the working port.\n
+
+    """
+    storage: CmdContext = context.obj
+    storage.should_do_lt = on
+    storage.lt_preset0_std = not preset0
+    storage.lt_interactive = True if mode == "interactive" else False
+
+    return None
 
 
 # # **************************
@@ -364,207 +358,217 @@ async def an_config(context: ac.Context, enable: bool, loopback: bool) -> None:
 #         return e.msg
 
 
-# # **************************
-# # Type: Control
-# # **************************
-# # **************************
-# # sub-command: lt inc
-# # **************************
-# @lt.command(cls=cb.XenaCommand)
-# @ac.argument("lane", type=ac.INT)
-# @ac.argument("emphasis", type=ac.STRING)
-# @try_wrapper(False)
-# async def lt_inc(lane: int, emphasis: str) -> str:
-#     """
-#     Tells the remote link training partner to increase its emphasis register value by 1 bit.
+# **************************
+# Type: Control
+# **************************
+# **************************
+# sub-command: lt inc
+# **************************
+@lt.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("emphasis", type=ac.STRING)
+@ac.pass_context
+async def lt_inc(context: ac.Context, lane: int, emphasis: str) -> str:
+    """
+    Tells the remote link training partner to increase its emphasis register value by 1 bit.
 
-#         LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
-#         EMPHASIS TEXT: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post. e.g. pre3\n
+        LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
+        EMPHASIS TEXT: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post. e.g. pre3\n
 
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     try:
-#         validate_choices(emphasis, ["pre3", "pre2", "pre", "main", "post"])
-#         await anlt_utils.lt_coeff_inc(port_obj, lane, emphasis)
-#         return f""
-#     except NotInChoicesError as e:
-#         return e.msg
-
-
-# # **************************
-# # sub-command: lt dec
-# # **************************
-# @lt.command(cls=cb.XenaCommand)
-# @ac.argument("lane", type=ac.INT)
-# @ac.argument("emphasis", type=ac.STRING)
-# @try_wrapper(False)
-# async def lt_dec(lane: int, emphasis: str) -> str:
-#     """
-#     Tells the remote link training partner to decrease its emphasis register value by 1 bit.
-
-#         LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
-#         EMPHASIS TEXT: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post. e.g. pre3\n
-
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     try:
-#         validate_choices(emphasis, ["pre3", "pre2", "pre", "main", "post"])
-#         await anlt_utils.lt_coeff_dec(port_obj, lane, emphasis)
-#         return f""
-#     except NotInChoicesError as e:
-#         return e.msg
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    try:
+        validate_choices(emphasis, ["pre3", "pre2", "pre", "main", "post"])
+        await anlt_utils.lt_coeff_inc(port_obj, lane, emphasis)
+        return f""
+    except NotInChoicesError as e:
+        return e.msg
 
 
-# # **************************
-# # sub-command: lt preset
-# # **************************
-# @lt.command(cls=cb.XenaCommand)
-# @ac.argument("lane", type=ac.INT)
-# @ac.argument("preset", type=ac.INT)
-# @try_wrapper(False)
-# async def lt_preset(lane: int, preset: int) -> str:
-#     """
-#     Ask the remote port to use the preset of the specified lane.
+# **************************
+# sub-command: lt dec
+# **************************
+@lt.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("emphasis", type=ac.STRING)
+@ac.pass_context
+async def lt_dec(context: ac.Context, lane: int, emphasis: str) -> str:
+    """
+    Tells the remote link training partner to decrease its emphasis register value by 1 bit.
 
-#         LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
-#         PRESET INT: Specifies the preset index. Allowed values: 1, 2, 3, 4, 5.\n
+        LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
+        EMPHASIS TEXT: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post. e.g. pre3\n
 
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     if preset in range(1, 5):
-#         await anlt_utils.lt_preset(port_obj, lane, preset)
-#         return f""
-#     else:
-#         return f"Preset {preset} is not in the choices (1, 2, 3, 4, 5)!"
-
-
-# # **************************
-# # sub-command: lt encoding
-# # **************************
-# @lt.command(cls=cb.XenaCommand)
-# @ac.argument("lane", type=ac.INT)
-# @ac.argument("encoding", type=ac.STRING)
-# @try_wrapper(False)
-# async def lt_encoding(lane: int, encoding: str) -> str:
-#     """
-#     Set the port to use the specified encoding in link training of the specified lane.
-
-#         LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
-#         ENCODING TEXT: Specifies the encoding. Allowed values: nrz/pam2, pam4, pam4pre\n
-
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     try:
-#         validate_choices(encoding, ["nrz", "pam2", "pam4", "pam4pre"])
-#         await anlt_utils.lt_encoding(port_obj, lane, encoding)
-#         return f""
-#     except NotInChoicesError as e:
-#         return e.msg
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    validate_choices(emphasis, ["pre3", "pre2", "pre", "main", "post"])
+    await anlt_utils.lt_coeff_dec(port_obj, lane, emphasis)
+    return f""
 
 
-# # **************************
-# # sub-command: lt trained
-# # **************************
-# @lt.command(cls=cb.XenaCommand)
-# @ac.argument("lane", type=ac.INT)
-# async def lt_trained(lane: int) -> str:
-#     """
-#     Announce that the specified lane is trained.
+# **************************
+# sub-command: lt preset
+# **************************
+@lt.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("preset", type=ac.INT)
+@ac.pass_context
+async def lt_preset(context: ac.Context, lane: int, preset: int) -> str:
+    """
+    Ask the remote port to use the preset of the specified lane.
 
-#         LANE INT: The lane index for the announcement.\n
+        LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
+        PRESET INT: Specifies the preset index. Allowed values: 1, 2, 3, 4, 5.\n
 
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     await anlt_utils.lt_trained(port_obj, lane)
-#     return ""
-
-
-# # **************************
-# # sub-command: lt log
-# # **************************
-# @lt.command(cls=cb.XenaCommand)
-# @ac.argument("lane", type=ac.INT)
-# @ac.option(
-#     "--live/--no-live",
-#     "-l/ ",
-#     is_flag=True,
-#     help="Should show the live LT log , " "default to False. " "e.g. lt_log --live",
-#     default=False,
-# )
-# async def lt_log(lane: int, live: bool) -> str:
-#     """
-#     Show the link training trace log for the specified lane.
-
-#         LANE INT: The lane index.\n
-
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     log = await anlt_utils.lt_log(port_obj, lane, live)
-#     return log
-#     # TODO: Needs to be implemented for display
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    validate_choices(preset, range(1, 5))
+    await anlt_utils.lt_preset(port_obj, lane, preset)
 
 
-# # **************************
-# # sub-command: lt status
-# # **************************
-# @lt.command(cls=cb.XenaCommand)
-# @ac.argument("lane", type=ac.INT)
-# async def lt_status(lane: int) -> str:
-#     """
-#     Show the link training status of the specified lane.
+# **************************
+# sub-command: lt encoding
+# **************************
+@lt.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("encoding", type=ac.STRING)
+@ac.pass_context
+async def lt_encoding(context: ac.Context, lane: int, encoding: str) -> str:
+    """
+    Set the port to use the specified encoding in link training of the specified lane.
 
-#         LANE INT: The lane index for the announcement.\n
+        LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
+        ENCODING TEXT: Specifies the encoding. Allowed values: nrz/pam2, pam4, pam4pre\n
 
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     status = await anlt_utils.lt_status(port_obj, lane)
-#     return status
-#     # TODO: Needs to be implemented for display
-
-
-# # **************************
-# # sub-command: txtapget
-# # **************************
-# @lt.command(cls=cb.XenaCommand)
-# @ac.argument("lane", type=ac.INT)
-# async def txtapget(lane: int) -> str:
-#     """
-#     Read the tap values of the specified lane of the local port.
-
-#         LANE INT: The lane index to read tap values from.\n
-
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     dict = await anlt_utils.txtap_get(port_obj, lane)
-#     return dict
-#     # TODO: Needs to be implemented for display
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    validate_choices(encoding, ["nrz", "pam2", "pam4", "pam4pre"])
+    await anlt_utils.lt_encoding(port_obj, lane, encoding)
 
 
-# # **************************
-# # sub-command: txtapset
-# # **************************
-# @lt.command(cls=cb.XenaCommand)
-# @ac.argument("lane", type=ac.INT)
-# @ac.argument("pre3", type=ac.INT)
-# @ac.argument("pre2", type=ac.INT)
-# @ac.argument("pre1", type=ac.INT)
-# @ac.argument("main", type=ac.INT)
-# @ac.argument("post1", type=ac.INT)
-# async def txtapset(
-#     lane: int, pre3: int, pre2: int, pre1: int, main: int, post1: int
-# ) -> str:
-#     """
-#     Write the tap values of the specified lane of the local port.
+# **************************
+# sub-command: lt trained
+# **************************
+@lt.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.pass_context
+async def lt_trained(context: ac.Context, lane: int) -> str:
+    """
+    Announce that the specified lane is trained.
 
-#         LANE INT: The lane index to read tap values from.\n
-#         PRE3 INT: c(-3) value of the tap.\n
-#         PRE2 INT: c(-2) value of the tap.\n
-#         PRE1 INT: c(-1) value of the tap.\n
-#         MAIN INT: c(0) value of the tap.\n
-#         POST1 INT: c(+1) value of the tap.\n
+        LANE INT: The lane index for the announcement.\n
 
-#     """
-#     port_obj = tp_storage.get_working_port()
-#     dict = await anlt_utils.txtap_set(port_obj, lane, pre3, pre2, pre1, main, post1)
-#     return dict
-#     # TODO: Needs to be implemented for display
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    await anlt_utils.lt_trained(port_obj, lane)
+    return ""
+
+
+# **************************
+# sub-command: lt log
+# **************************
+@lt.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.option(
+    "--live/--no-live",
+    "-l/ ",
+    is_flag=True,
+    help="Should show the live LT log , " "default to False. " "e.g. lt_log --live",
+    default=False,
+)
+@ac.pass_context
+async def lt_log(context: ac.Context, lane: int, live: bool) -> str:
+    """
+    Show the link training trace log for the specified lane.
+
+        LANE INT: The lane index.\n
+
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    log = await anlt_utils.lt_log(port_obj, lane, live)
+    return log
+    # TODO: Needs to be implemented for display
+
+
+# **************************
+# sub-command: lt status
+# **************************
+@lt.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.pass_context
+async def lt_status(context: ac.Context, lane: int) -> str:
+    """
+    Show the link training status of the specified lane.
+
+        LANE INT: The lane index for the announcement.\n
+
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    status = await anlt_utils.lt_status(port_obj, lane)
+    return status
+    # TODO: Needs to be implemented for display
+
+
+# **************************
+# sub-command: txtapget
+# **************************
+@lt.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.pass_context
+async def txtapget(context: ac.Context, lane: int) -> str:
+    """
+    Read the tap values of the specified lane of the local port.
+
+        LANE INT: The lane index to read tap values from.\n
+
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    dic = await anlt_utils.txtap_get(port_obj, lane)
+    return dic
+    # TODO: Needs to be implemented for display
+
+
+# **************************
+# sub-command: txtapset
+# **************************
+@lt.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("pre3", type=ac.INT)
+@ac.argument("pre2", type=ac.INT)
+@ac.argument("pre1", type=ac.INT)
+@ac.argument("main", type=ac.INT)
+@ac.argument("post1", type=ac.INT)
+@ac.pass_context
+async def txtapset(
+    context: ac.Context,
+    lane: int,
+    pre3: int,
+    pre2: int,
+    pre1: int,
+    main: int,
+    post1: int,
+) -> str:
+    """
+    Write the tap values of the specified lane of the local port.
+
+        LANE INT: The lane index to read tap values from.\n
+        PRE3 INT: c(-3) value of the tap.\n
+        PRE2 INT: c(-2) value of the tap.\n
+        PRE1 INT: c(-1) value of the tap.\n
+        MAIN INT: c(0) value of the tap.\n
+        POST1 INT: c(+1) value of the tap.\n
+
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    dic = await anlt_utils.txtap_set(port_obj, lane, pre3, pre2, pre1, main, post1)
+    return dic
+    # TODO: Needs to be implemented for display

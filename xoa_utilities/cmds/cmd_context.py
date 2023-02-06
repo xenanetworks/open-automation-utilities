@@ -33,6 +33,10 @@ class CmdContext:
         self.an_allow_loopback = False
         self.should_do_an = False
 
+        self.should_do_lt = False
+        self.lt_preset0_std = False
+        self.lt_interactive = False
+
     def prompt(self, base_prompt: str = "") -> str:
         s = self.retrieve_tester_serial()
         serial = f"[{s}]" if s else ""
@@ -52,7 +56,7 @@ class CmdContext:
         self, username: str, con_info: str, tester: L23Tester
     ) -> None:
         self.tester_con_info = con_info
-        self.tester_serial = tester.info.serial_number
+        self.tester_serial = str(tester.info.serial_number)
         self.tester_username = username
         self.tester = tester
         self.port_str = ""
@@ -86,6 +90,8 @@ class CmdContext:
         self.ports[exact_port_id] = port_obj
 
     def retrieve_port(self, exact_port_id: str = "current") -> GenericL23Port:
+        if self.tester is None:
+            raise NotConnectedError()
         if exact_port_id == "current":
             exact_port_id = self.port_str
         if exact_port_id in self.ports:

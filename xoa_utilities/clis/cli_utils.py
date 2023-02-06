@@ -128,3 +128,28 @@ def format_ports_status(storage: "CmdContext", all: bool) -> str:
         port_dic = storage.retrieve_ports()
     result_str = _port_dic_status(storage.retrieve_port_str(), port_dic)
     return result_str
+
+
+def format_status(port_id: str, status: dict) -> str:
+    return f"""
+Port {port_id}
+Auto-negotiation      : {status['autoneg_enabled']}
+Link training         : {status['link_training_mode']}
+Link training timeout : {status['link_training_timeout']}
+Link recovery         : {status['link_recovery']}"""
+
+
+def format_an_status(dic: dict) -> str:
+    return f"""
+Loopback              : {dic['loopback']}
+Duration              : {dic['duration']} us
+Successful runs       : {dic['successes']}
+Timeouts              : {dic['timeouts']}
+Loss of sync          : {dic['loss_of_sync']}
+FEC negotiation fails : {dic['fec_negotiation_fails']}
+HCD negotiation fails : {dic['hcd_negotiation_fails']}
+                        RX      TX
+Link codewords        : {str(dic['link_codewords']['rx']):6s}{str(dic['link_codewords']['tx']):6s}
+Next-page messages    : {str(dic['next_page_messages']['rx']):6s}{str(dic['next_page_messages']['tx']):6s}
+Unformatted pages     : {str(dic['unformatted_pages']['rx']):6s}{str(dic['unformatted_pages']['tx']):6s}
+    """

@@ -138,6 +138,8 @@ class CmdWorker:
                     success = False
             except ah.TerminalSizeChanged:
                 pass
+            except ah.BreakReceived:
+                self.finish()
             except ac.UsageError as error:
                 response = format_error(error)
                 success = False

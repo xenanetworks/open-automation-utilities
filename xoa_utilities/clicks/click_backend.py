@@ -11,7 +11,7 @@ class XenaGroup(ac.Group):
         e = super().get_help(ctx)
         e = e.replace("entry.py", "")
         storage: CmdContext = ctx.obj
-        storage.set_error(f"{e}")
+        storage.set_error(f"{e}\n")
         return e
 
 
@@ -20,5 +20,5 @@ class XenaCommand(ac.Command):
         e = super().get_help(ctx)
         e = e.replace("entry.py", "")
         storage: CmdContext = ctx.obj
-        storage.set_error(f"{e}")
+        storage.set_error(f"{e}\n")
         return e
