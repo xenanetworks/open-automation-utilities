@@ -1,5 +1,5 @@
-Resource Management
-===================
+Management
+==========
 
 .. toctree::
     :maxdepth: 1
@@ -14,11 +14,3 @@ Resource Management
 
     port
     ports
-
-.. toctree::
-    :maxdepth: 1
-    :caption: Port ANLT Commands
-    
-    status
-    recovery
-    do_anlt

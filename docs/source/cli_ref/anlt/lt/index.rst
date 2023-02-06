@@ -1,4 +1,4 @@
-Link Training Commands
+LT Commands
 ======================
 
 .. toctree::

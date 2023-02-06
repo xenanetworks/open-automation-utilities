@@ -1,10 +1,10 @@
-lt log show
-============
+debug lt_status
+======================
 
 Description
 -----------
 
-To show the link training trace log for the specified lane.
+Debug lt_status
 
 
 
@@ -12,8 +12,8 @@ Synopsis
 --------
 
 .. code-block:: console
-    
-    lt log show <LANE>
+
+    debug lt_status <LANE>
 
 
 Arguments
@@ -21,8 +21,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-Specifies the lane index.
-
+Specifies the transceiver lane index.
 
 
 Options
@@ -35,9 +34,9 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2]$ lt log show 0
+    xoa_util[port0/2]$ debug lt_status 0
 
-
+    xoa_util[port0/2]$
 
 
 

@@ -5,6 +5,5 @@ Command Reference
     :maxdepth: 2
 
     mgmt/index
-    auto_negotiation/index
-    link_training/index
+    anlt/index
     
