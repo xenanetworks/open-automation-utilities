@@ -111,7 +111,7 @@ If you run LT (interactive), you will need to manually control the LT parameters
 Check AN Status
 ---------------
 
-Check AN statistics by :doc:`../cli_ref/anlt/an/an_status` and logging by :doc:`../cli_ref/anlt/an/an_log`.
+Check AN statistics by :doc:`../cli_ref/anlt/an/an_status` and logging by :doc:`../cli_ref/anlt/an/an_log_show`, :doc:`../cli_ref/anlt/an/an_log_start`, and :doc:`../cli_ref/anlt/an/an_log_stop`.
 
 
 Check LT Status

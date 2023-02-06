@@ -1,5 +1,5 @@
-an log
-======
+an log show
+===========
 
 Description
 -----------
@@ -13,7 +13,7 @@ Synopsis
 
 .. code-block:: console
     
-    an log
+    an log show
 
 
 Arguments
@@ -30,7 +30,7 @@ Examples
 .. code-block:: console
     :caption: Show autoneg log
 
-    xoa_util[port0/2]$ an log
+    xoa_util[port0/2]$ an log show
 
 
 
