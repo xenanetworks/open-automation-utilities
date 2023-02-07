@@ -4,7 +4,7 @@ lt txtapset
 Description
 -----------
 
-Read the tap values of the specified lane of the local port.
+Write the tap values of the specified lane of the local port.
 
 
 

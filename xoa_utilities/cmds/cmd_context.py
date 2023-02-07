@@ -2,9 +2,14 @@ from __future__ import annotations
 import typing as t
 from xoa_driver.testers import L23Tester
 from xoa_driver.ports import GenericL23Port
-from ..exceptions import NotInStoreError, NotConnectedError, NoSuchIDError
-from xoa_driver.hlfuncs import anlt as anlt_utils
+from ..exceptions import (
+    NotInStoreError,
+    NotConnectedError,
+    NoSuchIDError,
+    NoWorkingPort,
+)
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
+from xoa_driver.enums import LinkTrainEncoding
 from functools import partialmethod
 
 
@@ -36,6 +41,7 @@ class CmdContext:
         self.should_do_lt = False
         self.lt_preset0_std = False
         self.lt_interactive = False
+        self.lt_initial_mod = {}
 
     def prompt(self, base_prompt: str = "") -> str:
         s = self.retrieve_tester_serial()
@@ -46,6 +52,27 @@ class CmdContext:
 
     # def store_functionality(self, functionality: str) -> None:
     #     self.functionality = functionality
+
+    def store_lt_initial_mod(self, lane: int, encoding: str) -> None:
+        # e = LinkTrainEncoding[
+        #     {"pam4pre": "PAM4_WITH_PRECODING"}.get(encoding, encoding).upper()
+        # ]
+        self.lt_initial_mod[lane] = encoding
+
+    def store_an_allow_loopback(self, do: bool) -> None:
+        self.an_allow_loopback = do
+
+    def store_should_do_an(self, do: bool) -> None:
+        self.should_do_an = do
+
+    def store_should_do_lt(self, do: bool) -> None:
+        self.should_do_lt = do
+
+    def store_lt_interactive(self, do: bool) -> None:
+        self.lt_interactive = do
+
+    def store_lt_preset0_std(self, do: bool) -> None:
+        self.lt_preset0_std = do
 
     def store_current_port_str(self, current_port_str: str) -> None:
         if current_port_str not in self.ports:
@@ -67,6 +94,19 @@ class CmdContext:
 
     # def retrieve_functionality(self) -> str:
     #     return self.functionality
+    def retrieve_lt_initial_mod(self, lane: int) -> str:
+        if lane not in self.lt_initial_mod:
+            raise NotInStoreError(lane)
+        return self.lt_initial_mod[lane]
+
+    def retrieve_lt_interactive(self) -> None:
+        return self.lt_interactive
+
+    def retrieve_should_do_lt(self) -> bool:
+        return self.should_do_lt
+
+    def retrieve_lt_preset0_std(self) -> bool:
+        return self.lt_preset0_std
 
     def retrieve_ports(self) -> dict[str, GenericL23Port]:
         return self.ports
@@ -93,6 +133,8 @@ class CmdContext:
         if self.tester is None:
             raise NotConnectedError()
         if exact_port_id == "current":
+            if not self.port_str:
+                raise NoWorkingPort()
             exact_port_id = self.port_str
         if exact_port_id in self.ports:
             return self.ports[exact_port_id]
@@ -126,10 +168,14 @@ class CmdContext:
                 m_id, p_id = splitted
             else:
                 raise NoSuchIDError(id_str)
-
+        try:
+            m_id = int(m_id)
+            p_id = int(p_id)
+        except ValueError:
+            raise NoSuchIDError(id_str)
         p_dics = {
             f"{i.kind.module_id}/{i.kind.port_id}": i
-            for i in mgmt_utils.get_ports(self.tester, int(m_id), int(p_id))
+            for i in mgmt_utils.get_ports(self.tester, m_id, p_id)
         }
         if update:
             self.ports.update(p_dics)

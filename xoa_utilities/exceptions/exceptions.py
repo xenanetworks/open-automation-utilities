@@ -29,7 +29,7 @@ class NoSuchModuleError(ConfigError):
 
 
 class NoSuchIDError(ConfigError):
-    def __init__(self, general_id: int) -> None:
+    def __init__(self, general_id: str) -> None:
         self.name = "No Such ID Error"
         self.msg = f"No such ID {general_id}!"
 
@@ -46,6 +46,10 @@ class NoSuchPortError(ConfigError):
         self.msg = f"No such port {port_id}!"
 
 
+class NoWorkingPort(ConfigError):
+    def __init__(self) -> None:
+        self.name = "No Working Port Error"
+        self.msg = f"There is no working port, please use 'port' command to specify one!"
 
 
 class NotSupportPcsPmaError(ConfigError):
@@ -81,10 +85,10 @@ class NotRightLaneValueError(ConfigError):
         self.msg = f"Lane {lane} should be a list of 4 integers ranges from 0 to 255!"
 
 
-class NotInChoicesError(ConfigError):
-    def __init__(self, string: str, choices: list[str]) -> None:
-        self.name = "Not In Choices Error"
-        self.msg = f"{string} is not in the choices {choices}!"
+# class NotInChoicesError(ConfigError):
+#     def __init__(self, string: str, choices: list[str]) -> None:
+#         self.name = "Not In Choices Error"
+#         self.msg = f"{string} is not in the choices {choices}!"
 
 
 class CannotConvertError(ConfigError):

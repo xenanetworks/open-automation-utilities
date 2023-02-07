@@ -30,7 +30,7 @@ Specifies the initial modulation.
 
 Allowed values:
 
-* `nrz` or `pam2`
+* `nrz_pam2`
 
 * `pam4`
 
@@ -47,15 +47,8 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2]$ lt im 0 nrz
-    Port 0/2: initial modulation NRZ/PAM2 on Lane 0
-
-    xoa_util[port0/2]$
-
-.. code-block:: console
-
-    xoa_util[port0/2]$ lt im 0 pam2
-    Port 0/2: initial modulation NRZ/PAM2 on Lane 0
+    xoa_util[port0/2]$ lt im 0 nrz_pam2
+    Port 0/2: initial modulation NRZ_PAM2 on Lane 0
 
     xoa_util[port0/2]$
 

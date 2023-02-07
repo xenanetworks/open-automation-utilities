@@ -5,8 +5,9 @@ import typing as t
 import asyncclick as ac
 import json
 from functools import wraps
-from ..exceptions import ConfigError, NotInChoicesError
+from ..exceptions import ConfigError
 from xoa_driver.exceptions import BadStatus
+from xoa_driver import enums
 
 if t.TYPE_CHECKING:
     from xoa_driver.ports import GenericL23Port
@@ -74,9 +75,9 @@ def format_error(error: ac.UsageError) -> str:
     return result
 
 
-def validate_choices(input_str: str, choices: list[str]) -> None:
-    if input_str not in choices:
-        raise NotInChoicesError(input_str, choices)
+# def validate_choices(input_str: t.Any, choices: list[t.Any]) -> None:
+#     if input_str not in choices:
+#         raise NotInChoicesError(input_str, choices)
 
 
 def _port_dic_status(current_id: str, port_dic: dict[str, GenericL23Port]) -> str:
@@ -85,7 +86,7 @@ def _port_dic_status(current_id: str, port_dic: dict[str, GenericL23Port]) -> st
         new_name = f"*{name}" if current_id == name else name
         owner = "You" if port.is_reserved_by_me() else "Others"
         sync_status = str(port.info.sync_status.name)
-        string += f"{new_name:10s}{sync_status:10s}{owner:10s}\n"
+        string += f"{new_name:10}{sync_status:10}{owner:10}\n"
 
     return string
 
@@ -130,7 +131,7 @@ def format_ports_status(storage: "CmdContext", all: bool) -> str:
     return result_str
 
 
-def format_status(port_id: str, status: dict) -> str:
+def format_port_status(port_id: str, status: dict) -> str:
     return f"""
 Port {port_id}
 Auto-negotiation      : {status['autoneg_enabled']}
@@ -149,8 +150,112 @@ Timeouts              : {dic['timeouts']}
 Loss of sync          : {dic['loss_of_sync']}
 FEC negotiation fails : {dic['fec_negotiation_fails']}
 HCD negotiation fails : {dic['hcd_negotiation_fails']}
-                        RX      TX
-Link codewords        : {str(dic['link_codewords']['rx']):6s}{str(dic['link_codewords']['tx']):6s}
-Next-page messages    : {str(dic['next_page_messages']['rx']):6s}{str(dic['next_page_messages']['tx']):6s}
-Unformatted pages     : {str(dic['unformatted_pages']['rx']):6s}{str(dic['unformatted_pages']['tx']):6s}
+                              RX      TX
+Link codewords        : {dic['link_codewords']['rx']:6}{dic['link_codewords']['tx']:6}
+Next-page messages    : {dic['next_page_messages']['rx']:6}{dic['next_page_messages']['tx']:6}
+Unformatted pages     : {dic['unformatted_pages']['rx']:6}{dic['unformatted_pages']['tx']:6}
     """
+
+
+def format_lt_config(storage: CmdContext) -> str:
+    return f"""
+Port {storage.retrieve_port_str()}
+Link training : {'on' if storage.retrieve_should_do_lt() else 'off'}
+Mode          : {'interactive' if storage.retrieve_lt_interactive() else 'auto'}
+Preset0       : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values 
+"""
+
+
+def format_lt_im(storage: CmdContext, lane: int) -> str:
+    return f"Port {storage.retrieve_port_str()}: initial modulation \
+           {enums.LinkTrainEncoding[storage.retrieve_lt_initial_mod(lane).upper()].name} \
+           on Lane {lane}\n"
+
+
+def format_an_config(storage: CmdContext, on: bool, loopback: bool) -> str:
+    om = "on" if on else "off"
+    lo = "allowed" if loopback else "not allowed"
+    return f"Port {storage.retrieve_port_str()} auto-negotiation:{om}, loopback:{lo}\n"
+
+
+def format_recovery(storage: CmdContext, on: bool) -> str:
+    enable = "on" if on else "off"
+    return f"Port {storage.retrieve_port_str()} link recovery: {enable}\n"
+
+
+def format_lt_inc_dec(
+    storage: CmdContext, lane: int, emphasis: str, increase: bool
+) -> str:
+    change = {
+        "pre3": "c(-3)",
+        "pre2": "c(-2)",
+        "pre": "c(-1)",
+        "main": "c(0)",
+        "post": "c(1)",
+    }[emphasis]
+    action = "increase" if increase else "decrease"
+    return (
+        f"Port {storage.retrieve_port_str()}: {action} {change} by 1 on Lane {lane}\n"
+    )
+
+
+def format_lt_encoding(storage: CmdContext, lane: int, encoding: str) -> str:
+    return f"Port {storage.retrieve_port_str()}: use \
+            {enums.LinkTrainEncoding[encoding.upper()].name} \
+            on Lane {lane}\n"
+
+
+def format_lt_preset(storage: CmdContext, lane: int, preset: int) -> str:
+    return f"Port {storage.retrieve_port_str()}: use preset {preset} on Lane {lane}.\n"
+
+
+def format_lt_trained(storage: CmdContext, lane: int) -> str:
+    return f"Port {storage.retrieve_port_str()} requests: Lane {lane} is trained.\n"
+
+
+def format_txtap_get(lane: int, dic: dict) -> str:
+    return f"""
+Local Coefficient Lane({lane})   :           c(-3)       c(-2)       c(-1)       c(0)       c(+1)
+    Current level           :              {dic['c(-3)']}           {dic['c(-2)']}           {dic['c(-1)']}           {dic['c(0)']}           {dic['c(+1)']}
+"""
+
+
+def format_txtap_set(
+    lane: int, pre3: int, pre2: int, pre1: int, main: int, post: int
+) -> str:
+    return format_txtap_get(
+        lane, {"c(-3)": pre3, "c(-2)": pre2, "c(-1)": pre1, "c(0)": main, "c(1)": post}
+    )
+
+
+def format_lt_status(dic: dict) -> str:
+    return f"""
+Is Enabled        : {str(dic['is_enabled']).lower()}
+Is Trained        : {str(dic['is_trained']).lower()}
+Failure           : {dic['failure']}
+
+Initial mode      : {dic['init_modulation']}
+Preset0           : {dic['preset0']}
+PRBS BER          : {dic['ber']}
+
+Duration          : {dic['duration']}
+
+Lock lost         : {dic['lock_lost']}
+Frame lock        : {dic['frame_lock']}
+Remote frame lock : {dic['remote_frame_lock']}
+
+Frame errors      : {dic['frame_errors']}
+Overrun errors    : {dic['overrun_errors']}
+
+Last IC received  : {dic['last_ic_received']}
+Last IC sent      : {dic['last_ic_sent']}
+TX Coefficient              :           c(-3)       c(-2)       c(-1)       c(0)       c(+1)
+    Current level           :{dic['c(-3)']['current_level']:17}{dic['c(-2)']['current_level']:12}{dic['c(-1)']['current_level']:12}{dic['c(0)']['current_level']:12}{dic['c(+1)']['current_level']:12}
+                            :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
+    + req                   :{dic['c(-3)']['+req']['rx']:11}{dic['c(-3)']['+req']['tx']:4}{dic['c(-2)']['+req']['rx']:8}{dic['c(-2)']['+req']['tx']:4}{dic['c(-1)']['+req']['rx']:8}{dic['c(-1)']['+req']['tx']:4}{dic['c(0)']['+req']['rx']:8}{dic['c(0)']['+req']['tx']:4}{dic['c(1)']['+req']['rx']:8}{dic['c(1)']['+req']['tx']:4}
+    - req                   :{dic['c(-3)']['-req']['rx']:11}{dic['c(-3)']['-req']['tx']:4}{dic['c(-2)']['-req']['rx']:8}{dic['c(-2)']['-req']['tx']:4}{dic['c(-1)']['-req']['rx']:8}{dic['c(-1)']['-req']['tx']:4}{dic['c(0)']['-req']['rx']:8}{dic['c(0)']['-req']['tx']:4}{dic['c(1)']['-req']['rx']:8}{dic['c(1)']['-req']['tx']:4}
+    coeff/eq limit reached  :{dic['c(-3)']['coeff_and_eq_limit_reached']['rx']:11}{dic['c(-3)']['coeff_and_eq_limit_reached']['tx']:4}{dic['c(-2)']['coeff_and_eq_limit_reached']['rx']:8}{dic['c(-2)']['coeff_and_eq_limit_reached']['tx']:4}{dic['c(-1)']['coeff_and_eq_limit_reached']['rx']:8}{dic['c(-1)']['coeff_and_eq_limit_reached']['tx']:4}{dic['c(0)']['coeff_and_eq_limit_reached']['rx']:8}{dic['c(0)']['coeff_and_eq_limit_reached']['tx']:4}{dic['c(1)']['coeff_and_eq_limit_reached']['rx']:8}{dic['c(1)']['coeff_and_eq_limit_reached']['tx']:4}
+    eq limit reached        :{dic['c(-3)']['eq_limit_reached']['rx']:11}{dic['c(-3)']['eq_limit_reached']['tx']:4}{dic['c(-2)']['eq_limit_reached']['rx']:8}{dic['c(-2)']['eq_limit_reached']['tx']:4}{dic['c(-1)']['eq_limit_reached']['rx']:8}{dic['c(-1)']['eq_limit_reached']['tx']:4}{dic['c(0)']['eq_limit_reached']['rx']:8}{dic['c(0)']['eq_limit_reached']['tx']:4}{dic['c(1)']['eq_limit_reached']['rx']:8}{dic['c(1)']['eq_limit_reached']['tx']:4}
+    coeff not supported     :{dic['c(-3)']['coeff_not_supported']['rx']:11}{dic['c(-3)']['coeff_not_supported']['tx']:4}{dic['c(-2)']['coeff_not_supported']['rx']:8}{dic['c(-2)']['coeff_not_supported']['tx']:4}{dic['c(-1)']['coeff_not_supported']['rx']:8}{dic['c(-1)']['coeff_not_supported']['tx']:4}{dic['c(0)']['coeff_not_supported']['rx']:8}{dic['c(0)']['coeff_not_supported']['tx']:4}{dic['c(1)']['coeff_not_supported']['rx']:8}{dic['c(1)']['coeff_not_supported']['tx']:4}
+    coeff at limit          :{dic['c(-3)']['coeff_at_limit']['rx']:11}{dic['c(-3)']['coeff_at_limit']['tx']:4}{dic['c(-2)']['coeff_at_limit']['rx']:8}{dic['c(-2)']['coeff_at_limit']['tx']:4}{dic['c(-1)']['coeff_at_limit']['rx']:8}{dic['c(-1)']['coeff_at_limit']['tx']:4}{dic['c(0)']['coeff_at_limit']['rx']:8}{dic['c(0)']['coeff_at_limit']['tx']:4}{dic['c(1)']['coeff_at_limit']['rx']:8}{dic['c(1)']['coeff_at_limit']['tx']:4}
+"""

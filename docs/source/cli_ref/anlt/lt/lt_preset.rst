@@ -28,7 +28,7 @@ Specifies the transceiver lane index.
     
 Specifies the preset index. 
 
-Allowed values: `1, 2, 3, 4, 5`
+Allowed values: `0, 1, 2, 3, 4`
 
 
 Options

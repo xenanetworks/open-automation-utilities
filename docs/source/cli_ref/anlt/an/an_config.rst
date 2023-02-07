@@ -41,7 +41,7 @@ Examples
     :caption: Autoneg should be enabled and allow loopback
 
     xoa_util[port0/2]$ an config --on --loopback
-    Port 0/2 auto-negotiation enabled loopback-allowed
+    Port 0/2 auto-negotiation\: on, loopback\: allowed
 
     xoa_util[port0/2]$
     
@@ -49,7 +49,7 @@ Examples
     :caption: Autoneg should be disabled
 
     xoa_util[port0/2]$ an config --off
-    Port 0/2 auto-negotiation disabled no-loopback-allowed
+    Port 0/2 auto-negotiation\: on, loopback\: not allowed
 
     xoa_util[port0/2]$
 

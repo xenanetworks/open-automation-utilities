@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 class XenaGroup(ac.Group):
     def get_help(self, ctx: ac.Context) -> str:
         e = super().get_help(ctx)
-        e = e.replace("entry.py", "")
+        e = e.replace("python -m entry ", "")
         storage: CmdContext = ctx.obj
         storage.set_error(f"{e}\n")
         return e
@@ -18,7 +18,7 @@ class XenaGroup(ac.Group):
 class XenaCommand(ac.Command):
     def get_help(self, ctx: ac.Context) -> str:
         e = super().get_help(ctx)
-        e = e.replace("entry.py", "")
+        e = e.replace("python -m entry ", "")
         storage: CmdContext = ctx.obj
         storage.set_error(f"{e}\n")
         return e
