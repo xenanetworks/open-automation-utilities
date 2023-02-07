@@ -14,6 +14,4 @@ AN Commands
     :caption: Statistics & Logging Commands
 
     an_status
-    an_log_show
-    an_log_start
-    an_log_stop
+    an_log

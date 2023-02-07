@@ -1,10 +1,10 @@
-lt log show
-============
+lt log
+======
 
 Description
 -----------
 
-To show the link training trace log for the specified lane.
+To start writing the link training trace log for the specified lane into a file, and display on the screen.
 
 
 
@@ -13,7 +13,7 @@ Synopsis
 
 .. code-block:: console
     
-    lt log show <LANE>
+    lt log <LANE> <FILENAME>
 
 
 Arguments
@@ -23,6 +23,10 @@ Arguments
 
 Specifies the lane index.
 
+
+``<FILENAME>`` (text)
+
+Filename of the log.
 
 
 Options
@@ -35,7 +39,7 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2]$ lt log show 0
+    xoa_util[port0/2]$ lt log 0 "log0.txt"
 
     | timestamp                |   MODULE |  TYPE |                    TX           |              RX                       |                                       |
     |--------------------------+----------+-------+---------------------------------+---------------------------------------+---------------------------------------|
@@ -81,6 +85,13 @@ Examples
     | 20230131-134060.100000   |     LT   | FSM   |                                 |                                       | STATE CHANGE: (EVENT_RESET_DEASSERT)  |
     |                          |          |       |                                 |                                       |    IDLE->INITIALIZE                   |
     |--------------------------+----------+-------+---------------------------------+---------------------------------------+---------------------------------------|
+
+
+
+
+
+
+
 
 
 
