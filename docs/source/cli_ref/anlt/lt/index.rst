@@ -27,6 +27,4 @@ LT Commands
     :caption: Statistics & Logging Commands
 
     lt_status
-    lt_log_show
-    lt_log_start
-    lt_log_stop
+    lt_log
