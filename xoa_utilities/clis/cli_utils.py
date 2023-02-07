@@ -150,7 +150,7 @@ Timeouts              : {dic['timeouts']}
 Loss of sync          : {dic['loss_of_sync']}
 FEC negotiation fails : {dic['fec_negotiation_fails']}
 HCD negotiation fails : {dic['hcd_negotiation_fails']}
-                              RX      TX
+                             RX    TX
 Link codewords        : {dic['link_codewords']['rx']:6}{dic['link_codewords']['tx']:6}
 Next-page messages    : {dic['next_page_messages']['rx']:6}{dic['next_page_messages']['tx']:6}
 Unformatted pages     : {dic['unformatted_pages']['rx']:6}{dic['unformatted_pages']['tx']:6}
@@ -167,9 +167,7 @@ Preset0       : {'standard tap' if storage.retrieve_lt_preset0_std() else 'exist
 
 
 def format_lt_im(storage: CmdContext, lane: int) -> str:
-    return f"Port {storage.retrieve_port_str()}: initial modulation \
-           {enums.LinkTrainEncoding[storage.retrieve_lt_initial_mod(lane).upper()].name} \
-           on Lane {lane}\n"
+    return f"Port {storage.retrieve_port_str()}: initial modulation {enums.LinkTrainEncoding[storage.retrieve_lt_initial_mod(lane).upper()].name} on Lane {lane}\n"
 
 
 def format_an_config(storage: CmdContext, on: bool, loopback: bool) -> str:

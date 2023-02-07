@@ -9,6 +9,7 @@ from ..clis import ReadConfig, run_coroutine_as_sync, format_error
 import asyncssh as ah
 import asyncclick as ac
 import os
+import asyncio
 from .cmd_context import CmdContext
 
 if t.TYPE_CHECKING:
@@ -120,35 +121,48 @@ class CmdWorker:
         if self.hub_enable and self.hub_manager:
             self.hub_msg_list.append((os.getpid(), request, response, success))  # type: ignore
 
-    def make_prompt(self) -> str:
-        return self.context.prompt(self.base_prompt)
+    def make_prompt(self, end_prompt: str = ">") -> str:
+        return self.context.prompt(self.base_prompt, end_prompt)
+
+    async def run_interactive_loop(self) -> None:
+        response = None
+        success = False
+        try:
+            request = (await self.process.stdin.readline()).strip()
+            response = await self.dispatch(request)
+            success = True
+            if isinstance(response, int):
+                response = self.context.get_error()
+                success = False
+        except ah.TerminalSizeChanged:
+            pass
+        except ah.BreakReceived:
+            self.finish()
+        except ac.UsageError as error:
+            response = format_error(error)
+            success = False
+        except Exception as e:
+            response = f"{type(e).__name__}: {e}\n"
+            success = False
+        if response is not None:
+            self.write(f"{response}\n{self.make_prompt()}")
+            self.put_hub_record(request, response, success)
+
+    async def run_coroutine_loop(self) -> None:
+        coro = self.context.get_loop_coro()
+        result = await coro()
+        self.write(f"{result}\n{self.make_prompt('!')}")
+        await asyncio.sleep(self.context.get_coro_interval())
 
     async def run(self) -> None:
         self.connect_hub()
         self.write(f"\n{self.make_prompt()}")
         while not self.process.stdin.at_eof():
-            response = None
-            success = False
-            try:
-                request = (await self.process.stdin.readline()).strip()
-                response = await self.dispatch(request)
-                success = True
-                if isinstance(response, int):
-                    response = self.context.get_error()
-                    success = False
-            except ah.TerminalSizeChanged:
-                pass
-            except ah.BreakReceived:
-                self.finish()
-            except ac.UsageError as error:
-                response = format_error(error)
-                success = False
-            except Exception as e:
-                response = f"{type(e).__name__}: {e}\n"
-                success = False
-            if response is not None:
-                self.write(f"{response}\n{self.make_prompt()}")
-                self.put_hub_record(request, response, success)
+            if self.context.get_loop_coro() is None:
+                await self.run_interactive_loop()
+            else:
+                await self.run_coroutine_loop()
+
 
     def connect_hub(self) -> None:
         config = ReadConfig()
