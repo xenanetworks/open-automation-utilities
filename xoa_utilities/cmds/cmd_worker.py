@@ -125,10 +125,10 @@ class CmdWorker:
         return self.context.prompt(self.base_prompt, end_prompt)
 
     async def run_interactive_loop(self) -> None:
+        request = (await self.process.stdin.readline()).strip()
         response = None
         success = False
         try:
-            request = (await self.process.stdin.readline()).strip()
             response = await self.dispatch(request)
             success = True
             if isinstance(response, int):
@@ -150,9 +150,10 @@ class CmdWorker:
 
     async def run_coroutine_loop(self) -> None:
         coro = self.context.get_loop_coro()
-        result = await coro()
-        self.write(f"{result}\n{self.make_prompt('!')}")
-        await asyncio.sleep(self.context.get_coro_interval())
+        if coro is not None:
+            result = await coro
+            self.write(f"{result}\n{self.make_prompt('!')}")
+            await asyncio.sleep(self.context.get_coro_interval())
 
     async def run(self) -> None:
         self.connect_hub()

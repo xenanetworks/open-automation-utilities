@@ -1,7 +1,7 @@
 from __future__ import annotations
 import typing as t
 from xoa_driver.testers import L23Tester
-from xoa_driver.ports import GenericL23Port
+from xoa_driver.ports import GenericL23Port, GenericAnyPort
 from ..exceptions import (
     NotInStoreError,
     NotConnectedError,
@@ -48,12 +48,12 @@ class LTState:
         self.do: bool = False
         self.preset0_std: bool = False
         self.interactive: bool = False
-        self.initial_mod: bool = {}
+        self.initial_mod: dict[int, str] = {}
 
 
 class LoopFuncState:
     def __init__(self) -> None:
-        self.func: t.Optional[t.Callable] = None
+        self.func: t.Optional[t.Coroutine] = None
         self.interval: int = 1
 
 
@@ -69,13 +69,13 @@ class CmdContext:
     def get_coro_interval(self) -> int:
         return self.fn_state.interval
 
-    def get_loop_coro(self) -> t.Optional[t.Callable]:
+    def get_loop_coro(self) -> t.Optional[t.Coroutine]:
         return self.fn_state.func
 
-    def set_loop_coro(self, coro: t.Coroutine) -> None:
+    def set_loop_coro(self, coro: t.Optional[t.Coroutine]) -> None:
         self.fn_state.func = coro
 
-    def prompt(self, base_prompt: str = "", end_prompt:str = '>') -> str:
+    def prompt(self, base_prompt: str = "", end_prompt: str = ">") -> str:
         s = self.retrieve_tester_serial()
         serial = f"[{s}]" if s else ""
         p = self.retrieve_port_str()
@@ -128,10 +128,10 @@ class CmdContext:
     #     return self.functionality
     def retrieve_lt_initial_mod(self, lane: int) -> str:
         if lane not in self.lt_state.initial_mod:
-            raise NotInStoreError(lane)
+            raise NotInStoreError(str(lane))
         return self.lt_state.initial_mod[lane]
 
-    def retrieve_lt_interactive(self) -> None:
+    def retrieve_lt_interactive(self) -> bool:
         return self.lt_state.interactive
 
     def retrieve_should_do_lt(self) -> bool:
@@ -205,10 +205,11 @@ class CmdContext:
             p_id = int(p_id)
         except ValueError:
             raise NoSuchIDError(id_str)
-        p_dics = {
-            f"{i.kind.module_id}/{i.kind.port_id}": i
-            for i in mgmt_utils.get_ports(self.retrieve_tester(), m_id, p_id)
-        }
-        if update:
-            self.pt_state.ports.update(p_dics)
+        tester = self.retrieve_tester()
+        p_dics = {}
+        if tester is not None:
+            for i in mgmt_utils.get_ports(tester, m_id, p_id):
+                p_dics[f"{i.kind.module_id}/{i.kind.port_id}"] = i
+            if update:
+                self.pt_state.ports.update(p_dics)
         return p_dics

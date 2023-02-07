@@ -18,6 +18,7 @@ from .group import xoa_utils
 from .. import click_help as h
 from ...cmds import CmdContext
 
+
 # --------------------------
 # command: lt
 # --------------------------
@@ -47,7 +48,7 @@ def lt():
     "--preset0/--no-preset0", type=ac.BOOL, help=h.HELP_LT_CONFIG_PRESET0, default=False
 )
 @ac.pass_context
-async def lt_config(context: ac.Context, mode: str, on: bool, preset0: bool) -> None:
+async def lt_config(context: ac.Context, mode: str, on: bool, preset0: bool) -> str:
     """
     To configure link training on the working port.\n
 
@@ -220,7 +221,7 @@ async def lt_txtapget(context: ac.Context, lane: int) -> str:
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
     dic = await anlt_utils.txtap_get(port_obj, lane)
-    return format_txtap_get(dic)
+    return format_txtap_get(lane, dic)
 
 
 # **************************
@@ -281,6 +282,6 @@ async def lt_log(context: ac.Context, lane: int, live: bool) -> str:
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    log = await anlt_utils.lt_log(port_obj, lane, live)
+    log = await anlt_utils.lt_log(port_obj, lane)
     return log
     # TODO: Needs to be implemented for display

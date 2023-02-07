@@ -75,11 +75,6 @@ def format_error(error: ac.UsageError) -> str:
     return result
 
 
-# def validate_choices(input_str: t.Any, choices: list[t.Any]) -> None:
-#     if input_str not in choices:
-#         raise NotInChoicesError(input_str, choices)
-
-
 def _port_dic_status(current_id: str, port_dic: dict[str, GenericL23Port]) -> str:
     string = f"Port      Sync      Owner     \n"
     for name, port in port_dic.items():
@@ -101,25 +96,6 @@ def format_tester_status(storage: "CmdContext") -> str:
         storage.retrieve_port_str(), storage.retrieve_ports()
     )
     return result_str
-
-
-# def format_port_status(storage: "CmdContext") -> str:
-#     result_str = _port_dic_status(storage.retrieve_port_str(), storage.retrieve_ports())
-
-#     port_obj = storage.retrieve_port()
-#     an_status = "on"
-#     lt_status = "interactive"
-#     lt_timeout = "default"
-#     lt_recovery = "on"
-#     result_str += f"""
-# Port {storage.retrieve_port_str()}
-# Auto-negotiation        : {an_status}
-# Link training           : {lt_status}
-# Link training timeout   : {lt_timeout}
-# Link recovery           : {lt_recovery}
-# """
-
-#     return result_str
 
 
 def format_ports_status(storage: "CmdContext", all: bool) -> str:
