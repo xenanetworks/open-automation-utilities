@@ -11,7 +11,6 @@ AN Commands
 
 .. toctree::
     :maxdepth: 1
-    :caption: Statistics & Logging Commands
+    :caption: Statistics Commands
 
     an_status
-    an_log

@@ -42,7 +42,7 @@ Then, reserve a port on the tester using the command :doc:`../cli_ref/mgmt/port`
 Disable Link Recovery
 ---------------------
 
-Before doing ANLT testing, remember to disable link recovery on the port using command :doc:`../cli_ref/anlt/an_lt/recovery`. 
+Before doing ANLT testing, remember to disable link recovery on the port using command :doc:`../cli_ref/anlt/an_lt/anlt_recovery`. 
 
 This is because the port always tries to re-do ANLT command sequence every five seconds if it detects no sync on the port. 
 
@@ -74,7 +74,7 @@ These three commands only configure the ANLT test scenario instead of starting a
 Start ANLT
 ----------
 
-After configuring the ANLT scenario on the port, you should execute :doc:`../cli_ref/anlt/an_lt/do_anlt` to let XOA Utilities application send low-level commands to the tester to start the ANLT procedure, either AN-only, or AN + LT, or LT (auto), or LT (interactive).
+After configuring the ANLT scenario on the port, you should execute :doc:`../cli_ref/anlt/an_lt/anlt_do` to let XOA Utilities application send low-level commands to the tester to start the ANLT procedure, either AN-only, or AN + LT, or LT (auto), or LT (interactive).
 
 .. code-block:: console
 
@@ -111,13 +111,18 @@ If you run LT (interactive), you will need to manually control the LT parameters
 Check AN Status
 ---------------
 
-Check AN statistics by :doc:`../cli_ref/anlt/an/an_status` and logging by :doc:`../cli_ref/anlt/an/an_log_show`, :doc:`../cli_ref/anlt/an/an_log_start`, and :doc:`../cli_ref/anlt/an/an_log_stop`.
-
+Check AN statistics by :doc:`../cli_ref/anlt/an/an_status` .
 
 Check LT Status
 ---------------
 
-Check LT statistics by :doc:`../cli_ref/anlt/lt/lt_status` and logging by :doc:`../cli_ref/anlt/lt/lt_log_show`, :doc:`../cli_ref/anlt/lt/lt_log_start`,  and :doc:`../cli_ref/anlt/lt/lt_log_stop`.
+Check LT statistics by :doc:`../cli_ref/anlt/lt/lt_status`.
+
+
+Check ANLT Log
+--------------
+
+Check ANLT logging by :doc:`../cli_ref/anlt/an_lt/anlt_log`.
 
 
 Start Over

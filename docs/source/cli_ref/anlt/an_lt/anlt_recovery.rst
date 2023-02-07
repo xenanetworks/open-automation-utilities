@@ -1,5 +1,5 @@
-recovery
-===========
+anlt recovery
+=============
 
 Description
 -----------
@@ -13,7 +13,7 @@ Synopsis
 
 .. code-block:: console
     
-    recovery
+    anlt recovery
     [--on/--off]
 
 
@@ -34,7 +34,7 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2]$ recovery
+    xoa_util[port0/2]$ anlt recovery
     Port 0/2 link recovery enabled
 
     xoa_util[port0/2]$
@@ -42,7 +42,7 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2]$ recovery --off
+    xoa_util[port0/2]$ anlt recovery --off
     Port 0/2 link recovery disable
 
     xoa_util[port0/2]$

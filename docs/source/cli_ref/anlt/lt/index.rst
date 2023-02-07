@@ -24,7 +24,6 @@ LT Commands
 
 .. toctree::
     :maxdepth: 1
-    :caption: Statistics & Logging Commands
+    :caption: Statistics Commands
 
     lt_status
-    lt_log

@@ -1,5 +1,5 @@
-lt log
-======
+anlt log
+========
 
 Description
 -----------
@@ -13,16 +13,11 @@ Synopsis
 
 .. code-block:: console
     
-    lt log <LANE> <FILENAME>
+    anlt log <FILENAME>
 
 
 Arguments
 ---------
-
-``<LANE>`` (integer)
-
-Specifies the lane index.
-
 
 ``<FILENAME>`` (text)
 
@@ -32,6 +27,22 @@ Filename of the log.
 Options
 -------
 
+``-k, --keep`` (text)
+    
+Specifies what types of log entries to keep, default to keep all.
+
+Allowed values:
+
+* `all`, to keep all.
+
+* `an`. to keep autoneg only.
+
+* `lt`, to keep lt only.
+
+
+``-l, --lane`` (int list)
+    
+Specifies which lanes of LT logs to keep. If you don't know how many serdes lanes the port has, use :doc:`../an_lt/anlt_log`, default to all lanes.
 
 
 Examples
@@ -39,9 +50,10 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2]$ lt log 0 "log0.txt"
+    xoa_util[port0/2]$ anlt log "log0.txt" --keep=lt --lane 0,1,5
 
-    | timestamp                |   MODULE |  TYPE |                    TX           |              RX                       |                                       |
+
+    | TIMESTAMP                |  MODULE  |  TYPE |               TX                |                   RX                  |                                       |
     |--------------------------+----------+-------+---------------------------------+---------------------------------------+---------------------------------------|
     | 20230131-134059.150943   |     LT   | TRACE |                                 |                                       | LOCK=true                             |
     |                          |          |       |                                 |                                       | SYNC LOST=true                        |

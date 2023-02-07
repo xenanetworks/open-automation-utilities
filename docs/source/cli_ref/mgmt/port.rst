@@ -55,6 +55,7 @@ Examples
     Link training           : interactive
     Link training timeout   : default
     Link recovery           : on
+    Lane (serdes) count     : 2
 
     xoa_util[port0/1]$ port 0/0
     Ports       Sync
@@ -66,6 +67,7 @@ Examples
     Link training           : interactive
     Link training timeout   : default
     Link recovery           : on
+    Lane (serdes) count     : 2
 
     xoa_util[port0/0]$ port 0/2 --no-reset
     Ports       Sync
@@ -78,6 +80,7 @@ Examples
     Link training           : interactive
     Link training timeout   : default
     Link recovery           : on
+    Lane (serdes) count     : 2
 
     xoa_util[port0/2]$
 

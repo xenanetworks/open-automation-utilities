@@ -1,4 +1,4 @@
-do anlt
+anlt do
 ===================
 
 Description
@@ -12,7 +12,7 @@ Synopsis
 
 .. code-block:: console
     
-    do anlt
+    anlt do
 
 Arguments
 ---------
@@ -27,6 +27,6 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/0]$ do anlt
+    xoa_util[port0/0]$ anlt do
 
     xoa_util[port0/0]$

@@ -4,6 +4,7 @@ AN & LT Commands
 .. toctree::
     :maxdepth: 1
 
-    do_anlt
-    recovery
-    status
+    anlt_do
+    anlt_recovery
+    anlt_status
+    anlt_log
