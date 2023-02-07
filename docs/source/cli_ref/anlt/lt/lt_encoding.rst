@@ -30,7 +30,7 @@ Specifies the encoding.
 
 Allowed values:
 
-* `nrz_pam2`
+* `nrz`
 
 * `pam4`
 
@@ -47,8 +47,8 @@ Examples
 
 .. code-block:: console
 
-    xoa_util[port0/2]$ lt encoding 0 nrz_pam2
-    Port 0/2 requests: use NRZ_PAM2 on Lane 0
+    xoa_util[port0/2]$ lt encoding 0 nrz
+    Port 0/2 requests: use NRZ on Lane 0
 
     xoa_util[port0/2]$
 
