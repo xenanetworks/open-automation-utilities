@@ -133,7 +133,7 @@ async def lt_dec(context: ac.Context, lane: int, emphasis: str) -> str:
 # **************************
 # sub-command: lt encoding
 # **************************
-@lt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand, name="encoding")
 @ac.argument("lane", type=ac.INT)
 @ac.argument("encoding", type=ac.Choice(["nrz", "pam4", "pam4pre"]))
 @ac.pass_context
@@ -156,7 +156,7 @@ async def lt_encoding(context: ac.Context, lane: int, encoding: str) -> str:
 # **************************
 # sub-command: lt preset
 # **************************
-@lt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand, name="preset")
 @ac.argument("lane", type=ac.INT)
 @ac.argument("preset", type=ac.IntRange(1, 5))
 @ac.pass_context
