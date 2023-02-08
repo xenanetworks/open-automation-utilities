@@ -54,8 +54,9 @@ class LTState:
 
 class LoopFuncState:
     def __init__(self) -> None:
-        self.func: t.Optional[t.Coroutine] = None
+        self.func: t.Optional[t.Callable] = None
         self.interval: int = 1
+        self.kw: dict = {}
 
 
 class CmdContext:
@@ -71,11 +72,20 @@ class CmdContext:
     def get_coro_interval(self) -> int:
         return self._fn_state.interval
 
-    def get_loop_coro(self) -> t.Optional[t.Coroutine]:
+    def get_loop_coro(self) -> t.Optional[t.Callable]:
         return self._fn_state.func
 
-    def set_loop_coro(self, coro: t.Optional[t.Coroutine]) -> None:
+    def set_loop_coro(self, coro: t.Optional[t.Callable]) -> None:
         self._fn_state.func = coro
+
+    def set_loop_coro_kw(self, dic: dict) -> None:
+        self._fn_state.kw = dic
+
+    def get_loop_coro_kw(self) -> dict:
+        return self._fn_state.kw
+
+    clear_loop_coro = partialmethod(set_loop_coro, None)
+    clear_loop_coro_kw = partialmethod(set_loop_coro_kw, {})
 
     def prompt(self, base_prompt: str = "", end_prompt: str = ">") -> str:
         s = self.retrieve_tester_serial()
@@ -135,10 +145,13 @@ class CmdContext:
     def retrieve_an_loopback(self) -> bool:
         return self._an_state.allow_loopback
 
-    # def retrieve_functionality(self) -> str:
-    #     return self.functionality
     def retrieve_lt_initial_mod(self) -> dict[int, LinkTrainEncoding]:
         return self._lt_state.initial_mod
+
+    def retrieve_lt_initial_mod_lane(self, lane: int) -> LinkTrainEncoding:
+        if lane not in self._lt_state.initial_mod:
+            raise NotInStoreError(str(lane))
+        return self._lt_state.initial_mod[lane]
 
     def retrieve_lt_interactive(self) -> bool:
         return self._lt_state.interactive

@@ -66,14 +66,14 @@ async def lt_config(context: ac.Context, mode: str, on: bool, preset0: bool) -> 
 # **************************
 @lt.command(cls=cb.XenaCommand, name="im")
 @ac.argument("lane", type=ac.INT)
-@ac.argument("encoding", type=ac.Choice(["nrz_pam2", "pam4", "pam4pre"]))
+@ac.argument("encoding", type=ac.Choice(["nrz", "pam4", "pam4pre"]))
 @ac.pass_context
 async def lt_im(context: ac.Context, lane: int, encoding: str) -> str:
     """
     Set the initial modulation for the specified lane.
 
         LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
-        ENCODING TEXT: Specifies the initial modulation. Allowed values: nrz_pam2 | pam4 | pam4pre.\n
+        ENCODING TEXT: Specifies the initial modulation. Allowed values: nrz | pam4 | pam4pre.\n
 
     """
     storage: CmdContext = context.obj
@@ -135,14 +135,14 @@ async def lt_dec(context: ac.Context, lane: int, emphasis: str) -> str:
 # **************************
 @lt.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
-@ac.argument("encoding", type=ac.Choice(["nrz", "pam2", "pam4", "pam4pre"]))
+@ac.argument("encoding", type=ac.Choice(["nrz", "pam4", "pam4pre"]))
 @ac.pass_context
 async def lt_encoding(context: ac.Context, lane: int, encoding: str) -> str:
     """
     To request the remote link training partner to use the specified encoding on the specified lane.
 
         LANE INT: Specifies the transceiver lane index.\n
-        ENCODING TEXT: Specifies the encoding. Allowed values: nrz_pam2 | pam4 | pam4pre\n
+        ENCODING TEXT: Specifies the encoding. Allowed values: nrz | pam4 | pam4pre\n
 
     """
     storage: CmdContext = context.obj

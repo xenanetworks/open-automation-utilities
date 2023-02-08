@@ -114,6 +114,7 @@ Auto-negotiation      : {status['autoneg_enabled']}
 Link training         : {status['link_training_mode']}
 Link training timeout : {status['link_training_timeout']}
 Link recovery         : {status['link_recovery']}
+Lane (serdes) count   : {status['serdes_count']}
 """
 
 
@@ -143,13 +144,15 @@ Preset0       : {'standard tap' if storage.retrieve_lt_preset0_std() else 'exist
 
 
 def format_lt_im(storage: CmdContext, lane: int) -> str:
-    return f"Port {storage.retrieve_port_str()}: initial modulation {enums.LinkTrainEncoding[storage.retrieve_lt_initial_mod(lane).upper()].name} on Lane {lane}\n"
+    return f"Port {storage.retrieve_port_str()}: initial modulation {storage.retrieve_lt_initial_mod_lane(lane).name} on Lane {lane}\n"
 
 
 def format_an_config(storage: CmdContext, on: bool, loopback: bool) -> str:
     om = "on" if on else "off"
     lo = "allowed" if loopback else "not allowed"
-    return f"Port {storage.retrieve_port_str()} auto-negotiation:{om}, loopback:{lo}\n"
+    return (
+        f"Port {storage.retrieve_port_str()} auto-negotiation: {om}, loopback: {lo}\n"
+    )
 
 
 def format_recovery(storage: CmdContext, on: bool) -> str:

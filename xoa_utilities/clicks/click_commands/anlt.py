@@ -1,9 +1,9 @@
 from __future__ import annotations
 import asyncclick as ac
-from .. import click_backend as cb
+import json
 from xoa_driver.hlfuncs import anlt as anlt_utils
+from .. import click_backend as cb
 from ...exceptions import *
-import asyncclick as ac
 from ...clis import format_recovery, format_port_status
 from .group import xoa_utils
 from .. import click_help as h
@@ -82,17 +82,76 @@ async def do(context: ac.Context) -> str:
     return ""
 
 
-# # **************************
-# # sub-command: an log
-# # **************************
-# @an.command(cls=cb.XenaCommand, name="log")
-# @ac.pass_context
-# async def an_log(context: ac.Context) -> str:
-#     """
-#     Show the auto-negotiation log trace.\n
+# **************************
+# command: log
+# **************************
+@anlt.command(cls=cb.XenaCommand, name="log")
+@ac.option(
+    "-f", "--filename", type=ac.STRING, help=h.HELP_ANLT_LOG_FILENAME, default=""
+)
+@ac.option(
+    "-k",
+    "--keep",
+    type=ac.Choice(["all", "an", "lt"]),
+    help=h.HELP_ANLT_LOG_KEEP,
+    default="all",
+)
+@ac.option("-l", "--lane", type=ac.STRING, help=h.HELP_ANLT_LOG_KEEP, default="")
+@ac.pass_context
+async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
+    """
+    Show the auto-negotiation log trace.\n
 
-#     """
-#     storage: CmdContext = context.obj
-#     port_obj = storage.retrieve_port()
-#     log = await anlt_utils.autoneg_log(port_obj)
-#     return log
+    """
+
+    def filter_log(log: str, keep: str, lane: list[int]) -> list[dict]:
+        all_logs = []
+        for l in log.split("\n"):
+            try:
+                content = json.loads(l)
+                log_lane = content["lane"]
+                module = content["module"]
+
+                lane_in = False
+                keep_in = False
+                if (lane and log_lane in lane) or not lane:
+                    lane_in = True
+                if any(
+                    (
+                        keep == "an" and "AN" in module,
+                        keep == "lt" and "LT" in module,
+                        keep == "all",
+                    )
+                ):
+                    keep_in = True
+                if lane_in and keep_in:
+                    all_logs.append(content)
+
+            except Exception:
+                pass
+        return all_logs
+
+    def beautify(filtered: list[dict]) -> str:
+        return "\n".join(
+            json.dumps(i, indent=2).replace("{", "").replace("}", "").replace('"', "")
+            for i in filtered
+        ).strip()
+
+    async def log(
+        storage: CmdContext, filename: str, keep: str, lane: list[int]
+    ) -> str:
+        port_obj = storage.retrieve_port()
+        log_str = await anlt_utils.anlt_log(port_obj)
+        filtered = filter_log(log_str, keep, lane)
+        string = beautify(filtered)
+        if filename and string:
+            with open(filename, "a") as f:
+                f.write(f"{string}\n")
+        return string
+
+    real_lane_list = [i.strip() for i in lane.split(",")] if lane else []
+    kw = {"filename": filename, "keep": keep, "lane": real_lane_list}
+    storage: CmdContext = ctx.obj
+    storage.set_loop_coro(log)
+    storage.set_loop_coro_kw(kw)
+    return ""

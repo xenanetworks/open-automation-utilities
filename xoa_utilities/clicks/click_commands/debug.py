@@ -20,9 +20,9 @@ def debug():
 # command: init
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
-async def init(context: ac.Context, lane) -> str:
+async def init(context: ac.Context, lane: int) -> str:
     """
     Debug init
 
@@ -58,7 +58,7 @@ async def _help_set(
 # command: lane_reset
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lane_reset(context: ac.Context, lane: int) -> str:
     """
@@ -78,7 +78,7 @@ async def lane_reset(context: ac.Context, lane: int) -> str:
 # command: mode_get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def mode_get(context: ac.Context, lane: int) -> str:
     """
@@ -94,8 +94,8 @@ async def mode_get(context: ac.Context, lane: int) -> str:
 # command: mode_set
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value", type=ac.INT)
 @ac.pass_context
 async def mode_set(context: ac.Context, lane: int, value: int) -> str:
     """
@@ -114,7 +114,7 @@ async def mode_set(context: ac.Context, lane: int, value: int) -> str:
 # command: lt_tx_config_get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_tx_config_get(context: ac.Context, lane: int) -> str:
     """
@@ -130,8 +130,8 @@ async def lt_tx_config_get(context: ac.Context, lane: int) -> str:
 # command: lt_tx_config_set
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value", type=ac.INT)
 @ac.pass_context
 async def lt_tx_config_set(context: ac.Context, lane: int, value: int) -> str:
     """
@@ -149,7 +149,7 @@ async def lt_tx_config_set(context: ac.Context, lane: int, value: int) -> str:
 # command: lt_rx_config_get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_rx_config_get(context: ac.Context, lane: int) -> str:
     """
@@ -165,8 +165,8 @@ async def lt_rx_config_get(context: ac.Context, lane: int) -> str:
 # command: lt_rx_config_set
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value", type=ac.INT)
 @ac.pass_context
 async def lt_rx_config_set(context: ac.Context, lane: int, value: int) -> str:
     """
@@ -184,7 +184,7 @@ async def lt_rx_config_set(context: ac.Context, lane: int, value: int) -> str:
 # command: lt_tx_tf_get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_tx_tf_get(context: ac.Context, lane: int) -> str:
     """
@@ -200,7 +200,7 @@ async def lt_tx_tf_get(context: ac.Context, lane: int) -> str:
 # command: lt_rx_error_stat0_get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_rx_error_stat0_get(context: ac.Context, lane: int) -> str:
     """
@@ -216,7 +216,7 @@ async def lt_rx_error_stat0_get(context: ac.Context, lane: int) -> str:
 # command: lt_rx_error_stat1_get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_rx_error_stat1_get(context: ac.Context, lane: int) -> str:
     """
@@ -232,7 +232,7 @@ async def lt_rx_error_stat1_get(context: ac.Context, lane: int) -> str:
 # command: lt_rx_analyzer_config_get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_rx_analyzer_config_get(context: ac.Context, lane: int) -> str:
     """
@@ -248,7 +248,7 @@ async def lt_rx_analyzer_config_get(context: ac.Context, lane: int) -> str:
 # command: lt_rx_analyzer_trig_mask_get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_rx_analyzer_trig_mask_get(context: ac.Context, lane: int) -> str:
     """
@@ -264,7 +264,7 @@ async def lt_rx_analyzer_trig_mask_get(context: ac.Context, lane: int) -> str:
 # command: lt_rx_analyzer_status_get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_rx_analyzer_status_get(context: ac.Context, lane: int) -> str:
     """
@@ -280,7 +280,7 @@ async def lt_rx_analyzer_status_get(context: ac.Context, lane: int) -> str:
 # command: lt_rx_analyzer_rd_addr_get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_rx_analyzer_rd_addr_get(context: ac.Context, lane: int) -> str:
     """
@@ -296,7 +296,7 @@ async def lt_rx_analyzer_rd_addr_get(context: ac.Context, lane: int) -> str:
 # command: lt_rx_analyzer_rd_page_get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_rx_analyzer_rd_page_get(context: ac.Context, lane: int) -> str:
     """
@@ -312,7 +312,7 @@ async def lt_rx_analyzer_rd_page_get(context: ac.Context, lane: int) -> str:
 # command: lt_rx_analyzer_rd_data_get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_rx_analyzer_rd_data_get(context: ac.Context, lane: int) -> str:
     """
@@ -328,8 +328,8 @@ async def lt_rx_analyzer_rd_data_get(context: ac.Context, lane: int) -> str:
 # command: lt_rx_analyzer_config_set
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value" ,type=ac.INT)
 @ac.pass_context
 async def lt_rx_analyzer_config_set(context: ac.Context, lane: int, value: int) -> str:
     """
@@ -348,8 +348,8 @@ async def lt_rx_analyzer_config_set(context: ac.Context, lane: int, value: int) 
 # command: lt_rx_analyzer_trig_mask_set
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value" ,type=ac.INT)
 @ac.pass_context
 async def lt_rx_analyzer_trig_mask_set(
     context: ac.Context, lane: int, value: int
@@ -370,8 +370,8 @@ async def lt_rx_analyzer_trig_mask_set(
 # command: lt_rx_analyzer_rd_addr_set
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value" ,type=ac.INT)
 @ac.pass_context
 async def lt_rx_analyzer_rd_addr_set(context: ac.Context, lane: int, value: int) -> str:
     """
@@ -390,8 +390,8 @@ async def lt_rx_analyzer_rd_addr_set(context: ac.Context, lane: int, value: int)
 # command: lt_rx_analyzer_rd_page_set
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value" ,type=ac.INT)
 @ac.pass_context
 async def lt_rx_analyzer_rd_page_set(context: ac.Context, lane: int, value: int) -> str:
     """
@@ -410,8 +410,8 @@ async def lt_rx_analyzer_rd_page_set(context: ac.Context, lane: int, value: int)
 # command: lt_status
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value" ,type=ac.INT)
 @ac.pass_context
 async def lt_status(context: ac.Context, lane: int, value: int) -> str:
     """
@@ -430,7 +430,7 @@ async def lt_status(context: ac.Context, lane: int, value: int) -> str:
 # command: lt_prbs
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_prbs(context: ac.Context, lane: int) -> str:
     """
@@ -445,12 +445,11 @@ async def lt_prbs(context: ac.Context, lane: int) -> str:
     return str(await debug_utils.lt_prbs(port_obj, lane, inf=inf))
 
 
-
 # --------------------------
 # command: lt_rx_analyzer_dump
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument(type=ac.INT)
+@ac.argument("lane", type=ac.INT)
 @ac.pass_context
 async def lt_rx_analyzer_dump(context: ac.Context, lane: int) -> str:
     """

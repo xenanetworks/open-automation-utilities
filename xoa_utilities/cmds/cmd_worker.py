@@ -109,7 +109,15 @@ class CmdWorker:
         return line, pos
 
     def register_keys(self) -> None:
-        self.channel.register_key("\t", self.autocomplete)
+        TAB = "\t"
+        CTRL_Z = "\x1a"
+        self.channel.register_key(TAB, self.autocomplete)
+        self.channel.register_key(CTRL_Z, self.stop_coro)
+
+    def stop_coro(self, line: str, pos: int) -> t.Tuple[str, int]:
+        self.context.clear_loop_coro()
+        self.context.clear_loop_coro_kw()
+        return line, pos
 
     def finish(self) -> None:
         self.process.exit(0)
@@ -124,7 +132,8 @@ class CmdWorker:
     def make_prompt(self, end_prompt: str = ">") -> str:
         return self.context.prompt(self.base_prompt, end_prompt)
 
-    async def run_interactive_loop(self) -> None:
+    async def run_interactive(self) -> None:
+        self.write(f"\n{self.make_prompt()}")
         request = (await self.process.stdin.readline()).strip()
         response = None
         success = False
@@ -145,25 +154,29 @@ class CmdWorker:
             response = f"{type(e).__name__}: {e}\n"
             success = False
         if response is not None:
-            self.write(f"{response}\n{self.make_prompt()}")
+            self.write(f"{response}")
             self.put_hub_record(request, response, success)
 
-    async def run_coroutine_loop(self) -> None:
-        coro = self.context.get_loop_coro()
-        if coro is not None:
-            result = await coro
-            self.write(f"{result}\n{self.make_prompt('!')}")
-            await asyncio.sleep(self.context.get_coro_interval())
+    async def run_coroutine(self) -> None:
+        async_func = self.context.get_loop_coro()
+        if async_func is not None:
+            try:
+                kw = self.context.get_loop_coro_kw()
+                result = await async_func(self.context, **kw)
+                self.write(f"{result}\n{self.make_prompt('!')}")
+                await asyncio.sleep(self.context.get_coro_interval())
+            except Exception as e:
+                self.write(f"{type(e).__name__}: {e}\n")
+                self.context.clear_loop_coro()
+                self.context.clear_loop_coro_kw()
 
     async def run(self) -> None:
         self.connect_hub()
-        self.write(f"\n{self.make_prompt()}")
         while not self.process.stdin.at_eof():
             if self.context.get_loop_coro() is None:
-                await self.run_interactive_loop()
+                await self.run_interactive()
             else:
-                await self.run_coroutine_loop()
-
+                await self.run_coroutine()
 
     def connect_hub(self) -> None:
         config = ReadConfig()

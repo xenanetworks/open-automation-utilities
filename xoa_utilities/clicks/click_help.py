@@ -49,3 +49,11 @@ HELP_LT_CONFIG_MODE = "The mode for link training on the working port, default t
 HELP_LT_CONFIG_ON = "Enable or disable link training on the working port, default to --on."
 
 HELP_LT_CONFIG_PRESET0 = "Should the preset0 (out-of-sync) use existing tap values or standard values, default to --no-preset0."
+
+HELP_ANLT_LOG_FILENAME = "Filename of the log."
+
+HELP_ANLT_LOG_KEEP = "Specifies what types of log entries to keep, default to keep all.\
+Allow values: all | an | lt; all, to keep all. an. to keep autoneg only. lt, to keep lt only."
+
+HELP_ANLT_LOG_LANE = "Specifies which lanes of LT logs to keep. If you don't know how many\
+serdes lanes the port has, use anlt log, default to all lanes."
