@@ -26,7 +26,7 @@ from ...cmds import CmdContext
 @xoa_utils.group(cls=cb.XenaGroup)
 def lt():
     """
-    To enter link training context.\n
+    Enter link training context.\n
 
     """
 
@@ -51,7 +51,7 @@ def lt():
 @ac.pass_context
 async def lt_config(context: ac.Context, mode: str, on: bool, preset0: bool) -> str:
     """
-    To configure link training on the working port.\n
+    Configure link training on the working port.\n
 
     """
     storage: CmdContext = context.obj
@@ -93,7 +93,7 @@ async def lt_im(context: ac.Context, lane: int, encoding: str) -> str:
 @ac.pass_context
 async def lt_inc(context: ac.Context, lane: int, emphasis: str) -> str:
     """
-    To request the remote link training partner to increase its emphasis value by 1 bit.
+    Request the remote port's lane to increase an emphasis by 1.
 
         LANE INT: Specifies the transceiver lane index.\n
         EMPHASIS TEXT: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post.\n
@@ -116,7 +116,7 @@ async def lt_inc(context: ac.Context, lane: int, emphasis: str) -> str:
 @ac.pass_context
 async def lt_dec(context: ac.Context, lane: int, emphasis: str) -> str:
     """
-    To request the remote link training partner to decrease its emphasis value by 1 bit.
+    Request the remote port's lane to decrease an emphasis by 1.
 
         LANE INT: Specifies the transceiver lane index.\n
         EMPHASIS TEXT: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post.\n
@@ -139,7 +139,7 @@ async def lt_dec(context: ac.Context, lane: int, emphasis: str) -> str:
 @ac.pass_context
 async def lt_encoding(context: ac.Context, lane: int, encoding: str) -> str:
     """
-    To request the remote link training partner to use the specified encoding on the specified lane.
+    Request the remote port's lane to use the encoding.
 
         LANE INT: Specifies the transceiver lane index.\n
         ENCODING TEXT: Specifies the encoding. Allowed values: nrz | pam4 | pam4pre\n
@@ -162,7 +162,7 @@ async def lt_encoding(context: ac.Context, lane: int, encoding: str) -> str:
 @ac.pass_context
 async def lt_preset(context: ac.Context, lane: int, preset: int) -> str:
     """
-    To request the remote link training partner to use the preset of the specified lane.
+    Request the remote port's lane to use the preset.
 
         LANE INT: Specifies the transceiver lane index.\n
         PRESET INT: Specifies the preset index. Allowed values: 0 | 1 | 2 | 3 | 4.\n
@@ -182,7 +182,7 @@ async def lt_preset(context: ac.Context, lane: int, preset: int) -> str:
 @ac.pass_context
 async def lt_trained(context: ac.Context, lane: int) -> str:
     """
-    To announce that the specified lane is trained.
+    Announce that the lane is trained.
 
         LANE INT: Specifies the transceiver lane index.\n
 
@@ -219,16 +219,16 @@ async def lt_txtapget(context: ac.Context, lane: int) -> str:
 @ac.argument("lane", type=ac.INT)
 @ac.argument("pre3", type=ac.INT)
 @ac.argument("pre2", type=ac.INT)
-@ac.argument("pre1", type=ac.INT)
+@ac.argument("pre", type=ac.INT)
 @ac.argument("main", type=ac.INT)
-@ac.argument("post1", type=ac.INT)
+@ac.argument("post", type=ac.INT)
 @ac.pass_context
 async def txtapset(
     context: ac.Context,
     lane: int,
     pre3: int,
     pre2: int,
-    pre1: int,
+    pre: int,
     main: int,
     post: int,
 ) -> str:
@@ -238,15 +238,15 @@ async def txtapset(
         LANE INT: The lane index to read tap values from.\n
         PRE3 INT: Specifies c(-3) value of the tap.\n
         PRE2 INT: Specifies c(-2) value of the tap.\n
-        PRE1 INT: Specifies c(-1) value of the tap.\n
+        PRE INT: Specifies c(-1) value of the tap.\n
         MAIN INT: Specifies c(0) value of the tap.\n
-        POST INT: Specifies c(+1) value of the tap.\n
+        POST INT: Specifies c(1) value of the tap.\n
 
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    await anlt_utils.txtap_set(port_obj, lane, pre3, pre2, pre1, main, post)
-    return format_txtap_set(lane, pre3, pre2, pre1, main, post)
+    await anlt_utils.txtap_set(port_obj, lane, pre3, pre2, pre, main, post)
+    return format_txtap_set(lane, pre3, pre2, pre, main, post)
 
 
 # **************************
@@ -257,7 +257,7 @@ async def txtapset(
 @ac.pass_context
 async def lt_status(context: ac.Context, lane: int) -> str:
     """
-    To show the link training status of the specified lane.
+    Show the link training status of the lane.
 
         LANE INT: Specifies the lane index.\n
 

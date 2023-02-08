@@ -44,7 +44,7 @@ async def connect(
 
         DEVICE TEXT: Specifies the chassis address for connection. You can specify the IP addresses in IPv4 format, or a host name, e.g. 10.10.10.10 or demo.xenanetworks.com\n
 
-        USERNAME TEXT: Specifies the name of the user, default to 'xena'.\n
+        USERNAME TEXT: Specifies the name of the user.\n
 
     """
     storage: CmdContext = context.obj

@@ -192,16 +192,16 @@ def format_lt_trained(storage: CmdContext, lane: int) -> str:
 
 def format_txtap_get(lane: int, dic: dict) -> str:
     return f"""
-Local Coefficient Lane({lane})   :           c(-3)       c(-2)       c(-1)       c(0)       c(+1)
-    Current level           :              {dic['c(-3)']}           {dic['c(-2)']}           {dic['c(-1)']}           {dic['c(0)']}           {dic['c(+1)']}
+Local Coefficient Lane({lane})   :           c(-3)       c(-2)       c(-1)        c(0)        c(1)
+    Current level           :              {dic['c(-3)']}           {dic['c(-2)']}           {dic['c(-1)']}           {dic['c(0)']}           {dic['c(1)']}
 """
 
 
 def format_txtap_set(
-    lane: int, pre3: int, pre2: int, pre1: int, main: int, post: int
+    lane: int, pre3: int, pre2: int, pre: int, main: int, post: int
 ) -> str:
     return format_txtap_get(
-        lane, {"c(-3)": pre3, "c(-2)": pre2, "c(-1)": pre1, "c(0)": main, "c(1)": post}
+        lane, {"c(-3)": pre3, "c(-2)": pre2, "c(-1)": pre, "c(0)": main, "c(1)": post}
     )
 
 
@@ -226,8 +226,8 @@ Overrun errors    : {dic['overrun_errors']}
 
 Last IC received  : {dic['last_ic_received']}
 Last IC sent      : {dic['last_ic_sent']}
-TX Coefficient              :           c(-3)       c(-2)       c(-1)       c(0)       c(+1)
-    Current level           :{dic['c(-3)']['current_level']:17}{dic['c(-2)']['current_level']:12}{dic['c(-1)']['current_level']:12}{dic['c(0)']['current_level']:12}{dic['c(+1)']['current_level']:12}
+TX Coefficient              :           c(-3)       c(-2)       c(-1)       c(0)        c(1)
+    Current level           :{dic['c(-3)']['current_level']:17}{dic['c(-2)']['current_level']:12}{dic['c(-1)']['current_level']:12}{dic['c(0)']['current_level']:12}{dic['c(1)']['current_level']:12}
                             :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
     + req                   :{dic['c(-3)']['+req']['rx']:11}{dic['c(-3)']['+req']['tx']:4}{dic['c(-2)']['+req']['rx']:8}{dic['c(-2)']['+req']['tx']:4}{dic['c(-1)']['+req']['rx']:8}{dic['c(-1)']['+req']['tx']:4}{dic['c(0)']['+req']['rx']:8}{dic['c(0)']['+req']['tx']:4}{dic['c(1)']['+req']['rx']:8}{dic['c(1)']['+req']['tx']:4}
     - req                   :{dic['c(-3)']['-req']['rx']:11}{dic['c(-3)']['-req']['tx']:4}{dic['c(-2)']['-req']['rx']:8}{dic['c(-2)']['-req']['tx']:4}{dic['c(-1)']['-req']['rx']:8}{dic['c(-1)']['-req']['tx']:4}{dic['c(0)']['-req']['rx']:8}{dic['c(0)']['-req']['tx']:4}{dic['c(1)']['-req']['rx']:8}{dic['c(1)']['-req']['tx']:4}
