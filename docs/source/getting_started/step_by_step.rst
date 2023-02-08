@@ -97,7 +97,7 @@ If you run LT (interactive), you will need to manually control the LT parameters
 
     [xoa_util][port0/0]$ lt inc 0 main
 
-    [xoa_util][port0/0]$ lt dec 0 post1
+    [xoa_util][port0/0]$ lt dec 0 post
 
     [xoa_util][port0/0]$ lt status 0
 

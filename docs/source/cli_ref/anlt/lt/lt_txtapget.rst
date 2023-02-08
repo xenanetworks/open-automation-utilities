@@ -34,7 +34,7 @@ Examples
 .. code-block:: console
 
     xoa_util[port0/2]$ lt txtapget 0
-    Local Coefficient Lane(0)   :           c(-3)       c(-2)       c(-1)       c(0)       c(+1)
+    Local Coefficient Lane(0)   :           c(-3)       c(-2)       c(-1)       c(0)        c(1)
         Current level           :              0           7           0           0           0
 
     xoa_util[port0/2]$

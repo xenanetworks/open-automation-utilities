@@ -13,19 +13,20 @@ Synopsis
 
 .. code-block:: console
     
-    anlt log <FILENAME>
+    anlt log
 
 
 Arguments
 ---------
 
-``<FILENAME>`` (text)
-
-Filename of the log.
-
 
 Options
 -------
+
+``-f, --filename`` (text)
+
+Specifies the filename for the log messages to be stored.
+
 
 ``-k, --keep`` (text)
     
@@ -75,17 +76,15 @@ Examples
         value: 0x021A0AB2,
         fields:
             control:
-            C_REQ: Dec,
-            C_SEL: c(-2),
-            PAM_MOD: PAM4,
-            IC_REQ: INDV
-            ,
+                C_REQ: Dec,
+                C_SEL: c(-2),
+                PAM_MOD: PAM4,
+                IC_REQ: INDV,
             status:
-            C_STS: C lim,
-            C_ECH: c(-2),
-            PAM_MOD: PAM4,
-            IC_STS: No upd
-            ,
+                C_STS: C lim,
+                C_ECH: c(-2),
+                PAM_MOD: PAM4,
+                IC_STS: No upd,
             locked: true,
             done: false
 
@@ -111,15 +110,15 @@ Examples
         value: 0x021A0AB2,
         fields:
             control:
-            C_REQ: Dec,
-            C_SEL: c(-2),
-            PAM_MOD: PAM4,
-            IC_REQ: INDV,
+                C_REQ: Dec,
+                C_SEL: c(-2),
+                PAM_MOD: PAM4,
+                IC_REQ: INDV,
             status:
-            C_STS: C lim,
-            C_ECH: c(-2),
-            PAM_MOD: PAM4,
-            IC_STS: No upd,
+                C_STS: C lim,
+                C_ECH: c(-2),
+                PAM_MOD: PAM4,
+                IC_STS: No upd,
             locked: true,
             done: false
 
@@ -145,17 +144,15 @@ Examples
         value: 0x02180A32,
         fields:
             control:
-            C_REQ: Hold,
-            C_SEL: c(-2),
-            PAM_MOD: PAM4,
-            IC_REQ: INDV
-            ,
+                C_REQ: Hold,
+                C_SEL: c(-2),
+                PAM_MOD: PAM4,
+                IC_REQ: INDV,
             status:
-            C_STS: C lim,
-            C_ECH: c(-2),
-            PAM_MOD: PAM4,
-            IC_STS: No upd
-            ,
+                C_STS: C lim,
+                C_ECH: c(-2),
+                PAM_MOD: PAM4,
+                IC_STS: No upd
             locked: true,
             done: false
 
@@ -181,17 +178,15 @@ Examples
         value: 0x02180A32,
         fields:
             control:
-            C_REQ: Hold,
-            C_SEL: c(-2),
-            PAM_MOD: PAM4,
-            IC_REQ: INDV
-            ,
+                C_REQ: Hold,
+                C_SEL: c(-2),
+                PAM_MOD: PAM4,
+                IC_REQ: INDV,
             status:
-            C_STS: C lim,
-            C_ECH: c(-2),
-            PAM_MOD: PAM4,
-            IC_STS: No upd
-            ,
+                C_STS: C lim,
+                C_ECH: c(-2),
+                PAM_MOD: PAM4,
+                IC_STS: No upd,
             locked: true,
             done: false
 

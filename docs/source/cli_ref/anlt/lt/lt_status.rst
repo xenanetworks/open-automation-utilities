@@ -53,7 +53,7 @@ Examples
 
     Last IC received  : INDV
     Last IC sent      : INDV
-    TX Coefficient              :           c(-3)       c(-2)       c(-1)       c(0)       c(+1)
+    TX Coefficient              :           c(-3)       c(-2)       c(-1)       c(0)        c(1)
         Current level           :              0          68           0           0           0
                                 :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
         + req                   :          0   0       0   0       0   0       0   0       0   0
