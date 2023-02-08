@@ -117,17 +117,16 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
     except NotInStoreError:
         port_dic = storage.obtain_physical_ports(port)
         for p_id, p_obj in port_dic.items():
-            if force:
-                await mgmt_utils.reserve_port(p_obj, force)
-            if reset:
-                await mgmt_utils.reset_port(p_obj)
             storage.store_port(p_id, p_obj)
             storage.store_current_port_str(p_id)
-    if force or reset:
-        await asyncio.sleep(3)
-        # status will change when you reserve_port or reset_port, need to wait
     port_obj = storage.retrieve_port()
     port_id = storage.retrieve_port_str()
+    if force:
+        await mgmt_utils.reserve_port(port_obj, force)
+    if reset:
+        await mgmt_utils.reset_port(port_obj)
+        await asyncio.sleep(3)
+        # status will change when you reserve_port or reset_port, need to wait
     status_dic = await anlt_utils.status(port_obj)
     return f"{format_ports_status(storage, False)}{format_port_status(port_id, status_dic)}"
 
@@ -140,28 +139,10 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
 @ac.pass_context
 async def ports(context: ac.Context, all: bool) -> str:
     """
-    To list all the ports reserved by the current session. This command works in all context.\n
+    To list all the ports reserved by the current session.\n
 
     """
     storage: CmdContext = context.obj
     return format_ports_status(storage, all)
 
 
-# # --------------------------
-# # command: do_anlt
-# # --------------------------
-# @xoa_utils.command(cls=cb.XenaCommand)
-# @try_wrapper(True)
-# async def do_anlt() -> str:
-#     """
-#     Start autoneg and link training according the previous configuration.\n
-
-#     """
-#     port_obj = tp_storage.get_working_port()
-
-#     should_an = tp_storage.should_do_an
-#     should_lt = tp_storage.should_do_lt
-
-#     return ",".join((tp_storage.list_ports()))
-
-#     ## NOT FINISHED!!!!!!
