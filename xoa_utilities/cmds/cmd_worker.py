@@ -143,10 +143,7 @@ class CmdWorker:
             if isinstance(response, int):
                 response = self.context.get_error()
                 success = False
-        except ah.TerminalSizeChanged:
-            pass
-        except ah.BreakReceived:
-            self.finish()
+
         except ac.UsageError as error:
             response = format_error(error)
             success = False
@@ -173,10 +170,15 @@ class CmdWorker:
     async def run(self) -> None:
         self.connect_hub()
         while not self.process.stdin.at_eof():
-            if self.context.get_loop_coro() is None:
-                await self.run_interactive()
-            else:
-                await self.run_coroutine()
+            try:
+                if self.context.get_loop_coro() is None:
+                    await self.run_interactive()
+                else:
+                    await self.run_coroutine()
+            except ah.TerminalSizeChanged:
+                pass
+            except ah.BreakReceived:
+                self.finish()
 
     def connect_hub(self) -> None:
         config = ReadConfig()
