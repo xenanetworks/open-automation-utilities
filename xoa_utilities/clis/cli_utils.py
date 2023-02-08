@@ -136,7 +136,7 @@ Unformatted pages     : {dic['unformatted_pages']['rx']:6}{dic['unformatted_page
 def format_lt_config(storage: CmdContext) -> str:
     return f"""
 Port {storage.retrieve_port_str()}
-Link training : {'on' if storage.retrieve_should_do_lt() else 'off'}
+Link training : {'on' if storage.retrieve_lt_enable() else 'off'}
 Mode          : {'interactive' if storage.retrieve_lt_interactive() else 'auto'}
 Preset0       : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values 
 """

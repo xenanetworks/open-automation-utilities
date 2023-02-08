@@ -4,6 +4,8 @@ from ...cmds import CmdContext
 from . import an
 from . import lt
 from . import management
+from . import anlt
+from . import debug
 from .group import xoa_utils
 
 

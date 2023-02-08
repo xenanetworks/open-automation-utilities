@@ -66,35 +66,3 @@ async def an_status(context: ac.Context) -> str:
     port_obj = storage.retrieve_port()
     status_dic = await anlt_utils.autoneg_status(port_obj)
     return format_an_status(status_dic)
-
-
-# **************************
-# sub-command: an log
-# **************************
-@an.command(cls=cb.XenaCommand, name="log")
-@ac.pass_context
-async def an_log(context: ac.Context) -> str:
-    """
-    Show the auto-negotiation log trace.\n
-
-    """
-    storage: CmdContext = context.obj
-    port_obj = storage.retrieve_port()
-    log = await anlt_utils.autoneg_log(port_obj)
-    return log
-
-
-@an.command(cls=cb.XenaCommand, name="print")
-@ac.pass_context
-async def an_print(context: ac.Context) -> str:
-    """
-    Show the auto-negotiation log trace.\n
-
-    """
-    storage: CmdContext = context.obj
-    import time
-    async def r():
-        return time.time()
-
-    storage.set_loop_coro(r)
-    return

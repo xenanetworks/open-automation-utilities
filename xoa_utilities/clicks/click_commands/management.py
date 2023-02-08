@@ -6,12 +6,10 @@ from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
 from xoa_driver.testers import L23Tester
 from ...exceptions import *
-import typing as t
 import asyncclick as ac
 from ...clis import (
     format_tester_status,
     format_ports_status,
-    format_recovery,
     format_port_status,
 )
 from .group import xoa_utils
@@ -90,7 +88,7 @@ async def exit(context: ac.Context, reset: bool, release: bool) -> str:
     To exit the session by terminating port reservations, disconnecting from the chassis, releasing system resources, and removing the specified port configurations. This command works in all context.
     """
     storage: CmdContext = context.obj
-    for port_id, port_obj in storage.pt_state.ports.copy().items():
+    for port_id, port_obj in storage.retrieve_ports().copy().items():
         if reset:
             await mgmt_utils.reset_port(port_obj)
         if release:
@@ -167,37 +165,3 @@ async def ports(context: ac.Context, all: bool) -> str:
 #     return ",".join((tp_storage.list_ports()))
 
 #     ## NOT FINISHED!!!!!!
-
-
-# --------------------------
-# command: recovery
-# --------------------------
-@xoa_utils.command(cls=cb.XenaCommand)
-@ac.option("--on/--off", type=ac.BOOL, help=h.HELP_RECOVERY_ON, default=True)
-@ac.pass_context
-async def recovery(context: ac.Context, on: bool) -> str:
-    """
-    Enable/disable link recovery on the specified port. If enable, the port will keep trying ANLT when no link-up signal is detected after five seconds of waiting.
-    """
-    storage: CmdContext = context.obj
-
-    port_obj = storage.retrieve_port()
-    await anlt_utils.link_recovery(port_obj, on)
-    return format_recovery(storage, on)
-
-
-# --------------------------
-# command: status
-# --------------------------
-@xoa_utils.command(cls=cb.XenaCommand)
-@ac.pass_context
-async def status(context: ac.Context) -> str:
-    """
-    Show the overview of ANLT status of the port.\n
-
-    """
-    storage: CmdContext = context.obj
-    port_obj = storage.retrieve_port()
-    status_dic = await anlt_utils.status(port_obj)
-    port_id = storage.retrieve_port_str()
-    return format_port_status(port_id, status_dic)

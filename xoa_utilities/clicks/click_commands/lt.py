@@ -2,6 +2,7 @@ from __future__ import annotations
 import asyncclick as ac
 from .. import click_backend as cb
 from xoa_driver.hlfuncs import anlt as anlt_utils
+from xoa_driver import enums
 from ...exceptions import *
 from ...clis import (
     format_lt_config,
@@ -100,7 +101,9 @@ async def lt_inc(context: ac.Context, lane: int, emphasis: str) -> str:
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    await anlt_utils.lt_coeff_inc(port_obj, lane, emphasis)
+    await anlt_utils.lt_coeff_inc(
+        port_obj, lane, enums.LinkTrainCoeffs[emphasis.upper()]
+    )
     return format_lt_inc_dec(storage, lane, emphasis, True)
 
 
@@ -121,7 +124,9 @@ async def lt_dec(context: ac.Context, lane: int, emphasis: str) -> str:
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    await anlt_utils.lt_coeff_dec(port_obj, lane, emphasis)
+    await anlt_utils.lt_coeff_dec(
+        port_obj, lane, enums.LinkTrainCoeffs[emphasis.upper()]
+    )
     return format_lt_inc_dec(storage, lane, emphasis, False)
 
 
@@ -142,7 +147,9 @@ async def lt_encoding(context: ac.Context, lane: int, encoding: str) -> str:
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    await anlt_utils.lt_encoding(port_obj, lane, encoding)
+    await anlt_utils.lt_encoding(
+        port_obj, lane, enums.LinkTrainEncoding[encoding.upper()]
+    )
     return format_lt_encoding(storage, lane, encoding)
 
 
@@ -163,7 +170,7 @@ async def lt_preset(context: ac.Context, lane: int, preset: int) -> str:
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    await anlt_utils.lt_preset(port_obj, lane, preset)
+    await anlt_utils.lt_preset(port_obj, lane, enums.LinkTrainPresets(preset))
     return format_lt_preset(storage, lane, preset)
 
 
@@ -184,25 +191,6 @@ async def lt_trained(context: ac.Context, lane: int) -> str:
     port_obj = storage.retrieve_port()
     await anlt_utils.lt_trained(port_obj, lane)
     return format_lt_trained(storage, lane)
-
-
-# **************************
-# sub-command: lt status
-# **************************
-@lt.command(cls=cb.XenaCommand, name="status")
-@ac.argument("lane", type=ac.INT)
-@ac.pass_context
-async def lt_status(context: ac.Context, lane: int) -> str:
-    """
-    To show the link training status of the specified lane.
-
-        LANE INT: Specifies the lane index.\n
-
-    """
-    storage: CmdContext = context.obj
-    port_obj = storage.retrieve_port()
-    dic = await anlt_utils.lt_status(port_obj, lane)
-    return format_lt_status(dic)
 
 
 # **************************
@@ -262,26 +250,19 @@ async def txtapset(
 
 
 # **************************
-# sub-command: lt log
+# sub-command: lt status
 # **************************
-@lt.command(cls=cb.XenaCommand)
+@lt.command(cls=cb.XenaCommand, name="status")
 @ac.argument("lane", type=ac.INT)
-@ac.option(
-    "--live/--no-live",
-    is_flag=True,
-    help="Should show the live LT log , " "default to False. " "e.g. lt_log --live",
-    default=False,
-)
 @ac.pass_context
-async def lt_log(context: ac.Context, lane: int, live: bool) -> str:
+async def lt_status(context: ac.Context, lane: int) -> str:
     """
-    Show the link training trace log for the specified lane.
+    To show the link training status of the specified lane.
 
-        LANE INT: The lane index.\n
+        LANE INT: Specifies the lane index.\n
 
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    log = await anlt_utils.lt_log(port_obj, lane)
-    return log
-    # TODO: Needs to be implemented for display
+    dic = await anlt_utils.lt_status(port_obj, lane)
+    return format_lt_status(dic)
