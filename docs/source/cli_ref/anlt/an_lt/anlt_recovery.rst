@@ -35,7 +35,7 @@ Examples
 .. code-block:: console
 
     xoa_util[port0/2]$ anlt recovery
-    Port 0/2 link recovery enabled
+    Port 0/2 link recovery on
 
     xoa_util[port0/2]$
 
@@ -43,7 +43,7 @@ Examples
 .. code-block:: console
 
     xoa_util[port0/2]$ anlt recovery --off
-    Port 0/2 link recovery disable
+    Port 0/2 link recovery off
 
     xoa_util[port0/2]$
 

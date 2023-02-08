@@ -53,52 +53,158 @@ Examples
     xoa_util[port0/2]$ anlt log "log0.txt" --keep=lt --lane 0,1,5
 
 
-    | TIMESTAMP                |  MODULE  |  TYPE |               TX                |                   RX                  |                                       |
-    |--------------------------+----------+-------+---------------------------------+---------------------------------------+---------------------------------------|
-    | 20230131-134059.150943   |     LT   | TRACE |                                 |                                       | LOCK=true                             |
-    |                          |          |       |                                 |                                       | SYNC LOST=true                        |
-    |                          |          |       |                                 |                                       | NEW_FRAME=true                        |
-    |                          |          |       |                                 |                                       | OVERRUN=false                         |
-    |--------------------------+----------+-------+---------------------------------+---------------------------------------+---------------------------------------|
-    | 20230131-134060.100000   |     LT   | TRACE | value = 0x3A824608              |                                       |                                       |
-    |                          |          |       | control:                        |                                       |                                       |
-    |                          |          |       |   REQ: Dec                      |                                       |                                       |
-    |                          |          |       |   SEL: c(0)                     |                                       |                                       |
-    |                          |          |       |   MOD: PAM4                     |                                       |                                       |
-    |                          |          |       |   IC: Indv                      |                                       |                                       |
-    |                          |          |       | status:                         |                                       |                                       |
-    |                          |          |       |   STS: No upd                   |                                       |                                       |
-    |                          |          |       |   ECH: c(1)                     |                                       |                                       |
-    |                          |          |       |   MOD: PAM4                     |                                       |                                       |
-    |                          |          |       |   IC: No upd                    |                                       |                                       |
-    |                          |          |       | locked: true                    |                                       |                                       |
-    |                          |          |       | Done: false                     |                                       |                                       |
-    |                          |          |       | Errors:                         |                                       |                                       |
-    |                          |          |       |   Control bit 7:5 not 0         |                                       |                                       |
-    |                          |          |       |   Status bit 14:12 not 0        |                                       |                                       |
-    |--------------------------+----------+-------+---------------------------------+---------------------------------------+---------------------------------------|
-    | 20230131-134060.100000   |     LT   | TRACE |                                 | value = 0x3A824608                    |                                       |
-    |                          |          |       |                                 | control:                              |                                       |
-    |                          |          |       |                                 |   REQ: Dec                            |                                       |
-    |                          |          |       |                                 |   SEL: c(0)                           |                                       |
-    |                          |          |       |                                 |   MOD: PAM4                           |                                       |
-    |                          |          |       |                                 |   IC: Indv                            |                                       |
-    |                          |          |       |                                 | status:                               |                                       |
-    |                          |          |       |                                 |   STS: No upd                         |                                       |
-    |                          |          |       |                                 |   ECH: c(1)                           |                                       |
-    |                          |          |       |                                 |   MOD: PAM4                           |                                       |
-    |                          |          |       |                                 |   IC: No upd                          |                                       |
-    |                          |          |       |                                 | locked: true                          |                                       |
-    |                          |          |       |                                 | Done: false                           |                                       |
-    |                          |          |       |                                 | Errors:                               |                                       |
-    |                          |          |       |                                 |   Control bit 7:5 not 0               |                                       |
-    |                          |          |       |                                 |   Status bit 14:12 not 0              |                                       |
-    |--------------------------+----------+-------+---------------------------------+---------------------------------------+---------------------------------------|
-    | 20230131-134060.100000   |     LT   | FSM   |                                 |                                       | STATE CHANGE: (EVENT_RESET_DEASSERT)  |
-    |                          |          |       |                                 |                                       |    IDLE->INITIALIZE                   |
-    |--------------------------+----------+-------+---------------------------------+---------------------------------------+---------------------------------------|
+    time: 19700101-000505.350588,
+    module: LT,
+    lane: 3,
+    type: trace,
+    entry:
+        direction: tx,
+        pkt:
+        state: prev,
+        value: 0x021A0A30,
+        count: 0
 
+    time: 19700101-000505.350600,
+    module: LT,
+    lane: 3,
+    type: trace,
+    entry:
+        direction: tx,
+        pkt:
+        state: new,
+        value: 0x021A0AB2,
+        fields:
+            control:
+            C_REQ: Dec,
+            C_SEL: c(-2),
+            PAM_MOD: PAM4,
+            IC_REQ: INDV
+            ,
+            status:
+            C_STS: C lim,
+            C_ECH: c(-2),
+            PAM_MOD: PAM4,
+            IC_STS: No upd
+            ,
+            locked: true,
+            done: false
 
+    time: 19700101-000505.350621,
+    module: LT,
+    lane: 3,
+    type: trace,
+    entry:
+        direction: rx,
+        pkt:
+        state: prev,
+        value: 0x021A0A30,
+        count: 182
+
+    time: 19700101-000505.350633,
+    module: LT,
+    lane: 3,
+    type: trace,
+    entry:
+        direction: rx,
+        pkt:
+        state: new,
+        value: 0x021A0AB2,
+        fields:
+            control:
+            C_REQ: Dec,
+            C_SEL: c(-2),
+            PAM_MOD: PAM4,
+            IC_REQ: INDV,
+            status:
+            C_STS: C lim,
+            C_ECH: c(-2),
+            PAM_MOD: PAM4,
+            IC_STS: No upd,
+            locked: true,
+            done: false
+
+    time: 19700101-000505.350657,
+    module: LT,
+    lane: 3,
+    type: trace,
+    entry:
+        direction: tx,
+        pkt:
+        state: prev,
+        value: 0x021A0AB2,
+        count: 0
+
+    time: 19700101-000505.350669,
+    module: LT,
+    lane: 3,
+    type: trace,
+    entry:
+        direction: tx,
+        pkt:
+        state: new,
+        value: 0x02180A32,
+        fields:
+            control:
+            C_REQ: Hold,
+            C_SEL: c(-2),
+            PAM_MOD: PAM4,
+            IC_REQ: INDV
+            ,
+            status:
+            C_STS: C lim,
+            C_ECH: c(-2),
+            PAM_MOD: PAM4,
+            IC_STS: No upd
+            ,
+            locked: true,
+            done: false
+
+    time: 19700101-000505.350690,
+    module: LT,
+    lane: 3,
+    type: trace,
+    entry:
+        direction: rx,
+        pkt:
+        state: prev,
+        value: 0x021A0AB2,
+        count: 214
+
+    time: 19700101-000505.350702,
+    module: LT,
+    lane: 3,
+    type: trace,
+    entry:
+        direction: rx,
+        pkt:
+        state: new,
+        value: 0x02180A32,
+        fields:
+            control:
+            C_REQ: Hold,
+            C_SEL: c(-2),
+            PAM_MOD: PAM4,
+            IC_REQ: INDV
+            ,
+            status:
+            C_STS: C lim,
+            C_ECH: c(-2),
+            PAM_MOD: PAM4,
+            IC_STS: No upd
+            ,
+            locked: true,
+            done: false
+
+    time: 19700101-000505.350715,
+    module: LT,
+    lane: 3,
+    type: trace,
+    entry:
+        direction: tx,
+        pkt:
+        state: prev,
+        value: 0x02180A32,
+        count: 0
 
 
 
