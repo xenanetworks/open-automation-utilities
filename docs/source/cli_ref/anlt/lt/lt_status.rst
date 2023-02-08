@@ -11,7 +11,7 @@ To show the link training status of the specified lane.
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
     
     lt status <LANE>
 
@@ -31,7 +31,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ lt status 0
     Is Enabled        : true

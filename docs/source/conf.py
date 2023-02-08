@@ -124,6 +124,7 @@ html_favicon = './_static/xoa_favicon_16.png'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = ['xoa.css']
 
 
 html_show_copyright = True
@@ -136,7 +137,7 @@ html_theme_options = {
     "show_toc_level": 1,
     "use_download_button": True,
     "show_navbar_depth": 2,
-    "announcement": "XOA ANLT Utilities is still in development. Content is subject to changes without notification.",
+    "announcement": "XOA ANLT Utilities is still in development. Content is subject to changes without prior notice.",
 }
 
 html_split_index = True

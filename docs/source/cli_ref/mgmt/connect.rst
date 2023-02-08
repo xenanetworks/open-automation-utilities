@@ -10,7 +10,7 @@ To connect to a tester for the current session.
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
     
     connect <DEVICE> <USERNAME>
     [-p, --ports <value: text list>]
@@ -50,28 +50,28 @@ If used, the context will switch to the first port in the list after the connect
 
 ``--reset/--no-reset`` 
     
-Removes all port configurations of the ports in `--ports` after reservation, default to `--reset`.
+Removes all port configurations of the ports in `--ports` after reservation, default to ``--reset``.
 
 
 ``--force/--no-force``
 
-Breaks port locks established by another user, aka. force reservation, default to `--force`.
+Breaks port locks established by another user, aka. force reservation, default to ``--force``.
 
 
 ``-P, --password`` (text)
     
-The login password of the tester, default to `xena`.
+The login password of the tester, default to ``xena``.
 
 
 ``-t, --tcp`` (int)
     
-The TCP port number on the chassis for the client to establish a session, default to `22606`.
+The TCP port number on the chassis for the client to establish a session, default to ``22606``.
 
 
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util$ connect 10.10.10.10 automation --ports 0/0,0/1,0/2,0/3 --reset --force --password xena --tcp 22606
     OK
@@ -89,7 +89,7 @@ Examples
     xoa_util[port0/0]$
 
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util$ connect 10.10.10.10 automation 
     OK

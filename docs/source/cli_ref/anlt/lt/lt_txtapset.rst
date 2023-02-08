@@ -11,7 +11,7 @@ Write the tap values of the specified lane of the local port.
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
     
     lt txtapget <LANE>
 
@@ -51,7 +51,7 @@ Specifies c(1) value of the tap.
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ lt txtapset 5 --pre3=1
     Local Coefficient Lane(5)   :           c(-3)       c(-2)       c(-1)       c(0)        c(1)
@@ -65,7 +65,7 @@ Examples
     xoa_util[port0/2][lt]$
 
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ lt txtapset 5 --main=80 --pre2=6
     Local Coefficient Lane(5)   :           c(-3)       c(-2)       c(-1)       c(0)        c(1)

@@ -16,7 +16,7 @@ Debug, reset the lane.
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     debug lane_reset <LANE>
 
@@ -37,7 +37,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ debug lane_reset 0
 

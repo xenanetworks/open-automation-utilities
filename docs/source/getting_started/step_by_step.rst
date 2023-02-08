@@ -1,3 +1,6 @@
+.. role:: xbluethick
+.. role:: xgreenthick
+
 Step-by-Step Guide
 ===================
 
@@ -13,6 +16,13 @@ The diagram below illustrates a basic flow of using XOA Utilities to do ANLT tes
 
     ⚡️ You can use **tab key** to auto-complete a command to speed up your input speed.
 
+.. important::
+
+    Commands in :xgreenthick:`green blocks` instruct the tester to take action immediately.
+
+    Commands in :xbluethick:`blue blocks` only configure the local state. You need to run ``anlt do`` to execute the configuration.
+
+
 Connect
 -------
 
@@ -20,9 +30,9 @@ First, you need to connect to your tester using the command :doc:`../cli_ref/mgm
 
 If you don't know which ports you will use at the time of connecting to the port, just leave the option ``--ports`` empty as the example shows below. You can reserve ports later.
 
-.. code-block:: console
+.. code-block:: text
 
-    [xoa_util]$ connect 10.10.10.10 xoa_anlt
+    xoa_util$ connect 10.10.10.10 xoa_anlt
 
 
 Reserve Port
@@ -34,9 +44,9 @@ Then, reserve a port on the tester using the command :doc:`../cli_ref/mgmt/port`
 
     You can only work on one port at a time in one console window. If you want to simultaneously work on multiple ports, you can open multiple console windows.
 
-.. code-block:: console
+.. code-block:: text
 
-    [xoa_util][]$ port 0/0 --reset --force
+    xoa_util[]$ port 0/0 --reset --force
 
 
 Disable Link Recovery
@@ -48,9 +58,9 @@ This is because the port always tries to re-do ANLT command sequence every five 
 
 This will disturb your manual link training procedure if you don't disable it prior to your interactive test.
 
-.. code-block:: console
+.. code-block:: text
 
-    [xoa_util][port0/0]$ recovery --off
+    xoa_util[port0/0]$ recovery --off
 
 
 Configure AN & LT
@@ -58,17 +68,25 @@ Configure AN & LT
 
 After disabling link recovery on the port, you can start configuring AN and LT using :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, and :doc:`../cli_ref/anlt/lt/lt_im` as the example shown below. 
 
-These three commands only configure the ANLT test scenario instead of starting any AN or LT on the port.
+
+.. code-block:: text
+
+    xoa_util[port0/0]$ an config --off --no-loopback
+
+    xoa_util[port0/0]$ lt config --on --preset0 --mode=interactive 
+
+    xoa_util[port0/2]$ lt im 0 nrz
+
 
 .. note::
 
     The initial modulation of each lane on a port is by default PAM2 (NRZ). If you want to change them, you can use :doc:`../cli_ref/anlt/lt/lt_im`, otherwise do nothing.
 
-.. code-block:: console
 
-    [xoa_util][port0/0]$ an config --off --no-loopback
+.. important::
 
-    [xoa_util][port0/0]$ lt config --on --preset0 --mode=interactive 
+    :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, and :doc:`../cli_ref/anlt/lt/lt_im` only change the local ANLT configuration state. To execute the configuration, you need to run :doc:`../cli_ref/anlt/an_lt/anlt_do`, otherwise your changes will not take effect on the tester.
+
 
 
 Start ANLT
@@ -76,9 +94,9 @@ Start ANLT
 
 After configuring the ANLT scenario on the port, you should execute :doc:`../cli_ref/anlt/an_lt/anlt_do` to let XOA Utilities application send low-level commands to the tester to start the ANLT procedure, either AN-only, or AN + LT, or LT (auto), or LT (interactive).
 
-.. code-block:: console
+.. code-block:: text
 
-    [xoa_util][port0/0]$ do anlt
+    xoa_util[port0/0]$ do anlt
 
 
 Control LT Interactive
@@ -87,31 +105,32 @@ Control LT Interactive
 If you run LT (interactive), you will need to manually control the LT parameters using the LT Control Commands shown in :doc:`../cli_ref/anlt/lt/index`, for example:
 
 
-.. code-block:: console
+.. code-block:: text
 
-    [xoa_util][port0/0]$ lt preset 2
+    xoa_util[port0/0]$ lt preset 2
 
-    [xoa_util][port0/0]$ lt inc 0 pre3
+    xoa_util[port0/0]$ lt inc 0 pre3
 
-    [xoa_util][port0/0]$ lt inc 0 main
+    xoa_util[port0/0]$ lt inc 0 main
 
-    [xoa_util][port0/0]$ lt inc 0 main
+    xoa_util[port0/0]$ lt inc 0 main
 
-    [xoa_util][port0/0]$ lt dec 0 post
+    xoa_util[port0/0]$ lt dec 0 post
 
-    [xoa_util][port0/0]$ lt status 0
+    xoa_util[port0/0]$ lt status 0
 
-    [xoa_util][port0/0]$ lt trained 0
+    xoa_util[port0/0]$ lt trained 0
 
-    [xoa_util][port0/0]$ lt txtagget 0
+    xoa_util[port0/0]$ lt txtagget 0
 
-    [xoa_util][port0/0]$ lt txtagset --pre3=5 --main=56
+    xoa_util[port0/0]$ lt txtagset --pre3=5 --main=56
 
 
 Check AN Status
 ---------------
 
-Check AN statistics by :doc:`../cli_ref/anlt/an/an_status` .
+Check AN statistics by :doc:`../cli_ref/anlt/an/an_status`.
+
 
 Check LT Status
 ---------------
@@ -124,6 +143,14 @@ Check ANLT Log
 
 Check ANLT logging by :doc:`../cli_ref/anlt/an_lt/anlt_log`.
 
+.. code-block:: text
+
+    xoa_util[port0/0]$ anlt log
+
+.. note::
+
+    This commands **continuously displays** the log messages on the screen so you can keep track of your ANLT actions. To **quit** the continuous display mode, press :kbd:`Control-z`.
+
 
 Start Over
 ----------
@@ -132,8 +159,8 @@ If you want to start over on the port, you can reset the port by ``port <PORT> -
 
 This will bring the port back to its default state.
 
-.. code-block:: console
+.. code-block:: text
 
-    [xoa_util][port0/0]$ port 0/0 --reset
+    xoa_util[port0/0]$ port 0/0 --reset
 
 

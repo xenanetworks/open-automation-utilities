@@ -15,7 +15,7 @@ Initialize debug
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     debug init <LANE>
 
@@ -36,7 +36,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ debug init 0
 

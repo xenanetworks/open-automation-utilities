@@ -11,7 +11,7 @@ To request the remote link training partner to use the specified encoding on the
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
     
 lt encoding <LANE> <ENCODING>
 
@@ -45,21 +45,21 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ lt encoding 0 nrz
     Port 0/2 requests: use NRZ on Lane 0
 
     xoa_util[port0/2]$
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ lt encoding 4 pam4
     Port 0/2 requests: use PAM4 on Lane 4
 
     xoa_util[port0/2]$+
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ lt encoding 3 pam4pre
     Port 0/2 requests: use PAM4_WITH_PRECODING on Lane 3

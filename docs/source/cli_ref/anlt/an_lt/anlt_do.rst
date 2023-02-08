@@ -10,7 +10,7 @@ To start ANLT according to the configuration from :doc:`../an/an_config`, :doc:`
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
     
     anlt do
 
@@ -25,7 +25,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/0]$ anlt do
 

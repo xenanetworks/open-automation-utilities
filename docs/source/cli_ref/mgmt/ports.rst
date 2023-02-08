@@ -10,7 +10,7 @@ This command works in all context.
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
     
     ports
 
@@ -29,7 +29,7 @@ Show all ports of the tester, default to ``--no-all``
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/0]$ ports --all
     Ports       Sync        Owner
@@ -40,7 +40,7 @@ Examples
     0/4         yes         Others
     0/5         yes         Others
 
-.. code-block:: console
+.. code-block:: text
     
     xoa_util[port0/0]$ ports
     Ports       Sync        Owner

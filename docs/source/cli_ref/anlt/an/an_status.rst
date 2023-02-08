@@ -11,7 +11,7 @@ To show the auto-negotiation status
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
     
     an status
 
@@ -27,7 +27,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ an status
     Loopback              : not allowed

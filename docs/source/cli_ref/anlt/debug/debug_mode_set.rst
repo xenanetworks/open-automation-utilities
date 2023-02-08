@@ -16,7 +16,7 @@ Debug mode_set
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     debug mode_set <LANE>
 
@@ -37,7 +37,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ debug mode_set 0
 

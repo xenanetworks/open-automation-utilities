@@ -16,7 +16,7 @@ Debug lt_status
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     debug lt_status <LANE>
 
@@ -37,7 +37,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ debug lt_status 0
 

@@ -11,7 +11,7 @@ To start writing the link training trace log for the specified lane into a file,
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
     
     anlt log
 
@@ -49,7 +49,7 @@ Specifies which lanes of LT logs to keep. If you don't know how many serdes lane
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ anlt log "log0.txt" --keep=lt --lane 0,1,5
 

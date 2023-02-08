@@ -11,7 +11,7 @@ Read the tap values of the specified lane of the local port.
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
     
     lt txtapget <LANE>
 
@@ -31,7 +31,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ lt txtapget 0
     Local Coefficient Lane(0)   :           c(-3)       c(-2)       c(-1)       c(0)        c(1)

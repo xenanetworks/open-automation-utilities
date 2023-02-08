@@ -15,7 +15,7 @@ Debug lt_prbs
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     debug lt_prbs <LANE>
 
@@ -36,7 +36,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ debug lt_prbs 0
 

@@ -1,6 +1,10 @@
 lt config
 =========
 
+.. important::
+
+    This command only changes the local ANLT configuration state. To execute the configuration, you need to run :doc:`../an_lt/anlt_do`, otherwise your changes will not take effect on the tester.
+
 Description
 -----------
 
@@ -11,7 +15,7 @@ To configure link training on the working port.
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     lt config
     [-m, --mode <value: text>] 
@@ -28,7 +32,7 @@ Options
 
 ``-m, --mode`` (text)
     
-The mode for link training on the working port, default to `interactive`.
+The mode for link training on the working port, default to ``interactive``.
 
 Allowed values:
 
@@ -40,12 +44,12 @@ Allowed values:
 
 ``--on/--off``
     
-Enable or disable link training on the working port, default to `--on`.
+Enable or disable link training on the working port, default to ``--on``.
 
 
 ``--preset0/--no-preset0``
 
-Should the preset0 (out-of-sync) use existing tap values or standard values, default to `--no-preset0`.
+Should the preset0 (out-of-sync) use **existing tap values** (``--preset0``) or **standard values** (``--no-preset0``), default to ``--no-preset0``.
 
 
 
@@ -53,7 +57,7 @@ Should the preset0 (out-of-sync) use existing tap values or standard values, def
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ lt config --on --preset0 --mode=interactive
     Port 0/2
@@ -63,7 +67,7 @@ Examples
 
     xoa_util[port0/2]$
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ lt config --off
     Port 0/2
@@ -73,7 +77,7 @@ Examples
 
     xoa_util[port0/2]$
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ lt config 
     Port 0/2

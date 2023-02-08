@@ -16,7 +16,7 @@ Debug lt_tx_config_get
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     debug lt_tx_config_get <LANE>
 
@@ -37,7 +37,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ debug lt_tx_config_get 0
 

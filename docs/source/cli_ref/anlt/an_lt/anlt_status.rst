@@ -10,7 +10,7 @@ To show the current status of the working port.
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
     
     anlt status
 
@@ -26,7 +26,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/0]$ anlt status
     

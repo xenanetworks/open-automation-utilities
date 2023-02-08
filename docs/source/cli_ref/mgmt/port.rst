@@ -10,7 +10,7 @@ This command changes the working port and will stay in the same context.
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
     
     port <PORT>
     [--reset/--no-reset]
@@ -33,17 +33,17 @@ Options
 
 ``--reset/--no-reset`` 
     
-Removes the port configurations, default to `--no-reset`.
+Removes the port configurations, default to ``--no-reset``.
 
 ``--force/--no-force``
 
-Breaks port locks established by another user, aka. force reservation, default to `--force`.
+Breaks port locks established by another user, aka. force reservation, default to ``--force``.
 
 
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/0]$ port 0/1
     Ports       Sync
@@ -85,7 +85,7 @@ Examples
     xoa_util[port0/2]$
 
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/0][lt]$ port 0/1
     Ports       Sync
@@ -101,7 +101,7 @@ Examples
     xoa_util[port0/1][lt]$ 
 
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/1][lt]$ port 0/2 --no-force
     Ports       Sync

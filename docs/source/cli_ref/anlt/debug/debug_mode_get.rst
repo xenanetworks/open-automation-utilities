@@ -16,7 +16,7 @@ Debug mode_get
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     debug mode_get <LANE>
 
@@ -37,7 +37,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ debug mode_get 0
 

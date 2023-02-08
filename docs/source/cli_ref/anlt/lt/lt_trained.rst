@@ -11,7 +11,7 @@ To announce that the specified lane is trained.
 Synopsis
 --------
 
-.. code-block:: console
+.. code-block:: text
     
     lt trained <LANE>
 
@@ -32,7 +32,7 @@ Options
 Examples
 --------
 
-.. code-block:: console
+.. code-block:: text
 
     xoa_util[port0/2]$ lt trained 0
     Port 0/2 requests: Lane 0 is trained
