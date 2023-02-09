@@ -6,10 +6,10 @@ def main():
         long_description = fh.read()
 
     setuptools.setup(
-        name="xoa-utilities",
+        name="xoa-utils",
         entry_points={
             "console_scripts": [
-                "xoa-utilities = xoa_utilities.entry:main",
+                "xoa-utils = xoa_utilities.entry:main",
             ]
         },
         description=(
@@ -26,7 +26,7 @@ def main():
         packages=setuptools.find_packages(),
         license="Apache 2.0",
         install_requires=[
-            "xoa-driver>=1.1.0",
+            "xoa-driver>=1.0.15",
             "typing_extensions>=4.4.0",
             "cffi>=1.15.1",
             "cryptography>=39.0.0",
