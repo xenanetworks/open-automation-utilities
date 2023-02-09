@@ -165,7 +165,7 @@ def format_lt_inc_dec(
     change = {
         "pre3": "c(-3)",
         "pre2": "c(-2)",
-        "pre1": "c(-1)",
+        "pre": "c(-1)",
         "main": "c(0)",
         "post": "c(1)",
     }[emphasis]

@@ -89,14 +89,14 @@ async def lt_im(context: ac.Context, lane: int, encoding: str) -> str:
 # **************************
 @lt.command(cls=cb.XenaCommand, name="inc")
 @ac.argument("lane", type=ac.INT)
-@ac.argument("emphasis", type=ac.Choice(["pre3", "pre2", "pre1", "main", "post"]))
+@ac.argument("emphasis", type=ac.Choice(["pre3", "pre2", "pre", "main", "post"]))
 @ac.pass_context
 async def lt_inc(context: ac.Context, lane: int, emphasis: str) -> str:
     """
     Request the remote port's lane to increase an emphasis by 1.
 
         LANE INT: Specifies the transceiver lane index.\n
-        EMPHASIS TEXT: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre1 | main | post.\n
+        EMPHASIS TEXT: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post.\n
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -112,14 +112,14 @@ async def lt_inc(context: ac.Context, lane: int, emphasis: str) -> str:
 # **************************
 @lt.command(cls=cb.XenaCommand, name="dec")
 @ac.argument("lane", type=ac.INT)
-@ac.argument("emphasis", type=ac.Choice(["pre3", "pre2", "pre1", "main", "post"]))
+@ac.argument("emphasis", type=ac.Choice(["pre3", "pre2", "pre", "main", "post"]))
 @ac.pass_context
 async def lt_dec(context: ac.Context, lane: int, emphasis: str) -> str:
     """
     Request the remote port's lane to decrease an emphasis by 1.
 
         LANE INT: Specifies the transceiver lane index.\n
-        EMPHASIS TEXT: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre1 | main | post.\n
+        EMPHASIS TEXT: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post.\n
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -239,7 +239,7 @@ async def txtapset(
         LANE INT: The lane index to read tap values from.\n
         PRE3 INT: Specifies c(-3) value of the tap.\n
         PRE2 INT: Specifies c(-2) value of the tap.\n
-        PRE1 INT: Specifies c(-1) value of the tap.\n
+        PRE  INT: Specifies c(-1) value of the tap.\n
         MAIN INT: Specifies c(0) value of the tap.\n
         POST INT: Specifies c(1) value of the tap.\n
     """
