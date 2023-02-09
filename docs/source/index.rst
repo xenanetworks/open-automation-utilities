@@ -2,7 +2,7 @@
 Xena OpenAutomation Utilities Documentation
 ===========================================
 
-Xena OpenAutomation Utilities (:term:`XOA Util`) provides an **interactive shell** for users to control Xena testers via **command-line interface** (CLI) commands to performance operations such as :term:`ANLT` testing and resource management (more will be added in future releases) in an interactive fashion.
+Xena OpenAutomation Utilities (:term:`XOA Utils`) provides an **interactive shell** for users to control Xena testers via **command-line interface** (CLI) commands to performance operations such as :term:`ANLT` testing and resource management (more will be added in future releases) in an interactive fashion.
 
 
 -----------

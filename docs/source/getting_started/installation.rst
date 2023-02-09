@@ -259,4 +259,88 @@ We recommend install and use the `pip-autoremove <https://github.com/invl/pip-au
     See `pip-autoremove <https://github.com/invl/pip-autoremove>`_ usage.
 
 
+Generate SSH Key
+------------------
+
+XOA Utils requires an SSH key pair to run as a SSH service. To generate a SSH key pair, please open Command Prompt (Windows) or Terminal (macOS/Linux)
+
+.. tab:: Windows
+    :new-set:
+
+    .. code-block:: doscon
+        :caption: Generate SSH key in Windows environment.
+
+        > ssh-keygen -t rsa
+
+    The key pair will be stored in C:\Users\YOU\.ssh
+
+
+.. tab:: macOS/Linux
+
+    .. code-block:: console
+        :caption: Generate SSH key in macOS/Linux environment.
+
+        $ ssh-keygen -t rsa
+    
+    The key pair will be stored in /Users/YOU/.ssh
+
+
+.. seealso::
+
+    You can read more about `Generating SSH Key <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key>`_ 
+
+
+Start XOA Utils
+---------------
+
+After installing the package and ensuring the SSH key in place, you can start XOA Utils simply by typing ``xoa-utils``
+
+.. tab:: Windows
+    :new-set:
+
+    .. code-block:: doscon
+        :caption: Start XOA Utils SSH service.
+
+        > xoa-utils
+
+        > Xena SSH running on 0.0.0.0:66
+
+
+.. tab:: macOS/Linux
+
+    .. code-block:: console
+        :caption: Start XOA Utils SSH service.
+
+        $ xoa-utils
+
+        $ Xena SSH running on 0.0.0.0:66
+
+
+
+Then you can SSH to your localhost:
+
+.. tab:: Windows
+    :new-set:
+
+    .. code-block:: doscon
+        :caption: SSH to XOA Utils service.
+
+        > ssh yourname@localhost -p 66
+
+        Welcome to Xena SSH server, yourname!
+
+        xoa_util > 
+
+
+.. tab:: macOS/Linux
+
+    .. code-block:: console
+        :caption: SSH to XOA Utils service.
+
+        $ ssh yourname@localhost -p 66
+
+        Welcome to Xena SSH server, yourname!
+
+        xoa_util > 
+
 
