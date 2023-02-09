@@ -136,8 +136,7 @@ html_theme_options = {
     "home_page_in_toc": True,
     "show_toc_level": 1,
     "use_download_button": True,
-    "show_navbar_depth": 2,
-    "announcement": "XOA ANLT Utilities is still in development. Content is subject to changes without prior notice.",
+    "show_navbar_depth": 2
 }
 
 html_split_index = True
