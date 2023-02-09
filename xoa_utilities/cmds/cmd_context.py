@@ -61,6 +61,12 @@ class LoopFuncState:
         self.kw: dict = {}
 
 
+class AnltLowState:
+    def __init__(self) -> None:
+        self.lane: int = -1
+        self.low: t.Optional[debug_utils.AnLtLowLevelInfo] = None
+
+
 class CmdContext:
     def __init__(self) -> None:
         self.clear_all()
@@ -72,7 +78,7 @@ class CmdContext:
         self._an_state: ANState = ANState()
         self._lt_state: LTState = LTState()
         self._fn_state: LoopFuncState = LoopFuncState()
-        self._anlt_low: t.Optional[debug_utils.AnLtLowLevelInfo] = None
+        self._anlt_low_state: AnltLowState = AnltLowState()
 
     def get_coro_interval(self) -> int:
         return self._fn_state.interval
@@ -99,8 +105,9 @@ class CmdContext:
         port_str = f"[{p}]" if p else ""
         return f"{base_prompt}{serial}{port_str} {end_prompt} "
 
-    def store_anlt_low(self, low: debug_utils.AnLtLowLevelInfo) -> None:
-        self._anlt_low = low
+    def store_anlt_low(self, lane: int, low: debug_utils.AnLtLowLevelInfo) -> None:
+        self._anlt_low_state.low = low
+        self._anlt_low_state.lane = lane
 
     def store_lt_initial_mod(self, lane: int, encoding: str) -> None:
         e = LinkTrainEncoding[
@@ -127,6 +134,7 @@ class CmdContext:
         if current_port_str not in self._pt_state.ports:
             raise NotInStoreError(current_port_str)
         self._pt_state.port_str = current_port_str
+        self._anlt_low_state = AnltLowState()
 
     def store_current_tester(
         self, username: str, con_info: str, tester: L23Tester
@@ -141,7 +149,10 @@ class CmdContext:
         return self.obtain_physical_ports("*", False)
 
     def retrieve_anlt_low(self) -> t.Optional[debug_utils.AnLtLowLevelInfo]:
-        return self._anlt_low
+        return self._anlt_low_state.low
+
+    def retrieve_anlt_lane(self) -> int:
+        return self._anlt_low_state.lane
 
     def retrieve_an_enable(self) -> bool:
         return self._an_state.do

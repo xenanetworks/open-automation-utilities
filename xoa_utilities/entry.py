@@ -7,6 +7,7 @@ from xoa_utilities.clis import ReadConfig
 from xoa_utilities.hub import Hub
 from xoa_utilities.ssh_server import XenaSSHServer
 from xoa_utilities.cmds import CmdWorker
+import argparse
 
 
 class XenaSSHCLIHandle:
@@ -35,7 +36,7 @@ async def start_server(config: ReadConfig) -> None:
     )
 
 
-if __name__ == "__main__":
+def main() -> None:
     loop = asyncio.get_event_loop()
     config = ReadConfig()
     try:
@@ -45,3 +46,7 @@ if __name__ == "__main__":
         sys.exit(f"Error starting server: <{type(str(exc))}> {exc}")
     except KeyboardInterrupt:
         os.remove(config.hub_pid_path)
+
+
+if __name__ == "__main__":
+    main()

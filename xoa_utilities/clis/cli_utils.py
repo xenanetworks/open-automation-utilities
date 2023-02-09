@@ -3,10 +3,6 @@ import configparser
 import os
 import typing as t
 import asyncclick as ac
-import json
-from functools import wraps
-from ..exceptions import ConfigError
-from xoa_driver.exceptions import BadStatus
 from xoa_driver import enums
 
 if t.TYPE_CHECKING:
@@ -15,10 +11,19 @@ if t.TYPE_CHECKING:
 
 
 class ReadConfig:
+    EXAMPLE = """[Connection]
+port = 66
+sshkeypath = ~/.ssh/id_rsa
+
+[Hub]
+enable = false
+port = 10000
+"""
+
     def __init__(self) -> None:
         config = configparser.ConfigParser()
-        config.read("config.ini")
         self.config = config
+        self._read_or_write_ini()
         self.connection_host = config["Connection"].get("host", "localhost")
         self.connection_port = int(config["Connection"].get("port", "5000"))
         self.connection_host_keys = config["Connection"].get(
@@ -34,15 +39,39 @@ class ReadConfig:
         self.hub_pid_path = config["Hub"].get("pid_path", "hub.pid")
         self.hub_pid = self._read_hub_pid()
 
-    def _read_hub_pid(self) -> int:
-        pid = 0
-        if not os.path.isfile(self.hub_pid_path):
+    def _read_or_write_ini(self) -> None:
+        folder = os.path.join(os.path.expanduser("~"), "XenaNetworks", "XOA-UTILITIES")
+        realpath = os.path.join(folder, "config.ini")
+        if not os.path.isfile(realpath):
+            self._write_ini(realpath)
+        try:
+            self.config.read(realpath)
+            for i in ("Hub", "Connection"):
+                assert i in self.config
+        except Exception:
+            self._write_ini(realpath)
+            self.config.read(realpath)
+
+    def _touch(self, realpath: str) -> None:
+        realpath = os.path.abspath(realpath)
+        folder = os.path.dirname(realpath)
+        if not os.path.isfile(realpath):
             try:
-                os.unlink(self.hub_pid_path)
+                os.remove(realpath)
             except Exception:
                 pass
-            with open(self.hub_pid_path, "w"):
+            os.makedirs(folder, exist_ok=True)
+            with open(realpath, "w") as f:
                 pass
+
+    def _write_ini(self, realpath: str) -> None:
+        self._touch(realpath)
+        with open(realpath, "w") as f:
+            f.write(type(self).EXAMPLE)
+
+    def _read_hub_pid(self) -> int:
+        pid = 0
+        self._touch(self.hub_pid_path)
         with open(self.hub_pid_path, "r") as f:
             content = f.read().strip()
             try:

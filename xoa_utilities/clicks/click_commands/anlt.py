@@ -128,10 +128,17 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
         return all_logs
 
     def beautify(filtered: list[dict]) -> str:
-        return "\n".join(
-            json.dumps(i, indent=2).replace("{", "").replace("}", "").replace('"', "")
-            for i in filtered
-        ).strip()
+        result = []
+        for i in filtered:
+            base = (
+                json.dumps(i, indent=2)
+                .replace("{", "")
+                .replace("}", "")
+                .replace('"', "")
+            )            
+            result.append(base)
+
+        return ("-" * 50).join(result).strip()
 
     async def log(
         storage: CmdContext, filename: str, keep: str, lane: list[int]
@@ -140,9 +147,9 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
         log_str = await anlt_utils.anlt_log(port_obj)
         filtered = filter_log(log_str, keep, lane)
         string = beautify(filtered)
-        if filename and string:
+        if filename and log_str:
             with open(filename, "a") as f:
-                f.write(f"{string}\n")
+                f.write(f"{log_str}\n")
         return string
 
     real_lane_list = [i.strip() for i in lane.split(",")] if lane else []

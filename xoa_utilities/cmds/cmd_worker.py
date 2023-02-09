@@ -170,7 +170,8 @@ class CmdWorker:
             try:
                 kw = self.context.get_loop_coro_kw()
                 result = await async_func(self.context, **kw)
-                self.write(f"{result}\n{self.make_prompt('!')}")
+                if result:
+                    self.write(f"{result}\n{self.make_prompt('!')}")
                 await asyncio.sleep(self.context.get_coro_interval())
             except Exception as e:
                 self.write(f"{type(e).__name__}: {e}\n")
