@@ -96,7 +96,7 @@ After configuring the ANLT scenario on the port, you should execute :doc:`../cli
 
 .. code-block:: text
 
-    xoa_util[port0/0]$ do anlt
+    xoa_util[port0/0]$ anlt do
 
 
 Control LT Interactive
