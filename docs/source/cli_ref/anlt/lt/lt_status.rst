@@ -40,9 +40,11 @@ Examples
     
     Initial mode      : 0
     Preset0           : existing
-    PRBS BER          : 2.1234678E-5
+    Total Bits        : 2080985280
+    Total Err. Bits   : 2
+    PRBS BER          : 9.610832038177609e-10
 
-    Duration          : 10 us
+    Duration          : 10 µs
 
     Lock lost         : 0
     Frame lock        : lost

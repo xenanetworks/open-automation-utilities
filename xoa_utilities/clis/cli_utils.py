@@ -149,7 +149,7 @@ Lane (serdes) count   : {status['serdes_count']}
 def format_an_status(dic: dict) -> str:
     return f"""
 Loopback              : {dic['loopback']}
-Duration              : {dic['duration']} us
+Duration              : {dic['duration']:,} µs
 Successful runs       : {dic['successes']}
 Timeouts              : {dic['timeouts']}
 Loss of sync          : {dic['loss_of_sync']}
@@ -242,19 +242,22 @@ Failure           : {dic['failure']}
 
 Initial mode      : {dic['init_modulation']}
 Preset0           : {dic['preset0']}
-PRBS BER          : {dic['ber']}
+Total bits        : {dic['total_bits']:,}
+Total err. bits   : {dic['total_errored_bits']:,}
+BER               : {dic['ber']}
 
-Duration          : {dic['duration']}
+Duration          : {dic['duration']:,} µs
 
 Lock lost         : {dic['lock_lost']}
 Frame lock        : {dic['frame_lock']}
 Remote frame lock : {dic['remote_frame_lock']}
 
-Frame errors      : {dic['frame_errors']}
-Overrun errors    : {dic['overrun_errors']}
+Frame errors      : {dic['frame_errors']:,}
+Overrun errors    : {dic['overrun_errors']:,}
 
 Last IC received  : {dic['last_ic_received']}
 Last IC sent      : {dic['last_ic_sent']}
+
 TX Coefficient              :           c(-3)       c(-2)       c(-1)        c(0)        c(1)
     Current level           :{dic['c(-3)']['current_level']:16}{dic['c(-2)']['current_level']:12}{dic['c(-1)']['current_level']:12}{dic['c(0)']['current_level']:12}{dic['c(1)']['current_level']:12}
                             :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
