@@ -1,7 +1,9 @@
 Introduction
 ============
 
-The CLI commands of XOA Util are categorized into the following families:
+XOA Utils runs as a SSH service and provides users with a clientless user interface to do interactive testing (e.g. ANLT testing) with no dependency on platforms. It provides a set of CLI commands to manage and configure test ports, collect statistics, and save logs.
+
+The CLI commands of XOA Utils are categorized into the following families:
 
 * Auto-Negotiation and Link Training
 
@@ -52,7 +54,7 @@ Auto negotiation and Link Training are in principle two independent processes. H
     Read more about `Auto Negotiation and Link Training on NRZ and PAM4 based Ethernet Interfaces <https://xenanetworks.com/whitepaper/autoneg-link-training/>`_.
 
 
-In XOA Util, you can find the following functionalities to do auto-negotiation and link training interactive tests.
+In XOA Utils, you can find the following functionalities to do auto-negotiation and link training interactive tests.
 
 AN Functionalities
 ^^^^^^^^^^^^^^^^^^^^
@@ -106,7 +108,6 @@ Test Resource Management
 
 1. Connect to tester
 2. Reserve port
-3. Show port status
-4. Release port
-5. Reset port
-6. Disconnect
+3. Release port
+4. Reset port
+5. Disconnect
