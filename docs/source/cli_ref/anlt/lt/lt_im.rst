@@ -17,7 +17,7 @@ Synopsis
 
 .. code-block:: text
     
-lt im <LANE> <ENCODING>
+    lt im <LANE> <ENCODING>
 
 
 Arguments

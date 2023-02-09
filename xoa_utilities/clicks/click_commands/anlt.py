@@ -14,7 +14,6 @@ from ...cmds import CmdContext
 def anlt():
     """
     To enter anlt context.\n
-
     """
 
 
@@ -43,7 +42,6 @@ async def recovery(context: ac.Context, on: bool) -> str:
 async def status(context: ac.Context) -> str:
     """
     Show the overview of ANLT status of the port.\n
-
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -60,7 +58,6 @@ async def status(context: ac.Context) -> str:
 async def do(context: ac.Context) -> str:
     """
     Show the overview of ANLT status of the port.\n
-
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -101,7 +98,6 @@ async def do(context: ac.Context) -> str:
 async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
     """
     Show the auto-negotiation log trace.\n
-
     """
 
     def filter_log(log: str, keep: str, lane: list[int]) -> list[dict]:

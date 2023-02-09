@@ -10,6 +10,7 @@ import asyncssh as ah
 import asyncclick as ac
 import os
 import asyncio
+from xoa_driver import exceptions as driver_ex
 from .cmd_context import CmdContext
 
 if t.TYPE_CHECKING:
@@ -88,6 +89,7 @@ class CmdWorker:
         self.hub_enable: bool = False
         self.hub_msg_list: list = []
         self.context = CmdContext()
+        self.show_prompt = True
         self.register_keys()
 
     def autocomplete(self, line: str, pos: int) -> t.Tuple[str, int]:
@@ -132,8 +134,14 @@ class CmdWorker:
     def make_prompt(self, end_prompt: str = ">") -> str:
         return self.context.prompt(self.base_prompt, end_prompt)
 
+    def show_prompts(self) -> None:
+        if self.show_prompt:
+            self.write(f"\n{self.make_prompt()}")
+        else:
+            self.show_prompt = True
+
     async def run_interactive(self) -> None:
-        self.write(f"\n{self.make_prompt()}")
+        self.show_prompts()
         request = (await self.process.stdin.readline()).strip()
         response = None
         success = False
@@ -143,9 +151,11 @@ class CmdWorker:
             if isinstance(response, int):
                 response = self.context.get_error()
                 success = False
-
         except ac.UsageError as error:
             response = format_error(error)
+            success = False
+        except driver_ex.BadStatus as ee:
+            response = f"{type(ee).__name__}: Driver BadStatus error.\n"
             success = False
         except Exception as e:
             response = f"{type(e).__name__}: {e}\n"
@@ -176,7 +186,7 @@ class CmdWorker:
                 else:
                     await self.run_coroutine()
             except ah.TerminalSizeChanged:
-                pass
+                self.show_prompt = False
             except ah.BreakReceived:
                 self.finish()
 

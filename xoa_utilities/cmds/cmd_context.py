@@ -7,6 +7,7 @@ from ..exceptions import (
     NotConnectedError,
     NoSuchIDError,
     NoWorkingPort,
+    NotCorrectLaneError,
 )
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
 from xoa_driver.hlfuncs import anlt_ll_debug as debug_utils
@@ -36,6 +37,7 @@ class PortState:
     def __init__(self) -> None:
         self.ports: dict[str, GenericL23Port] = {}
         self.port_str: str = ""
+        self.port_lane_num: dict[str, int] = {}
 
 
 class ANState:
@@ -61,6 +63,9 @@ class LoopFuncState:
 
 class CmdContext:
     def __init__(self) -> None:
+        self.clear_all()
+
+    def clear_all(self) -> None:
         self._tr_state: TesterState = TesterState()
         self._pt_state: PortState = PortState()
         self._error: ErrorString = ErrorString()
@@ -126,12 +131,11 @@ class CmdContext:
     def store_current_tester(
         self, username: str, con_info: str, tester: L23Tester
     ) -> None:
+        self.clear_all()
         self._tr_state.con_info = con_info
         self._tr_state.serial = str(tester.info.serial_number)
         self._tr_state.username = username
         self._tr_state.obj = tester
-        self._pt_state.port_str = ""
-        self._pt_state.ports = {}
 
     def get_all_ports(self) -> dict[str, GenericL23Port]:
         return self.obtain_physical_ports("*", False)
@@ -180,8 +184,11 @@ class CmdContext:
     def retrieve_port_str(self) -> str:
         return self._pt_state.port_str
 
-    def store_port(self, exact_port_id: str, port_obj: GenericL23Port) -> None:
+    def store_port(
+        self, exact_port_id: str, port_obj: GenericL23Port, port_lane_num: int
+    ) -> None:
         self._pt_state.ports[exact_port_id] = port_obj
+        self._pt_state.port_lane_num[exact_port_id] = port_lane_num
 
     def retrieve_port(self, exact_port_id: str = "current") -> GenericL23Port:
         if self.retrieve_tester() is None:
@@ -193,6 +200,13 @@ class CmdContext:
         if exact_port_id in self._pt_state.ports:
             return self._pt_state.ports[exact_port_id]
         raise NotInStoreError(exact_port_id)
+
+    def validate_current_lane(self, lane: int) -> None:
+        current_port_id = self._pt_state.port_str
+        if current_port_id not in self._pt_state.port_lane_num:
+            raise NotInStoreError(current_port_id)
+        if not lane in range(self._pt_state.port_lane_num[self._pt_state.port_str]):
+            raise NotCorrectLaneError(current_port_id, lane)
 
     def remove_port(self, exact_port_id: str) -> None:
         if exact_port_id in self._pt_state.ports:

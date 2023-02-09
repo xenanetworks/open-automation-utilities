@@ -40,6 +40,12 @@ class NotInStoreError(ConfigError):
         self.msg = f"Not in store {general_id}!"
 
 
+class NotCorrectLaneError(ConfigError):
+    def __init__(self, port_id: str, lane: int) -> None:
+        self.name = "Not Correct Lane Error"
+        self.msg = f"No lane {lane} in port {port_id}!"
+
+
 class NoSuchPortError(ConfigError):
     def __init__(self, port_id: int) -> None:
         self.name = "No Such Port Error"
@@ -49,7 +55,9 @@ class NoSuchPortError(ConfigError):
 class NoWorkingPort(ConfigError):
     def __init__(self) -> None:
         self.name = "No Working Port Error"
-        self.msg = f"There is no working port, please use 'port' command to specify one!"
+        self.msg = (
+            f"There is no working port, please use 'port' command to specify one!"
+        )
 
 
 class NotSupportPcsPmaError(ConfigError):

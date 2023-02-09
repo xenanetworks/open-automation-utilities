@@ -18,7 +18,6 @@ from ...cmds import CmdContext
 def an():
     """
     To enter auto-negotiation context.\n
-
     """
 
 
@@ -40,10 +39,9 @@ def an():
 async def an_config(context: ac.Context, on: bool, loopback: bool) -> str:
     """
     Configure auto-negotiation for the working port.\n
-
     """
     storage: CmdContext = context.obj
-
+    storage.retrieve_port()
     storage.store_an_allow_loopback(loopback)
     storage.store_should_do_an(on)
     return format_an_config(storage, on, loopback)
@@ -60,7 +58,6 @@ async def an_config(context: ac.Context, on: bool, loopback: bool) -> str:
 async def an_status(context: ac.Context) -> str:
     """
     Show the auto-negotiation status.\n
-
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()

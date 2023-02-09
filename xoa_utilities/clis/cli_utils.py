@@ -90,7 +90,6 @@ def format_tester_status(storage: "CmdContext") -> str:
     serial_number = storage.retrieve_tester_serial()
     con_info = storage.retrieve_tester_con_info()
     username = storage.retrieve_tester_username()
-    port_dic = storage.retrieve_ports()
     result_str = f"\nTester  :      {serial_number}\nConInfo :      {con_info}\nUsername:      {username}\n\n"
     result_str += _port_dic_status(
         storage.retrieve_port_str(), storage.retrieve_ports()
@@ -166,7 +165,7 @@ def format_lt_inc_dec(
     change = {
         "pre3": "c(-3)",
         "pre2": "c(-2)",
-        "pre": "c(-1)",
+        "pre1": "c(-1)",
         "main": "c(0)",
         "post": "c(1)",
     }[emphasis]
@@ -177,9 +176,10 @@ def format_lt_inc_dec(
 
 
 def format_lt_encoding(storage: CmdContext, lane: int, encoding: str) -> str:
-    return f"Port {storage.retrieve_port_str()}: use \
-            {enums.LinkTrainEncoding[encoding.upper()].name} \
-            on Lane {lane}\n"
+    e = enums.LinkTrainEncoding[
+        {"pam4pre": "PAM4_WITH_PRECODING"}.get(encoding, encoding).upper()
+    ]
+    return f"Port {storage.retrieve_port_str()}: use {e.name} on Lane {lane}\n"
 
 
 def format_lt_preset(storage: CmdContext, lane: int, preset: int) -> str:
@@ -226,8 +226,8 @@ Overrun errors    : {dic['overrun_errors']}
 
 Last IC received  : {dic['last_ic_received']}
 Last IC sent      : {dic['last_ic_sent']}
-TX Coefficient              :           c(-3)       c(-2)       c(-1)       c(0)        c(1)
-    Current level           :{dic['c(-3)']['current_level']:17}{dic['c(-2)']['current_level']:12}{dic['c(-1)']['current_level']:12}{dic['c(0)']['current_level']:12}{dic['c(1)']['current_level']:12}
+TX Coefficient              :           c(-3)       c(-2)       c(-1)        c(0)        c(1)
+    Current level           :{dic['c(-3)']['current_level']:16}{dic['c(-2)']['current_level']:12}{dic['c(-1)']['current_level']:12}{dic['c(0)']['current_level']:12}{dic['c(1)']['current_level']:12}
                             :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
     + req                   :{dic['c(-3)']['+req']['rx']:11}{dic['c(-3)']['+req']['tx']:4}{dic['c(-2)']['+req']['rx']:8}{dic['c(-2)']['+req']['tx']:4}{dic['c(-1)']['+req']['rx']:8}{dic['c(-1)']['+req']['tx']:4}{dic['c(0)']['+req']['rx']:8}{dic['c(0)']['+req']['tx']:4}{dic['c(1)']['+req']['rx']:8}{dic['c(1)']['+req']['tx']:4}
     - req                   :{dic['c(-3)']['-req']['rx']:11}{dic['c(-3)']['-req']['tx']:4}{dic['c(-2)']['-req']['rx']:8}{dic['c(-2)']['-req']['tx']:4}{dic['c(-1)']['-req']['rx']:8}{dic['c(-1)']['-req']['tx']:4}{dic['c(0)']['-req']['rx']:8}{dic['c(0)']['-req']['tx']:4}{dic['c(1)']['-req']['rx']:8}{dic['c(1)']['-req']['tx']:4}

@@ -4,6 +4,7 @@ import asyncio
 from .. import click_backend as cb
 from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
+from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_driver.testers import L23Tester
 from ...exceptions import *
 import asyncclick as ac
@@ -61,7 +62,8 @@ async def connect(
                 await mgmt_utils.reserve_port(port_obj, force)
             if reset:
                 await mgmt_utils.reset_port(port_obj)
-            storage.store_port(port_id, port_obj)
+            port_lane_num = (await anlt_utils.status(port_obj))["serdes_count"]
+            storage.store_port(port_id, port_obj, port_lane_num)
             if count == 0:
                 first_id = port_id
             count += 1
@@ -117,7 +119,8 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
     except NotInStoreError:
         port_dic = storage.obtain_physical_ports(port)
         for p_id, p_obj in port_dic.items():
-            storage.store_port(p_id, p_obj)
+            port_lane_num = (await anlt_utils.status(p_obj))["serdes_count"]
+            storage.store_port(p_id, p_obj, port_lane_num)
             storage.store_current_port_str(p_id)
     port_obj = storage.retrieve_port()
     port_id = storage.retrieve_port_str()
@@ -144,5 +147,3 @@ async def ports(context: ac.Context, all: bool) -> str:
     """
     storage: CmdContext = context.obj
     return format_ports_status(storage, all)
-
-
