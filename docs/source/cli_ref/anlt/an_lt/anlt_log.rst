@@ -51,155 +51,107 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ anlt log "log0.txt" --keep=lt --lane 0,1,5
+    xoa_util[port0/2]$ anlt log "log0.txt"
 
+            time: 84552988935,
+            module: ANEG,
+            lane: 0,
+            type: fsm,
+            entry: 
+                fsm: 
+                event: EVENT_BREAK_LINK_TIMER_DONE,
+                current: TRANSMIT_DISABLE,
+                new: ABILITY_DETECT
+    --------------------------------------------------
 
-    time: 19700101-000505.350588,
-    module: LT,
-    lane: 3,
+    time: 84552988948,
+    module: ANEG,
+    lane: 0,
     type: trace,
-    entry:
-        direction: tx,
-        pkt:
-        state: prev,
-        value: 0x021A0A30,
-        count: 0
+    entry: 
+        log: SYNC=true, SYNC LOST=true, NEW_PAGE=true
+    --------------------------------------------------
 
-    time: 19700101-000505.350600,
-    module: LT,
-    lane: 3,
+    time: 84552988958,
+    module: ANEG,
+    lane: 0,
     type: trace,
-    entry:
-        direction: tx,
-        pkt:
-        state: new,
-        value: 0x021A0AB2,
-        fields:
-            control:
-                C_REQ: Dec,
-                C_SEL: c(-2),
-                PAM_MOD: PAM4,
-                IC_REQ: INDV,
-            status:
-                C_STS: C lim,
-                C_ECH: c(-2),
-                PAM_MOD: PAM4,
-                IC_STS: No upd,
-            locked: true,
-            done: false
+    entry: 
+        log: RX is active
+    --------------------------------------------------
 
-    time: 19700101-000505.350621,
-    module: LT,
-    lane: 3,
+    time: 84552988968,
+    module: ANEG,
+    lane: 0,
     type: trace,
-    entry:
+    entry: 
         direction: rx,
-        pkt:
+        pkt: 
         state: prev,
-        value: 0x021A0A30,
-        count: 182
-
-    time: 19700101-000505.350633,
-    module: LT,
-    lane: 3,
+        value: 0x1080000D0001,
+        count: 274
+    --------------------------------------------------
+    
+    time: 84552988982,
+    module: ANEG,
+    lane: 0,
     type: trace,
-    entry:
+    entry: 
         direction: rx,
-        pkt:
+        pkt: 
         state: new,
-        value: 0x021A0AB2,
-        fields:
-            control:
-                C_REQ: Dec,
-                C_SEL: c(-2),
-                PAM_MOD: PAM4,
-                IC_REQ: INDV,
-            status:
-                C_STS: C lim,
-                C_ECH: c(-2),
-                PAM_MOD: PAM4,
-                IC_STS: No upd,
-            locked: true,
-            done: false
+        value: 0x1080001F0001,
+        type: base page,
+        fields: 
+            NP: 0x0,
+            Ack: 0x0,
+            RF: 0x0,
+            TN: 0x1f,
+            EN: 0x0,
+            C: 0x0,
+            fec: [
+            25G BASE-R FEC
+            ],
+            ability: [
+            400GBASE_KR4
+            ]
+    --------------------------------------------------
 
-    time: 19700101-000505.350657,
-    module: LT,
-    lane: 3,
-    type: trace,
-    entry:
-        direction: tx,
-        pkt:
-        state: prev,
-        value: 0x021A0AB2,
-        count: 0
+                                    time: 84552989050,
+                                    module: ANEG,
+                                    lane: 0,
+                                    type: trace,
+                                    entry: 
+                                        direction: tx,
+                                        pkt: 
+                                        state: prev,
+                                        value: 0x1080001F0001,
+                                        count: 65535
+    --------------------------------------------------
 
-    time: 19700101-000505.350669,
-    module: LT,
-    lane: 3,
-    type: trace,
-    entry:
-        direction: tx,
-        pkt:
-        state: new,
-        value: 0x02180A32,
-        fields:
-            control:
-                C_REQ: Hold,
-                C_SEL: c(-2),
-                PAM_MOD: PAM4,
-                IC_REQ: INDV,
-            status:
-                C_STS: C lim,
-                C_ECH: c(-2),
-                PAM_MOD: PAM4,
-                IC_STS: No upd
-            locked: true,
-            done: false
-
-    time: 19700101-000505.350690,
-    module: LT,
-    lane: 3,
-    type: trace,
-    entry:
-        direction: rx,
-        pkt:
-        state: prev,
-        value: 0x021A0AB2,
-        count: 214
-
-    time: 19700101-000505.350702,
-    module: LT,
-    lane: 3,
-    type: trace,
-    entry:
-        direction: rx,
-        pkt:
-        state: new,
-        value: 0x02180A32,
-        fields:
-            control:
-                C_REQ: Hold,
-                C_SEL: c(-2),
-                PAM_MOD: PAM4,
-                IC_REQ: INDV,
-            status:
-                C_STS: C lim,
-                C_ECH: c(-2),
-                PAM_MOD: PAM4,
-                IC_STS: No upd,
-            locked: true,
-            done: false
-
-    time: 19700101-000505.350715,
-    module: LT,
-    lane: 3,
-    type: trace,
-    entry:
-        direction: tx,
-        pkt:
-        state: prev,
-        value: 0x02180A32,
-        count: 0
+                                    time: 84552989064,
+                                    module: ANEG,
+                                    lane: 0,
+                                    type: trace,
+                                    entry: 
+                                        direction: tx,
+                                        pkt: 
+                                        state: new,
+                                        value: 0x108000100001,
+                                        type: base page,
+                                        fields: 
+                                            NP: 0x0,
+                                            Ack: 0x0,
+                                            RF: 0x0,
+                                            TN: 0x10,
+                                            EN: 0x0,
+                                            C: 0x0,
+                                            fec: [
+                                            25G BASE-R FEC
+                                            ],
+                                            ability: [
+                                            400GBASE_KR4
+                                            ]
 
 
 
