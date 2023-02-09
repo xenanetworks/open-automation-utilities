@@ -1,0 +1,10 @@
+{
+    "python.autoComplete.extraPaths": [
+        "D:/venv3.8.10_utility/Lib",
+        "D:/Working/open-automation-python-api-utility",
+    ],
+    "python.analysis.extraPaths": [
+        "D:/venv3.8.10_utility/Lib",
+        "D:/Working/open-automation-python-api-utility",
+    ]
+}

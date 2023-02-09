@@ -1,0 +1,35 @@
+.xblack {
+    color: black;
+}
+
+.xgray {
+    color: gray;
+}
+
+.xwhite {
+    color: white;
+}
+
+.xred {
+    color: rgb(203, 64, 57)
+}
+
+.xblue {
+    color: rgb(108,142,191);
+}
+
+.xbluethick {
+    color: rgb(108,142,191);
+    font-weight: bold;
+}
+
+.xgreen
+{
+    color: rgb(130,179,102)
+}
+
+.xgreenthick
+{
+    color: rgb(130,179,102);
+    font-weight: bold;
+}

@@ -63,7 +63,7 @@ Installing From PyPI Using ``pip``
 
 .. note::
     
-    If you install XOA Utilities using ``pip install xoa-util``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically installed.
+    If you install XOA Utilities using ``pip install xoa-utils``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically installed.
 
 
 .. _install_core_global:
@@ -77,18 +77,18 @@ Install to Global Namespace
     .. code-block:: doscon
         :caption: Install XOA Utilities in Windows environment from PyPI.
 
-        > pip install xoa-util            # latest version
-        > pip install xoa-util==1.0.0     # specific version
-        > pip install xoa-util>=1.0.0     # minimum version
+        > pip install xoa-utils            # latest version
+        > pip install xoa-utils==1.0.0     # specific version
+        > pip install xoa-utils>=1.0.0     # minimum version
 
 .. tab:: macOS/Linux
 
     .. code-block:: console
         :caption: Install XOA Utilities in macOS/Linux environment from PyPI.
 
-        $ pip install xoa-util            # latest version
-        $ pip install xoa-util==1.0.0     # specific version
-        $ pip install xoa-util>=1.0.0     # minimum version
+        $ pip install xoa-utils            # latest version
+        $ pip install xoa-utils==1.0.0     # specific version
+        $ pip install xoa-utils>=1.0.0     # minimum version
 
 
 .. _install_core_venv:
@@ -105,12 +105,12 @@ For example, your project folder is called ``/my_xoa_project``.
     .. code-block:: doscon
         :caption: Install XOA Utilities in a virtual environment in Windows from PyPI.
 
-        [my_xoa_project]> python -m venv ./env
-        [my_xoa_project]> source ./env/bin/activate
+        [my_xoa_project]> python -m venv .\env
+        [my_xoa_project]> .env\Scripts\activate
 
-        (env) [my_xoa_project]> pip install xoa-util         # latest version
-        (env) [my_xoa_project]> pip install xoa-util==1.0.0  # specific version
-        (env) [my_xoa_project]> pip install xoa-util>=1.0.0  # minimum version
+        (env) [my_xoa_project]> pip install xoa-utils         # latest version
+        (env) [my_xoa_project]> pip install xoa-utils==1.0.0  # specific version
+        (env) [my_xoa_project]> pip install xoa-utils>=1.0.0  # minimum version
 
 .. tab:: macOS/Linux
 
@@ -120,8 +120,8 @@ For example, your project folder is called ``/my_xoa_project``.
         [my_xoa_project]$ python3 -m venv ./env
         [my_xoa_project]$ source ./env/bin/activate
 
-        (env) [my_xoa_project]$ pip install xoa-util         # latest version
-        (env) [my_xoa_project]$ pip install xoa-util==1.0.0  # specific version
+        (env) [my_xoa_project]$ pip install xoa-utils         # latest version
+        (env) [my_xoa_project]$ pip install xoa-utils==1.0.0  # specific version
         (env) [my_xoa_project]$ pip install xoa-utile>=1.0.0 # minimum version
 
 Afterwards, your project folder will be:
@@ -151,19 +151,19 @@ To upgrade XOA Utilities package from PyPI:
     .. code-block:: doscon
         :caption: Upgrade XOA Utilities in Windows environment from PyPI.
 
-        > pip install xoa-util --upgrade
+        > pip install xoa-utils --upgrade
 
 .. tab:: macOS/Linux
 
     .. code-block:: console
         :caption: Upgrade XOA Utilities in macOS/Linux environment from PyPI.
 
-        $ pip install xoa-util --upgrade
+        $ pip install xoa-utils --upgrade
 
 
 .. note::
     
-    If you upgrade XOA Utilities using ``pip install --upgrade xoa-util``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically upgraded.
+    If you upgrade XOA Utilities using ``pip install --upgrade xoa-utils``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically upgraded.
 
 
 Installing Manually From Source
@@ -231,7 +231,7 @@ If for some reason you need to install XOA Utilities manually from source, the s
 Uninstall and Remove Unused Dependencies
 ----------------------------------------
 
-``pip uninstall xoa-util`` can uninstall the package itself but not its dependencies. Leaving the package's dependencies in your environment can later create conflicting dependencies problem.
+``pip uninstall xoa-utils`` can uninstall the package itself but not its dependencies. Leaving the package's dependencies in your environment can later create conflicting dependencies problem.
 
 We recommend install and use the `pip-autoremove <https://github.com/invl/pip-autoremove>`_ utility to remove a package plus unused dependencies.
 
@@ -242,7 +242,7 @@ We recommend install and use the `pip-autoremove <https://github.com/invl/pip-au
         :caption: Uninstall XOA Utilities in Windows environment.
 
         > pip install pip-autoremove
-        > pip-autoremove xoa-util -y
+        > pip-autoremove xoa-utils -y
 
 .. tab:: macOS/Linux
 
@@ -250,7 +250,7 @@ We recommend install and use the `pip-autoremove <https://github.com/invl/pip-au
         :caption: Uninstall XOA Utilities in macOS/Linux environment.
 
         $ pip install pip-autoremove
-        $ pip-autoremove xoa-util -y
+        $ pip-autoremove xoa-utils -y
 
 .. seealso::
 

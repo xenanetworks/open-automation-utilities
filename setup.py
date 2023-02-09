@@ -7,6 +7,11 @@ def main():
 
     setuptools.setup(
         name="xoa-utils",
+        entry_points={
+            "console_scripts": [
+                "xoa-utils = xoa_utilities.entry:main",
+            ]
+        },
         description=(
             "Xena OpenAutomation Utilities provides a shell-like command-line interface for users to do explorative"
             " tests interactively, such as ANLT test."
@@ -19,8 +24,26 @@ def main():
         maintainer_email="support@xenanetworks.com",
         url="https://github.com/xenanetworks/open-automation-utilities",
         packages=setuptools.find_packages(),
-        license='Apache 2.0',
-        install_requires=["typing_extensions>=4.3.0", "loguru"],
+        license="Apache 2.0",
+        install_requires=[
+            "xoa-driver>=1.0.15",
+            "typing_extensions>=4.4.0",
+            "cffi>=1.15.1",
+            "cryptography>=39.0.0",
+            "pycparser>=2.21",
+            "colorama>=0.4.6",
+            "idna>=3.4",
+            "asyncssh>=2.13.0",
+            "asyncclick>=8.1.3.4",
+            "anyio>=3.6.2",
+            "loguru>=0.6.0",
+            "pdoc>=12.3.1",
+            "pytest>=7.2.1",
+            "asyncclick>=8.1.3.4",
+            "asyncssh>=2.13.0",
+            "anyio>=3.6.2",
+            "psutil>=5.9.4",
+        ],
         classifiers=[
             "Development Status :: 4 - Beta",
             "Intended Audience :: Developers",
@@ -35,5 +58,5 @@ def main():
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

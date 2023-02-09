@@ -2,8 +2,8 @@ Command Reference
 =================
 
 .. toctree::
+    :maxdepth: 2
 
-    port_level/index
-    auto_negotiation/index
-    link_training/index
+    mgmt/index
+    anlt/index
     
