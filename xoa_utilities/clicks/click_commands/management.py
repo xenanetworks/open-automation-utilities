@@ -61,7 +61,7 @@ async def connect(
                 await mgmt_utils.reserve_port(port_obj, force)
             if reset:
                 await mgmt_utils.reset_port(port_obj)
-            port_lane_num = (await anlt_utils.status(port_obj))["serdes_count"]
+            port_lane_num = (await anlt_utils.anlt_status(port_obj))["serdes_count"]
             storage.store_port(port_id, port_obj, port_lane_num)
             if count == 0:
                 first_id = port_id
@@ -116,12 +116,12 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
     try:
         storage.store_current_port_str(port)
         p_obj = storage.retrieve_port()
-        port_lane_num = (await anlt_utils.status(p_obj))["serdes_count"]
+        port_lane_num = (await anlt_utils.anlt_status(p_obj))["serdes_count"]
         storage.store_port(port, p_obj, port_lane_num)
     except NotInStoreError:
         port_dic = storage.obtain_physical_ports(port)
         for p_id, p_obj in port_dic.items():
-            port_lane_num = (await anlt_utils.status(p_obj))["serdes_count"]
+            port_lane_num = (await anlt_utils.anlt_status(p_obj))["serdes_count"]
             storage.store_port(p_id, p_obj, port_lane_num)
             storage.store_current_port_str(p_id)
     port_obj = storage.retrieve_port()
@@ -133,7 +133,7 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
     if force or reset:
         await asyncio.sleep(3)
         # status will change when you reserve_port or reset_port, need to wait
-    status_dic = await anlt_utils.status(port_obj)
+    status_dic = await anlt_utils.anlt_status(port_obj)
     return f"{format_ports_status(storage, False)}{format_port_status(port_id, status_dic)}"
 
 
