@@ -248,19 +248,23 @@ class CmdContext:
             if len(splitted) == 1:
                 m_id = splitted[0]
                 p_id = -1
-                for i in mgmt_utils.get_ports(tester, m_id):
-                    p_dics[f"{i.kind.module_id}/{i.kind.port_id}"] = i
+                try:
+                    m_id = int(m_id)
+                    for i in mgmt_utils.get_ports(tester, m_id):
+                        p_dics[f"{i.kind.module_id}/{i.kind.port_id}"] = i
+                except ValueError:
+                    raise NoSuchIDError(id_str)
             elif len(splitted) == 2:
                 m_id, p_id = splitted
-                for i in mgmt_utils.get_port(tester, m_id, p_id):
+                try:
+                    m_id = int(m_id)
+                    p_id = int(p_id)
+                    i = mgmt_utils.get_port(tester, m_id, p_id)
                     p_dics[f"{i.kind.module_id}/{i.kind.port_id}"] = i
+                except ValueError:
+                    raise NoSuchIDError(id_str)
             else:
                 raise NoSuchIDError(id_str)
-        try:
-            m_id = int(m_id)
-            p_id = int(p_id)
-        except ValueError:
-            raise NoSuchIDError(id_str)
         if update:
             self._pt_state.ports.update(p_dics)
         return p_dics
