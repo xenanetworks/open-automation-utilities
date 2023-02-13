@@ -30,7 +30,7 @@ async def recovery(context: ac.Context, on: bool) -> str:
     storage: CmdContext = context.obj
 
     port_obj = storage.retrieve_port()
-    await anlt_utils.link_recovery(port_obj, on)
+    await anlt_utils.anlt_link_recovery(port_obj, on)
     return format_recovery(storage, on)
 
 
