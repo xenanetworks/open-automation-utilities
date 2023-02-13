@@ -45,7 +45,7 @@ async def status(context: ac.Context) -> str:
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    status_dic = await anlt_utils.status(port_obj)
+    status_dic = await anlt_utils.anlt_status(port_obj)
     port_id = storage.retrieve_port_str()
     return format_port_status(port_id, status_dic)
 
@@ -67,7 +67,7 @@ async def do(context: ac.Context) -> str:
     lt_preset0_std = storage.retrieve_lt_preset0_std()
     lt_initial_modulations = storage.retrieve_lt_initial_mod()
     lt_interactive = storage.retrieve_lt_interactive()
-    await anlt_utils.do_anlt(
+    await anlt_utils.anlt_start(
         port_obj,
         an_enable,
         lt_enable,

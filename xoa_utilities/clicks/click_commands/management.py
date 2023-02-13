@@ -4,7 +4,6 @@ import asyncio
 from .. import click_backend as cb
 from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
-from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_driver.testers import L23Tester
 from ...exceptions import *
 import asyncclick as ac

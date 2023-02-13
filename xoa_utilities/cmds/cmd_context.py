@@ -236,15 +236,24 @@ class CmdContext:
     ) -> dict[str, GenericL23Port]:
         if self.retrieve_tester() is None:
             raise NotConnectedError()
+        
+        tester = self.retrieve_tester()
+        p_dics = {}
         if id_str == "*":
             m_id = p_id = -1
+            for i in mgmt_utils.get_all_ports(tester):
+                p_dics[f"{i.kind.module_id}/{i.kind.port_id}"] = i
         else:
             splitted = id_str.split("/")
             if len(splitted) == 1:
                 m_id = splitted[0]
                 p_id = -1
+                for i in mgmt_utils.get_ports(tester, m_id):
+                    p_dics[f"{i.kind.module_id}/{i.kind.port_id}"] = i
             elif len(splitted) == 2:
                 m_id, p_id = splitted
+                for i in mgmt_utils.get_port(tester, m_id, p_id):
+                    p_dics[f"{i.kind.module_id}/{i.kind.port_id}"] = i
             else:
                 raise NoSuchIDError(id_str)
         try:
@@ -252,11 +261,6 @@ class CmdContext:
             p_id = int(p_id)
         except ValueError:
             raise NoSuchIDError(id_str)
-        tester = self.retrieve_tester()
-        p_dics = {}
-        if tester is not None:
-            for i in mgmt_utils.get_ports(tester, m_id, p_id):
-                p_dics[f"{i.kind.module_id}/{i.kind.port_id}"] = i
-            if update:
-                self._pt_state.ports.update(p_dics)
+        if update:
+            self._pt_state.ports.update(p_dics)
         return p_dics
