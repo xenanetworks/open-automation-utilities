@@ -31,7 +31,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[123456][port0/0] > ports --all
+    xoa-utils[123456][port0/0] > ports --all
     Ports       Sync        Owner
     *0/0        yes         You
     0/1         yes         You
@@ -42,7 +42,7 @@ Examples
 
 .. code-block:: text
     
-    xoa_util[123456][port0/0] > ports
+    xoa-utils[123456][port0/0] > ports
     Ports       Sync        Owner
     *0/0        yes         You
     0/1         yes         You

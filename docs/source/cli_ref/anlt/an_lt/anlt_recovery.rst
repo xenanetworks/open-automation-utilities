@@ -34,18 +34,18 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[123456][port0/2] > anlt recovery
+    xoa-utils[123456][port0/2] > anlt recovery
     Port 0/2 link recovery on
 
-    xoa_util[123456][port0/2] >
+    xoa-utils[123456][port0/2] >
 
 
 .. code-block:: text
 
-    xoa_util[123456][port0/2] > anlt recovery --off
+    xoa-utils[123456][port0/2] > anlt recovery --off
     Port 0/2 link recovery off
 
-    xoa_util[123456][port0/2] >
+    xoa-utils[123456][port0/2] >
 
 
 

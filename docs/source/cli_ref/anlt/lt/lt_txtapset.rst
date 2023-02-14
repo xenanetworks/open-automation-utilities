@@ -54,11 +54,11 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[123456][port0/2] > lt txtapset 5 1 6 5 80 0
+    xoa-utils[123456][port0/2] > lt txtapset 5 1 6 5 80 0
     Local Coefficient Lane(5)   :           c(-3)       c(-2)       c(-1)       c(0)        c(1)
         Current level           :              1           6           5          80           0
 
-    xoa_util[123456][port0/2] >
+    xoa-utils[123456][port0/2] >
 
 
 

@@ -38,9 +38,9 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[123456][port0/2] > debug lt-rx-analyzer-config-set 0
+    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-config-set 0
 
-    xoa_util[123456][port0/2] >
+    xoa-utils[123456][port0/2] >
 
 
 

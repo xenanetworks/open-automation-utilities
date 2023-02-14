@@ -34,10 +34,10 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[123456][port0/2] > lt trained 0
+    xoa-utils[123456][port0/2] > lt trained 0
     Port 0/2 requests: Lane 0 is trained
 
-    xoa_util[123456][port0/2] >
+    xoa-utils[123456][port0/2] >
 
 
 

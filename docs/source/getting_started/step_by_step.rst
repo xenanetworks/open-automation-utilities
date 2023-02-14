@@ -32,7 +32,7 @@ If you don't know which ports you will use at the time of connecting to the port
 
 .. code-block:: text
 
-    xoa_util$ connect 10.10.10.10 xoa_anlt
+    xoa-utils > connect 10.10.10.10 yourname
 
 
 Reserve Port
@@ -46,7 +46,7 @@ Then, reserve a port on the tester using the command :doc:`../cli_ref/mgmt/port`
 
 .. code-block:: text
 
-    xoa_util[]$ port 0/0 --reset --force
+    xoa-utils[123456] > port 0/0
 
 
 Disable Link Recovery
@@ -60,7 +60,7 @@ This will disturb your manual link training procedure if you don't disable it pr
 
 .. code-block:: text
 
-    xoa_util[port0/0]$ recovery --off
+    xoa-utils[123456][port0/0] > anlt recovery --off
 
 
 Configure AN & LT
@@ -71,11 +71,11 @@ After disabling link recovery on the port, you can start configuring AN and LT u
 
 .. code-block:: text
 
-    xoa_util[port0/0]$ an config --off --no-loopback
+    xoa-utils[123456][port0/0] > an config --off --no-loopback
 
-    xoa_util[port0/0]$ lt config --on --preset0 --mode=interactive 
+    xoa-utils[123456][port0/0] > lt config --on --preset0 --mode=interactive 
 
-    xoa_util[port0/2]$ lt im 0 nrz
+    xoa-utils[123456][port0/0] > lt im 0 nrz
 
 
 .. note::
@@ -96,7 +96,7 @@ After configuring the ANLT scenario on the port, you should execute :doc:`../cli
 
 .. code-block:: text
 
-    xoa_util[port0/0]$ anlt do
+    xoa-utils[123456][port0/0] > anlt do
 
 
 Control LT Interactive
@@ -107,23 +107,21 @@ If you run LT (interactive), you will need to manually control the LT parameters
 
 .. code-block:: text
 
-    xoa_util[port0/0]$ lt preset 2
+    xoa-utils[123456][port0/0] > lt preset 0 2
 
-    xoa_util[port0/0]$ lt inc 0 pre3
+    xoa-utils[123456][port0/0] > lt inc 0 pre3
 
-    xoa_util[port0/0]$ lt inc 0 main
+    xoa-utils[123456][port0/0] > lt inc 0 main
 
-    xoa_util[port0/0]$ lt inc 0 main
+    xoa-utils[123456][port0/0] > lt dec 0 post
 
-    xoa_util[port0/0]$ lt dec 0 post
+    xoa-utils[123456][port0/0] > lt status 0
 
-    xoa_util[port0/0]$ lt status 0
+    xoa-utils[123456][port0/0] > lt trained 0
 
-    xoa_util[port0/0]$ lt trained 0
+    xoa-utils[123456][port0/0] > lt txtagget 0
 
-    xoa_util[port0/0]$ lt txtagget 0
-
-    xoa_util[port0/0]$ lt txtagset --pre3=5 --main=56
+    xoa-utils[123456][port0/0] > lt txtagset 0 0 0 1 56 0
 
 
 Check AN Status
@@ -145,7 +143,7 @@ Check ANLT logging by :doc:`../cli_ref/anlt/an_lt/anlt_log`.
 
 .. code-block:: text
 
-    xoa_util[port0/0]$ anlt log
+    xoa-utils[123456][port0/0] > anlt log -f mylog.log
 
 .. note::
 
@@ -161,6 +159,6 @@ This will bring the port back to its default state.
 
 .. code-block:: text
 
-    xoa_util[port0/0]$ port 0/0 --reset
+    xoa-utils[123456][port0/0] > port 0/0 --reset
 
 

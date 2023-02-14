@@ -39,9 +39,9 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[123456][port0/2] > debug mode-set 0
+    xoa-utils[123456][port0/2] > debug mode-set 0
 
-    xoa_util[123456][port0/2] >
+    xoa-utils[123456][port0/2] >
 
 
 
