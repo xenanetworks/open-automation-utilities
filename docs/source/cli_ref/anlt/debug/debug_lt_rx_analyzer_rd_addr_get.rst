@@ -1,4 +1,4 @@
-debug lt_rx_analyzer_rd_addr_get
+debug lt-rx-analyzer-rd-addr-get
 ================================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_rx_analyzer_rd_addr_get
 Description
 -----------
 
-Debug lt_rx_analyzer_rd_addr_get
+Debug lt-rx-analyzer-rd-addr-get
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_rx_analyzer_rd_addr_get <LANE>
+    debug lt-rx-analyzer-rd-addr-get <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_rx_analyzer_rd_addr_get 0
+    xoa_util[port0/2]$ debug lt-rx-analyzer-rd-addr-get 0
 
     xoa_util[port0/2]$
 

@@ -119,6 +119,7 @@ class CmdWorker:
     def stop_coro(self, line: str, pos: int) -> t.Tuple[str, int]:
         self.context.clear_loop_coro()
         self.context.clear_loop_coro_kw()
+        self.show_prompt = True
         return line, pos
 
     def finish(self) -> None:
@@ -134,14 +135,14 @@ class CmdWorker:
     def make_prompt(self, end_prompt: str = ">") -> str:
         return self.context.prompt(self.base_prompt, end_prompt)
 
-    def show_prompts(self) -> None:
+    def show_prompts(self, end_prompt: str) -> None:
         if self.show_prompt:
-            self.write(f"\n{self.make_prompt()}")
+            self.write(f"\n{self.make_prompt(end_prompt)}")
         else:
             self.show_prompt = True
 
     async def run_interactive(self) -> None:
-        self.show_prompts()
+        self.show_prompts('>')
         request = (await self.process.stdin.readline()).strip()
         response = None
         success = False
@@ -168,10 +169,13 @@ class CmdWorker:
         async_func = self.context.get_loop_coro()
         if async_func is not None:
             try:
+                self.show_prompts('!')
                 kw = self.context.get_loop_coro_kw()
                 result = await async_func(self.context, **kw)
                 if result:
-                    self.write(f"{result}\n{self.make_prompt('!')}")
+                    self.write(f"{result}\n")
+                else:
+                    self.show_prompt = False
                 await asyncio.sleep(self.context.get_coro_interval())
             except Exception as e:
                 self.write(f"{type(e).__name__}: {e}\n")

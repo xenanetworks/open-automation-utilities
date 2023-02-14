@@ -30,7 +30,7 @@ async def recovery(context: ac.Context, on: bool) -> str:
     storage: CmdContext = context.obj
 
     port_obj = storage.retrieve_port()
-    await anlt_utils.link_recovery(port_obj, on)
+    await anlt_utils.anlt_link_recovery(port_obj, on)
     return format_recovery(storage, on)
 
 
@@ -45,7 +45,7 @@ async def status(context: ac.Context) -> str:
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    status_dic = await anlt_utils.status(port_obj)
+    status_dic = await anlt_utils.anlt_status(port_obj)
     port_id = storage.retrieve_port_str()
     return format_port_status(port_id, status_dic)
 
@@ -67,7 +67,7 @@ async def do(context: ac.Context) -> str:
     lt_preset0_std = storage.retrieve_lt_preset0_std()
     lt_initial_modulations = storage.retrieve_lt_initial_mod()
     lt_interactive = storage.retrieve_lt_interactive()
-    await anlt_utils.do_anlt(
+    await anlt_utils.anlt_start(
         port_obj,
         an_enable,
         lt_enable,
@@ -135,10 +135,16 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
                 .replace("{", "")
                 .replace("}", "")
                 .replace('"', "")
-            )            
-            result.append(base)
+            ).strip("\n  ")
+            space_num = 0
+            if i["type"] == "fsm":
+                space_num = 26
+            elif i["entry"].get("direction", "") == "rx":
+                space_num = 52
+            real = "\n".join([f"{space_num * ' '}{p}" for p in base.split("\n")])
+            result.append(real)
 
-        return ("-" * 50).join(result).strip()
+        return (f"\n{'-' * 80}\n").join(result).strip()
 
     async def log(
         storage: CmdContext, filename: str, keep: str, lane: list[int]
@@ -152,7 +158,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
                 f.write(f"{log_str}\n")
         return string
 
-    real_lane_list = [i.strip() for i in lane.split(",")] if lane else []
+    real_lane_list = [int(i.strip()) for i in lane.split(",")] if lane else []
     kw = {"filename": filename, "keep": keep, "lane": real_lane_list}
     storage: CmdContext = ctx.obj
     storage.set_loop_coro(log)

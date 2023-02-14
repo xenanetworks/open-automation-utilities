@@ -1,4 +1,4 @@
-debug lt_rx_analyzer_rd_addr_set
+debug lt-rx-analyzer-rd-addr-set
 ================================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_rx_analyzer_rd_addr_set
 Description
 -----------
 
-Debug lt_rx_analyzer_rd_addr_set
+Debug lt-rx-analyzer-rd-addr-set
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_rx_analyzer_rd_addr_set <LANE>
+    debug lt-rx-analyzer-rd-addr-set <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_rx_analyzer_rd_addr_set 0
+    xoa_util[port0/2]$ debug lt-rx-analyzer-rd-addr-set 0
 
     xoa_util[port0/2]$
 

@@ -1,4 +1,4 @@
-debug mode_get
+debug mode-get
 ======================
 
 .. important::
@@ -9,7 +9,7 @@ debug mode_get
 Description
 -----------
 
-Debug mode_get
+Debug mode-get
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug mode_get <LANE>
+    debug mode-get <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug mode_get 0
+    xoa_util[port0/2]$ debug mode-get 0
 
     xoa_util[port0/2]$
 
