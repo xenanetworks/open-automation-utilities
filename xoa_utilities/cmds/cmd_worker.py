@@ -80,7 +80,7 @@ class CmdWorker:
     def __init__(
         self,
         process: "SSHServerProcess",
-        base_prompt: str = "xoa_util",
+        base_prompt: str = "xoa-utils",
     ) -> None:
         self.process: "SSHServerProcess" = process
         self.base_prompt: str = base_prompt
