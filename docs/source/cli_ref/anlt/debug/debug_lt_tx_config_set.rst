@@ -1,4 +1,4 @@
-debug lt_tx_config_set
+debug lt-tx-config-set
 ======================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_tx_config_set
 Description
 -----------
 
-Debug lt_tx_config_set
+Debug lt-tx-config-set
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_tx_config_set <LANE>
+    debug lt-tx-config-set <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_tx_config_set 0
+    xoa_util[port0/2]$ debug lt-tx-config-set 0
 
     xoa_util[port0/2]$
 

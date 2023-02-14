@@ -1,4 +1,4 @@
-debug lt_tx_tf_set
+debug lt-tx-tf-set
 ======================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_tx_tf_set
 Description
 -----------
 
-Debug lt_tx_tf_set
+Debug lt-tx-tf-set
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_tx_tf_set <LANE>
+    debug lt-tx-tf-set <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_tx_tf_set 0
+    xoa_util[port0/2]$ debug lt-tx-tf-set 0
 
     xoa_util[port0/2]$
 

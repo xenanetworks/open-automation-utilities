@@ -1,4 +1,4 @@
-debug lt_tx_config_get
+debug lt-tx-config-get
 ======================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_tx_config_get
 Description
 -----------
 
-Debug lt_tx_config_get
+Debug lt-tx-config-get
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_tx_config_get <LANE>
+    debug lt-tx-config-get <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_tx_config_get 0
+    xoa_util[port0/2]$ debug lt-tx-config-get 0
 
     xoa_util[port0/2]$
 

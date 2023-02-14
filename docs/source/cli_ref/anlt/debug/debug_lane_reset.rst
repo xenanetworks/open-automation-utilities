@@ -1,4 +1,4 @@
-debug lane_reset
+debug lane-reset
 ================
 
 .. important::
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lane_reset <LANE>
+    debug lane*reset <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lane_reset 0
+    xoa_util[port0/2]$ debug lane-reset 0
 
     xoa_util[port0/2]$
 

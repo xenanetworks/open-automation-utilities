@@ -1,4 +1,4 @@
-debug lt_rx_analyzer_config_get
+debug lt-rx-analyzer-config-get
 ===============================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_rx_analyzer_config_get
 Description
 -----------
 
-Debug lt_rx_analyzer_config_get
+Debug lt-rx-analyzer-config-get
 
 
 Synopsis
@@ -17,7 +17,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_rx_analyzer_config_get <LANE>
+    debug lt-rx-analyzer-config-get <LANE>
 
 
 Arguments
@@ -38,7 +38,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_rx_analyzer_config_get 0
+    xoa_util[port0/2]$ debug lt-rx-analyzer-config-get 0
 
     xoa_util[port0/2]$
 
