@@ -58,4 +58,4 @@ an:  keep AN only\
 lt:  keep lt only"
 
 HELP_ANLT_LOG_LANE = "Specifies which lanes of LT logs to keep. If you don't know how many\
-serdes lanes the port has, use 'anlt log, default to all lanes."
+serdes lanes the port has, use 'anlt log', default to all lanes."
