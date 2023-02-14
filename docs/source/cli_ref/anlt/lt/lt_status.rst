@@ -33,7 +33,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ lt status 0
+    xoa_util[123456][port0/2] > lt status 0
     Is Enabled        : true
     Is Trained        : false
     Failure           : no_failure
@@ -65,7 +65,7 @@ Examples
         coeff not supported     :          0   0       0   0       0   0       0   0       0   0
         coeff at limit          :          0   0       0   0       0   0       0   0       0   0
 
-    xoa_util[port0/2]$
+    xoa_util[123456][port0/2] >
 
 
 

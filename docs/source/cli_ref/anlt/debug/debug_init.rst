@@ -38,9 +38,9 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug init 0
+    xoa_util[123456][port0/2] > debug init 0
 
-    xoa_util[port0/2]$
+    xoa_util[123456][port0/2] >
 
 
 
