@@ -1,4 +1,4 @@
-debug lt_rx_analyzer_trig_mask_set
+debug lt-rx-analyzer-trig-mask-set
 ==================================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_rx_analyzer_trig_mask_set
 Description
 -----------
 
-Debug lt_rx_analyzer_trig_mask_set
+Debug lt-rx-analyzer-trig-mask-set
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_rx_analyzer_trig_mask_set <LANE>
+    debug lt-rx-analyzer-trig-mask-set <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_rx_analyzer_trig_mask_set 0
+    xoa_util[port0/2]$ debug lt-rx-analyzer-trig-mask-set 0
 
     xoa_util[port0/2]$
 

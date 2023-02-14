@@ -1,4 +1,4 @@
-debug lt_prbs
+debug lt-prbs
 ======================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_prbs
 Description
 -----------
 
-Debug lt_prbs
+Debug lt-prbs
 
 
 Synopsis
@@ -17,7 +17,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_prbs <LANE>
+    debug lt-prbs <LANE>
 
 
 Arguments
@@ -38,7 +38,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_prbs 0
+    xoa_util[port0/2]$ debug lt-prbs 0
 
     xoa_util[port0/2]$
 

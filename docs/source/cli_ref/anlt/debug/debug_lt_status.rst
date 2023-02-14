@@ -1,4 +1,4 @@
-debug lt_status
+debug lt-status
 ======================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_status
 Description
 -----------
 
-Debug lt_status
+Debug lt-status
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_status <LANE>
+    debug lt-status <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_status 0
+    xoa_util[port0/2]$ debug lt-status 0
 
     xoa_util[port0/2]$
 
