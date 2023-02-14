@@ -28,7 +28,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/0]$ anlt status
+    xoa-utils[123456][port0/0] > anlt status
     
     Port 0/0
     Auto-negotiation        : on

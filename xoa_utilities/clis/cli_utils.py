@@ -236,12 +236,12 @@ def format_txtap_set(
 
 def format_lt_status(dic: dict) -> str:
     return f"""
-Is Enabled        : {str(dic['is_enabled']).lower()}
-Is Trained        : {str(dic['is_trained']).lower()}
+Is enabled        : {str(dic['is_enabled']).lower()}
+Is trained        : {str(dic['is_trained']).lower()}
 Failure           : {dic['failure']}
 
-Initial mode      : {dic['init_modulation']}
-Preset0           : {dic['preset0']}
+Initial mod.      : {dic['init_modulation']}
+Preset0           : {"standard tap values" if dic['preset0'] else "existing tap values"}
 Total bits        : {dic['total_bits']:,}
 Total err. bits   : {dic['total_errored_bits']:,}
 BER               : {dic['ber']}

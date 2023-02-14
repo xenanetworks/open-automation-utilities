@@ -59,33 +59,33 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ lt config --on --preset0 --mode=interactive
+    xoa-utils[123456][port0/2] > lt config --on --preset0 --mode=interactive
     Port 0/2
     Link training : on
     Mode          : interactive
     Preset0       : existing tap values
 
-    xoa_util[port0/2]$
+    xoa-utils[123456][port0/2] >
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ lt config --off
+    xoa-utils[123456][port0/2] > lt config --off
     Port 0/2
     Link training : off
     Mode          : interactive
     Preset0       : standard tap values
 
-    xoa_util[port0/2]$
+    xoa-utils[123456][port0/2] >
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ lt config 
+    xoa-utils[123456][port0/2] > lt config 
     Port 0/2
     Link training : on
     Mode          : interactive
     Preset0       : standard tap values
 
-    xoa_util[port0/2]$
+    xoa-utils[123456][port0/2] >
 
 
 

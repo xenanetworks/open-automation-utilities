@@ -93,7 +93,7 @@ async def do(context: ac.Context) -> str:
     help=h.HELP_ANLT_LOG_KEEP,
     default="all",
 )
-@ac.option("-l", "--lane", type=ac.STRING, help=h.HELP_ANLT_LOG_KEEP, default="")
+@ac.option("-l", "--lane", type=ac.STRING, help=h.HELP_ANLT_LOG_LANE, default="")
 @ac.pass_context
 async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
     """
