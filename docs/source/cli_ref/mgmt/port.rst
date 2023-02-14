@@ -45,7 +45,7 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/0]$ port 0/1
+    xoa-utils[123456][port0/0] > port 0/1
     Ports       Sync
     0/0         yes
     *0/1        yes
@@ -57,7 +57,7 @@ Examples
     Link recovery           : on
     Lane (serdes) count     : 2
 
-    xoa_util[port0/1]$ port 0/0
+    xoa-utils[123456][port0/1] > port 0/0
     Ports       Sync
     *0/0        yes
     0/1         yes
@@ -69,7 +69,7 @@ Examples
     Link recovery           : on
     Lane (serdes) count     : 2
 
-    xoa_util[port0/0]$ port 0/2 --no-reset
+    xoa-utils[123456][port0/0] > port 0/2 --no-reset
     Ports       Sync
     0/0         yes
     0/1         yes
@@ -82,12 +82,12 @@ Examples
     Link recovery           : on
     Lane (serdes) count     : 2
 
-    xoa_util[port0/2]$
+    xoa-utils[123456][port0/2] >
 
 
 .. code-block:: text
 
-    xoa_util[port0/0][lt]$ port 0/1
+    xoa-utils[123456][port0/0] > port 0/1
     Ports       Sync
     0/0         yes
     *0/1        yes
@@ -98,12 +98,12 @@ Examples
     Link training timeout   : default
     Link recovery           : on
 
-    xoa_util[port0/1][lt]$ 
+    xoa-utils[123456][port0/1] >
 
 
 .. code-block:: text
 
-    xoa_util[port0/1][lt]$ port 0/2 --no-force
+    xoa-utils[123456][port0/1] > port 0/2 --no-force
     Ports       Sync
     0/0         yes
     *0/1        yes
@@ -114,6 +114,6 @@ Examples
     Link training timeout   : default
     Link recovery           : on
 
-    xoa_util[port0/1][lt]$ 
+    xoa-utils[123456][port0/1] >
 
 

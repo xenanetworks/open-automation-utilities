@@ -49,7 +49,7 @@ class ANState:
 class LTState:
     def __init__(self) -> None:
         self.do: bool = False
-        self.preset0_std: bool = False
+        self.preset0_std: bool = True
         self.interactive: bool = False
         self.initial_mod: dict[int, LinkTrainEncoding] = {}
 

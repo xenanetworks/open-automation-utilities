@@ -329,7 +329,7 @@ Then you can SSH to your localhost:
 
         Welcome to Xena SSH server, yourname!
 
-        xoa_util > 
+        xoa-utils > 
 
 
 .. tab:: macOS/Linux
@@ -341,6 +341,6 @@ Then you can SSH to your localhost:
 
         Welcome to Xena SSH server, yourname!
 
-        xoa_util > 
+        xoa-utils > 
 
 
