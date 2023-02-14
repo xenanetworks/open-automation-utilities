@@ -64,14 +64,14 @@ class NotSupportPcsPmaError(ConfigError):
     def __init__(self, port: GenericAnyPort) -> None:
         module_id, port_id = port.kind.module_id, port.kind.port_id
         self.name = "Not Support Pcs Pma Error"
-        self.msg = f"This port {module_id}/{port_id} does not support pcs_pma!"
+        self.msg = f"This port {module_id}/{port_id} does not support PCS/PMA!"
 
 
 class NotSupportAutoNegError(ConfigError):
     def __init__(self, port: GenericAnyPort) -> None:
         module_id, port_id = port.kind.module_id, port.kind.port_id
         self.name = "Not Support Autoneg Error"
-        self.msg = f"This port {module_id}/{port_id} does not support auto negotiation!"
+        self.msg = f"This port {module_id}/{port_id} does not support auto-negotiation!"
 
 
 class NotSupportLinkTrainError(ConfigError):
