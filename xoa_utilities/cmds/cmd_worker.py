@@ -184,10 +184,10 @@ class CmdWorker:
         self.connect_hub()
         while not self.process.stdin.at_eof():
             try:
-                if not self.context.has_loop_coro():
-                    await self.run_interactive()
-                else:
+                if self.context.has_loop_coro():
                     await self.run_coroutine()
+                else:
+                    await self.run_interactive()
             except ah.TerminalSizeChanged:
                 self.show_prompt = False
             except ah.BreakReceived:
