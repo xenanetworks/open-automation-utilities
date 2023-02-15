@@ -28,13 +28,21 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/0]$ anlt status
+    xoa-utils[123456][port0/0] > anlt status
     
     Port 0/0
+    =ACTUAL STATUS=
     Auto-negotiation        : on
     Link training           : interactive
     Link training timeout   : default
     Link recovery           : on
     Lane (serdes) count     : 2
+
+    =SHADOW STATUS=
+    Auto-negotiation        : off
+    Allow loopback          : true
+    Link training           : on (auto)
+    Preset0                 : standard tap values
+
 
 

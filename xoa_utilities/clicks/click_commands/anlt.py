@@ -47,7 +47,7 @@ async def status(context: ac.Context) -> str:
     port_obj = storage.retrieve_port()
     status_dic = await anlt_utils.anlt_status(port_obj)
     port_id = storage.retrieve_port_str()
-    return format_port_status(port_id, status_dic)
+    return format_port_status(port_id, status_dic, storage)
 
 
 # --------------------------
@@ -93,7 +93,7 @@ async def do(context: ac.Context) -> str:
     help=h.HELP_ANLT_LOG_KEEP,
     default="all",
 )
-@ac.option("-l", "--lane", type=ac.STRING, help=h.HELP_ANLT_LOG_KEEP, default="")
+@ac.option("-l", "--lane", type=ac.STRING, help=h.HELP_ANLT_LOG_LANE, default="")
 @ac.pass_context
 async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
     """

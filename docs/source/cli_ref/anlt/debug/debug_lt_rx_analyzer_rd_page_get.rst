@@ -1,4 +1,4 @@
-debug lt_rx_analyzer_rd_page_get
+debug lt-rx-analyzer-rd-page-get
 ================================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_rx_analyzer_rd_page_get
 Description
 -----------
 
-Debug lt_rx_analyzer_rd_page_get
+Debug lt-rx-analyzer-rd-page-get
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_rx_analyzer_rd_page_get <LANE>
+    debug lt-rx-analyzer-rd-page-get <LANE>
 
 
 Arguments
@@ -39,9 +39,9 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_rx_analyzer_rd_page_get 0
+    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-rd-page-get 0
 
-    xoa_util[port0/2]$
+    xoa-utils[123456][port0/2] >
 
 
 

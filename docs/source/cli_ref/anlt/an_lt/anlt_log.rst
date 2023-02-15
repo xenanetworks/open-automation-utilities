@@ -50,112 +50,26 @@ Examples
 --------
 
 .. code-block:: text
-
-    xoa_util[port0/2]$ anlt log "log0.txt"
-
-            time: 84552988935,
-            module: ANEG,
-            lane: 0,
-            type: fsm,
-            entry: 
-                fsm: 
-                event: EVENT_BREAK_LINK_TIMER_DONE,
-                current: TRANSMIT_DISABLE,
-                new: ABILITY_DETECT
-    --------------------------------------------------
-
-    time: 84552988948,
-    module: ANEG,
-    lane: 0,
-    type: trace,
-    entry: 
-        log: SYNC=true, SYNC LOST=true, NEW_PAGE=true
-    --------------------------------------------------
-
-    time: 84552988958,
-    module: ANEG,
-    lane: 0,
-    type: trace,
-    entry: 
-        log: RX is active
-    --------------------------------------------------
-
-    time: 84552988968,
-    module: ANEG,
-    lane: 0,
-    type: trace,
-    entry: 
-        direction: rx,
-        pkt: 
-        state: prev,
-        value: 0x1080000D0001,
-        count: 274
-    --------------------------------------------------
     
-    time: 84552988982,
-    module: ANEG,
-    lane: 0,
-    type: trace,
-    entry: 
-        direction: rx,
-        pkt: 
-        state: new,
-        value: 0x1080001F0001,
-        type: base page,
-        fields: 
-            NP: 0x0,
-            Ack: 0x0,
-            RF: 0x0,
-            TN: 0x1f,
-            EN: 0x0,
-            C: 0x0,
-            fec: [
-            25G BASE-R FEC
-            ],
-            ability: [
-            400GBASE_KR4
-            ]
-    --------------------------------------------------
+    xoa-utils[123456][port0/2] > anlt log mylog.log
 
-                                    time: 84552989050,
-                                    module: ANEG,
-                                    lane: 0,
-                                    type: trace,
-                                    entry: 
-                                        direction: tx,
-                                        pkt: 
-                                        state: prev,
-                                        value: 0x1080001F0001,
-                                        count: 65535
-    --------------------------------------------------
+    time: 7130745, PORT, Debug   :  Version EA410100, Feature 3
+    time: 573514936, ANEG, Message :  TRANSMIT_DISABLE - ANEG restart
+    time: 573514936, ANEG, Message :  SYNC=true, SYNC LOST=true, NEW_PAGE=true
+    time: 573514936, ANEG, Message :  SYNC=true, SYNC LOST=false, NEW_PAGE=true
+    time: 573514936, ANEG, Message :  RX is active
+    time: 573581625, ANEG, TX Page :  (0x1020000640C1), base page, NP:0, ACK:1, RF:0, TN:6, EN:6, C:000, FEC:["25G RS-FEC"], ABILITY:["100GBASE_KR1"]
+    time: 573581625, ANEG, RX Page :  (0x1020000640C1), base page, NP:0, ACK:1, RF:0, TN:6, EN:6, C:000, FEC:["25G RS-FEC"], ABILITY:["100GBASE_KR1"]
+    time: 573581684, ANEG, FSM     :  (EVENT_ACKNOWLEDGE_DETECT) ACKNOWLEDGE_DETECT -> COMPLETE_ACKNOWLEDGE 
+    time: 10053807228, LT_COEF (Lane 0), Message: Setting coeff c(-1) PRE1 to 0
+    time: 10053807237, LT_COEF (Lane 0), Message: Setting coeff c(0)  MAIN to 42
+    time: 10053807246, LT_COEF (Lane 0), Message: Setting coeff c(1)  POST to 0
+    time: 10053807255, LT_COEF (Lane 0), Message: Setting coeff c(-2) PRE2 to 0
+    time: 10053807264, LT_COEF (Lane 0), Message: Setting coeff c(-3) PRE3 to 0
+    time: 10053807283, LT (Lane 0), TX: (0x00000300), C_REQ:Hold, C_SEL:c(0), PAM_MOD:PAM2, IC_REQ:INDV, C_STS:No upd, C_ECH:c(0), PAM_MOD:PAM2, IC_STS:Upd, locked:true, done:false
+    time: 10053807294, LT_ALG0 (Lane 0), FSM : (EVENT_RESET_DEASSERT) IDLE -> STATE_ALG_INIT
 
-                                    time: 84552989064,
-                                    module: ANEG,
-                                    lane: 0,
-                                    type: trace,
-                                    entry: 
-                                        direction: tx,
-                                        pkt: 
-                                        state: new,
-                                        value: 0x108000100001,
-                                        type: base page,
-                                        fields: 
-                                            NP: 0x0,
-                                            Ack: 0x0,
-                                            RF: 0x0,
-                                            TN: 0x10,
-                                            EN: 0x0,
-                                            C: 0x0,
-                                            fec: [
-                                            25G BASE-R FEC
-                                            ],
-                                            ability: [
-                                            400GBASE_KR4
-                                            ]
-
-
-
-
+    xoa-utils[123456][port0/2] !
 
 
 

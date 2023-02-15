@@ -1,4 +1,4 @@
-debug lt_rx_config_set
+debug lt-rx-config-set
 ======================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_rx_config_set
 Description
 -----------
 
-Debug lt_rx_config_set
+Debug lt-rx-config-set
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_rx_config_set <LANE>
+    debug lt-rx-config-set <LANE>
 
 
 Arguments
@@ -39,9 +39,9 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_rx_config_set 0
+    xoa-utils[123456][port0/2] > debug lt-rx-config-set 0
 
-    xoa_util[port0/2]$
+    xoa-utils[123456][port0/2] >
 
 
 

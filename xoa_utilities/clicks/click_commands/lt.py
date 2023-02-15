@@ -45,7 +45,7 @@ def lt():
 )
 @ac.option("--on/--off", type=ac.BOOL, help=h.HELP_LT_CONFIG_ON, default=True)
 @ac.option(
-    "--preset0/--no-preset0", type=ac.BOOL, help=h.HELP_LT_CONFIG_PRESET0, default=False
+    "--preset0/--no-preset0", type=ac.BOOL, help=h.HELP_LT_CONFIG_PRESET0, default=True
 )
 @ac.pass_context
 async def lt_config(context: ac.Context, mode: str, on: bool, preset0: bool) -> str:
@@ -55,7 +55,7 @@ async def lt_config(context: ac.Context, mode: str, on: bool, preset0: bool) -> 
     storage: CmdContext = context.obj
     storage.retrieve_port()
     storage.store_should_do_lt(on)
-    storage.store_lt_preset0_std(not preset0)
+    storage.store_lt_preset0_std(preset0)
     storage.store_lt_interactive(True if mode == "interactive" else False)
     return format_lt_config(storage)
 

@@ -33,13 +33,13 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ lt status 0
+    xoa-utils[123456][port0/2] > lt status 0
     Is Enabled        : true
     Is Trained        : false
     Failure           : no_failure
     
-    Initial mode      : 0
-    Preset0           : existing
+    Initial mod.      : 0
+    Preset0           : standard tap values
     Total Bits        : 2080985280
     Total Err. Bits   : 2
     PRBS BER          : 9.610832038177609e-10
@@ -65,7 +65,7 @@ Examples
         coeff not supported     :          0   0       0   0       0   0       0   0       0   0
         coeff at limit          :          0   0       0   0       0   0       0   0       0   0
 
-    xoa_util[port0/2]$
+    xoa-utils[123456][port0/2] >
 
 
 

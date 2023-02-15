@@ -1,4 +1,4 @@
-debug mode_set
+debug mode-set
 ======================
 
 .. important::
@@ -9,7 +9,7 @@ debug mode_set
 Description
 -----------
 
-Debug mode_set
+Debug mode-set
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug mode_set <LANE>
+    debug mode-set <LANE>
 
 
 Arguments
@@ -39,9 +39,9 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug mode_set 0
+    xoa-utils[123456][port0/2] > debug mode-set 0
 
-    xoa_util[port0/2]$
+    xoa-utils[123456][port0/2] >
 
 
 

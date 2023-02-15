@@ -1,4 +1,4 @@
-debug lt_rx_analyzer_status_get
+debug lt-rx-analyzer-status-get
 ================================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_rx_analyzer_status_get
 Description
 -----------
 
-Debug lt_rx_analyzer_status_get
+Debug lt-rx-analyzer-status-get
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_rx_analyzer_status_get <LANE>
+    debug lt-rx-analyzer-status-get <LANE>
 
 
 Arguments
@@ -39,9 +39,9 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_rx_analyzer_status_get 0
+    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-status-get 0
 
-    xoa_util[port0/2]$
+    xoa-utils[123456][port0/2] >
 
 
 

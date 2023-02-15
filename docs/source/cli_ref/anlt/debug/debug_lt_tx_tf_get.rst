@@ -1,4 +1,4 @@
-debug lt_tx_tf_get
+debug lt-tx-tf-get
 ======================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt_tx_tf_get
 Description
 -----------
 
-Debug lt_tx_tf_get
+Debug lt-tx-tf-get
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt_tx_tf_get <LANE>
+    debug lt-tx-tf-get <LANE>
 
 
 Arguments
@@ -39,9 +39,9 @@ Examples
 
 .. code-block:: text
 
-    xoa_util[port0/2]$ debug lt_tx_tf_get 0
+    xoa-utils[123456][port0/2] > debug lt-tx-tf-get 0
 
-    xoa_util[port0/2]$
+    xoa-utils[123456][port0/2] >
 
 
 

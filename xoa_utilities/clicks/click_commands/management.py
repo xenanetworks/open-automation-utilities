@@ -134,7 +134,7 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
         await asyncio.sleep(3)
         # status will change when you reserve_port or reset_port, need to wait
     status_dic = await anlt_utils.anlt_status(port_obj)
-    return f"{format_ports_status(storage, False)}{format_port_status(port_id, status_dic)}"
+    return f"{format_ports_status(storage, False)}{format_port_status(port_id, status_dic, storage)}"
 
 
 # --------------------------
