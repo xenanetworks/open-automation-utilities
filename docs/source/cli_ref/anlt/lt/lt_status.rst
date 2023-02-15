@@ -38,8 +38,8 @@ Examples
     Is Trained        : false
     Failure           : no_failure
     
-    Initial mode      : 0
-    Preset0           : existing
+    Initial mod.      : 0
+    Preset0           : standard tap values
     Total Bits        : 2080985280
     Total Err. Bits   : 2
     PRBS BER          : 9.610832038177609e-10
