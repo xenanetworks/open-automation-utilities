@@ -132,7 +132,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
         return current
 
     def _flatten(dic: dict[str, str]) -> str:
-        return "  ".join((f"{k}: {v:<10}" for k, v in dic.items()))
+        return ", ".join((f"{k}: {v}" for k, v in dic.items()))
 
     
     def beautify(filtered: list[dict]) -> str:
@@ -170,134 +170,25 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
             log_pkt_value = _dict_get(i, "entry", "pkt", "value")
 
             lane_str = f" (Lane {log_lane})," if "LT" in log_m else ","
-            common = f"time: {log_time}, {log_m}{lane_str} {log_direction.upper()}"
-
-            if log_type == "debug":
-                b_str = f"{common}Debug: {log_log}"
-            elif log_type == "fsm":
-                b_str = f"{common}FSM: ({log_event}) {log_current} -> {log_new}"
-            elif log_type == "trace" and "log" in log_entry:
-                b_str = f"{common}Message: {log_log}"
-            elif log_type == "trace" and "direction" in log_entry and "LT" not in log_m:
-                if log_pstate == "new":
-                    b_str = f"{common}Page: ({log_value}), {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}, FEC:{log_fec}, ABILITY:{log_ab}"
-            elif log_type == "trace" and "direction" in log_entry and "LT" in log_m:
-                if log_pstate == "new":
-                    b_str = f"{common}: ({log_pkt_value}), {_flatten(log_pkt_ctrl)}, {_flatten(log_pkt_status)}, Locked: {log_pkt_locked}, Done: {log_pkt_done} "
-
-            if b_str:
-                real.append(b_str)
-                
-        return "\n".join(real)
-
-
-    def beautify_v2(filtered: list[dict]) -> str:
-        real = []
-        for i in filtered:
-            b_str = ""
-
-            log_time = _dict_get(i, "time")
-            log_entry = _dict_get(i, "entry")
-            log_type = _dict_get(i, "type")
-            log_m = _dict_get(i, "module")
-            log_log = _dict_get(i, "entry", "log")
-            log_lane = _dict_get(i, "lane")
-            log_m = _dict_get(i, "module")
-            log_m = _dict_get(i, "module")
-            log_event = _dict_get(i, "entry", "fsm", "event")
-            log_current = _dict_get(i, "entry", "fsm", "current")
-            log_new = _dict_get(i, "entry", "fsm", "new")
-            log_direction = _dict_get(i, "entry", "direction")
-            log_value = _dict_get(i, "entry", "pkt", "value")
-            log_ptype = _dict_get(i, "entry", "pkt", "type")
-            log_pstate = _dict_get(i, "entry", "pkt", "state")
-            log_np = _dict_get(i, "entry", "pkt", "fields", "NP")
-            log_ack = _dict_get(i, "entry", "pkt", "fields", "Ack")
-            log_rf = _dict_get(i, "entry", "pkt", "fields", "RF")
-            log_tn = _dict_get(i, "entry", "pkt", "fields", "TN")
-            log_en = _dict_get(i, "entry", "pkt", "fields", "EN")
-            log_c = _dict_get(i, "entry", "pkt", "fields", "C")
-            log_fec = _dict_get(i, "entry", "pkt", "fields", "fec")
-            log_ab = _dict_get(i, "entry", "pkt", "fields", "ability")
-            log_pkt_ctrl = _dict_get(i, "entry", "pkt", "fields", "control")
-            log_pkt_status = _dict_get(i, "entry", "pkt", "fields", "status")
-            log_pkt_locked = _dict_get(i, "entry", "pkt", "fields", "locked")
-            log_pkt_done = _dict_get(i, "entry", "pkt", "fields", "done")
-            log_pkt_value = _dict_get(i, "entry", "pkt", "value")
-
-            lane_str = f" (Lane {log_lane})," if "LT" in log_m else ","
             common = f"time: {log_time}, {log_m}{lane_str}"
 
             if log_type == "debug":
-                b_str = f"{common:<44}{'Debug:':<10}{log_log}"
+                b_str = f"{common:<38}{'Debug:':<10}{log_log}"
             elif log_type == "fsm":
-                b_str = f"{common:<44}{'FSM:':<10}({log_event}) {log_current} -> {log_new}"
+                b_str = f"{common:<38}{'FSM:':<10}({log_event}) {log_current} -> {log_new}"
             elif log_type == "trace" and "log" in log_entry:
-                b_str = f"{common:<44}{'Message:':<10}{log_log}"
+                b_str = f"{common:<38}{'Message:':<10}{log_log}"
             elif log_type == "trace" and "direction" in log_entry and "LT" not in log_m:
                 if log_pstate == "new":
-                    b_str = f"{common:<44}{log_direction.upper() + ' Page:':<10}({log_value}), {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}, FEC:{log_fec}, ABILITY:{log_ab}"
+                    b_str = f"{common:<38}{log_direction.upper() + ' Page:':<10}({log_value}), {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}, FEC:{log_fec}, ABILITY:{log_ab}"
             elif log_type == "trace" and "direction" in log_entry and "LT" in log_m:
                 if log_pstate == "new":
-                    b_str = f"{common:<44}{log_direction.upper():<10}({log_pkt_value}),\n{'':<44}{_flatten(log_pkt_ctrl)},\n{'':<44}{_flatten(log_pkt_status)}, Locked: {log_pkt_locked}, Done: {log_pkt_done} "
+                    b_str = f"{common:<38}{log_direction.upper()} ({log_pkt_value}) {_flatten(log_pkt_ctrl)} {_flatten(log_pkt_status)}, Locked: {log_pkt_locked}, Done: {log_pkt_done} "
 
             if b_str:
                 real.append(b_str)
         return "\n".join(real)
-
-    def beautify_v3(filtered: list[dict]) -> str:
-        real = []
-        for i in filtered:
-            b_str = ""
-
-            log_time = _dict_get(i, "time")
-            log_entry = _dict_get(i, "entry")
-            log_type = _dict_get(i, "type")
-            log_m = _dict_get(i, "module")
-            log_log = _dict_get(i, "entry", "log")
-            log_lane = _dict_get(i, "lane")
-            log_m = _dict_get(i, "module")
-            log_m = _dict_get(i, "module")
-            log_event = _dict_get(i, "entry", "fsm", "event")
-            log_current = _dict_get(i, "entry", "fsm", "current")
-            log_new = _dict_get(i, "entry", "fsm", "new")
-            log_direction = _dict_get(i, "entry", "direction")
-            log_value = _dict_get(i, "entry", "pkt", "value")
-            log_ptype = _dict_get(i, "entry", "pkt", "type")
-            log_pstate = _dict_get(i, "entry", "pkt", "state")
-            log_np = _dict_get(i, "entry", "pkt", "fields", "NP")
-            log_ack = _dict_get(i, "entry", "pkt", "fields", "Ack")
-            log_rf = _dict_get(i, "entry", "pkt", "fields", "RF")
-            log_tn = _dict_get(i, "entry", "pkt", "fields", "TN")
-            log_en = _dict_get(i, "entry", "pkt", "fields", "EN")
-            log_c = _dict_get(i, "entry", "pkt", "fields", "C")
-            log_fec = _dict_get(i, "entry", "pkt", "fields", "fec")
-            log_ab = _dict_get(i, "entry", "pkt", "fields", "ability")
-            log_pkt_ctrl = _dict_get(i, "entry", "pkt", "fields", "control")
-            log_pkt_status = _dict_get(i, "entry", "pkt", "fields", "status")
-            log_pkt_locked = _dict_get(i, "entry", "pkt", "fields", "locked")
-            log_pkt_done = _dict_get(i, "entry", "pkt", "fields", "done")
-            log_pkt_value = _dict_get(i, "entry", "pkt", "value")
-
-            lane_str = f" (Lane {log_lane})," if "LT" in log_m else ","
-            common = f"time: {log_time}, {log_m}{lane_str}"
-
-            if log_type == "debug":
-                b_str = f"{common:<44}{'Debug:':<10}{log_log}"
-            elif log_type == "fsm":
-                b_str = f"{common:<44}{'FSM:':<10}({log_event}) {log_current} -> {log_new}"
-            elif log_type == "trace" and "log" in log_entry:
-                b_str = f"{common:<44}{'Message:':<10}{log_log}"
-            elif log_type == "trace" and "direction" in log_entry and "LT" not in log_m:
-                if log_pstate == "new":
-                    b_str = f"{common:<44}{log_direction.upper() + ' Page:':<10}({log_value}), {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}, FEC:{log_fec}, ABILITY:{log_ab}"
-            elif log_type == "trace" and "direction" in log_entry and "LT" in log_m:
-                if log_pstate == "new":
-                    b_str = f"{common:<44}{log_direction.upper():<10}({log_pkt_value}) \n{'':<44}{_flatten(log_pkt_ctrl)} \n{'':<44}{_flatten(log_pkt_status)}  Locked: {log_pkt_locked}, Done: {log_pkt_done} "
-
-            if b_str:
-                real.append(b_str)
-        return "\n".join(real)
+        
 
     async def log(
         storage: CmdContext, filename: str, keep: str, lane: list[int]
@@ -305,7 +196,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
         port_obj = storage.retrieve_port()
         log_str = await anlt_utils.anlt_log(port_obj)
         filtered = filter_log(log_str, keep, lane)
-        string = beautify_v3(filtered)
+        string = beautify(filtered)
         if filename and log_str:
             with open(filename, "a") as f:
                 f.write(f"{log_str}\n")
