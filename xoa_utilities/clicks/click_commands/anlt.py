@@ -1,9 +1,9 @@
 from __future__ import annotations
 import asyncclick as ac
 import json
+import typing as t
 from xoa_driver.hlfuncs import anlt as anlt_utils
 from .. import click_backend as cb
-from ...exceptions import *
 from ...clis import format_recovery, format_port_status
 from .group import xoa_utils
 from .. import click_help as h
@@ -102,24 +102,20 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
 
     def filter_log(log: str, keep: str, lane: list[int]) -> list[dict]:
         all_logs = []
-        for l in log.split("\n"):
+        for lg in log.split("\n"):
             try:
-                content = json.loads(l)
+                content = json.loads(lg)
                 log_lane = content["lane"]
                 module = content["module"]
 
-                lane_in = False
-                keep_in = False
-                if (lane and log_lane in lane) or not lane:
-                    lane_in = True
-                if any(
+                lane_in = (lane and log_lane in lane) or (not lane)
+                keep_in = any(
                     (
                         keep == "an" and "AN" in module,
                         keep == "lt" and "LT" in module,
                         keep == "all",
                     )
-                ):
-                    keep_in = True
+                )
                 if lane_in and keep_in:
                     all_logs.append(content)
 
@@ -130,6 +126,8 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
     def _dict_get(dic: dict, *keys: str) -> t.Any:
         current = dic
         for k in keys:
+            if not isinstance(current, dict):
+                break
             current = current.get(k, "")
             if current == "":
                 break
@@ -181,7 +179,8 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
                             b_str = f"{common_str}, {log_direction.upper()} Page : ({log_value}), {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn,0)}, EN:{int(log_en ,0)}, C:{log_c}, FEC:{log_fec}, ABILITY:{log_ab}"
             if b_str:
                 real.append(b_str)
-        return f"\n{'\n'.join(real)}\n"
+        joined = "\n".join(real)
+        return f"\n{joined}\n"
 
     async def log(
         storage: CmdContext, filename: str, keep: str, lane: list[int]
@@ -198,6 +197,5 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
     real_lane_list = [int(i.strip()) for i in lane.split(",")] if lane else []
     kw = {"filename": filename, "keep": keep, "lane": real_lane_list}
     storage: CmdContext = ctx.obj
-    storage.set_loop_coro(log)
-    storage.set_loop_coro_kw(kw)
+    storage.set_loop_coro(log, kw)
     return ""
