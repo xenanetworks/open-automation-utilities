@@ -16,7 +16,7 @@ class XenaSSHCLIHandle:
         setattr(out, "flush", out._chan._flush_send_buf)
         # patch the flush() method since it doesn't exist.
         asyncclick.echo(
-            f"Welcome to Xena SSH server, {process.get_extra_info('username')}!",
+            f"Hello {process.get_extra_info('username')}, welcome to Xena OpenAutomation Utilities SSH Service.",
             file=out,
         )
         worker = CmdWorker(process)
@@ -25,7 +25,7 @@ class XenaSSHCLIHandle:
 
 async def start_server(config: ReadConfig) -> None:
     Hub.check_hub_process(config)
-    print(f"(PID: {os.getpid()}) Xena SSH running on 0.0.0.0:{config.connection_port}")
+    print(f"(PID: {os.getpid()}) XOA Utils SSH Service running on 0.0.0.0:{config.connection_port}")
     await asyncssh.create_server(
         XenaSSHServer,
         "0.0.0.0",
