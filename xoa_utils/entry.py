@@ -3,10 +3,10 @@ import asyncio
 import asyncclick
 import sys
 import os
-from xoa_utilities.clis import ReadConfig
-from xoa_utilities.hub import Hub
-from xoa_utilities.ssh_server import XenaSSHServer
-from xoa_utilities.cmds import CmdWorker
+from xoa_utils.clis import ReadConfig
+from xoa_utils.hub import Hub
+from xoa_utils.ssh_server import XenaSSHServer
+from xoa_utils.cmds import CmdWorker
 
 
 class XenaSSHCLIHandle:
