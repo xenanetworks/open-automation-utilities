@@ -134,9 +134,9 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
     def _flatten(dic: dict[str, str]) -> str:
         return ", ".join((f"{k}: {v}" for k, v in dic.items()))
 
+    
     def beautify(filtered: list[dict]) -> str:
         real = []
-        print(len(filtered))
         for i in filtered:
             b_str = ""
 
@@ -154,6 +154,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
             log_direction = _dict_get(i, "entry", "direction")
             log_value = _dict_get(i, "entry", "pkt", "value")
             log_ptype = _dict_get(i, "entry", "pkt", "type")
+            log_pstate = _dict_get(i, "entry", "pkt", "state")
             log_np = _dict_get(i, "entry", "pkt", "fields", "NP")
             log_ack = _dict_get(i, "entry", "pkt", "fields", "Ack")
             log_rf = _dict_get(i, "entry", "pkt", "fields", "RF")
@@ -178,12 +179,15 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
             elif log_type == "trace" and "log" in log_entry:
                 b_str = f"{common}Message: {log_log}"
             elif log_type == "trace" and "direction" in log_entry and "LT" not in log_m:
-                b_str = f"{common} Page: ({log_value}), {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn,0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}, FEC:{log_fec}, ABILITY:{log_ab}"
+                if log_pstate == "new":
+                    b_str = f"{common} Page: ({log_value}), {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}, FEC:{log_fec}, ABILITY:{log_ab}"
             elif log_type == "trace" and "direction" in log_entry and "LT" in log_m:
-                b_str = f"{common}: ({log_pkt_value}), {_flatten(log_pkt_ctrl)}, {_flatten(log_pkt_status)}, Locked: {log_pkt_locked}, Done: {log_pkt_done} "
+                if log_pstate == "new":
+                    b_str = f"{common}: ({log_pkt_value}), {_flatten(log_pkt_ctrl)}, {_flatten(log_pkt_status)}, Locked: {log_pkt_locked}, Done: {log_pkt_done} "
 
             if b_str:
                 real.append(b_str)
+                
         return "\n".join(real)
 
     async def log(
