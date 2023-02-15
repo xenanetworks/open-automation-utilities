@@ -49,7 +49,7 @@ async def connect(
     """
     storage: CmdContext = context.obj
     real_port_list = [i.strip() for i in ports.split(",")] if ports else []
-    tester = await L23Tester(device, username, password, tcp, debug=True)
+    tester = await L23Tester(device, username, password, tcp, debug=False)
     con_info = f"{device}:{tcp}"
     storage.store_current_tester(username, con_info, tester)
     count = 0

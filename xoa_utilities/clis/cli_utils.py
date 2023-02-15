@@ -147,7 +147,7 @@ Lane (serdes) count   : {status['serdes_count']}
 
 =SHADOW STATUS=
 Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'}
-Allow loopback        : {'true' if storage.retrieve_an_loopback() else 'off'}
+Allow loopback        : {'yes' if storage.retrieve_an_loopback() else 'no'}
 Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'})
 Preset0               : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values
 """
@@ -172,9 +172,11 @@ Unformatted pages     : {dic['unformatted_pages']['rx']:6}{dic['unformatted_page
 def format_lt_config(storage: CmdContext) -> str:
     return f"""
 Port {storage.retrieve_port_str()}
-Link training : {'on' if storage.retrieve_lt_enable() else 'off'}
-Mode          : {'interactive' if storage.retrieve_lt_interactive() else 'auto'}
-Preset0       : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values 
+=SHADOW STATUS=
+Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'}
+Allow loopback        : {'yes' if storage.retrieve_an_loopback() else 'no'}
+Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'})
+Preset0               : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values
 """
 
 
@@ -182,12 +184,16 @@ def format_lt_im(storage: CmdContext, lane: int) -> str:
     return f"Port {storage.retrieve_port_str()}: initial modulation {storage.retrieve_lt_initial_mod_lane(lane).name} on Lane {lane}\n"
 
 
-def format_an_config(storage: CmdContext, on: bool, loopback: bool) -> str:
-    om = "on" if on else "off"
-    lo = "allowed" if loopback else "not allowed"
-    return (
-        f"Port {storage.retrieve_port_str()} auto-negotiation: {om}, loopback: {lo}\n"
-    )
+def format_an_config(storage: CmdContext,) -> str:
+    return f"""
+Port {storage.retrieve_port_str()}
+=SHADOW STATUS=
+Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'}
+Allow loopback        : {'yes' if storage.retrieve_an_loopback() else 'no'}
+Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'})
+Preset0               : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values
+"""
+
 
 
 def format_recovery(storage: CmdContext, on: bool) -> str:
