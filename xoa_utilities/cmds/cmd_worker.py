@@ -184,7 +184,7 @@ class CmdWorker:
         self.connect_hub()
         while not self.process.stdin.at_eof():
             try:
-                if self.context.has_loop_coro():
+                if not self.context.has_loop_coro():
                     await self.run_interactive()
                 else:
                     await self.run_coroutine()
