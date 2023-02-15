@@ -50,40 +50,26 @@ Examples
 --------
 
 .. code-block:: text
+    
+    xoa-utils[123456][port0/2] > anlt log mylog.log
 
-    xoa_util[123456][port0/2] > anlt log "log0.txt"
+    time: 7130745, PORT, Debug   :  Version EA410100, Feature 3
+    time: 573514936, ANEG, Message :  TRANSMIT_DISABLE - ANEG restart
+    time: 573514936, ANEG, Message :  SYNC=true, SYNC LOST=true, NEW_PAGE=true
+    time: 573514936, ANEG, Message :  SYNC=true, SYNC LOST=false, NEW_PAGE=true
+    time: 573514936, ANEG, Message :  RX is active
+    time: 573581625, ANEG, TX Page :  (0x1020000640C1), base page, NP:0, ACK:1, RF:0, TN:6, EN:6, C:000, FEC:["25G RS-FEC"], ABILITY:["100GBASE_KR1"]
+    time: 573581625, ANEG, RX Page :  (0x1020000640C1), base page, NP:0, ACK:1, RF:0, TN:6, EN:6, C:000, FEC:["25G RS-FEC"], ABILITY:["100GBASE_KR1"]
+    time: 573581684, ANEG, FSM     :  (EVENT_ACKNOWLEDGE_DETECT) ACKNOWLEDGE_DETECT -> COMPLETE_ACKNOWLEDGE 
+    time: 10053807228, LT_COEF (Lane 0), Message: Setting coeff c(-1) PRE1 to 0
+    time: 10053807237, LT_COEF (Lane 0), Message: Setting coeff c(0)  MAIN to 42
+    time: 10053807246, LT_COEF (Lane 0), Message: Setting coeff c(1)  POST to 0
+    time: 10053807255, LT_COEF (Lane 0), Message: Setting coeff c(-2) PRE2 to 0
+    time: 10053807264, LT_COEF (Lane 0), Message: Setting coeff c(-3) PRE3 to 0
+    time: 10053807283, LT (Lane 0), TX: (0x00000300), C_REQ:Hold, C_SEL:c(0), PAM_MOD:PAM2, IC_REQ:INDV, C_STS:No upd, C_ECH:c(0), PAM_MOD:PAM2, IC_STS:Upd, locked:true, done:false
+    time: 10053807294, LT_ALG0 (Lane 0), FSM : (EVENT_RESET_DEASSERT) IDLE -> STATE_ALG_INIT
 
-    {"time":7130745,"module":"PORT","lane":0,"type":"debug","entry":{"log":"Version: EA410100, feature: 3"}}
-    {"time":7397844,"module":"ANEG","lane":0,"type":"fsm","entry":{"fsm":{"event":"XFSM_EVENT_SELF","current":"UNKNOWN","new":"AN_GOOD"}}}
-
-    {"time":573514045,"module":"ANEG","lane":0,"type":"fsm","entry":{"fsm":{"event":"XFSM_EVENT_SELF","current":"AN_GOOD","new":"UNKNOWN"}}}
-    {"time":573514876,"module":"ANEG","lane":0,"type":"fsm","entry":{"fsm":{"event":"EVENT_INIT_DONE","current":"UNKNOWN","new":"WAIT_ANEG_ENABLE"}}}
-    {"time":573514925,"module":"ANEG","lane":0,"type":"fsm","entry":{"fsm":{"event":"EVENT_AUTONEG_ENABLE","current":"WAIT_ANEG_ENABLE","new":"TRANSMIT_DISABLE"}}}
-    {"time":573514936,"module":"ANEG","lane":0,"type":"trace","entry":{"log":"TRANSMIT_DISABLE - ANEG restart"}}
-    {"time":573514943,"module":"ANEG","lane":0,"type":"trace","entry":{"direction":"tx","pkt":{"state":"prev","value":"0x000000000000","count":65535}}}
-    {"time":573514955,"module":"ANEG","lane":0,"type":"trace","entry":{"direction":"tx","pkt":{"state":"new","value":"0x102000060001","type":"base page","fields":{"NP":"0x0","Ack":"0x0","RF":"0x0","TN":"0x6","EN":"0x0","C":"0x0","fec":["25G RS-FEC"],"ability":["100GBASE_KR1"]}}}}
-    {"time":573581479,"module":"ANEG","lane":0,"type":"fsm","entry":{"fsm":{"event":"EVENT_BREAK_LINK_TIMER_DONE","current":"TRANSMIT_DISABLE","new":"ABILITY_DETECT"}}}
-    {"time":573581511,"module":"ANEG","lane":0,"type":"trace","entry":{"log":"SYNC=true, SYNC LOST=true, NEW_PAGE=true"}}
-    {"time":573581520,"module":"ANEG","lane":0,"type":"trace","entry":{"log":"RX is active"}}
-    {"time":573581528,"module":"ANEG","lane":0,"type":"trace","entry":{"direction":"rx","pkt":{"state":"prev","value":"0x000000000000","count":0}}}
-    {"time":573581539,"module":"ANEG","lane":0,"type":"trace","entry":{"direction":"rx","pkt":{"state":"new","value":"0x102000060001","type":"base page","fields":{"NP":"0x0","Ack":"0x0","RF":"0x0","TN":"0x6","EN":"0x0","C":"0x0","fec":["25G RS-FEC"],"ability":["100GBASE_KR1"]}}}}
-    {"time":573581572,"module":"ANEG","lane":0,"type":"trace","entry":{"log":"SYNC=true, SYNC LOST=false, NEW_PAGE=true"}}
-    {"time":573581602,"module":"ANEG","lane":0,"type":"fsm","entry":{"fsm":{"event":"EVENT_ABILITY_MATCH_N_NONCE","current":"ABILITY_DETECT","new":"ACKNOWLEDGE_DETECT"}}}
-    {"time":573581612,"module":"ANEG","lane":0,"type":"trace","entry":{"direction":"tx","pkt":{"state":"prev","value":"0x102000060001","count":65535}}}
-    {"time":573581625,"module":"ANEG","lane":0,"type":"trace","entry":{"direction":"tx","pkt":{"state":"new","value":"0x1020000640C1","type":"base page","fields":{"NP":"0x0","Ack":"0x1","RF":"0x0","TN":"0x6","EN":"0x6","C":"0x0","fec":["25G RS-FEC"],"ability":["100GBASE_KR1"]}}}}
-    {"time":573581639,"module":"ANEG","lane":0,"type":"trace","entry":{"direction":"rx","pkt":{"state":"prev","value":"0x102000060001","count":355}}}
-    {"time":573581652,"module":"ANEG","lane":0,"type":"trace","entry":{"direction":"rx","pkt":{"state":"new","value":"0x1020000640C1","type":"base page","fields":{"NP":"0x0","Ack":"0x1","RF":"0x0","TN":"0x6","EN":"0x6","C":"0x0","fec":["25G RS-FEC"],"ability":["100GBASE_KR1"]}}}}
-    {"time":573581684,"module":"ANEG","lane":0,"type":"fsm","entry":{"fsm":{"event":"EVENT_ACKNOWLEDGE_DETECT","current":"ACKNOWLEDGE_DETECT","new":"COMPLETE_ACKNOWLEDGE"}}}
-    {"time":573581714,"module":"ANEG","lane":0,"type":"fsm","entry":{"fsm":{"event":"EVENT_ACK_N_NP","current":"COMPLETE_ACKNOWLEDGE","new":"AN_GOOD_CHECK"}}}
-    {"time":573581723,"module":"ANEG","lane":0,"type":"debug","entry":{"log":"O:102000000000|000000000000 R:1020000640C1|000000000000"}}
-    {"time":573581743,"module":"ANEG","lane":0,"type":"debug","entry":{"log":"HCD=16"}}
-    {"time":573581772,"module":"PORT","lane":0,"type":"debug","entry":{"log":"LT on 0x1"}}
-    {"time":573581784,"module":"ANEG","lane":0,"type":"fsm","entry":{"fsm":{"event":"EVENT_LINK_HCD_OK","current":"AN_GOOD_CHECK","new":"AN_GOOD"}}}
-
-    xoa_util[123456][port0/2] !
-
-
-
+    xoa-utils[123456][port0/2] !
 
 
 
