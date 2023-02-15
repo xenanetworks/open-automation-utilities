@@ -7,7 +7,6 @@ from xoa_utilities.clis import ReadConfig
 from xoa_utilities.hub import Hub
 from xoa_utilities.ssh_server import XenaSSHServer
 from xoa_utilities.cmds import CmdWorker
-import argparse
 
 
 class XenaSSHCLIHandle:
