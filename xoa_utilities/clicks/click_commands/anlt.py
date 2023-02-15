@@ -127,24 +127,61 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
                 pass
         return all_logs
 
-    def beautify(filtered: list[dict]) -> str:
-        result = []
-        for i in filtered:
-            base = (
-                json.dumps(i, indent=2)
-                .replace("{", "")
-                .replace("}", "")
-                .replace('"', "")
-            ).strip("\n  ")
-            space_num = 0
-            if i["type"] == "fsm":
-                space_num = 26
-            elif i["entry"].get("direction", "") == "rx":
-                space_num = 52
-            real = "\n".join([f"{space_num * ' '}{p}" for p in base.split("\n")])
-            result.append(real)
+    def _dict_get(dic: dict, *keys: str) -> t.Any:
+        current = dic
+        for k in keys:
+            current = current.get(k, "")
+            if current == "":
+                break
+        return current
 
-        return (f"\n{'-' * 80}\n").join(result).strip()
+    def beautify(filtered: list[dict]) -> str:
+        real = []
+        print(len(filtered))
+        for i in filtered:
+            b_str = ""
+            log_time = _dict_get(i, "time")
+            log_entry = _dict_get(i, "entry")
+            log_type = _dict_get(i, "type")
+            log_module = _dict_get(i, "module")
+            log_log = _dict_get(i, "entry", "log")
+            log_lane = _dict_get(i, "lane")
+            log_module = _dict_get(i, "module")
+            log_module = _dict_get(i, "module")
+            log_event = _dict_get(i, "entry", "fsm", "event")
+            log_current = _dict_get(i, "entry", "fsm", "current")
+            log_new = _dict_get(i, "entry", "fsm", "new")
+            log_state = _dict_get(i, "entry", "pkt", "state")
+            log_direction = _dict_get(i, "entry", "direction")
+            log_value = _dict_get(i, "entry", "pkt", "value")
+            log_ptype = _dict_get(i, "entry", "pkt", "type")
+            log_np = _dict_get(i, "entry", "pkt", "fields", "NP")
+            log_ack = _dict_get(i, "entry", "pkt", "fields", "Ack")
+            log_rf = _dict_get(i, "entry", "pkt", "fields", "RF")
+            log_tn = _dict_get(i, "entry", "pkt", "fields", "TN")
+            log_en = _dict_get(i, "entry", "pkt", "fields", "EN")
+            log_c = _dict_get(i, "entry", "pkt", "fields", "C")
+            log_fec = _dict_get(i, "entry", "pkt", "fields", "fec")
+            log_ab = _dict_get(i, "entry", "pkt", "fields", "ability")
+            lane_str = f" (Lane {log_lane})," if "LT" in log_module else ""
+            common_str = f"time: {log_time}, {log_module}"
+            common_lane_str = f"{common_str}{lane_str}"
+            if log_type == "debug":
+                b_str = f"{common_lane_str} Debug : {log_log}"
+            elif log_type == "fsm":
+                b_str = (
+                    f"{common_lane_str} FSM : ({log_event}) {log_current} -> {log_new}"
+                )
+            elif log_type == "trace":
+                if "LT" not in log_module:
+                    if "log" in log_entry:
+                        b_str = f"{common_str}, Message : ({log_log})"
+                    elif "direction" in log_entry:
+                        if log_state == "new":
+                            b_str = f"{common_str}, {log_direction.upper()} Page : ({log_value}), {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn,0)}, EN:{int(log_en ,0)}, C:{log_c}, FEC:{log_fec}, ABILITY:{log_ab}"
+            if b_str:
+                real.append(b_str)
+        return f"\n{'\n'.join(real)}\n"
 
     async def log(
         storage: CmdContext, filename: str, keep: str, lane: list[int]
