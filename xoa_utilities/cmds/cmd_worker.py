@@ -118,7 +118,6 @@ class CmdWorker:
 
     def stop_coro(self, line: str, pos: int) -> t.Tuple[str, int]:
         self.context.clear_loop_coro()
-        self.context.clear_loop_coro_kw()
         self.show_prompt = True
         return line, pos
 
