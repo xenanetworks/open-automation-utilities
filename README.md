@@ -44,7 +44,7 @@ First, you need to connect to your tester using the command ``connect``.
 If you don't know which ports you will use at the time of connecting to the port, just leave the option ``--ports`` empty as the example shows below. You can reserve ports later.
 
 
-    xoa_util$ connect 10.10.10.10 xoa_anlt
+    xoa-utils > connect 10.10.10.10 yourname
 
 
 ### Reserve Port
@@ -53,7 +53,7 @@ Then, reserve a port on the tester using the command ``port``, as shown in the e
 
 > You can only work on one port at a time in one console window. If you want to simultaneously work on multiple ports, you can open multiple console windows.
 
-    xoa_util[]$ port 0/0 --reset --force
+    xoa-utils[123456] > port 0/0
 
 
 ### Disable Link Recovery
@@ -64,18 +64,18 @@ This is because the port always tries to re-do ANLT command sequence every five 
 
 This will disturb your manual link training procedure if you don't disable it prior to your interactive test.
 
-    xoa_util[port0/0]$ recovery --off
+    xoa-utils[123456][port0/0] > anlt recovery --off
 
 
 ### Configure AN & LT
 
 After disabling link recovery on the port, you can start configuring AN and LT using ``an_config``, ``lt_config``, and ``lt_im`` as the example shown below. 
 
-    xoa_util[port0/0]$ an config --off --no-loopback
+    xoa-utils[123456][port0/0] > an config --off --no-loopback
 
-    xoa_util[port0/0]$ lt config --on --preset0 --mode=interactive 
+    xoa-utils[123456][port0/0] > lt config --on --preset0 --mode=interactive 
 
-    xoa_util[port0/2]$ lt im 0 nrz
+    xoa-utils[123456][port0/0] > lt im 0 nrz
 
 
 > The initial modulation of each lane on a port is by default PAM2 (NRZ). If you want to change them, you can use ``lt_im``, otherwise do nothing.
@@ -89,7 +89,7 @@ After disabling link recovery on the port, you can start configuring AN and LT u
 
 After configuring the ANLT scenario on the port, you should execute ``anlt_do`` to let XOA Utilities application send low-level commands to the tester to start the ANLT procedure, either AN-only, or AN + LT, or LT (auto), or LT (interactive).
 
-    xoa_util[port0/0]$ do anlt
+    xoa-utils[123456][port0/0] > anlt do
 
 
 ### Control LT Interactive
@@ -97,23 +97,21 @@ After configuring the ANLT scenario on the port, you should execute ``anlt_do`` 
 If you run LT (interactive), you will need to manually control the LT parameters using the LT Control Commands, for example:
 
 
-    xoa_util[port0/0]$ lt preset 2
+    xoa-utils[123456][port0/0] > lt preset 0 2
 
-    xoa_util[port0/0]$ lt inc 0 pre3
+    xoa-utils[123456][port0/0] > lt inc 0 pre3
 
-    xoa_util[port0/0]$ lt inc 0 main
+    xoa-utils[123456][port0/0] > lt inc 0 main
 
-    xoa_util[port0/0]$ lt inc 0 main
+    xoa-utils[123456][port0/0] > lt dec 0 post
 
-    xoa_util[port0/0]$ lt dec 0 post
+    xoa-utils[123456][port0/0] > lt status 0
 
-    xoa_util[port0/0]$ lt status 0
+    xoa-utils[123456][port0/0] > lt trained 0
 
-    xoa_util[port0/0]$ lt trained 0
+    xoa-utils[123456][port0/0] > lt txtagget 0
 
-    xoa_util[port0/0]$ lt txtagget 0
-
-    xoa_util[port0/0]$ lt txtagset --pre3=5 --main=56
+    xoa-utils[123456][port0/0] > lt txtagset 0 0 0 1 56 0
 
 
 ### Check AN Status
@@ -131,7 +129,7 @@ Check LT statistics by ``lt_status``.
 Check ANLT logging by ``anlt_log``.
 
 
-    xoa_util[port0/0]$ anlt log
+    xoa-utils[123456][port0/0] > anlt log -f mylog.log
 
 > This commands **continuously displays** the log messages on the screen so you can keep track of your ANLT actions. To **quit** the continuous display mode, press `Control-z`.
 
@@ -142,7 +140,7 @@ If you want to start over on the port, you can reset the port by ``port <PORT> -
 
 This will bring the port back to its default state.
 
-    xoa_util[port0/0]$ port 0/0 --reset
+    xoa-utils[123456][port0/0] > port 0/0 --reset
 
 
 
