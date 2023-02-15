@@ -135,14 +135,21 @@ def format_ports_status(storage: "CmdContext", all: bool) -> str:
     return result_str
 
 
-def format_port_status(port_id: str, status: dict) -> str:
+def format_port_status(port_id: str, status: dict, storage: "CmdContext") -> str:
     return f"""
 Port {port_id}
+=ACTUAL STATUS=
 Auto-negotiation      : {status['autoneg_enabled']}
 Link training         : {status['link_training_mode']}
 Link training timeout : {status['link_training_timeout']}
 Link recovery         : {status['link_recovery']}
 Lane (serdes) count   : {status['serdes_count']}
+
+=SHADOW STATUS=
+Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'}
+Allow loopback        : {'true' if storage.retrieve_an_loopback() else 'off'}
+Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'})
+Preset0               : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values
 """
 
 
@@ -241,7 +248,7 @@ Is trained        : {str(dic['is_trained']).lower()}
 Failure           : {dic['failure']}
 
 Initial mod.      : {dic['init_modulation']}
-Preset0           : {"standard tap values" if dic['preset0'] else "existing tap values"}
+Preset0           : {"standard tap" if dic['preset0'] else "existing tap"} values
 Total bits        : {dic['total_bits']:,}
 Total err. bits   : {dic['total_errored_bits']:,}
 BER               : {dic['ber']}
