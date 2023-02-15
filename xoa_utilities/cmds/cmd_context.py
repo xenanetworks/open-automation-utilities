@@ -83,20 +83,17 @@ class CmdContext:
     def get_coro_interval(self) -> int:
         return self._fn_state.interval
 
-    def get_loop_coro(self) -> t.Optional[t.Callable]:
-        return self._fn_state.func
+    def has_loop_coro(self) -> bool:
+        return self._fn_state.func is not None and callable(self._fn_state.func)
 
-    def set_loop_coro(self, coro: t.Optional[t.Callable]) -> None:
+    def get_loop_coro(self) -> tuple[t.Optional[t.Callable], dict]:
+        return self._fn_state.func, self._fn_state.kw
+
+    def set_loop_coro(self, coro: t.Optional[t.Callable], dic: dict) -> None:
         self._fn_state.func = coro
-
-    def set_loop_coro_kw(self, dic: dict) -> None:
         self._fn_state.kw = dic
 
-    def get_loop_coro_kw(self) -> dict:
-        return self._fn_state.kw
-
-    clear_loop_coro = partialmethod(set_loop_coro, None)
-    clear_loop_coro_kw = partialmethod(set_loop_coro_kw, {})
+    clear_loop_coro = partialmethod(set_loop_coro, None, {})
 
     def prompt(self, base_prompt: str = "", end_prompt: str = ">") -> str:
         s = self.retrieve_tester_serial()
@@ -236,7 +233,7 @@ class CmdContext:
     ) -> dict[str, GenericL23Port]:
         if self.retrieve_tester() is None:
             raise NotConnectedError()
-        
+
         tester = self.retrieve_tester()
         p_dics = {}
         if id_str == "*":

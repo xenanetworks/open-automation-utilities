@@ -13,4 +13,4 @@ async def cmd_main(context: CmdContext, cmd_str: str) -> t.Any:
     context.clear_error()
     args = cmd_str.split()
     result = await xoa_utils.main(args=args, standalone_mode=False, obj=context)
-    return result 
+    return result

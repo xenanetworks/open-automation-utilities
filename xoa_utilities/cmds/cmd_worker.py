@@ -118,7 +118,6 @@ class CmdWorker:
 
     def stop_coro(self, line: str, pos: int) -> t.Tuple[str, int]:
         self.context.clear_loop_coro()
-        self.context.clear_loop_coro_kw()
         self.show_prompt = True
         return line, pos
 
@@ -142,7 +141,7 @@ class CmdWorker:
             self.show_prompt = True
 
     async def run_interactive(self) -> None:
-        self.show_prompts('>')
+        self.show_prompts(">")
         request = (await self.process.stdin.readline()).strip()
         response = None
         success = False
@@ -166,11 +165,10 @@ class CmdWorker:
             self.put_hub_record(request, response, success)
 
     async def run_coroutine(self) -> None:
-        async_func = self.context.get_loop_coro()
+        async_func, kw = self.context.get_loop_coro()
         if async_func is not None:
             try:
-                self.show_prompts('!')
-                kw = self.context.get_loop_coro_kw()
+                self.show_prompts("!")
                 result = await async_func(self.context, **kw)
                 if result:
                     self.write(f"{result}\n")
@@ -180,16 +178,15 @@ class CmdWorker:
             except Exception as e:
                 self.write(f"{type(e).__name__}: {e}\n")
                 self.context.clear_loop_coro()
-                self.context.clear_loop_coro_kw()
 
     async def run(self) -> None:
         self.connect_hub()
         while not self.process.stdin.at_eof():
             try:
-                if self.context.get_loop_coro() is None:
-                    await self.run_interactive()
-                else:
+                if self.context.has_loop_coro():
                     await self.run_coroutine()
+                else:
+                    await self.run_interactive()
             except ah.TerminalSizeChanged:
                 self.show_prompt = False
             except ah.BreakReceived:
