@@ -44,7 +44,7 @@ async def an_config(context: ac.Context, on: bool, loopback: bool) -> str:
     storage.retrieve_port()
     storage.store_an_allow_loopback(loopback)
     storage.store_should_do_an(on)
-    return format_an_config(storage, on, loopback)
+    return format_an_config(storage)
 
 
 # **************************
