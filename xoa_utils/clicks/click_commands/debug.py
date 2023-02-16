@@ -1,13 +1,13 @@
 from __future__ import annotations
 import asyncclick as ac
 import typing as t
-from .group import xoa_utils
+from .group import xoa_util
 from .. import click_backend as cb
 from ...cmds import CmdContext
 from xoa_driver.hlfuncs import anlt_ll_debug as debug_utils
 
 
-@xoa_utils.group(cls=cb.XenaGroup)
+@xoa_util.group(cls=cb.XenaGroup)
 def debug():
     """
     To enter debug context.\n

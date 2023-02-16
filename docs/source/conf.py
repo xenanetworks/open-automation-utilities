@@ -49,10 +49,10 @@ author = u'Xena Networks'
 title = u'Xena OpenAutomation Utilities Documentation'
 
 # The full version, including alpha/beta/rc tags.
-release = get_version("../../xoa_utilities/__init__.py")
+release = get_version("../../xoa_utils/__init__.py")
 
 # The short X.Y version.
-version = get_short_version("../../xoa_utilities/__init__.py")
+version = get_short_version("../../xoa_utils/__init__.py")
 
 
 # -- General configuration -----------------------------------------------------

@@ -7,5 +7,5 @@ cs = {"help_option_names": ["-h", "--help"]}
 
 
 @ac.group(cls=cb.XenaGroup)
-def xoa_utils():
+def xoa_util():
     pass
