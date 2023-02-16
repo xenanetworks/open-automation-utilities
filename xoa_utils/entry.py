@@ -39,7 +39,8 @@ async def start_server(config: ReadConfig) -> None:
 
 def main() -> None:
     loop = asyncio.get_event_loop()
-    config = ReadConfig(sys.argv[1])
+    argv = (sys.argv[1],) if len(sys.argv) >= 2 else tuple()
+    config = ReadConfig(*argv)
     try:
         loop.run_until_complete(start_server(config))
         loop.run_forever()

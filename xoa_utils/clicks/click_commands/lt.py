@@ -15,7 +15,7 @@ from ...clis import (
     format_txtap_set,
     format_lt_status,
 )
-from .group import xoa_utils
+from .group import xoa_util
 from .. import click_help as h
 from ...cmds import CmdContext
 
@@ -23,7 +23,7 @@ from ...cmds import CmdContext
 # --------------------------
 # command: lt
 # --------------------------
-@xoa_utils.group(cls=cb.XenaGroup)
+@xoa_util.group(cls=cb.XenaGroup)
 def lt():
     """
     Enter link training context.\n

@@ -2,7 +2,7 @@ from __future__ import annotations
 from asyncclick.shell_completion import ShellComplete, CompletionItem
 from asyncclick import BaseCommand
 import typing as t
-from ..clicks import xoa_utils
+from ..clicks import xoa_util
 from ..clicks import cmd_main
 from ..hub import HubManager
 from ..clis import ReadConfig, run_coroutine_as_sync, format_error
@@ -96,7 +96,7 @@ class CmdWorker:
         if not line:
             return line, pos
         args_raw = line.split()
-        coro = shell_complete(xoa_utils, args_raw)
+        coro = shell_complete(xoa_util, args_raw)
         completed = str(run_coroutine_as_sync(coro))
         if not completed:
             pass
