@@ -100,7 +100,7 @@ class CmdWorker:
         completed = str(run_coroutine_as_sync(coro))
         if not completed:
             pass
-        elif completed.startswith("-"):
+        elif "\t" in completed:
             self.write(f"{line}\n{completed}\n\n{self.make_prompt()}")
         elif args_raw and completed.startswith(args_raw[-1]):
             new_l = args_raw[:-1] + [completed]
@@ -179,8 +179,8 @@ class CmdWorker:
                 self.write(f"{type(e).__name__}: {e}\n")
                 self.context.clear_loop_coro()
 
-    async def run(self) -> None:
-        self.connect_hub()
+    async def run(self, config: ReadConfig) -> None:
+        self.connect_hub(config)
         while not self.process.stdin.at_eof():
             try:
                 if self.context.has_loop_coro():
@@ -192,8 +192,7 @@ class CmdWorker:
             except ah.BreakReceived:
                 self.finish()
 
-    def connect_hub(self) -> None:
-        config = ReadConfig()
+    def connect_hub(self, config: ReadConfig) -> None:
         self.hub_enable = config.hub_enabled
         if config.hub_enabled:
             self.hub_manager = HubManager(

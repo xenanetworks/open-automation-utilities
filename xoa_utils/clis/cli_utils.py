@@ -1,5 +1,6 @@
 from __future__ import annotations
-import configparser
+
+# import configparser
 import os
 import typing as t
 import asyncclick as ac
@@ -11,46 +12,68 @@ if t.TYPE_CHECKING:
 
 
 class ReadConfig:
-    EXAMPLE = """[Connection]
-port = 66
-sshkeypath = ~/.ssh/id_rsa
+    # EXAMPLE =
+    # """[Connection]
+    # port = 22622
+    # sshkeypath = ~/.ssh/id_rsa
 
-[Hub]
-enable = false
-port = 10000
-"""
+    # [Hub]
+    # enable = false
+    # port = 10000
+    # """
 
-    def __init__(self) -> None:
-        config = configparser.ConfigParser()
-        self.config = config
-        self._read_or_write_ini()
-        self.connection_host = config["Connection"].get("host", "localhost")
-        self.connection_port = int(config["Connection"].get("port", "5000"))
-        self.connection_host_keys = config["Connection"].get(
-            "sshkeypath", "~/.ssh/id_rsa"
+    def __init__(
+        self,
+        ssh_port: str = "22622",
+        ssh_key_path: str = os.path.join(os.path.expanduser("~"), ".ssh", "id_rsa"),
+        hub_host: str = "localhost",
+        hub_port: str = "10000",
+        hub_enable: str = "false",
+        hub_pid_path: str = os.path.join(
+            os.path.expanduser("~"), "XenaNetworks", "XOA-UTILITIES", "hub.pid"
+        ),
+    ) -> None:
+        # config = configparser.ConfigParser()
+        # self.config = config
+        # self._read_or_write_ini()
+        config = {
+            "Connection": {
+                "port": ssh_port,
+                "sshkeypath": ssh_key_path,
+            },
+            "Hub": {
+                "host": hub_host,
+                "port": hub_port,
+                "enable": hub_enable,
+                "pidpath": hub_pid_path,
+            },
+        }
+        conn_config = config.get("Connection", {})
+        hub_config = config.get("Hub", {})
+        hub_pid = os.path.join(
+            os.path.expanduser("~"), "XenaNetworks", "XOA-UTILITIES", "hub.pid"
         )
-        self.hub_enabled = (
-            True
-            if str(config["Hub"].get("enable", "false")).lower() == "true"
-            else False
-        )
-        self.hub_host = config["Hub"].get("host", "localhost")
-        self.hub_port = int(config["Hub"].get("port", "10000"))
-        self.hub_pid_path = config["Hub"].get("pid_path", "hub.pid")
+        id_rsa = os.path.join(os.path.expanduser("~"), ".ssh", "id_rsa")
+        self.conn_port = int(conn_config.get("port", "5000"))
+        self.conn_host_keys = conn_config.get("sshkeypath", id_rsa)
+        self.hub_enabled = str(hub_config.get("enable", "false")).lower() == "true"
+        self.hub_host = hub_config.get("hub_host", "localhost")
+        self.hub_port = int(hub_config.get("port", "10000"))
+        self.hub_pid_path = hub_config.get("pidpath", hub_pid)
         self.hub_pid = self._read_hub_pid()
 
-    def _read_or_write_ini(self) -> None:
-        folder = os.path.join(os.path.expanduser("~"), "XenaNetworks", "XOA-UTILITIES")
-        realpath = os.path.join(folder, "config.ini")
-        if not os.path.isfile(realpath):
-            self._write_ini(realpath)
-        try:
-            self.config.read(realpath)
-            for i in ("Hub", "Connection"):
-                assert i in self.config
-        except Exception:
-            self._write_ini(realpath)
-            self.config.read(realpath)
+    # def _read_or_write_ini(self) -> None:
+    #     folder = os.path.join(os.path.expanduser("~"), "XenaNetworks", "XOA-UTILITIES")
+    #     realpath = os.path.join(folder, "config.ini")
+    #     if not os.path.isfile(realpath):
+    #         self._write_ini(realpath)
+    #     try:
+    #         self.config.read(realpath)
+    #         for i in ("Hub", "Connection"):
+    #             assert i in self.config
+    #     except Exception:
+    #         self._write_ini(realpath)
+    #         self.config.read(realpath)
 
     def _touch(self, realpath: str) -> None:
         realpath = os.path.abspath(realpath)
@@ -61,13 +84,13 @@ port = 10000
             except Exception:
                 pass
             os.makedirs(folder, exist_ok=True)
-            with open(realpath, "w") as f:
+            with open(realpath, "w"):
                 pass
 
-    def _write_ini(self, realpath: str) -> None:
-        self._touch(realpath)
-        with open(realpath, "w") as f:
-            f.write(type(self).EXAMPLE)
+    # def _write_ini(self, realpath: str) -> None:
+    #     self._touch(realpath)
+    #     with open(realpath, "w") as f:
+    #         f.write(type(self).EXAMPLE)
 
     def _read_hub_pid(self) -> int:
         pid = 0
@@ -184,7 +207,7 @@ def format_lt_im(storage: CmdContext, lane: int) -> str:
     return f"Port {storage.retrieve_port_str()}: initial modulation {storage.retrieve_lt_initial_mod_lane(lane).name} on Lane {lane}\n"
 
 
-def format_an_config(storage: CmdContext,) -> str:
+def format_an_config(storage: CmdContext) -> str:
     return f"""
 Port {storage.retrieve_port_str()}
 =SHADOW STATUS=
@@ -193,7 +216,6 @@ Allow loopback        : {'yes' if storage.retrieve_an_loopback() else 'no'}
 Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'})
 Preset0               : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values
 """
-
 
 
 def format_recovery(storage: CmdContext, on: bool) -> str:

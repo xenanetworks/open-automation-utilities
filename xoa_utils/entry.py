@@ -25,19 +25,21 @@ class XenaSSHCLIHandle:
 
 async def start_server(config: ReadConfig) -> None:
     Hub.check_hub_process(config)
-    print(f"(PID: {os.getpid()}) XOA Utils SSH Service running on 0.0.0.0:{config.connection_port}")
+    print(
+        f"(PID: {os.getpid()}) XOA Utils SSH Service running on 0.0.0.0:{config.conn_port}."
+    )
     await asyncssh.create_server(
         XenaSSHServer,
         "0.0.0.0",
-        config.connection_port,
-        server_host_keys=[config.connection_host_keys],
+        config.conn_port,
+        server_host_keys=[config.conn_host_keys],
         process_factory=XenaSSHCLIHandle.handle_client,
     )
 
 
 def main() -> None:
     loop = asyncio.get_event_loop()
-    config = ReadConfig()
+    config = ReadConfig(sys.argv[1])
     try:
         loop.run_until_complete(start_server(config))
         loop.run_forever()
