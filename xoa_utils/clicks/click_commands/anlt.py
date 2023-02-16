@@ -5,12 +5,12 @@ import typing as t
 from xoa_driver.hlfuncs import anlt as anlt_utils
 from .. import click_backend as cb
 from ...clis import format_recovery, format_port_status
-from .group import xoa_utils
+from .group import xoa_util
 from .. import click_help as h
 from ...cmds import CmdContext
 
 
-@xoa_utils.group(cls=cb.XenaGroup)
+@xoa_util.group(cls=cb.XenaGroup)
 def anlt():
     """
     To enter anlt context.\n

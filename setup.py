@@ -9,7 +9,7 @@ def main():
         name="xoa-utils",
         entry_points={
             "console_scripts": [
-                "xoa-utils = xoa_utilities.entry:main",
+                "xoa-utils = xoa_utils.entry:main",
             ]
         },
         description=(

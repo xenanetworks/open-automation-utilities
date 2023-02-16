@@ -3,41 +3,46 @@ import asyncio
 import asyncclick
 import sys
 import os
-from xoa_utilities.clis import ReadConfig
-from xoa_utilities.hub import Hub
-from xoa_utilities.ssh_server import XenaSSHServer
-from xoa_utilities.cmds import CmdWorker
+from xoa_utils.clis import ReadConfig
+from xoa_utils.hub import Hub
+from xoa_utils.ssh_server import XenaSSHServer
+from xoa_utils.cmds import CmdWorker
 
 
 class XenaSSHCLIHandle:
-    @classmethod
-    async def handle_client(cls, process: asyncssh.SSHServerProcess) -> None:
+    def __init__(self, config: ReadConfig) -> None:
+        self.config = config
+
+    async def handle_client(self, process: asyncssh.SSHServerProcess) -> None:
         out = process.stdout
         setattr(out, "flush", out._chan._flush_send_buf)
         # patch the flush() method since it doesn't exist.
         asyncclick.echo(
-            f"Welcome to Xena SSH server, {process.get_extra_info('username')}!",
+            f"Hello {process.get_extra_info('username')}, welcome to Xena OpenAutomation Utilities SSH Service.",
             file=out,
         )
         worker = CmdWorker(process)
-        await worker.run()
+        await worker.run(self.config)
 
 
 async def start_server(config: ReadConfig) -> None:
     Hub.check_hub_process(config)
-    print(f"(PID: {os.getpid()}) Xena SSH running on 0.0.0.0:{config.connection_port}")
+    print(
+        f"(PID: {os.getpid()}) XOA Utils SSH Service running on 0.0.0.0:{config.conn_port}."
+    )
     await asyncssh.create_server(
         XenaSSHServer,
         "0.0.0.0",
-        config.connection_port,
-        server_host_keys=[config.connection_host_keys],
-        process_factory=XenaSSHCLIHandle.handle_client,
+        config.conn_port,
+        server_host_keys=[config.conn_host_keys],
+        process_factory=XenaSSHCLIHandle(config).handle_client,
     )
 
 
 def main() -> None:
     loop = asyncio.get_event_loop()
-    config = ReadConfig()
+    argv = (sys.argv[1],) if len(sys.argv) >= 2 else tuple()
+    config = ReadConfig(*argv)
     try:
         loop.run_until_complete(start_server(config))
         loop.run_forever()

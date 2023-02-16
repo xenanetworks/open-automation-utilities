@@ -7,14 +7,14 @@ from ...clis import (
     format_an_status,
     format_an_config,
 )
-from .group import xoa_utils
+from .group import xoa_util
 from .. import click_help as h
 from ...cmds import CmdContext
 
 # --------------------------
 # command: an
 # --------------------------
-@xoa_utils.group(cls=cb.XenaGroup)
+@xoa_util.group(cls=cb.XenaGroup)
 def an():
     """
     To enter auto-negotiation context.\n

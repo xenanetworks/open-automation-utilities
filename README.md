@@ -20,11 +20,14 @@ After installing the package and ensuring the SSH key in place, you can start XO
 
     > xoa-utils
 
-    Xena SSH running on 0.0.0.0:66
+    Xena SSH running on 0.0.0.0:22622
+
+> If you want to run xoa-utils SSH service on a different port, do ``xoa-utils 12345``
+
 
 Then you can SSH to your localhost:
 
-    > ssh yourname@localhost -p 66
+    > ssh yourname@localhost -p 22622
 
     Welcome to Xena SSH server, yourname!
 

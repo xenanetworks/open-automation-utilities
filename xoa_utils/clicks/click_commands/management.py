@@ -12,7 +12,7 @@ from ...clis import (
     format_ports_status,
     format_port_status,
 )
-from .group import xoa_utils
+from .group import xoa_util
 from .. import click_help as h
 from ...cmds import CmdContext
 
@@ -20,7 +20,7 @@ from ...cmds import CmdContext
 # --------------------------
 # command: connect
 # --------------------------
-@xoa_utils.command(cls=cb.XenaCommand)
+@xoa_util.command(cls=cb.XenaCommand)
 @ac.argument("device", type=ac.STRING)
 @ac.argument("username", type=ac.STRING)
 @ac.option("-p", "--ports", type=ac.STRING, help=h.HELP_CONNECT_PORT_LIST, default="")
@@ -78,7 +78,7 @@ async def connect(
 # --------------------------
 # command: exit
 # --------------------------
-@xoa_utils.command(cls=cb.XenaCommand)
+@xoa_util.command(cls=cb.XenaCommand)
 @ac.option("--reset/--no-reset", type=ac.BOOL, help=h.HELP_CONNECT_RESET, default=True)
 @ac.option(
     "--release/--no-release", type=ac.BOOL, help=h.HELP_EXIT_RELEASE, default=True
@@ -101,7 +101,7 @@ async def exit(context: ac.Context, reset: bool, release: bool) -> str:
 # --------------------------
 # command: port
 # --------------------------
-@xoa_utils.command(cls=cb.XenaCommand)
+@xoa_util.command(cls=cb.XenaCommand)
 @ac.argument("port", type=ac.STRING)
 @ac.option("--reset/--no-reset", type=ac.BOOL, help=h.HELP_CONNECT_RESET, default=False)
 @ac.option("--force/--no-force", type=ac.BOOL, help=h.HELP_CONNECT_FORCE, default=True)
@@ -140,7 +140,7 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
 # --------------------------
 # command: ports
 # --------------------------
-@xoa_utils.command(cls=cb.XenaCommand)
+@xoa_util.command(cls=cb.XenaCommand)
 @ac.option("--all/--no-all", type=ac.BOOL, help=h.HELP_PORTS_ALL, default=False)
 @ac.pass_context
 async def ports(context: ac.Context, all: bool) -> str:
