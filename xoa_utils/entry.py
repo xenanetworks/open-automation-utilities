@@ -10,8 +10,10 @@ from xoa_utils.cmds import CmdWorker
 
 
 class XenaSSHCLIHandle:
-    @classmethod
-    async def handle_client(cls, process: asyncssh.SSHServerProcess) -> None:
+    def __init__(self, config: ReadConfig) -> None:
+        self.config = config
+
+    async def handle_client(self, process: asyncssh.SSHServerProcess) -> None:
         out = process.stdout
         setattr(out, "flush", out._chan._flush_send_buf)
         # patch the flush() method since it doesn't exist.
@@ -20,7 +22,7 @@ class XenaSSHCLIHandle:
             file=out,
         )
         worker = CmdWorker(process)
-        await worker.run()
+        await worker.run(self.config)
 
 
 async def start_server(config: ReadConfig) -> None:
@@ -33,7 +35,7 @@ async def start_server(config: ReadConfig) -> None:
         "0.0.0.0",
         config.conn_port,
         server_host_keys=[config.conn_host_keys],
-        process_factory=XenaSSHCLIHandle.handle_client,
+        process_factory=XenaSSHCLIHandle(config).handle_client,
     )
 
 
