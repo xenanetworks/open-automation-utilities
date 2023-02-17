@@ -1,8 +1,8 @@
 from __future__ import annotations
 import typing as t
 from xoa_driver.testers import L23Tester
-from xoa_driver.ports import GenericL23Port, GenericAnyPort
-from ..exceptions import (
+from xoa_driver.ports import GenericL23Port
+from xoa_utils.exceptions import (
     NotInStoreError,
     NotConnectedError,
     NoSuchIDError,

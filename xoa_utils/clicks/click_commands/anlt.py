@@ -3,11 +3,11 @@ import asyncclick as ac
 import json
 import typing as t
 from xoa_driver.hlfuncs import anlt as anlt_utils
-from .. import click_backend as cb
-from ...clis import format_recovery, format_port_status
-from .group import xoa_util
-from .. import click_help as h
-from ...cmds import CmdContext
+from xoa_utils.clicks import click_backend as cb
+from xoa_utils.clis import format_recovery, format_port_status
+from xoa_utils.clicks.click_commands.group import xoa_util
+from xoa_utils.clicks import click_help as h
+from xoa_utils.cmds import CmdContext
 
 
 @xoa_util.group(cls=cb.XenaGroup)
@@ -134,7 +134,6 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
     def _flatten(dic: dict[str, str]) -> str:
         return ", ".join((f"{k}: {v}" for k, v in dic.items()))
 
-    
     def beautify(filtered: list[dict]) -> str:
         real = []
         for i in filtered:
@@ -175,7 +174,9 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
             if log_type == "debug":
                 b_str = f"{common:<38}{'Debug:':<10}{log_log}"
             elif log_type == "fsm":
-                b_str = f"{common:<38}{'FSM:':<10}({log_event}) {log_current} -> {log_new}"
+                b_str = (
+                    f"{common:<38}{'FSM:':<10}({log_event}) {log_current} -> {log_new}"
+                )
             elif log_type == "trace" and "log" in log_entry:
                 b_str = f"{common:<38}{'Message:':<10}{log_log}"
             elif log_type == "trace" and "direction" in log_entry and "LT" not in log_m:
@@ -188,7 +189,6 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
             if b_str:
                 real.append(b_str)
         return "\n".join(real)
-        
 
     async def log(
         storage: CmdContext, filename: str, keep: str, lane: list[int]

@@ -1,9 +1,9 @@
 from __future__ import annotations
 import asyncclick as ac
 import typing as t
-from .group import xoa_util
-from .. import click_backend as cb
-from ...cmds import CmdContext
+from xoa_utils.clicks.click_commands.group import xoa_util
+from xoa_utils.clicks import click_backend as cb
+from xoa_utils.cmds import CmdContext
 from xoa_driver.hlfuncs import anlt_ll_debug as debug_utils
 
 

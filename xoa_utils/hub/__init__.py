@@ -1,1 +1,1 @@
-from .hub import Hub, HubManager
+from xoa_utils.hub.hub import Hub, HubManager

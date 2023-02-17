@@ -1,20 +1,14 @@
 from __future__ import annotations
 import asyncclick as ac
 import asyncio
-from .. import click_backend as cb
+from xoa_utils.clicks import click_backend as cb
 from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
 from xoa_driver.testers import L23Tester
-from ...exceptions import *
-import asyncclick as ac
-from ...clis import (
-    format_tester_status,
-    format_ports_status,
-    format_port_status,
-)
-from .group import xoa_util
-from .. import click_help as h
-from ...cmds import CmdContext
+from xoa_utils.clis import format_tester_status, format_ports_status, format_port_status
+from xoa_utils.clicks.click_commands.group import xoa_util
+from xoa_utils.clicks import click_help as h
+from xoa_utils.cmds import CmdContext
 
 
 # --------------------------

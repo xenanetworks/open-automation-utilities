@@ -1,4 +1,4 @@
-from .cli_utils import (
+from xoa_utils.clis.cli_utils import (
     ReadConfig,
     run_coroutine_as_sync,
     format_tester_status,

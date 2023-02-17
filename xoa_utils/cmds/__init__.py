@@ -1,2 +1,2 @@
-from .cmd_context import CmdContext, ErrorString
-from .cmd_worker import CmdWorker
+from xoa_utils.cmds.cmd_context import CmdContext, ErrorString
+from xoa_utils.cmds.cmd_worker import CmdWorker

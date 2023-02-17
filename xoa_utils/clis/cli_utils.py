@@ -8,7 +8,7 @@ from xoa_driver import enums
 
 if t.TYPE_CHECKING:
     from xoa_driver.ports import GenericL23Port
-    from ..cmds.cmd_context import CmdContext
+    from xoa_utils.cmds.cmd_context import CmdContext
 
 
 class ReadConfig:
