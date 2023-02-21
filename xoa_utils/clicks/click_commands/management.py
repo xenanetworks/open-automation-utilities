@@ -9,7 +9,7 @@ from xoa_utils.clis import format_tester_status, format_ports_status, format_por
 from xoa_utils.clicks.click_commands.group import xoa_util
 from xoa_utils.clicks import click_help as h
 from xoa_utils.cmds import CmdContext
-
+from xoa_utils import exceptions as ex
 
 # --------------------------
 # command: connect
@@ -112,7 +112,7 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
         p_obj = storage.retrieve_port()
         port_lane_num = (await anlt_utils.anlt_status(p_obj))["serdes_count"]
         storage.store_port(port, p_obj, port_lane_num)
-    except NotInStoreError:
+    except ex.NotInStoreError:
         port_dic = storage.obtain_physical_ports(port)
         for p_id, p_obj in port_dic.items():
             port_lane_num = (await anlt_utils.anlt_status(p_obj))["serdes_count"]
