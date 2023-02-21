@@ -182,10 +182,10 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
             elif log_type == "trace" and "log" in log_entry:
                 b_str = f"{common:<38}{'Message:':<10}{log_log}"
             elif log_type == "trace" and "direction" in log_entry and "LT" not in log_m:
-                if log_pstate == "new":
+                if log_pstate == "new" or log_pstate == "":
                     b_str = f"{common:<38}{log_direction.upper() + ' Page:':<10}({log_value}), {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}, FEC:{log_fec}, ABILITY:{log_ab}"
             elif log_type == "trace" and "direction" in log_entry and "LT" in log_m:
-                if log_pstate == "new":
+                if log_pstate == "new" or log_pstate == "":
                     b_str = f"{common:<38}{log_direction.upper()} ({log_pkt_value}) {_flatten(log_pkt_ctrl)} {_flatten(log_pkt_status)}, Locked: {log_pkt_locked}, Done: {log_pkt_done} "
 
             if b_str:
