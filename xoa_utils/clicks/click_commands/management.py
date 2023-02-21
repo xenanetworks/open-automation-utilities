@@ -120,12 +120,16 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
             storage.store_current_port_str(p_id)
     port_obj = storage.retrieve_port()
     port_id = storage.retrieve_port_str()
+    tester_obj = storage.retrieve_tester()
+    module_id = int(port.split("/")[0])
     if force:
+        module_obj = mgmt_utils.get_module(tester_obj, module_id)
+        await mgmt_utils.free_module(module_obj)
         await mgmt_utils.reserve_port(port_obj, force)
     if reset:
         await mgmt_utils.reset_port(port_obj)
     if force or reset:
-        await asyncio.sleep(3)
+        await asyncio.sleep(2)
         # status will change when you reserve_port or reset_port, need to wait
     status_dic = await anlt_utils.anlt_status(port_obj)
     return f"{format_ports_status(storage, False)}{format_port_status(port_id, status_dic, storage)}"
