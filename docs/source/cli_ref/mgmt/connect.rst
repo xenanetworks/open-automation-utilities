@@ -5,7 +5,7 @@ connect
 Description
 -----------
 
-To connect to a tester for the current session.
+Connect to a tester for the current session.
 
 Synopsis
 --------

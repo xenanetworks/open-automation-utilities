@@ -4,7 +4,9 @@ anlt log
 Description
 -----------
 
-To start writing the link training trace log for the specified lane into a file, and display on the screen.
+Show ANLT protocol trace log and save to a file.
+
+To **quit** the continuous display mode, press :kbd:`Control-z`.
 
 
 

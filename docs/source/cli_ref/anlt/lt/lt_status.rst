@@ -4,7 +4,7 @@ lt status
 Description
 -----------
 
-To show the link training status of the specified lane.
+Show the link training status of the specified lane.
 
 
 

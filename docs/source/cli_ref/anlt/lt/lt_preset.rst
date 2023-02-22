@@ -4,7 +4,7 @@ lt preset
 Description
 -----------
 
-To request the remote link training partner to use the preset of the specified lane.
+Request the remote link training partner to use the preset of the specified lane.
 
 
 

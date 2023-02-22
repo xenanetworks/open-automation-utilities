@@ -4,7 +4,7 @@ ports
 Description
 -----------
 
-To list all the ports reserved by the current session.
+List all the ports reserved by the current session.
 This command works in all context.
 
 Synopsis

@@ -4,7 +4,7 @@ lt inc
 Description
 -----------
 
-To request the remote link training partner to increase (+) its emphasis value by 1.
+Request the remote link training partner to increase (+) its emphasis value by 1.
 
 
 

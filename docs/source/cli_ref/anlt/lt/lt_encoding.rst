@@ -4,7 +4,7 @@ lt encoding
 Description
 -----------
 
-To request the remote link training partner to use the specified encoding on the specified lane.
+Request the remote link training partner to use the specified encoding on the specified lane.
 
 
 
