@@ -34,12 +34,11 @@ async def connect(
     tcp: int,
 ) -> str:
     """
-    To connect to a tester for the current session.
+    Connect to a tester for the current session.
 
-        DEVICE TEXT: Specifies the chassis address for connection. You can specify the IP addresses in IPv4 format, or a host name, e.g. 10.10.10.10 or demo.xenanetworks.com\n
+        <DEVICE>: The chassis address to connect. Address can be in IPv4 format (e.g. 10.10.10.10), or a host name (e.g. demo.xenanetworks.com)
 
-        USERNAME TEXT: Specifies the name of the user.\n
-
+        <USERNAME>: Username for port reservation.
     """
     storage: CmdContext = context.obj
     real_port_list = [i.strip() for i in ports.split(",")] if ports else []
@@ -80,7 +79,7 @@ async def connect(
 @ac.pass_context
 async def exit(context: ac.Context, reset: bool, release: bool) -> str:
     """
-    To exit the session by terminating port reservations, disconnecting from the chassis, releasing system resources, and removing the specified port configurations. This command works in all context.
+    Exit the session. Exit by terminating port reservations, disconnecting from the chassis, releasing system resources, and removing the specified port configurations.
     """
     storage: CmdContext = context.obj
     for port_id, port_obj in storage.retrieve_ports().copy().items():
@@ -104,7 +103,7 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
     """
     Switch the working port. If the port is not yet reserved, reserve the port. Update the working port in the cache.
 
-        PORT TEXT: Specifies the port on the specified device host. Specify a port using the format slot/port, e.g. 0/0\n
+        <PORT>: The port on the specified device host. Specify a port using the format slot/port, e.g. 0/0
     """
     storage: CmdContext = context.obj
     try:
@@ -139,8 +138,7 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
 @ac.pass_context
 async def ports(context: ac.Context, all: bool) -> str:
     """
-    To list all the ports reserved by the current session.\n
-
+    List all the ports reserved by the current session.
     """
     storage: CmdContext = context.obj
     return format_ports_status(storage, all)

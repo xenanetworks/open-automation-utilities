@@ -10,8 +10,7 @@ from xoa_driver.hlfuncs import anlt_ll_debug as debug_utils
 @xoa_util.group(cls=cb.XenaGroup)
 def debug():
     """
-    To enter debug context.\n
-
+    Commands for debugging.\n
     """
 
 
@@ -23,9 +22,9 @@ def debug():
 @ac.pass_context
 async def init(context: ac.Context, lane: int) -> str:
     """
-    Debug init
+    Debug: Initialize debug on the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -69,9 +68,9 @@ async def _help_set(
 @ac.pass_context
 async def lane_reset(context: ac.Context, lane: int) -> str:
     """
-    Debug lane-reset
+    Debug: Reset the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -93,9 +92,9 @@ async def lane_reset(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def mode_get(context: ac.Context, lane: int) -> str:
     """
-    Debug mode-get
+    Debug: Get mode of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.mode_get, context, lane)
 
@@ -109,10 +108,11 @@ async def mode_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def mode_set(context: ac.Context, lane: int, value: int) -> str:
     """
-    Debug mode-set
+    Debug: Set mode of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
-        VALUE INT: Specifies the value.\n
+        <LANE>: The lane (serdes) index.
+
+        <VALUE>: Specifies the value.
     """
 
     return await _help_set(debug_utils.mode_get, context, lane, value)
@@ -126,9 +126,9 @@ async def mode_set(context: ac.Context, lane: int, value: int) -> str:
 @ac.pass_context
 async def lt_tx_config_get(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-tx-config-get
+    Debug: Read LT TX configuration of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.lt_tx_config_get, context, lane)
 
@@ -142,10 +142,11 @@ async def lt_tx_config_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_tx_config_set(context: ac.Context, lane: int, value: int) -> str:
     """
-    Debug lt-tx-config-set
+    Debug: Write LT TX configuration of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
-        VALUE INT: Specifies the value.\n
+        <LANE>: The lane (serdes) index.
+        
+        <VALUE>: Specifies the value.
     """
     return await _help_set(debug_utils.lt_tx_config_set, context, lane, value)
 
@@ -158,9 +159,9 @@ async def lt_tx_config_set(context: ac.Context, lane: int, value: int) -> str:
 @ac.pass_context
 async def lt_rx_config_get(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-rx-config-get
+    Debug: Read LT RX configuration of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.lt_rx_config_get, context, lane)
 
@@ -174,10 +175,11 @@ async def lt_rx_config_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_rx_config_set(context: ac.Context, lane: int, value: int) -> str:
     """
-    Debug lt-rx-config-set
+    Debug: Write LT RX configuration of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
-        VALUE INT: Specifies the value.\n
+        <LANE>: The lane (serdes) index.
+        
+        <VALUE>: Specifies the value.
     """
     return await _help_set(debug_utils.lt_rx_config_set, context, lane, value)
 
@@ -190,9 +192,9 @@ async def lt_rx_config_set(context: ac.Context, lane: int, value: int) -> str:
 @ac.pass_context
 async def lt_tx_tf_get(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-tx-tf-get
+    Debug: Read LT TX Test Frame of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.lt_tx_tf_get, context, lane)
 
@@ -205,9 +207,9 @@ async def lt_tx_tf_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_rx_error_stat0_get(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-rx-error-stat0-get
+    Debug: Read LT RX Error Stat0 of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.lt_rx_error_stat0_get, context, lane)
 
@@ -220,9 +222,9 @@ async def lt_rx_error_stat0_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_rx_error_stat1_get(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-rx-error-stat1-get
+    Debug: Read LT RX Error Stat1 of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.lt_rx_error_stat1_get, context, lane)
 
@@ -235,9 +237,9 @@ async def lt_rx_error_stat1_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_rx_analyzer_config_get(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-rx-analyzer-config-get
+    Debug: Read LT RX analyzer configuration of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.lt_rx_analyzer_config_get, context, lane)
 
@@ -250,9 +252,9 @@ async def lt_rx_analyzer_config_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_rx_analyzer_trig_mask_get(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-rx-analyzer-trig-mask-get
+    Debug: Read LT RX analyzer trigger mask of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.lt_rx_analyzer_trig_mask_get, context, lane)
 
@@ -265,9 +267,9 @@ async def lt_rx_analyzer_trig_mask_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_rx_analyzer_status_get(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-rx-analyzer-status-get
+    Debug: Read LT RX analyzer status of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.lt_rx_analyzer_status_get, context, lane)
 
@@ -280,9 +282,9 @@ async def lt_rx_analyzer_status_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_rx_analyzer_rd_addr_get(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-rx-analyzer-rd-addr-get
+    Debug: Read LT RX analyzer RD Address of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.lt_rx_analyzer_rd_addr_get, context, lane)
 
@@ -295,9 +297,9 @@ async def lt_rx_analyzer_rd_addr_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_rx_analyzer_rd_page_get(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-rx-analyzer-rd-page-get
+    Debug: Read LT RX analyzer RD Page of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.lt_rx_analyzer_rd_page_get, context, lane)
 
@@ -310,9 +312,9 @@ async def lt_rx_analyzer_rd_page_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_rx_analyzer_rd_data_get(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-rx-analyzer-rd-data-get
+    Debug: Read LT RX analyzer RD Data of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.lt_rx_analyzer_rd_data_get, context, lane)
 
@@ -326,9 +328,9 @@ async def lt_rx_analyzer_rd_data_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_rx_analyzer_config_set(context: ac.Context, lane: int, value: int) -> str:
     """
-    Debug lt-rx-analyzer-config-set
+    Debug: Write LT RX Analyzer configuration of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
         VALUE INT: Specifies the value.\n
     """
     await _help_set(debug_utils.lt_rx_analyzer_config_set, context, lane, value)
@@ -346,10 +348,11 @@ async def lt_rx_analyzer_trig_mask_set(
     context: ac.Context, lane: int, value: int
 ) -> str:
     """
-    Debug lt-rx-analyzer-trig-mask-set
+    Debug: Write LT RX analyzer trigger mask of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
-        VALUE INT: Specifies the value.\n
+        <LANE>: The lane (serdes) index.
+        
+        <VALUE>: Specifies the value.
     """
     await _help_set(debug_utils.lt_rx_analyzer_trig_mask_set, context, lane, value)
     return ""
@@ -364,10 +367,11 @@ async def lt_rx_analyzer_trig_mask_set(
 @ac.pass_context
 async def lt_rx_analyzer_rd_addr_set(context: ac.Context, lane: int, value: int) -> str:
     """
-    Debug lt-rx-analyzer-rd-addr-set
+    Debug: Write LT RX analyzer RD Address of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
-        VALUE INT: Specifies the value.\n
+        <LANE>: The lane (serdes) index.
+        
+        <VALUE>: Specifies the value.
     """
     await _help_set(debug_utils.lt_rx_analyzer_rd_addr_set, context, lane, value)
     return ""
@@ -382,10 +386,11 @@ async def lt_rx_analyzer_rd_addr_set(context: ac.Context, lane: int, value: int)
 @ac.pass_context
 async def lt_rx_analyzer_rd_page_set(context: ac.Context, lane: int, value: int) -> str:
     """
-    Debug lt-rx-analyzer-rd-page-set
+    Debug: Write LT RX analyzer RD Page of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
-        VALUE INT: Specifies the value.\n
+        <LANE>: The lane (serdes) index.
+        
+        <VALUE>: Specifies the value.
     """
     await _help_set(debug_utils.lt_rx_analyzer_rd_page_set, context, lane, value)
     return ""
@@ -396,16 +401,14 @@ async def lt_rx_analyzer_rd_page_set(context: ac.Context, lane: int, value: int)
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
-@ac.argument("value", type=ac.INT)
 @ac.pass_context
-async def lt_status(context: ac.Context, lane: int, value: int) -> str:
+async def lt_status(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-status
+    Debug: Read the LT status of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
-        VALUE INT: Specifies the value.\n
+        <LANE>: The lane (serdes) index.
     """
-    await _help_set(debug_utils.lt_status, context, lane, value)
+    await _help_get(debug_utils.lt_status, context, lane)
     return ""
 
 
@@ -417,9 +420,9 @@ async def lt_status(context: ac.Context, lane: int, value: int) -> str:
 @ac.pass_context
 async def lt_prbs(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-prbs
+    Debug: Read PRBS BER of the specified lane.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -440,9 +443,9 @@ async def lt_prbs(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_rx_analyzer_dump(context: ac.Context, lane: int) -> str:
     """
-    Debug lt-rx-analyzer-dump
+    Debug: Show the LT RX analyzer dump
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
