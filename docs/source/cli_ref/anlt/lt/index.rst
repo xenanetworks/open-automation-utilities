@@ -1,6 +1,8 @@
 LT Commands
 ======================
 
+Commands for Link Training.
+
 .. toctree::
     :maxdepth: 1
     :caption: Configuration Commands

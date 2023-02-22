@@ -4,7 +4,7 @@ an status
 Description
 -----------
 
-To show the auto-negotiation status
+Show AN status of the working port.
 
 
 
@@ -30,17 +30,18 @@ Examples
 .. code-block:: text
 
     xoa-utils[123456][port0/2] > an status
-    Loopback              : not allowed
-    Duration              : 10 us
-    Successful runs       : 2
+    
+    Loopback              : allowed
+    Duration              : 2,068,747 µs
+    Successful runs       : 1
     Timeouts              : 0
     Loss of sync          : 0
-    FEC negotiation fails : 1
-    HCD negotiation fails : 1
-                            RX      TX
-    Link codewords        : 2       2
-    Next-page messages    : 2       2
-    Unformatted pages     : 2       2
+    FEC negotiation fails : 0
+    HCD negotiation fails : 0
+                                RX    TX
+    Link codewords        :      2     1
+    Next-page messages    :      0     0
+    Unformatted pages     :      0     0
 
     xoa-utils[123456][port0/2] >
 

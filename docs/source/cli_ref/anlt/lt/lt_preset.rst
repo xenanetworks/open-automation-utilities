@@ -28,7 +28,7 @@ Specifies the transceiver lane index.
     
 Specifies the preset index. 
 
-Allowed values: `0, 1, 2, 3, 4`
+Allowed values: `1, 2, 3, 4, 5`
 
 
 Options
@@ -43,20 +43,6 @@ Examples
 
     xoa-utils[123456][port0/2] > lt preset 0 1
     Port 0/2 requests: use preset 1 on Lane 0
-
-    xoa-utils[123456][port0/2] >
-
-.. code-block:: text
-
-    xoa-utils[123456][port0/2] > lt preset 2 3
-    Port 0/2 requests: use preset 3 on Lane 2
-
-    xoa-utils[123456][port0/2] >
-
-.. code-block:: text
-
-    xoa-utils[123456][port0/2] > lt preset 2 3
-    Port 0/2 requests: use preset 3 on Lane 2
 
     xoa-utils[123456][port0/2] >
 

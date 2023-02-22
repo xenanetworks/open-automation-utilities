@@ -3,12 +3,12 @@ an config
 
 .. important::
 
-    This command only changes the local ANLT configuration state. To execute the configuration, you need to run :doc:`../an_lt/anlt_do`, otherwise your changes will not take effect on the tester.
+    This command only changes the local AN configuration state. To execute the configuration, you need to run :doc:`../an_lt/anlt_do`, otherwise your changes will not take effect on the tester.
 
 Description
 -----------
 
-To configure auto-negotiation on the working port.
+Configure AN of the working port.
 
 
 
@@ -45,17 +45,13 @@ Examples
     :caption: Autoneg should be enabled and allow loopback
 
     xoa-utils[123456][port0/2] > an config --on --loopback
-    Port 0/2 auto-negotiation: on, loopback: allowed
-
-    xoa-utils[123456][port0/2] >
     
-.. code-block:: text
-    :caption: Autoneg should be disabled
-
-    xoa-utils[123456][port0/2] > an config --off
-    Port 0/2 auto-negotiation: on, loopback: not allowed
-
-    xoa-utils[123456][port0/2] >
+    Port 0/0
+    =SHADOW STATUS=
+    Auto-negotiation      : on
+    Allow loopback        : yes
+    Link training         : off (auto)
+    Preset0               : standard tap values
 
 
 
