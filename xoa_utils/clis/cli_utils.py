@@ -208,7 +208,7 @@ def format_lt_im(storage: CmdContext, lane: int) -> str:
 
 
 def format_lt_algorithm(storage: CmdContext, lane: int) -> str:
-    return f"Port {storage.retrieve_port_str()}: link algorithm {storage.retrieve_lt_algorithm_lane(lane).name} on Lane {lane}\n"
+    return f"Port {storage.retrieve_port_str()}: lt algorithm {storage.retrieve_lt_algorithm_lane(lane).name} on Lane {lane}\n"
 
 
 def format_an_config(storage: CmdContext) -> str:
