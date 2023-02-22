@@ -52,7 +52,7 @@ Examples
 .. code-block:: text
 
     xoa-utils[123456][port0/2] > lt alg 0 alg_0
-    Port 0/2: lt algorithm ALG_0 on Lane 0
+    Port 0/2: lt algorithm ALG0 on Lane 0
 
     xoa-utils[123456][port0/2] >
 
