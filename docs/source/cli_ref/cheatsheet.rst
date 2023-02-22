@@ -1,9 +1,10 @@
 Cheat Sheet
 ===============
 
-.. list-table:: Title
-    :widths: 16 30 54
+.. list-table:: XOA Utils CLI Commands Cheat Sheet
+    :widths: auto
     :header-rows: 1
+    :stub-columns: 1
 
     * - Command
       - Description
