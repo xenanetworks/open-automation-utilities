@@ -4,7 +4,7 @@ lt dec
 Description
 -----------
 
-Request the remote link training partner to decrease (-) its emphasis value by 1 bit.
+Request the remote link training partner to decrease (-) its emphasis value by 1.
 
 
 

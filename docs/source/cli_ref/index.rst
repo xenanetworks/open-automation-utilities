@@ -3,7 +3,6 @@ Command Reference
 
 .. toctree::
     :maxdepth: 2
-    :caption: Cheat Sheet
 
     cheatsheet
 
