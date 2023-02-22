@@ -4,6 +4,7 @@ from xoa_utils.clicks import click_backend as cb
 from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_driver import enums
 from xoa_utils.clis import (
+    format_lt_algorithm,
     format_lt_config,
     format_lt_im,
     format_lt_inc_dec,
@@ -78,6 +79,27 @@ async def lt_im(context: ac.Context, lane: int, encoding: str) -> str:
     storage.validate_current_lane(lane)
     storage.store_lt_initial_mod(lane, encoding)
     return format_lt_im(storage, lane)
+
+
+# **************************
+# sub-command: lt alg
+# **************************
+@lt.command(cls=cb.XenaCommand, name="alg")
+@ac.argument("lane", type=ac.INT)
+@ac.argument("algorithm", type=ac.Choice(["alg_0", "alg_n1"]))
+@ac.pass_context
+async def lt_algorithm(context: ac.Context, lane: int, algorithm: str) -> str:
+    """
+    Set the link training algorithm for the specified lane.
+
+        LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
+        ALGORITHM TEXT: Specifies the algorithm. Allowed values: alg_0, alg_n1.\n
+    """
+    storage: CmdContext = context.obj
+    storage.retrieve_port()
+    storage.validate_current_lane(lane)
+    storage.store_lt_algorithm(lane, algorithm)
+    return format_lt_algorithm(storage, lane)
 
 
 # **************************

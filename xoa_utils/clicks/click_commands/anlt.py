@@ -101,6 +101,7 @@ async def do(context: ac.Context) -> str:
     lt_preset0_std = storage.retrieve_lt_preset0_std()
     lt_initial_modulations = storage.retrieve_lt_initial_mod()
     lt_interactive = storage.retrieve_lt_interactive()
+    lt_algorithm = storage.retrieve_lt_algorithm()
     await anlt_utils.anlt_start(
         port_obj,
         an_enable,
@@ -109,6 +110,7 @@ async def do(context: ac.Context) -> str:
         lt_preset0_std,
         lt_initial_modulations,
         lt_interactive,
+        lt_algorithm,
     )
     return ""
 
@@ -235,10 +237,10 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
             elif log_type == "trace" and "log" in log_entry:
                 b_str = f"{common:<32}{'MSG:':<5}{log_log}"
             elif log_type == "trace" and "direction" in log_entry and "LT" not in log_m:
-                if log_pstate == "new":
+                if log_pstate == "new" or log_pstate == "":
                     b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}\n{'':<37}FEC:{log_fec}, ABILITY:{log_ab}"
             elif log_type == "trace" and "direction" in log_entry and "LT" in log_m:
-                if log_pstate == "new":
+                if log_pstate == "new" or log_pstate == "":
                     b_str = f"{common:<32}{(log_direction + ':'):<14}{log_pkt_value}, LOCKED={log_pkt_locked}, DONE={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"
 
             if b_str:
