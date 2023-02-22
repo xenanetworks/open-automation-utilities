@@ -2,7 +2,7 @@ Cheat Sheet
 ===============
 
 .. list-table:: XOA Utils CLI Commands Cheat Sheet
-    :widths: auto
+    :widths: 20 35 45
     :header-rows: 1
     :stub-columns: 1
 
@@ -14,13 +14,16 @@ Cheat Sheet
       - ``connect 10.10.10.10 yourname``
     * - :doc:`mgmt/port`
       - Reserve and switch port
-      - ``port 0/0``
+      - ``port 0/0 | port 0/0 --reset``
     * - :doc:`mgmt/ports`
       - List ports
-      - ``ports``
+      - ``ports | ports --all``
     * - :doc:`mgmt/exit`
       - Exit the session
       - ``exit``
+    * - 
+      - 
+      - 
     * - :doc:`anlt/an_lt/anlt_status`
       - Show AN/LT status of the working port
       - ``anlt status``
@@ -33,15 +36,21 @@ Cheat Sheet
     * - :doc:`anlt/an_lt/anlt_do`
       - Apply and start AN/LT to the working port
       - ``anlt do``
+    * - 
+      - 
+      - 
     * - :doc:`anlt/an/an_config`
       - Configure AN of the working port
       - ``an config --on --loopback``
     * - :doc:`anlt/an/an_status`
       - Show AN status of the working port
       - ``an status``
+    * - 
+      - 
+      - 
     * - :doc:`anlt/lt/lt_config`
       - Configure LT of the working port
-      - ``lt config --on --mode=interactive --preset0``
+      - ``lt config --on --mode=auto --preset0``
     * - :doc:`anlt/lt/lt_im`
       - Set initial modulation for the specified lane
       - ``lt im 0 nrz``
