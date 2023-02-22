@@ -177,7 +177,7 @@ class CmdContext:
     def retrieve_lt_algorithm(self) -> dict[int, LinkTrainAlgorithm]:
         return self._lt_state.algorithm
 
-    def retrieve_lt_algorithm_lane(self, lane: int) -> dict[int, LinkTrainAlgorithm]:
+    def retrieve_lt_algorithm_lane(self, lane: int) -> LinkTrainAlgorithm:
         if lane not in self._lt_state.algorithm:
             raise NotInStoreError(str(lane))
         return self._lt_state.algorithm[lane]
