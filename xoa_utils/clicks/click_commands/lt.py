@@ -1,10 +1,10 @@
 from __future__ import annotations
 import asyncclick as ac
-from .. import click_backend as cb
+from xoa_utils.clicks import click_backend as cb
 from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_driver import enums
-from ...exceptions import *
-from ...clis import (
+from xoa_utils.clis import (
+    format_lt_algorithm,
     format_lt_config,
     format_lt_im,
     format_lt_inc_dec,
@@ -15,9 +15,9 @@ from ...clis import (
     format_txtap_set,
     format_lt_status,
 )
-from .group import xoa_util
-from .. import click_help as h
-from ...cmds import CmdContext
+from xoa_utils.clicks.click_commands.group import xoa_util
+from xoa_utils.clicks import click_help as h
+from xoa_utils.cmds import CmdContext
 
 
 # --------------------------
@@ -26,7 +26,7 @@ from ...cmds import CmdContext
 @xoa_util.group(cls=cb.XenaGroup)
 def lt():
     """
-    Enter link training context.\n
+    Commands for Link Training.
     """
 
 
@@ -50,7 +50,7 @@ def lt():
 @ac.pass_context
 async def lt_config(context: ac.Context, mode: str, on: bool, preset0: bool) -> str:
     """
-    Configure link training on the working port.\n
+    Configure LT for the working port.
     """
     storage: CmdContext = context.obj
     storage.retrieve_port()
@@ -69,16 +69,38 @@ async def lt_config(context: ac.Context, mode: str, on: bool, preset0: bool) -> 
 @ac.pass_context
 async def lt_im(context: ac.Context, lane: int, encoding: str) -> str:
     """
-    Set the initial modulation for the specified lane.
+    Set initial modulation for the specified lane.
 
-        LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
-        ENCODING TEXT: Specifies the initial modulation. Allowed values: nrz | pam4 | pam4pre.\n
+        <LANE>: Specifies the transceiver lane (serdes) index.
+        
+        <ENCODING>: Specifies the initial modulation. Allowed values: nrz | pam4 | pam4pre
     """
     storage: CmdContext = context.obj
     storage.retrieve_port()
     storage.validate_current_lane(lane)
     storage.store_lt_initial_mod(lane, encoding)
     return format_lt_im(storage, lane)
+
+
+# **************************
+# sub-command: lt alg
+# **************************
+@lt.command(cls=cb.XenaCommand, name="alg")
+@ac.argument("lane", type=ac.INT)
+@ac.argument("algorithm", type=ac.Choice(["alg_0", "alg_n1"]))
+@ac.pass_context
+async def lt_algorithm(context: ac.Context, lane: int, algorithm: str) -> str:
+    """
+    Set the link training algorithm for the specified lane.
+
+        LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
+        ALGORITHM TEXT: Specifies the algorithm. Allowed values: alg_0, alg_n1.\n
+    """
+    storage: CmdContext = context.obj
+    storage.retrieve_port()
+    storage.validate_current_lane(lane)
+    storage.store_lt_algorithm(lane, algorithm)
+    return format_lt_algorithm(storage, lane)
 
 
 # **************************
@@ -93,10 +115,11 @@ async def lt_im(context: ac.Context, lane: int, encoding: str) -> str:
 @ac.pass_context
 async def lt_inc(context: ac.Context, lane: int, emphasis: str) -> str:
     """
-    Request the remote port's lane to increase an emphasis by 1.
+    Request the remote port's lane to increase (+) an emphasis by 1.
 
-        LANE INT: Specifies the transceiver lane index.\n
-        EMPHASIS TEXT: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post.\n
+        <LANE>: Specifies the transceiver lane (serdes) index.
+
+        <EMPHASIS>: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -116,10 +139,11 @@ async def lt_inc(context: ac.Context, lane: int, emphasis: str) -> str:
 @ac.pass_context
 async def lt_dec(context: ac.Context, lane: int, emphasis: str) -> str:
     """
-    Request the remote port's lane to decrease an emphasis by 1.
+    Request the remote port's lane to decrease (-) an emphasis by 1.
 
-        LANE INT: Specifies the transceiver lane index.\n
-        EMPHASIS TEXT: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post.\n
+        <LANE>: The lane (serdes) index.
+
+        <EMPHASIS>: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -139,10 +163,11 @@ async def lt_dec(context: ac.Context, lane: int, emphasis: str) -> str:
 @ac.pass_context
 async def lt_encoding(context: ac.Context, lane: int, encoding: str) -> str:
     """
-    Request the remote port's lane to use the encoding.
+    Request the remote port's lane to use the specified encoding.
 
-        LANE INT: Specifies the transceiver lane index.\n
-        ENCODING TEXT: Specifies the encoding. Allowed values: nrz | pam4 | pam4pre\n
+        <LANE>: The lane (serdes) index.
+
+        <ENCODING>: Specifies the encoding. Allowed values: nrz | pam4 | pam4pre
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -159,15 +184,17 @@ async def lt_encoding(context: ac.Context, lane: int, encoding: str) -> str:
 # **************************
 @lt.command(cls=cb.XenaCommand, name="preset")
 @ac.argument("lane", type=ac.INT)
-@ac.argument("preset", type=ac.IntRange(0, 4))
+@ac.argument("preset", type=ac.IntRange(1, 5))
 @ac.pass_context
 async def lt_preset(context: ac.Context, lane: int, preset: int) -> str:
     """
     Request the remote port's lane to use the preset.
 
-        LANE INT: Specifies the transceiver lane index.\n
-        PRESET INT: Specifies the preset index. Allowed values: 0 | 1 | 2 | 3 | 4.\n
+        <LANE>: The lane (serdes) index.
+
+        <PRESET>: Specifies the preset index. Allowed values: 1 | 2 | 3 | 4 | 5
     """
+    preset = max(preset - 1, 0)
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
     storage.validate_current_lane(lane)
@@ -183,9 +210,9 @@ async def lt_preset(context: ac.Context, lane: int, preset: int) -> str:
 @ac.pass_context
 async def lt_trained(context: ac.Context, lane: int) -> str:
     """
-    Announce that the lane is trained.
+    Announce the lane is trained to the remote port.
 
-        LANE INT: Specifies the transceiver lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -202,9 +229,9 @@ async def lt_trained(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_txtapget(context: ac.Context, lane: int) -> str:
     """
-    Read the tap values of the specified lane of the local port.
+    Read the tap values of the specified lane of the working port.
 
-        LANE INT: Specifies the lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -234,14 +261,19 @@ async def txtapset(
     post: int,
 ) -> str:
     """
-    Write the tap values of the specified lane of the local port.
+    Write the tap values of the specified lane of the working port.
 
-        LANE INT: The lane index to read tap values from.\n
-        PRE3 INT: Specifies c(-3) value of the tap.\n
-        PRE2 INT: Specifies c(-2) value of the tap.\n
-        PRE  INT: Specifies c(-1) value of the tap.\n
-        MAIN INT: Specifies c(0) value of the tap.\n
-        POST INT: Specifies c(1) value of the tap.\n
+        <LANE>: The lane (serdes) index.
+
+        <PRE3>: Specifies c(-3) value of the tap.
+
+        <PRE2>: Specifies c(-2) value of the tap.
+
+        <PRE> : Specifies c(-1) value of the tap.
+
+        <MAIN>: Specifies c(0) value of the tap.
+
+        <POST>: Specifies c(1) value of the tap.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -260,7 +292,7 @@ async def lt_status(context: ac.Context, lane: int) -> str:
     """
     Show the link training status of the lane.
 
-        LANE INT: Specifies the lane index.\n
+        <LANE>: The lane (serdes) index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()

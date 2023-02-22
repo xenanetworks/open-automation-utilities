@@ -3,7 +3,7 @@ import asyncclick as ac
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from ..cmds import CmdContext
+    from xoa_utils.cmds import CmdContext
 
 
 class XenaGroup(ac.Group):

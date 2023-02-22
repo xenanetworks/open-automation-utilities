@@ -1,8 +1,9 @@
 from __future__ import annotations
 import typing as t
 from xoa_driver.testers import L23Tester
-from xoa_driver.ports import GenericL23Port, GenericAnyPort
-from ..exceptions import (
+from xoa_driver.ports import GenericL23Port
+from xoa_driver.modules import GenericAnyModule
+from xoa_utils.exceptions import (
     NotInStoreError,
     NotConnectedError,
     NoSuchIDError,
@@ -11,7 +12,10 @@ from ..exceptions import (
 )
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
 from xoa_driver.hlfuncs import anlt_ll_debug as debug_utils
-from xoa_driver.enums import LinkTrainEncoding
+from xoa_driver.enums import (
+    LinkTrainEncoding,
+    LinkTrainAlgorithm,
+)
 from functools import partialmethod
 
 
@@ -52,6 +56,7 @@ class LTState:
         self.preset0_std: bool = True
         self.interactive: bool = False
         self.initial_mod: dict[int, LinkTrainEncoding] = {}
+        self.algorithm: dict[int, LinkTrainAlgorithm] = {}
 
 
 class LoopFuncState:
@@ -112,6 +117,10 @@ class CmdContext:
         ]
         self._lt_state.initial_mod[lane] = e
 
+    def store_lt_algorithm(self, lane: int, algorithm: str) -> None:
+        e = LinkTrainAlgorithm[algorithm.upper()]
+        self._lt_state.algorithm[lane] = e
+
     def store_an_allow_loopback(self, do: bool) -> None:
         self._an_state.allow_loopback = do
 
@@ -164,6 +173,14 @@ class CmdContext:
         if lane not in self._lt_state.initial_mod:
             raise NotInStoreError(str(lane))
         return self._lt_state.initial_mod[lane]
+
+    def retrieve_lt_algorithm(self) -> dict[int, LinkTrainAlgorithm]:
+        return self._lt_state.algorithm
+
+    def retrieve_lt_algorithm_lane(self, lane: int) -> dict[int, LinkTrainAlgorithm]:
+        if lane not in self._lt_state.algorithm:
+            raise NotInStoreError(str(lane))
+        return self._lt_state.algorithm[lane]
 
     def retrieve_lt_interactive(self) -> bool:
         return self._lt_state.interactive

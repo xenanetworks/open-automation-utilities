@@ -3,19 +3,53 @@ import asyncclick as ac
 import json
 import typing as t
 from xoa_driver.hlfuncs import anlt as anlt_utils
-from .. import click_backend as cb
-from ...clis import format_recovery, format_port_status
-from .group import xoa_util
-from .. import click_help as h
-from ...cmds import CmdContext
+from xoa_utils.clicks import click_backend as cb
+from xoa_utils.clis import format_recovery, format_port_status
+from xoa_utils.clicks.click_commands.group import xoa_util
+from xoa_utils.clicks import click_help as h
+from xoa_utils.cmds import CmdContext
+from datetime import timedelta
+from enum import Enum
+
+class ASCIIStyle(Enum):
+    DARKRED = '\033[31m'
+    DARKGREEN = '\033[32m'
+    DARKYELLOW = '\033[33m'
+    DARKBLUE = '\033[34m'
+    DARKMAGENTA = '\033[35m'
+    DARKCYAN = '\033[36m'
+
+    RED = '\033[91m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    BLUE = '\033[94m'
+    MAGENTA = '\033[95m'
+    CYAN = '\033[96m'
+
+    DARKRED_BG = '\033[41m'
+    DARKGREEN_BG = '\033[42m'
+    DARKYELLOW_BG = '\033[43m'
+    DARKBLUE_BG = '\033[44m'
+    DARKMAGENTA_BG = '\033[45m'
+    DARKCYAN_BG = '\033[46m'
+
+    RED_BG = '\033[101m'
+    GREEN_BG = '\033[102m'
+    YELLOW_BG = '\033[103m'
+    BLUE_BG = '\033[104m'
+    MAGENTA_BG = '\033[105m'
+    CYAN_BG = '\033[106m'
+    
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    END = '\033[0m'
 
 
 @xoa_util.group(cls=cb.XenaGroup)
 def anlt():
     """
-    To enter anlt context.\n
+    Commands for AN/LT.
     """
-
 
 # --------------------------
 # command: recovery
@@ -25,7 +59,8 @@ def anlt():
 @ac.pass_context
 async def recovery(context: ac.Context, on: bool) -> str:
     """
-    Enable/disable link recovery on the specified port. If enable, the port will keep trying ANLT when no link-up signal is detected after five seconds of waiting.
+    Enable/disable link recovery on the working port.
+    If enable, the port will keep doing AN/LT when no link-up signal is detected.
     """
     storage: CmdContext = context.obj
 
@@ -41,7 +76,7 @@ async def recovery(context: ac.Context, on: bool) -> str:
 @ac.pass_context
 async def status(context: ac.Context) -> str:
     """
-    Show the overview of ANLT status of the port.\n
+    Show AN/LT status of the working port.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -57,7 +92,7 @@ async def status(context: ac.Context) -> str:
 @ac.pass_context
 async def do(context: ac.Context) -> str:
     """
-    Show the overview of ANLT status of the port.\n
+    Apply and start AN/LT to the working port.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -67,6 +102,7 @@ async def do(context: ac.Context) -> str:
     lt_preset0_std = storage.retrieve_lt_preset0_std()
     lt_initial_modulations = storage.retrieve_lt_initial_mod()
     lt_interactive = storage.retrieve_lt_interactive()
+    lt_algorithm = storage.retrieve_lt_algorithm()
     await anlt_utils.anlt_start(
         port_obj,
         an_enable,
@@ -75,6 +111,7 @@ async def do(context: ac.Context) -> str:
         lt_preset0_std,
         lt_initial_modulations,
         lt_interactive,
+        lt_algorithm,
     )
     return ""
 
@@ -97,10 +134,10 @@ async def do(context: ac.Context) -> str:
 @ac.pass_context
 async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
     """
-    Show the auto-negotiation log trace.\n
+    Start AN/LT logging.
     """
 
-    def filter_log(log: str, keep: str, lane: list[int]) -> list[dict]:
+    def _filter_log(log: str, keep: str, lane: list[int]) -> list[dict]:
         all_logs = []
         for lg in log.split("\n"):
             try:
@@ -132,10 +169,17 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
         return current
 
     def _flatten(dic: dict[str, str]) -> str:
-        return ", ".join((f"{k}: {v}" for k, v in dic.items()))
+        return "".join((f"{k}: {v:<7}" for k, v in dic.items()))
 
     
-    def beautify(filtered: list[dict]) -> str:
+    def _ascii_styler(str: str, fg_style: t.List[ASCIIStyle]) -> str:
+        _END = '\033[0m'
+        style=""
+        for s in fg_style:
+            style = style + s.value
+        return f'{style}{str}{_END}'
+
+    def _beautify(filtered: list[dict]) -> str:
         real = []
         for i in filtered:
             b_str = ""
@@ -152,6 +196,11 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
             log_current = _dict_get(i, "entry", "fsm", "current")
             log_new = _dict_get(i, "entry", "fsm", "new")
             log_direction = _dict_get(i, "entry", "direction")
+            if log_direction == "tx":
+                log_direction = _ascii_styler(log_direction.upper(), [ASCIIStyle.DARKBLUE_BG])
+            else:
+                log_direction = _ascii_styler(log_direction.upper(), [ASCIIStyle.DARKGREEN_BG])
+
             log_value = _dict_get(i, "entry", "pkt", "value")
             log_ptype = _dict_get(i, "entry", "pkt", "type")
             log_pstate = _dict_get(i, "entry", "pkt", "state")
@@ -166,37 +215,46 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
             log_pkt_ctrl = _dict_get(i, "entry", "pkt", "fields", "control")
             log_pkt_status = _dict_get(i, "entry", "pkt", "fields", "status")
             log_pkt_locked = _dict_get(i, "entry", "pkt", "fields", "locked")
+            if log_pkt_locked == "true":
+                log_pkt_locked = _ascii_styler(log_pkt_locked, [ASCIIStyle.GREEN_BG])
+            else:
+                log_pkt_locked = _ascii_styler(log_pkt_locked, [ASCIIStyle.RED_BG])
+
             log_pkt_done = _dict_get(i, "entry", "pkt", "fields", "done")
+            if log_pkt_done == "true":
+                log_pkt_done = _ascii_styler(log_pkt_done, [ASCIIStyle.GREEN_BG])
+            else:
+                log_pkt_done = _ascii_styler(log_pkt_done, [ASCIIStyle.RED_BG])
+
             log_pkt_value = _dict_get(i, "entry", "pkt", "value")
 
-            lane_str = f" (Lane {log_lane})," if "LT" in log_m else ","
-            common = f"time: {log_time}, {log_m}{lane_str}"
+            lane_str = f"(L{log_lane})," if "LT" in log_m else ","
+            common = f"{log_time/1000000}, {log_m}{lane_str}"
 
             if log_type == "debug":
-                b_str = f"{common:<38}{'Debug:':<10}{log_log}"
+                b_str = f"{common:<32}{'DBG:':<5}{log_log}"
             elif log_type == "fsm":
-                b_str = f"{common:<38}{'FSM:':<10}({log_event}) {log_current} -> {log_new}"
+                b_str = f"{common:<32}{'FSM:':<5}({log_event}) {log_current} -> {log_new}"
             elif log_type == "trace" and "log" in log_entry:
-                b_str = f"{common:<38}{'Message:':<10}{log_log}"
+                b_str = f"{common:<32}{'MSG:':<5}{log_log}"
             elif log_type == "trace" and "direction" in log_entry and "LT" not in log_m:
-                if log_pstate == "new":
-                    b_str = f"{common:<38}{log_direction.upper() + ' Page:':<10}({log_value}), {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}, FEC:{log_fec}, ABILITY:{log_ab}"
+                if log_pstate == "new" or log_pstate == "":
+                    b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}\n{'':<37}FEC:{log_fec}, ABILITY:{log_ab}"
             elif log_type == "trace" and "direction" in log_entry and "LT" in log_m:
-                if log_pstate == "new":
-                    b_str = f"{common:<38}{log_direction.upper()} ({log_pkt_value}) {_flatten(log_pkt_ctrl)} {_flatten(log_pkt_status)}, Locked: {log_pkt_locked}, Done: {log_pkt_done} "
+                if log_pstate == "new" or log_pstate == "":
+                    b_str = f"{common:<32}{(log_direction + ':'):<14}{log_pkt_value}, LOCKED={log_pkt_locked}, DONE={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"
 
             if b_str:
                 real.append(b_str)
         return "\n".join(real)
-        
 
     async def log(
         storage: CmdContext, filename: str, keep: str, lane: list[int]
     ) -> str:
         port_obj = storage.retrieve_port()
         log_str = await anlt_utils.anlt_log(port_obj)
-        filtered = filter_log(log_str, keep, lane)
-        string = beautify(filtered)
+        filtered = _filter_log(log_str, keep, lane)
+        string = _beautify(filtered)
         if filename and log_str:
             with open(filename, "a") as f:
                 f.write(f"{log_str}\n")

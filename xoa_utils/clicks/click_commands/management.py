@@ -1,21 +1,15 @@
 from __future__ import annotations
 import asyncclick as ac
 import asyncio
-from .. import click_backend as cb
+from xoa_utils.clicks import click_backend as cb
 from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
 from xoa_driver.testers import L23Tester
-from ...exceptions import *
-import asyncclick as ac
-from ...clis import (
-    format_tester_status,
-    format_ports_status,
-    format_port_status,
-)
-from .group import xoa_util
-from .. import click_help as h
-from ...cmds import CmdContext
-
+from xoa_utils.clis import format_tester_status, format_ports_status, format_port_status
+from xoa_utils.clicks.click_commands.group import xoa_util
+from xoa_utils.clicks import click_help as h
+from xoa_utils.cmds import CmdContext
+from xoa_utils import exceptions as ex
 
 # --------------------------
 # command: connect
@@ -40,12 +34,11 @@ async def connect(
     tcp: int,
 ) -> str:
     """
-    To connect to a tester for the current session.
+    Connect to a tester for the current session.
 
-        DEVICE TEXT: Specifies the chassis address for connection. You can specify the IP addresses in IPv4 format, or a host name, e.g. 10.10.10.10 or demo.xenanetworks.com\n
+        <DEVICE>: The chassis address to connect. Address can be in IPv4 format (e.g. 10.10.10.10), or a host name (e.g. demo.xenanetworks.com)
 
-        USERNAME TEXT: Specifies the name of the user.\n
-
+        <USERNAME>: Username for port reservation.
     """
     storage: CmdContext = context.obj
     real_port_list = [i.strip() for i in ports.split(",")] if ports else []
@@ -86,7 +79,7 @@ async def connect(
 @ac.pass_context
 async def exit(context: ac.Context, reset: bool, release: bool) -> str:
     """
-    To exit the session by terminating port reservations, disconnecting from the chassis, releasing system resources, and removing the specified port configurations. This command works in all context.
+    Exit the session. Exit by terminating port reservations, disconnecting from the chassis, releasing system resources, and removing the specified port configurations.
     """
     storage: CmdContext = context.obj
     for port_id, port_obj in storage.retrieve_ports().copy().items():
@@ -110,7 +103,7 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
     """
     Switch the working port. If the port is not yet reserved, reserve the port. Update the working port in the cache.
 
-        PORT TEXT: Specifies the port on the specified device host. Specify a port using the format slot/port, e.g. 0/0\n
+        <PORT>: The port on the specified device host. Specify a port using the format slot/port, e.g. 0/0
     """
     storage: CmdContext = context.obj
     try:
@@ -118,7 +111,7 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
         p_obj = storage.retrieve_port()
         port_lane_num = (await anlt_utils.anlt_status(p_obj))["serdes_count"]
         storage.store_port(port, p_obj, port_lane_num)
-    except NotInStoreError:
+    except ex.NotInStoreError:
         port_dic = storage.obtain_physical_ports(port)
         for p_id, p_obj in port_dic.items():
             port_lane_num = (await anlt_utils.anlt_status(p_obj))["serdes_count"]
@@ -126,12 +119,16 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
             storage.store_current_port_str(p_id)
     port_obj = storage.retrieve_port()
     port_id = storage.retrieve_port_str()
+    tester_obj = storage.retrieve_tester()
+    module_id = int(port.split("/")[0])
     if force:
+        module_obj = mgmt_utils.get_module(tester_obj, module_id)
+        await mgmt_utils.free_module(module_obj)
         await mgmt_utils.reserve_port(port_obj, force)
     if reset:
         await mgmt_utils.reset_port(port_obj)
     if force or reset:
-        await asyncio.sleep(3)
+        await asyncio.sleep(2)
         # status will change when you reserve_port or reset_port, need to wait
     status_dic = await anlt_utils.anlt_status(port_obj)
     return f"{format_ports_status(storage, False)}{format_port_status(port_id, status_dic, storage)}"
@@ -145,8 +142,7 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
 @ac.pass_context
 async def ports(context: ac.Context, all: bool) -> str:
     """
-    To list all the ports reserved by the current session.\n
-
+    List all the ports reserved by the current session.
     """
     storage: CmdContext = context.obj
     return format_ports_status(storage, all)

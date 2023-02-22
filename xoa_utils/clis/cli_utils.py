@@ -8,7 +8,7 @@ from xoa_driver import enums
 
 if t.TYPE_CHECKING:
     from xoa_driver.ports import GenericL23Port
-    from ..cmds.cmd_context import CmdContext
+    from xoa_utils.cmds.cmd_context import CmdContext
 
 
 class ReadConfig:
@@ -205,6 +205,10 @@ Preset0               : {'standard tap' if storage.retrieve_lt_preset0_std() els
 
 def format_lt_im(storage: CmdContext, lane: int) -> str:
     return f"Port {storage.retrieve_port_str()}: initial modulation {storage.retrieve_lt_initial_mod_lane(lane).name} on Lane {lane}\n"
+
+
+def format_lt_algorithm(storage: CmdContext, lane: int) -> str:
+    return f"Port {storage.retrieve_port_str()}: link algorithm {storage.retrieve_lt_algorithm_lane(lane).name} on Lane {lane}\n"
 
 
 def format_an_config(storage: CmdContext) -> str:

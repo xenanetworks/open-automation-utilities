@@ -1,4 +1,4 @@
-from .cli_utils import (
+from xoa_utils.clis.cli_utils import (
     ReadConfig,
     run_coroutine_as_sync,
     format_tester_status,
@@ -6,6 +6,7 @@ from .cli_utils import (
     format_an_status,
     format_port_status,
     format_recovery,
+    format_lt_algorithm,
     format_lt_config,
     format_lt_im,
     format_error,
