@@ -27,6 +27,9 @@ Cheat Sheets
     :header-rows: 1
     :stub-columns: 1
 
+    * - Command
+      - Description
+      - Example
     * - :doc:`../anlt/an_lt/anlt_status`
       - Show AN/LT status of the working port
       - ``anlt status``
@@ -45,6 +48,9 @@ Cheat Sheets
     :header-rows: 1
     :stub-columns: 1
 
+    * - Command
+      - Description
+      - Example
     * - :doc:`../anlt/an/an_config`
       - Configure AN of the working port
       - ``an config --on --loopback``
@@ -57,6 +63,9 @@ Cheat Sheets
     :header-rows: 1
     :stub-columns: 1
 
+    * - Command
+      - Description
+      - Example
     * - :doc:`../anlt/lt/lt_config`
       - Configure LT of the working port
       - ``lt config --on --mode=auto --preset0``
