@@ -200,6 +200,39 @@ async def lt_tx_tf_get(context: ac.Context, lane: int) -> str:
 
 
 # --------------------------
+# command: lt-tx-tf-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value", type=ac.INT)
+@ac.pass_context
+async def lt_tx_tf_set(context: ac.Context, lane: int, value: int) -> str:
+    """
+    Debug: Write LT TX Training Frames of the specified lane.
+
+        <LANE>: The lane (serdes) index.
+
+        <VALUE>: Specifies the value.
+    """
+    return await _help_set(debug_utils.lt_tx_tf_set, context, lane, value)
+
+
+# --------------------------
+# command: lt-rx-tf-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.pass_context
+async def lt_rx_tf_get(context: ac.Context, lane: int) -> str:
+    """
+    Debug: Read LT RX Training Frames of the specified lane.
+
+        <LANE>: The lane (serdes) index.
+    """
+    return await _help_get(debug_utils.lt_rx_tf_get, context, lane)
+
+
+# --------------------------
 # command: lt-rx-error-stat0-get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
