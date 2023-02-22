@@ -9,6 +9,10 @@ The CLI commands of XOA Utils are categorized into the following families:
 
 * Test Resource Management
 
+.. seealso::
+
+    :doc:`Cheat sheet of XOA Utils ANLT CLI commands </cli_ref/cheatsheets/index>`
+
 
 Auto-Negotiation and Link Training
 ------------------------------------
@@ -33,15 +37,17 @@ Once the ports in the link have completed the requisite AN information exchange 
 
 .. rubric:: No Auto Negotiation, No Link Training
 
-In some instances, Auto negotiation and Link Training are not required to establish a communication path: High speed optical transceivers and interfaces typically only run at one speed, so there is no need the negotiate this. Link Training is only required for electrical interfaces - in some cases (e.g. when short cables are used) an electrical interface may become operational just using default settings of the terminal equipment in the communication path. The IEEE 802.3by specification allows for force connect over electrical interfaces in these instances.
+In some instances, Auto Negotiation and Link Training are not required to establish a communication path: High speed optical transceivers and interfaces typically only run at one speed, so there is no need the negotiate this.
+
+Link Training is only required for electrical interfaces - in some cases (e.g. when short cables are used) an electrical interface may become operational just using default settings of the terminal equipment in the communication path. The IEEE 802.3 by specification allows for force connect over electrical interfaces in these instances.
 
 .. rubric:: No Auto Negotiation, Link Training
 
-While Link Training can be essential to make some electrical interfaces work, Auto negotiation may not be required is the link speed is fixed or if it can be manually set at both end points of a link.
+While Link Training can be essential to make some electrical interfaces work, Auto Negotiation may not be required, if the link speed is fixed or if it can be manually set at both end points of a link.
 
 .. rubric:: Auto Negotiation and Link Training
 
-Auto negotiation and Link Training are in principle two independent processes. However, when both are done, Auto negotiation must be done first to determine the overall mode for a link and then perform the Link Training. Hereby you get the sequence shown in the figure below.
+Auto Negotiation and Link Training are in principle two **independent** processes. However, when both are to be done, Auto Negotiation must start first to determine the overall mode for a link and then the Link Training. Hereby you get the sequence shown in the figure below.
 
 .. figure:: /_static/aneg_lt_seq.png
     :scale: 70 %

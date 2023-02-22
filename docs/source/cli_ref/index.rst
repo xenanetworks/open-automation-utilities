@@ -4,7 +4,7 @@ Command Reference
 .. toctree::
     :maxdepth: 2
 
-    cheatsheet
+    cheatsheets/index
 
 .. toctree::
     :maxdepth: 2

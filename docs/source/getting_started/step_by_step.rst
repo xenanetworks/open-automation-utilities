@@ -49,6 +49,29 @@ Then, reserve a port on the tester using the command :doc:`../cli_ref/mgmt/port`
     xoa-utils[123456] > port 0/0
 
 
+Start ANLT Logging
+------------------
+
+Start ANLT logging by :doc:`../cli_ref/anlt/an_lt/anlt_log`.
+
+.. code-block:: text
+
+    xoa-utils[123456][port0/0] > anlt log -f mylog.log
+
+.. note::
+
+    This commands **continuously displays** the log messages on the screen so you can keep track of your ANLT actions.
+    
+    To **quit** the continuous display mode, press :kbd:`Control-z`.
+
+
+Use one terminal to view the ANLT protocol trace, and use another to execute ANLT commands, as shown in the sreenshot below.
+
+.. figure:: ../_static/start_logging.png
+    :width: 100 %
+    :align: center
+
+
 Disable Link Recovery
 ---------------------
 
@@ -94,9 +117,19 @@ Start ANLT
 
 After configuring the ANLT scenario on the port, you should execute :doc:`../cli_ref/anlt/an_lt/anlt_do` to let XOA Utilities application send low-level commands to the tester to start the ANLT procedure, either AN-only, or AN + LT, or LT (auto), or LT (interactive).
 
+.. seealso::
+
+    `Auto-Negotiation and Link Training Sequence <https://xenanetworks.com/whitepaper/autoneg-link-training/>`_
+
 .. code-block:: text
 
     xoa-utils[123456][port0/0] > anlt do
+
+Use one terminal to view the ANLT protocol trace, and use another to execute ANLT commands, as shown in the sreenshot below.
+    
+.. figure:: ../_static/start_anlt.png
+    :width: 100 %
+    :align: center
 
 
 Control LT Interactive
@@ -129,25 +162,62 @@ Check AN Status
 
 Check AN statistics by :doc:`../cli_ref/anlt/an/an_status`.
 
+.. code-block:: text
+
+    xoa-utils[123456][port0/0] > an status
+    
+    Loopback              : allowed
+    Duration              : 2,068,747 µs
+    Successful runs       : 1
+    Timeouts              : 0
+    Loss of sync          : 0
+    FEC negotiation fails : 0
+    HCD negotiation fails : 0
+                                RX    TX
+    Link codewords        :      2     1
+    Next-page messages    :      0     0
+    Unformatted pages     :      0     0
 
 Check LT Status
 ---------------
 
 Check LT statistics by :doc:`../cli_ref/anlt/lt/lt_status`.
 
-
-Check ANLT Log
---------------
-
-Check ANLT logging by :doc:`../cli_ref/anlt/an_lt/anlt_log`.
-
 .. code-block:: text
 
-    xoa-utils[123456][port0/0] > anlt log -f mylog.log
+    xoa-utils[123456][port0/0] > lt status 0
+    
+    Is enabled        : true
+    Is trained        : true
+    Failure           : no_failure
 
-.. note::
+    Initial mod.      : nrz
+    Preset0           : standard tap values
+    Total bits        : 2,201,372,480
+    Total err. bits   : 24
+    BER               : 1.09e-08
 
-    This commands **continuously displays** the log messages on the screen so you can keep track of your ANLT actions. To **quit** the continuous display mode, press :kbd:`Control-z`.
+    Duration          : 2,000,250 µs
+
+    Lock lost         : 2
+    Frame lock        : locked
+    Remote frame lock : locked
+
+    Frame errors      : 1
+    Overrun errors    : 1
+
+    Last IC received  : Preset 3
+    Last IC sent      : Preset 3
+
+    TX Coefficient              :           c(-3)       c(-2)       c(-1)        c(0)        c(1)
+        Current level           :               0           0           1          44           0
+                                :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
+        + req                   :          0   0       0   0       2   2       1   1       0   0
+        - req                   :          0   0       0   0       2   2       0   0       0   0
+        coeff/eq limit reached  :          0   0       0   0       0   0       0   0       0   0
+        eq limit reached        :          0   0       0   0       0   0       0   0       0   0
+        coeff not supported     :          0   0       0   0       0   0       0   0       0   0
+        coeff at limit          :          0   0       0   0       0   0       0   0       0   0
 
 
 Start Over

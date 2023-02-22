@@ -19,7 +19,7 @@ Install Python
     XOA Utils requires Python >= 3.8.
 
 
-XOA Utils requires that you `install Python <https://realpython.com/installing-python/>`_  on your system. `Download Python from Python.org <https://www.python.org/downloads/>`_.
+XOA Utils requires that you `download and install Python3 <https://www.python.org/downloads/>`_ on your system.
 
 .. note::
 
@@ -29,7 +29,7 @@ XOA Utils requires that you `install Python <https://realpython.com/installing-p
         :width: 100 %
         :align: center
 
-After installation, open **Command Prompt** (Windows) or **Terminal** (macOS/Linux) and type ``python`` to check your Python installation.
+After installation, open **Command Prompt** (Windows) or **Terminal** (macOS/Linux) and type ``python`` to verify your Python installation.
 
 .. tab:: Windows
 
@@ -50,6 +50,10 @@ After installation, open **Command Prompt** (Windows) or **Terminal** (macOS/Lin
         Python 3.10.10 (v3.10.10:a58ebcc701, Feb 7 2023, 14:50:16) [Clang 13.0.0 (clang-1300.0.29.30)] on darwin
         Type "help", "copyright", "credits" or "license" for more information.
         >>> 
+
+.. note::
+
+    🧐 If you are stuck with Python installation, seek help in `Python 3 Installation & Setup Guide <https://realpython.com/installing-python/>`_
 
 
 Install PIP
