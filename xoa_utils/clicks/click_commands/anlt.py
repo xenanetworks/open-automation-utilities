@@ -48,7 +48,7 @@ class ASCIIStyle(Enum):
 @xoa_util.group(cls=cb.XenaGroup)
 def anlt():
     """
-    To enter anlt context.\n
+    Commands for AN/LT.
     """
 
 # --------------------------
@@ -59,7 +59,8 @@ def anlt():
 @ac.pass_context
 async def recovery(context: ac.Context, on: bool) -> str:
     """
-    Enable/disable link recovery on the specified port. If enable, the port will keep trying ANLT when no link-up signal is detected after five seconds of waiting.
+    Enable/disable link recovery on the working port.
+    If enable, the port will keep doing AN/LT when no link-up signal is detected.
     """
     storage: CmdContext = context.obj
 
@@ -75,7 +76,7 @@ async def recovery(context: ac.Context, on: bool) -> str:
 @ac.pass_context
 async def status(context: ac.Context) -> str:
     """
-    Show the overview of ANLT status of the port.\n
+    Show AN/LT status of the working port.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -91,7 +92,7 @@ async def status(context: ac.Context) -> str:
 @ac.pass_context
 async def do(context: ac.Context) -> str:
     """
-    Show the overview of ANLT status of the port.\n
+    Apply and start AN/LT to the working port.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -133,10 +134,10 @@ async def do(context: ac.Context) -> str:
 @ac.pass_context
 async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
     """
-    Show the auto-negotiation log trace.\n
+    Start AN/LT logging.
     """
 
-    def filter_log(log: str, keep: str, lane: list[int]) -> list[dict]:
+    def _filter_log(log: str, keep: str, lane: list[int]) -> list[dict]:
         all_logs = []
         for lg in log.split("\n"):
             try:
@@ -178,7 +179,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
             style = style + s.value
         return f'{style}{str}{_END}'
 
-    def beautify(filtered: list[dict]) -> str:
+    def _beautify(filtered: list[dict]) -> str:
         real = []
         for i in filtered:
             b_str = ""
@@ -252,8 +253,8 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
     ) -> str:
         port_obj = storage.retrieve_port()
         log_str = await anlt_utils.anlt_log(port_obj)
-        filtered = filter_log(log_str, keep, lane)
-        string = beautify(filtered)
+        filtered = _filter_log(log_str, keep, lane)
+        string = _beautify(filtered)
         if filename and log_str:
             with open(filename, "a") as f:
                 f.write(f"{log_str}\n")
