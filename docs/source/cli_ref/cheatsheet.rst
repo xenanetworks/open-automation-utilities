@@ -1,7 +1,7 @@
 Cheat Sheet
 ===============
 
-.. list-table:: XOA Utils CLI Commands Cheat Sheet
+.. list-table:: Management Command Cheat Sheet
     :widths: 20 35 45
     :header-rows: 1
     :stub-columns: 1
@@ -21,9 +21,12 @@ Cheat Sheet
     * - :doc:`mgmt/exit`
       - Exit the session
       - ``exit``
-    * - 
-      - 
-      - 
+
+.. list-table:: ANLT Command Cheat Sheet
+    :widths: 20 35 45
+    :header-rows: 1
+    :stub-columns: 1
+
     * - :doc:`anlt/an_lt/anlt_status`
       - Show AN/LT status of the working port
       - ``anlt status``
@@ -36,18 +39,24 @@ Cheat Sheet
     * - :doc:`anlt/an_lt/anlt_do`
       - Apply and start AN/LT to the working port
       - ``anlt do``
-    * - 
-      - 
-      - 
+
+.. list-table:: AN Command Cheat Sheet
+    :widths: 20 35 45
+    :header-rows: 1
+    :stub-columns: 1
+
     * - :doc:`anlt/an/an_config`
       - Configure AN of the working port
       - ``an config --on --loopback``
     * - :doc:`anlt/an/an_status`
       - Show AN status of the working port
       - ``an status``
-    * - 
-      - 
-      - 
+
+.. list-table:: LT Command Cheat Sheet
+    :widths: 20 35 45
+    :header-rows: 1
+    :stub-columns: 1
+
     * - :doc:`anlt/lt/lt_config`
       - Configure LT of the working port
       - ``lt config --on --mode=auto --preset0``
