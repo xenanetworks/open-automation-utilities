@@ -73,18 +73,13 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils > connect 10.10.10.10 automation --ports 0/0,0/1,0/2,0/3 --reset --force --password xena --tcp 22606
-    OK
+    xoa-utils > connect 10.10.10.10 xoa
 
-    Tester:             12345
-                        10.10.10.10:22606
-    Username:           xoa
+    Tester  :      9999999
+    ConInfo :      10.10.10.102:22606
+    Username:      xoa
 
-    Ports       Sync    Owner
-    *0/0        yes     You
-    0/1         yes     You
-    0/2         yes     You
-    0/3         yes     You
+    Port      Sync      Owner
 
     xoa-utils[123456][port0/0] >
 

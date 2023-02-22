@@ -1,6 +1,7 @@
 AN Commands
 =========================
 
+Commands for Auto-Negotiation.
 
 .. toctree::
     :maxdepth: 1

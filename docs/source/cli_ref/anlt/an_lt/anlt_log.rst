@@ -51,23 +51,33 @@ Examples
 
 .. code-block:: text
     
-    xoa-utils[123456][port0/2] > anlt log mylog.log
+    xoa-utils[123456][port0/2] > anlt log -f mylog.log
 
-    time: 7130745, PORT, Debug   :  Version EA410100, Feature 3
-    time: 573514936, ANEG, Message :  TRANSMIT_DISABLE - ANEG restart
-    time: 573514936, ANEG, Message :  SYNC=true, SYNC LOST=true, NEW_PAGE=true
-    time: 573514936, ANEG, Message :  SYNC=true, SYNC LOST=false, NEW_PAGE=true
-    time: 573514936, ANEG, Message :  RX is active
-    time: 573581625, ANEG, TX Page :  (0x1020000640C1), base page, NP:0, ACK:1, RF:0, TN:6, EN:6, C:000, FEC:["25G RS-FEC"], ABILITY:["100GBASE_KR1"]
-    time: 573581625, ANEG, RX Page :  (0x1020000640C1), base page, NP:0, ACK:1, RF:0, TN:6, EN:6, C:000, FEC:["25G RS-FEC"], ABILITY:["100GBASE_KR1"]
-    time: 573581684, ANEG, FSM     :  (EVENT_ACKNOWLEDGE_DETECT) ACKNOWLEDGE_DETECT -> COMPLETE_ACKNOWLEDGE 
-    time: 10053807228, LT_COEF (Lane 0), Message: Setting coeff c(-1) PRE1 to 0
-    time: 10053807237, LT_COEF (Lane 0), Message: Setting coeff c(0)  MAIN to 42
-    time: 10053807246, LT_COEF (Lane 0), Message: Setting coeff c(1)  POST to 0
-    time: 10053807255, LT_COEF (Lane 0), Message: Setting coeff c(-2) PRE2 to 0
-    time: 10053807264, LT_COEF (Lane 0), Message: Setting coeff c(-3) PRE3 to 0
-    time: 10053807283, LT (Lane 0), TX: (0x00000300), C_REQ:Hold, C_SEL:c(0), PAM_MOD:PAM2, IC_REQ:INDV, C_STS:No upd, C_ECH:c(0), PAM_MOD:PAM2, IC_STS:Upd, locked:true, done:false
-    time: 10053807294, LT_ALG0 (Lane 0), FSM : (EVENT_RESET_DEASSERT) IDLE -> STATE_ALG_INIT
+    ...
+    
+    10054.176465, LT_COEF(L0),      MSG: Setting coeff c(-1) PRE1 to 1
+    10054.176474, LT_COEF(L0),      MSG: Setting coeff c(0)  MAIN to 46
+    10054.176483, LT_COEF(L0),      MSG: Setting coeff c(1)  POST to 0
+    10054.176492, LT_COEF(L0),      MSG: Setting coeff c(-2) PRE2 to 2
+    10054.176501, LT_COEF(L0),      MSG: Setting coeff c(-3) PRE3 to 1
+    10054.176523, LT(L0),           TX:  0x1A000B00, LOCKED=true, DONE=false
+                                         C_REQ: Hold   C_SEL: c(0)   PAM_MOD: PAM4   IC_REQ: IC 5   
+                                         C_STS: No upd C_ECH: c(0)   PAM_MOD: PAM4   IC_STS: Upd    
+    10054.176569, LT(L0),           RX:  0x1A000B00, LOCKED=true, DONE=false
+                                         C_REQ: Hold   C_SEL: c(0)   PAM_MOD: PAM4   IC_REQ: IC 5   
+                                         C_STS: No upd C_ECH: c(0)   PAM_MOD: PAM4   IC_STS: Upd    
+    10054.176617, LT(L0),           TX:  0x02000B00, LOCKED=true, DONE=false
+                                         C_REQ: Hold   C_SEL: c(0)   PAM_MOD: PAM4   IC_REQ: INDV   
+                                         C_STS: No upd C_ECH: c(0)   PAM_MOD: PAM4   IC_STS: Upd    
+    10054.176663, LT(L0),           RX:  0x02000B00, LOCKED=true, DONE=false
+                                         C_REQ: Hold   C_SEL: c(0)   PAM_MOD: PAM4   IC_REQ: INDV   
+                                         C_STS: No upd C_ECH: c(0)   PAM_MOD: PAM4   IC_STS: Upd    
+    10054.176688, LT(L0),           TX:  0x02000A80, LOCKED=true, DONE=false
+                                         C_REQ: Hold   C_SEL: c(0)   PAM_MOD: PAM4   IC_REQ: INDV   
+                                         C_STS: No upd C_ECH: c(0)   PAM_MOD: PAM4   IC_STS: No upd 
+    10054.1792, LT(L0),             RX:  0x02000A80, LOCKED=true, DONE=false
+                                         C_REQ: Hold   C_SEL: c(0)   PAM_MOD: PAM4   IC_REQ: INDV   
+                                         C_STS: No upd C_ECH: c(0)   PAM_MOD: PAM4   IC_STS: No upd 
 
     xoa-utils[123456][port0/2] !
 
