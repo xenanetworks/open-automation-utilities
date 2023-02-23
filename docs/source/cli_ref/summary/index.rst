@@ -1,7 +1,7 @@
-Cheat Sheets
-============
+Summary
+=======
 
-.. list-table:: Management Command Cheat Sheet
+.. list-table:: Management Command Summary
     :widths: 20 35 45
     :header-rows: 1
     :stub-columns: 1
@@ -22,7 +22,7 @@ Cheat Sheets
       - Exit the session
       - ``exit``
 
-.. list-table:: ANLT Command Cheat Sheet
+.. list-table:: AN/LT Command Summary
     :widths: 20 35 45
     :header-rows: 1
     :stub-columns: 1
@@ -43,7 +43,7 @@ Cheat Sheets
       - Apply and start AN/LT to the working port
       - ``anlt do``
 
-.. list-table:: AN Command Cheat Sheet
+.. list-table:: AN Command Summary
     :widths: 20 35 45
     :header-rows: 1
     :stub-columns: 1
@@ -58,7 +58,7 @@ Cheat Sheets
       - Show AN status of the working port
       - ``an status``
 
-.. list-table:: LT Command Cheat Sheet
+.. list-table:: LT Command Summary
     :widths: 20 35 45
     :header-rows: 1
     :stub-columns: 1

@@ -4,18 +4,16 @@ Command Reference
 .. toctree::
     :maxdepth: 2
 
-    cheatsheets/index
+    summary/index
 
 .. toctree::
     :maxdepth: 2
-    :caption: Management Commands
 
     mgmt/index
 
 
 .. toctree::
     :maxdepth: 3
-    :caption: AN/LT Commands
 
     anlt/index
     

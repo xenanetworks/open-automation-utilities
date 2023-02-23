@@ -1,4 +1,4 @@
-AN & LT Commands
+AN/LT Commands
 ======================
 
 Commands for AN/LT.
