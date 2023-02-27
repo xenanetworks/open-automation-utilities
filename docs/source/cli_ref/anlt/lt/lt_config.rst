@@ -3,13 +3,12 @@ lt config
 
 .. important::
 
-    This command only changes the local ANLT configuration state. To execute the configuration, you need to run :doc:`../an_lt/anlt_do`, otherwise your changes will not take effect on the tester.
+    This command only changes the local LT configuration state. To execute the configuration, you need to run :doc:`../an_lt/anlt_do`, otherwise your changes will not take effect on the tester.
 
 Description
 -----------
 
-To configure link training on the working port.
-
+Configure LT for the working port.
 
 
 Synopsis
@@ -29,7 +28,6 @@ Arguments
 
 Options
 -------
-
 
 ``--on/--off``
 
@@ -56,7 +54,6 @@ Allowed values:
 * `standard`:    Use standard tap values as preset0
 
 * `existing`:    Use the existing tap values as preset0
-
 
 
 

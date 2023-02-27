@@ -4,7 +4,7 @@ lt trained
 Description
 -----------
 
-To announce that the specified lane is trained.
+Announce that the specified lane is trained.
 
 
 

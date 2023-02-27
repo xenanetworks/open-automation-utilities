@@ -1,5 +1,5 @@
-Management
-==========
+Management Commands
+===================
 
 .. toctree::
     :maxdepth: 1

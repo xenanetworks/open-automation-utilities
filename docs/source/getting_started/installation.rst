@@ -1,27 +1,63 @@
-Installing XOA Utilities
-========================
+Installing XOA Utils
+====================
 
-XOA Utilities is available to install via the `Python Package Index <https://pypi.org/>`_. You can also install from the source file.
+XOA Utils is available to install via the `Python Package Index <https://pypi.org/>`_. You can also install from the source file.
 
 Prerequisites
 -------------
 
-Before installing XOA Utilities, please make sure your environment has installed:
+Before installing XOA Utils, please make sure your environment has installed:
     
-* `Python`_
-* `pip`_
+* `Install Python`_ (requires **Python >= 3.8**)
+* `Install PIP`_
 
-Python
-^^^^^^
+Install Python
+^^^^^^^^^^^^^^
 
-XOA Utilities requires that you `install Python <https://realpython.com/installing-python/>`_  on your system.
+.. important:: 
 
-.. note:: 
+    XOA Utils requires Python >= 3.8.
 
-    XOA Utilities requires Python >= 3.8.
 
-``pip``
-^^^^^^^
+XOA Utils requires that you `download and install Python3 <https://www.python.org/downloads/>`_ on your system.
+
+.. note::
+
+    If you use **Windows**, remember to check **Add python.exe to PATH**.
+
+    .. figure:: ../_static/python_installation.png
+        :width: 100 %
+        :align: center
+
+After installation, open **Command Prompt** (Windows) or **Terminal** (macOS/Linux) and type ``python`` to verify your Python installation.
+
+.. tab:: Windows
+
+    .. code-block:: doscon
+        :caption: Check Python installation in Windows.
+
+        > python
+        Python 3.10.10 (tags/v3.10.10:878ead1, Feb  7 2023, 16:38:35) [MSC v.1934 64 bit (AMD64)] on win32
+        Type "help", "copyright", "credits" or "license" for more information.
+        >>>
+
+.. tab:: macOS/Linux
+
+    .. code-block:: console
+        :caption: Check Python installation in macOS/Linux.
+
+        $ python3
+        Python 3.10.10 (v3.10.10:a58ebcc701, Feb 7 2023, 14:50:16) [Clang 13.0.0 (clang-1300.0.29.30)] on darwin
+        Type "help", "copyright", "credits" or "license" for more information.
+        >>> 
+
+.. note::
+
+    🧐 If you are stuck with Python installation, seek help in `Python 3 Installation & Setup Guide <https://realpython.com/installing-python/>`_
+
+
+Install PIP
+^^^^^^^^^^^
 
 Make sure ``pip`` is installed on your system. ``pip`` is the `package installer for Python <https://packaging.python.org/guides/tool-recommendations/>`_ . You can use it to install packages from the `Python Package Index <https://pypi.org/>`_  and other indexes.
 
@@ -56,14 +92,14 @@ If you don't have ``pip`` installed, you can:
     Read more about installation of ``pip`` in `pip installation <https://pip.pypa.io/en/stable/installation/>`_.
 
 
-Installing From PyPI Using ``pip``
-----------------------------------
+Install From PyPi Repository
+----------------------------
 
-``pip`` is the recommended installer for XOA Utilities. The most common usage of ``pip`` is to install from the `Python Package Index <https://pypi.org/>`_ using `Requirement Specifiers <https://pip.pypa.io/en/stable/cli/pip_install/#requirement-specifiers>`_.
+``pip`` is the recommended installer for XOA Utils. The most common usage of ``pip`` is to install from the `Python Package Index <https://pypi.org/>`_ using `Requirement Specifiers <https://pip.pypa.io/en/stable/cli/pip_install/#requirement-specifiers>`_.
 
 .. note::
     
-    If you install XOA Utilities using ``pip install xoa-utils``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically installed.
+    If you install XOA Utils using ``pip install xoa-utils``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically installed.
 
 
 .. _install_core_global:
@@ -75,7 +111,7 @@ Install to Global Namespace
     :new-set:
 
     .. code-block:: doscon
-        :caption: Install XOA Utilities in Windows environment from PyPI.
+        :caption: Install XOA Utils in Windows environment from PyPI.
 
         > pip install xoa-utils            # latest version
         > pip install xoa-utils==1.0.0     # specific version
@@ -84,7 +120,7 @@ Install to Global Namespace
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: Install XOA Utilities in macOS/Linux environment from PyPI.
+        :caption: Install XOA Utils in macOS/Linux environment from PyPI.
 
         $ pip install xoa-utils            # latest version
         $ pip install xoa-utils==1.0.0     # specific version
@@ -93,17 +129,17 @@ Install to Global Namespace
 
 .. _install_core_venv:
 
-Install in Virtual Environment
+Install to Virtual Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Install XOA Utilities in a virtual environment, so it does not pollute your global namespace. 
+Install XOA Utils in a virtual environment, so it does not pollute your global namespace. 
 
 For example, your project folder is called ``/my_xoa_project``.
 
 .. tab:: Windows
 
     .. code-block:: doscon
-        :caption: Install XOA Utilities in a virtual environment in Windows from PyPI.
+        :caption: Install XOA Utils in a virtual environment in Windows from PyPI.
 
         [my_xoa_project]> python -m venv .\env
         [my_xoa_project]> .env\Scripts\activate
@@ -115,7 +151,7 @@ For example, your project folder is called ``/my_xoa_project``.
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: Install XOA Utilities in a virtual environment in macOS/Linux from PyPI.
+        :caption: Install XOA Utils in a virtual environment in macOS/Linux from PyPI.
 
         [my_xoa_project]$ python3 -m venv ./env
         [my_xoa_project]$ source ./env/bin/activate
@@ -140,36 +176,36 @@ Afterwards, your project folder will be:
     * `venv <https://docs.python.org/3/library/venv.html>`_
 
 
-Upgrading From PyPI Using ``pip``
----------------------------------
+Upgrade From PyPi Repository
+-----------------------------
 
-To upgrade XOA Utilities package from PyPI:
+To upgrade XOA Utils package from PyPI:
 
 .. tab:: Windows
     :new-set:
     
     .. code-block:: doscon
-        :caption: Upgrade XOA Utilities in Windows environment from PyPI.
+        :caption: Upgrade XOA Utils in Windows environment from PyPI.
 
         > pip install xoa-utils --upgrade
 
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: Upgrade XOA Utilities in macOS/Linux environment from PyPI.
+        :caption: Upgrade XOA Utils in macOS/Linux environment from PyPI.
 
         $ pip install xoa-utils --upgrade
 
 
 .. note::
     
-    If you upgrade XOA Utilities using ``pip install --upgrade xoa-utils``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically upgraded.
+    If you upgrade XOA Utils using ``pip install --upgrade xoa-utils``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically upgraded.
 
 
-Installing Manually From Source
--------------------------------
+Install Manually From Source
+----------------------------
 
-If for some reason you need to install XOA Utilities manually from source, the steps are:
+If you don't have internet access, you can install XOA Utils manually from source, the steps are:
 
 **Step 1**, make sure Python packages `wheel <https://wheel.readthedocs.io/en/stable/>`_ and  `setuptools <https://setuptools.pypa.io/en/latest/index.html>`_ are installed on your system. Install ``wheel`` and ``setuptools`` using ``pip``:
 
@@ -188,20 +224,20 @@ If for some reason you need to install XOA Utilities manually from source, the s
 
         $ pip install wheel setuptools
 
-**Step 2**, download the XOA Utilities source distribution from `XOA Utilities Releases <https://github.com/xenanetworks/open-automation-core/releases>`_. Unzip the archive and run the ``setup.py`` script to install the package:
+**Step 2**, download the XOA Utils source distribution from `XOA Utils Releases <https://github.com/xenanetworks/open-automation-core/releases>`_. Unzip the archive and run the ``setup.py`` script to install the package:
 
 .. tab:: Windows
     :new-set:
 
     .. code-block:: doscon
-        :caption: Install XOA Utilities in Windows environment from source.
+        :caption: Install XOA Utils in Windows environment from source.
 
         [xoa_core]> python setup.py install
 
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: Install XOA Utilities in macOS/Linux environment from source.
+        :caption: Install XOA Utils in macOS/Linux environment from source.
 
         [xoa_core]$ python3 setup.py install
 
@@ -212,51 +248,20 @@ If for some reason you need to install XOA Utilities manually from source, the s
     :new-set:
 
     .. code-block:: doscon
-        :caption: Build XOA Utilities wheel in Windows environment for distribution.
+        :caption: Build XOA Utils wheel in Windows environment for distribution.
 
         [xoa_core]> python setup.py bdist_wheel
 
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: Build XOA Utilities wheel in macOS/Linux environment for distribution.
+        :caption: Build XOA Utils wheel in macOS/Linux environment for distribution.
 
         [xoa_core]$ python3 setup.py bdist_wheel
 
 .. important::
 
-    If you install XOA Utilities from the source code, you need to install XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) separately. This is because XOA Python API is treated as a 3rd-party dependency of XOA Utilities. You can go to `XOA Python API <https://github.com/xenanetworks/open-automation-python-api>`_ repository to learn how to install it.
-
-
-Uninstall and Remove Unused Dependencies
-----------------------------------------
-
-``pip uninstall xoa-utils`` can uninstall the package itself but not its dependencies. Leaving the package's dependencies in your environment can later create conflicting dependencies problem.
-
-We recommend install and use the `pip-autoremove <https://github.com/invl/pip-autoremove>`_ utility to remove a package plus unused dependencies.
-
-.. tab:: Windows
-    :new-set:
-
-    .. code-block:: doscon
-        :caption: Uninstall XOA Utilities in Windows environment.
-
-        > pip install pip-autoremove
-        > pip-autoremove xoa-utils -y
-
-.. tab:: macOS/Linux
-
-    .. code-block:: console
-        :caption: Uninstall XOA Utilities in macOS/Linux environment.
-
-        $ pip install pip-autoremove
-        $ pip-autoremove xoa-utils -y
-
-.. seealso::
-
-    See the `pip uninstall <https://pip.pypa.io/en/stable/cli/pip_uninstall/#pip-uninstall>`_ reference.
-
-    See `pip-autoremove <https://github.com/invl/pip-autoremove>`_ usage.
+    If you install XOA Utils from the source code, you need to install XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) separately. This is because XOA Python API is treated as a 3rd-party dependency of XOA Utils. You can go to `XOA Python API <https://github.com/xenanetworks/open-automation-python-api>`_ repository to learn how to install it.
 
 
 Generate SSH Key
@@ -272,7 +277,13 @@ XOA Utils requires an SSH key pair to run as a SSH service. To generate a SSH ke
 
         > ssh-keygen -t rsa
 
-    The key pair will be stored in C:\Users\YOU\.ssh
+    Press :kbd:`Enter` to finish **Enter file in which to save the key**. The filename will be default to ``id_rsa``.
+    
+    Press :kbd:`Enter` to skip passphrase.
+    
+    Press :kbd:`Enter` again to confirm passphrase.
+
+    The key pair will be stored in ``C:\Users\YOU\.ssh``
 
 
 .. tab:: macOS/Linux
@@ -282,7 +293,13 @@ XOA Utils requires an SSH key pair to run as a SSH service. To generate a SSH ke
 
         $ ssh-keygen -t rsa
     
-    The key pair will be stored in /Users/YOU/.ssh
+    Press :kbd:`Enter` to finish **Enter file in which to save the key**. The filename will be default to ``id_rsa``.
+    
+    Press :kbd:`Enter` to skip passphrase.
+    
+    Press :kbd:`Enter` again to confirm passphrase.
+    
+    The key pair will be stored in ``/Users/YOU/.ssh``
 
 
 .. seealso::
@@ -290,8 +307,8 @@ XOA Utils requires an SSH key pair to run as a SSH service. To generate a SSH ke
     You can read more about `Generating SSH Key <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key>`_ 
 
 
-Start XOA Utils
----------------
+Start XOA Utils SSH Server
+--------------------------
 
 After installing the package and ensuring the SSH key in place, you can start XOA Utils simply by typing ``xoa-utils``
 
@@ -302,8 +319,7 @@ After installing the package and ensuring the SSH key in place, you can start XO
         :caption: Start XOA Utils SSH service.
 
         > xoa-utils
-
-        > Xena SSH running on 0.0.0.0:22622
+        (PID: 33906) XOA Utils SSH Service running on 0.0.0.0:22622.
 
 
 .. tab:: macOS/Linux
@@ -312,24 +328,27 @@ After installing the package and ensuring the SSH key in place, you can start XO
         :caption: Start XOA Utils SSH service.
 
         $ xoa-utils
-
-        $ Xena SSH running on 0.0.0.0:22622
+        (PID: 33906) XOA Utils SSH Service running on 0.0.0.0:22622.
 
 .. note::
 
     If you want to run xoa-utils SSH service on a different port, do ``xoa-utils <port number>``
 
-Then you can SSH to your localhost:
+
+SSH to XOA Utils
+----------------
+
+After running the XOA Utils SSH Server, use another console to SSH to XOA Utils.
 
 .. tab:: Windows
     :new-set:
 
     .. code-block:: doscon
-        :caption: SSH to XOA Utils service.
+        :caption: SSH to XOA Utils.
 
         > ssh yourname@localhost -p 22622
 
-        Welcome to Xena SSH server, yourname!
+        Hello yourname, welcome to Xena OpenAutomation Utilities SSH Service.
 
         xoa-utils > 
 
@@ -337,12 +356,41 @@ Then you can SSH to your localhost:
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: SSH to XOA Utils service.
+        :caption: SSH to XOA Utils.
 
         $ ssh yourname@localhost -p 22622
 
-        Welcome to Xena SSH server, yourname!
+        Hello yourname, welcome to Xena OpenAutomation Utilities SSH Service.
 
-        xoa-utils > 
+        xoa-utils >  
 
 
+Uninstall and Remove Unused Dependencies
+----------------------------------------
+
+``pip uninstall xoa-utils`` can uninstall the package itself but not its dependencies. Leaving the package's dependencies in your environment can later create conflicting dependencies problem.
+
+We recommend install and use the `pip-autoremove <https://github.com/invl/pip-autoremove>`_ utility to remove a package plus unused dependencies.
+
+.. tab:: Windows
+    :new-set:
+
+    .. code-block:: doscon
+        :caption: Uninstall XOA Utils in Windows environment.
+
+        > pip install pip-autoremove
+        > pip-autoremove xoa-utils -y
+
+.. tab:: macOS/Linux
+
+    .. code-block:: console
+        :caption: Uninstall XOA Utils in macOS/Linux environment.
+
+        $ pip install pip-autoremove
+        $ pip-autoremove xoa-utils -y
+
+.. seealso::
+
+    See the `pip uninstall <https://pip.pypa.io/en/stable/cli/pip_uninstall/#pip-uninstall>`_ reference.
+
+    See `pip-autoremove <https://github.com/invl/pip-autoremove>`_ usage.

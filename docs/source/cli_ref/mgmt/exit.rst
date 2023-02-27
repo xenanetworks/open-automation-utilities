@@ -5,7 +5,7 @@ exit
 Description
 -----------
 
-To exit the session by terminating port reservations, disconnecting from the chassis, releasing system resources, and removing the specified port configurations.
+Exit the session by terminating port reservations, disconnecting from the chassis, releasing system resources, and removing the specified port configurations.
 This command works in all context.
 
 Synopsis

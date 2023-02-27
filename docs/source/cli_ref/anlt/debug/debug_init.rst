@@ -43,7 +43,3 @@ Examples
     xoa-utils[123456][port0/2] >
 
 
-
-
-
-

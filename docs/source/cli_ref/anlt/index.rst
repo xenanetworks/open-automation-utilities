@@ -1,9 +1,8 @@
-ANLT
-====
+ANLT Commands
+=============
 
 .. toctree::
     :maxdepth: 2
-    :caption: ANLT Commands
 
     an_lt/index
     an/index

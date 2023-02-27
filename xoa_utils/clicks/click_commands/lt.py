@@ -91,14 +91,15 @@ async def lt_im(context: ac.Context, lane: int, encoding: str) -> str:
 # **************************
 @lt.command(cls=cb.XenaCommand, name="alg")
 @ac.argument("lane", type=ac.INT)
-@ac.argument("algorithm", type=ac.Choice(["alg_0", "alg_n1"]))
+@ac.argument("algorithm", type=ac.Choice(["alg0", "algn1"]))
 @ac.pass_context
 async def lt_algorithm(context: ac.Context, lane: int, algorithm: str) -> str:
     """
     Set the link training algorithm for the specified lane.
 
-        LANE INT: Specifies the transceiver lane number to configure. e.g. If the value is set to 1, Lane 1 will be configured.\n
-        ALGORITHM TEXT: Specifies the algorithm. Allowed values: alg_0, alg_n1.\n
+        <LANE>: Specifies the transceiver lane (serdes) index.
+
+        <ALGORITHM>: Specifies the algorithm. Allowed values: alg0 | algn1
     """
     storage: CmdContext = context.obj
     storage.retrieve_port()

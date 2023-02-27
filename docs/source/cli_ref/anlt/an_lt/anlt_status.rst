@@ -4,7 +4,7 @@ anlt status
 Description
 -----------
 
-To show the current status of the working port.
+Show AN/LT status of the working port.
 
 
 Synopsis

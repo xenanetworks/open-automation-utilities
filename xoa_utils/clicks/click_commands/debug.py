@@ -192,7 +192,7 @@ async def lt_rx_config_set(context: ac.Context, lane: int, value: int) -> str:
 @ac.pass_context
 async def lt_tx_tf_get(context: ac.Context, lane: int) -> str:
     """
-    Debug: Read LT TX Test Frame of the specified lane.
+    Debug: Read LT TX Training Frames of the specified lane.
 
         <LANE>: The lane (serdes) index.
     """
@@ -208,7 +208,8 @@ async def lt_tx_tf_get(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def lt_tx_tf_set(context: ac.Context, lane: int, value: int) -> str:
     """
-    Debug: Write LT TX TestFrame to the specified lane.
+    Debug: Write LT TX Test Frame to the specified lane.
+
 
         <LANE>: The lane (serdes) index.
 
@@ -230,6 +231,7 @@ async def lt_rx_tf_get(context: ac.Context, lane: int) -> str:
         <LANE>: The lane (serdes) index.
     """
     return await _help_get(debug_utils.lt_rx_tf_get, context, lane)
+
 
 # --------------------------
 # command: lt-rx-error-stat0-get
