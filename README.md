@@ -31,11 +31,11 @@ Then you can SSH to your localhost:
 
     Welcome to Xena SSH server, yourname!
 
-    xoa_util > 
+    xoa_util >
 
 ## Step-by-Step Guide
 
-This section provides a step-by-step guide on how to use XOA Utility to do interactive ANLT test. 
+This section provides a step-by-step guide on how to use XOA Utility to do interactive ANLT test.
 
 > ⚡️ You can use **tab key** to auto-complete a command to speed up your input speed.
 
@@ -61,9 +61,9 @@ Then, reserve a port on the tester using the command ``port``, as shown in the e
 
 ### Disable Link Recovery
 
-Before doing ANLT testing, remember to disable link recovery on the port using command ``anlt_recovery``. 
+Before doing ANLT testing, remember to disable link recovery on the port using command ``anlt_recovery``.
 
-This is because the port always tries to re-do ANLT command sequence every five seconds if it detects no sync on the port. 
+This is because the port always tries to re-do ANLT command sequence every five seconds if it detects no sync on the port.
 
 This will disturb your manual link training procedure if you don't disable it prior to your interactive test.
 
@@ -72,11 +72,11 @@ This will disturb your manual link training procedure if you don't disable it pr
 
 ### Configure AN & LT
 
-After disabling link recovery on the port, you can start configuring AN and LT using ``an_config``, ``lt_config``, and ``lt_im`` as the example shown below. 
+After disabling link recovery on the port, you can start configuring AN and LT using ``an_config``, ``lt_config``, and ``lt_im`` as the example shown below.
 
     xoa-utils[123456][port0/0] > an config --off --no-loopback
 
-    xoa-utils[123456][port0/0] > lt config --on --preset0 --mode=interactive 
+    xoa-utils[123456][port0/0] > lt config --on --preset0=standard --mode=interactive
 
     xoa-utils[123456][port0/0] > lt im 0 nrz
 

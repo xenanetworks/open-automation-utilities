@@ -172,7 +172,7 @@ Lane (serdes) count   : {status['serdes_count']}
 Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'}
 Allow loopback        : {'yes' if storage.retrieve_an_loopback() else 'no'}
 Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'})
-Preset0               : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values
+Preset0               : {'existing tap' if storage.retrieve_lt_preset0() else 'standard tap'} values
 """
 
 
@@ -199,7 +199,7 @@ Port {storage.retrieve_port_str()}
 Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'}
 Allow loopback        : {'yes' if storage.retrieve_an_loopback() else 'no'}
 Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'})
-Preset0               : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values
+Preset0               : {'existing tap' if storage.retrieve_lt_preset0() else 'standard tap'} values
 """
 
 
@@ -218,7 +218,7 @@ Port {storage.retrieve_port_str()}
 Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'}
 Allow loopback        : {'yes' if storage.retrieve_an_loopback() else 'no'}
 Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'})
-Preset0               : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values
+Preset0               : {'existing tap' if storage.retrieve_lt_preset0() else 'standard tap'} values
 """
 
 
