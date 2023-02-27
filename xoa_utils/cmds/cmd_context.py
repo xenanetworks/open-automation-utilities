@@ -54,7 +54,7 @@ class ANState:
 class LTState:
     def __init__(self) -> None:
         self.do: bool = False
-        self.preset0: dict[int, NRZPreset] = {}
+        self.preset0: NRZPreset = NRZPreset.NRZ_NO_PRESET
         self.interactive: bool = False
         self.initial_mod: dict[int, LinkTrainEncoding] = {}
         self.algorithm: dict[int, LinkTrainAlgorithm] = {}
@@ -192,7 +192,7 @@ class CmdContext:
     def retrieve_lt_enable(self) -> bool:
         return self._lt_state.do
 
-    def retrieve_lt_preset0(self) -> int:
+    def retrieve_lt_preset0(self) -> NRZPreset:
         return self._lt_state.preset0
 
     def retrieve_ports(self) -> dict[str, GenericL23Port]:
