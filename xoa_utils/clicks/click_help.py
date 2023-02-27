@@ -43,7 +43,7 @@ default to --on."
 HELP_AN_CONFIG_LOOPBACK = "Should loopback be allowed in auto-negotiation, \
 default to --no-loopback."
 
-HELP_LT_CONFIG_MODE = "The mode for link training on the working port, default to interactive."
+HELP_LT_CONFIG_MODE = "The mode for link training on the working port, default to --mode=auto."
 
 HELP_LT_CONFIG_ON = "Enable or disable link training on the working port, default to --on."
 

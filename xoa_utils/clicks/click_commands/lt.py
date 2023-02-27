@@ -41,7 +41,7 @@ def lt():
     "--mode",
     type=ac.Choice(["interactive", "auto"]),
     help=h.HELP_LT_CONFIG_MODE,
-    default="interactive",
+    default="auto",
 )
 @ac.option("--on/--off", type=ac.BOOL, help=h.HELP_LT_CONFIG_ON, default=True)
 @ac.option(
