@@ -36,7 +36,7 @@ Enable or disable link training on the working port, default to ``--on``.
 
 ``-m, --mode`` (text)
 
-The mode for link training on the working port, default to ``--mode==auto``.
+The mode for link training on the working port, default to ``auto``.
 
 Allowed values:
 
@@ -47,7 +47,7 @@ Allowed values:
 
 ``--preset0`` (text)
 
-The preset0 mode, default to ``standard``.
+The preset0 mode, default to `standard``.
 
 Allowed values:
 
@@ -65,11 +65,9 @@ Examples
     xoa-utils[123456][port0/2] > lt config --on --preset0=existing --mode=interactive
     
     Port 0/2
-    =SHADOW STATUS=
-    Auto-negotiation      : off
-    Allow loopback        : yes
-    Link training         : on (interactive)
-    Preset0               : existing tap values
+        [SHADOW STATUS]
+        Auto-negotiation      : off (allow loopback: no)
+        Link training         : on (interactive) (preset0: existing tap values)
 
     xoa-utils[123456][port0/2] >
 
