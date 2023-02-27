@@ -18,8 +18,8 @@ Synopsis
 .. code-block:: text
 
     lt config
-    [-m, --mode <value: text>] 
-    [--preset0/--no-preset0]
+    [-m, --mode <value: text>]
+    [--preset0 <value: text>]
     [--on/--off]
 
 
@@ -31,7 +31,7 @@ Options
 -------
 
 ``-m, --mode`` (text)
-    
+
 The mode for link training on the working port, default to ``interactive``.
 
 Allowed values:
@@ -43,13 +43,19 @@ Allowed values:
 
 
 ``--on/--off``
-    
+
 Enable or disable link training on the working port, default to ``--on``.
 
 
-``--preset0/--no-preset0``
+``--preset0`` (text)
 
-Should the preset0 (out-of-sync) use **existing tap values** (``--preset0``) or **standard values** (``--no-preset0``), default to ``--no-preset0``.
+The preset0 mode, default to ``standard``.
+
+Allowed values:
+
+* `standard`:    Use standard tap values as preset0
+
+* `existing`:    Use the existing tap values as preset0
 
 
 
@@ -59,7 +65,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > lt config --on --preset0 --mode=interactive
+    xoa-utils[123456][port0/2] > lt config --on --preset0=existing --mode=interactive
     Port 0/2
     Link training : on
     Mode          : interactive
@@ -79,7 +85,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > lt config 
+    xoa-utils[123456][port0/2] > lt config
     Port 0/2
     Link training : on
     Mode          : interactive
