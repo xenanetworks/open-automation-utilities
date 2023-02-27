@@ -16,6 +16,9 @@ Synopsis
 .. code-block:: text
     
     anlt log
+    [-f, --filename <value: text>]
+    [-k, --keep <value: text>]
+    [-l, --lane <value>]
 
 
 Arguments
@@ -53,7 +56,7 @@ Examples
 
 .. code-block:: text
     
-    xoa-utils[123456][port0/2] > anlt log -f mylog.log
+    xoa-utils[123456][port0/2] > anlt log --filename mylog.log --keep lt --lane 0
 
 .. figure:: ../../../_static/anlt_log.png
     :width: 100 %
