@@ -115,7 +115,7 @@ async def mode_set(context: ac.Context, lane: int, value: int) -> str:
         <VALUE>: Specifies the value.
     """
 
-    return await _help_set(debug_utils.mode_get, context, lane, value)
+    return await _help_set(debug_utils.mode_set, context, lane, value)
 
 
 # --------------------------
@@ -145,7 +145,7 @@ async def lt_tx_config_set(context: ac.Context, lane: int, value: int) -> str:
     Debug: Write LT TX configuration of the specified lane.
 
         <LANE>: The lane (serdes) index.
-        
+
         <VALUE>: Specifies the value.
     """
     return await _help_set(debug_utils.lt_tx_config_set, context, lane, value)
@@ -178,7 +178,7 @@ async def lt_rx_config_set(context: ac.Context, lane: int, value: int) -> str:
     Debug: Write LT RX configuration of the specified lane.
 
         <LANE>: The lane (serdes) index.
-        
+
         <VALUE>: Specifies the value.
     """
     return await _help_set(debug_utils.lt_rx_config_set, context, lane, value)
@@ -198,6 +198,38 @@ async def lt_tx_tf_get(context: ac.Context, lane: int) -> str:
     """
     return await _help_get(debug_utils.lt_tx_tf_get, context, lane)
 
+
+# --------------------------
+# command: lt-tx-tf-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value", type=ac.INT)
+@ac.pass_context
+async def lt_tx_tf_set(context: ac.Context, lane: int, value: int) -> str:
+    """
+    Debug: Write LT TX TestFrame to the specified lane.
+
+        <LANE>: The lane (serdes) index.
+
+        <VALUE>: Specifies the value.
+    """
+    return await _help_set(debug_utils.lt_tx_tf_set, context, lane, value)
+
+
+# --------------------------
+# command: lt-rx-tf-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.pass_context
+async def lt_rx_tf_get(context: ac.Context, lane: int) -> str:
+    """
+    Debug: Read LT RX Test Frame of the specified lane.
+
+        <LANE>: The lane (serdes) index.
+    """
+    return await _help_get(debug_utils.lt_rx_tf_get, context, lane)
 
 # --------------------------
 # command: lt-rx-error-stat0-get
@@ -351,7 +383,7 @@ async def lt_rx_analyzer_trig_mask_set(
     Debug: Write LT RX analyzer trigger mask of the specified lane.
 
         <LANE>: The lane (serdes) index.
-        
+
         <VALUE>: Specifies the value.
     """
     await _help_set(debug_utils.lt_rx_analyzer_trig_mask_set, context, lane, value)
@@ -370,7 +402,7 @@ async def lt_rx_analyzer_rd_addr_set(context: ac.Context, lane: int, value: int)
     Debug: Write LT RX analyzer RD Address of the specified lane.
 
         <LANE>: The lane (serdes) index.
-        
+
         <VALUE>: Specifies the value.
     """
     await _help_set(debug_utils.lt_rx_analyzer_rd_addr_set, context, lane, value)
@@ -389,7 +421,7 @@ async def lt_rx_analyzer_rd_page_set(context: ac.Context, lane: int, value: int)
     Debug: Write LT RX analyzer RD Page of the specified lane.
 
         <LANE>: The lane (serdes) index.
-        
+
         <VALUE>: Specifies the value.
     """
     await _help_set(debug_utils.lt_rx_analyzer_rd_page_set, context, lane, value)
@@ -408,8 +440,7 @@ async def lt_status(context: ac.Context, lane: int) -> str:
 
         <LANE>: The lane (serdes) index.
     """
-    await _help_get(debug_utils.lt_status, context, lane)
-    return ""
+    return await _help_get(debug_utils.lt_status, context, lane)
 
 
 # --------------------------
