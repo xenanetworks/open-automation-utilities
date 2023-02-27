@@ -39,7 +39,7 @@ class ASCIIStyle(Enum):
     BLUE_BG = '\033[104m'
     MAGENTA_BG = '\033[105m'
     CYAN_BG = '\033[106m'
-    
+
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
     END = '\033[0m'
@@ -99,7 +99,7 @@ async def do(context: ac.Context) -> str:
     an_enable = storage.retrieve_an_enable()
     lt_enable = storage.retrieve_lt_enable()
     an_allow_loopback = storage.retrieve_an_loopback()
-    lt_preset0_std = storage.retrieve_lt_preset0_std()
+    lt_preset0 = storage.retrieve_lt_preset0()
     lt_initial_modulations = storage.retrieve_lt_initial_mod()
     lt_interactive = storage.retrieve_lt_interactive()
     lt_algorithm = storage.retrieve_lt_algorithm()
@@ -108,7 +108,7 @@ async def do(context: ac.Context) -> str:
         an_enable,
         lt_enable,
         an_allow_loopback,
-        lt_preset0_std,
+        lt_preset0,
         lt_initial_modulations,
         lt_interactive,
         lt_algorithm,
@@ -171,7 +171,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
     def _flatten(dic: dict[str, str]) -> str:
         return "".join((f"{k}: {v:<7}" for k, v in dic.items()))
 
-    
+
     def _ascii_styler(str: str, fg_style: t.List[ASCIIStyle]) -> str:
         _END = '\033[0m'
         style=""

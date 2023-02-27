@@ -45,17 +45,21 @@ def lt():
 )
 @ac.option("--on/--off", type=ac.BOOL, help=h.HELP_LT_CONFIG_ON, default=True)
 @ac.option(
-    "--preset0/--no-preset0", type=ac.BOOL, help=h.HELP_LT_CONFIG_PRESET0, default=True
+    "--preset0",
+    type=ac.Choice(["standard", "existing"]),
+    help=h.HELP_LT_CONFIG_PRESET0,
+    default="standard",
 )
+
 @ac.pass_context
-async def lt_config(context: ac.Context, mode: str, on: bool, preset0: bool) -> str:
+async def lt_config(context: ac.Context, mode: str, on: bool, preset0: str) -> str:
     """
     Configure LT for the working port.
     """
     storage: CmdContext = context.obj
     storage.retrieve_port()
     storage.store_should_do_lt(on)
-    storage.store_lt_preset0_std(preset0)
+    storage.store_lt_preset0(preset0)
     storage.store_lt_interactive(True if mode == "interactive" else False)
     return format_lt_config(storage)
 
@@ -72,7 +76,7 @@ async def lt_im(context: ac.Context, lane: int, encoding: str) -> str:
     Set initial modulation for the specified lane.
 
         <LANE>: Specifies the transceiver lane (serdes) index.
-        
+
         <ENCODING>: Specifies the initial modulation. Allowed values: nrz | pam4 | pam4pre
     """
     storage: CmdContext = context.obj

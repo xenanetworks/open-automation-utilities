@@ -13,6 +13,7 @@ from xoa_utils.exceptions import (
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
 from xoa_driver.hlfuncs import anlt_ll_debug as debug_utils
 from xoa_driver.enums import (
+    NRZPreset,
     LinkTrainEncoding,
     LinkTrainAlgorithm,
 )
@@ -53,7 +54,7 @@ class ANState:
 class LTState:
     def __init__(self) -> None:
         self.do: bool = False
-        self.preset0_std: bool = True
+        self.preset0: dict[int, NRZPreset] = {}
         self.interactive: bool = False
         self.initial_mod: dict[int, LinkTrainEncoding] = {}
         self.algorithm: dict[int, LinkTrainAlgorithm] = {}
@@ -133,8 +134,11 @@ class CmdContext:
     def store_lt_interactive(self, do: bool) -> None:
         self._lt_state.interactive = do
 
-    def store_lt_preset0_std(self, do: bool) -> None:
-        self._lt_state.preset0_std = do
+    def store_lt_preset0(self, preset0: str) -> None:
+        if preset0 == "standard":
+            self._lt_state.preset0 = NRZPreset.NRZ_NO_PRESET
+        else:
+            self._lt_state.preset0 = NRZPreset.NRZ_WITH_PRESET
 
     def store_current_port_str(self, current_port_str: str) -> None:
         if current_port_str not in self._pt_state.ports:
@@ -188,8 +192,8 @@ class CmdContext:
     def retrieve_lt_enable(self) -> bool:
         return self._lt_state.do
 
-    def retrieve_lt_preset0_std(self) -> bool:
-        return self._lt_state.preset0_std
+    def retrieve_lt_preset0(self) -> int:
+        return self._lt_state.preset0
 
     def retrieve_ports(self) -> dict[str, GenericL23Port]:
         return self._pt_state.ports

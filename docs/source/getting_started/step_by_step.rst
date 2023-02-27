@@ -4,7 +4,7 @@
 Step-by-Step Guide
 ===================
 
-This section provides a step-by-step guide on how to use XOA Utility to do interactive ANLT test. 
+This section provides a step-by-step guide on how to use XOA Utility to do interactive ANLT test.
 
 The diagram below illustrates a basic flow of using XOA Utilities to do ANLT testing.
 
@@ -75,9 +75,9 @@ Use one terminal to view the ANLT protocol trace, and use another to execute ANL
 Disable Link Recovery
 ---------------------
 
-Before doing ANLT testing, remember to disable link recovery on the port using command :doc:`../cli_ref/anlt/an_lt/anlt_recovery`. 
+Before doing ANLT testing, remember to disable link recovery on the port using command :doc:`../cli_ref/anlt/an_lt/anlt_recovery`.
 
-This is because the port always tries to re-do ANLT command sequence every five seconds if it detects no sync on the port. 
+This is because the port always tries to re-do ANLT command sequence every five seconds if it detects no sync on the port.
 
 This will disturb your manual link training procedure if you don't disable it prior to your interactive test.
 
@@ -89,14 +89,14 @@ This will disturb your manual link training procedure if you don't disable it pr
 Configure AN & LT
 -----------------
 
-After disabling link recovery on the port, you can start configuring AN and LT using :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, and :doc:`../cli_ref/anlt/lt/lt_im` as the example shown below. 
+After disabling link recovery on the port, you can start configuring AN and LT using :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, and :doc:`../cli_ref/anlt/lt/lt_im` as the example shown below.
 
 
 .. code-block:: text
 
     xoa-utils[123456][port0/0] > an config --off --no-loopback
 
-    xoa-utils[123456][port0/0] > lt config --on --preset0 --mode=interactive 
+    xoa-utils[123456][port0/0] > lt config --on --preset0=standard --mode=interactive
 
     xoa-utils[123456][port0/0] > lt im 0 nrz
 
