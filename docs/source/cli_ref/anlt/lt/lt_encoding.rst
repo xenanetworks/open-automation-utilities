@@ -47,8 +47,8 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > lt encoding 4 pam4
-    Port 0/2 requests: use PAM4 on Lane 4
+    xoa-utils[123456][port0/2] > lt encoding 0 pam4
+    Port 0/0: use PAM4 on Lane 0 (SUCCESS)
 
     xoa-utils[123456][port0/2] >
 
