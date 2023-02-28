@@ -35,7 +35,7 @@ Examples
 .. code-block:: text
 
     xoa-utils[123456][port0/2] > lt trained 0
-    Port 0/2 requests: Lane 0 is trained
+    Port 0/0 requests: Lane 0 is trained (SUCCESS)
 
     xoa-utils[123456][port0/2] >
 

@@ -57,8 +57,8 @@ Examples
     Last IC received  : Preset 3
     Last IC sent      : Preset 3
 
-    TX Coefficient              :           c(-3)       c(-2)       c(-1)        c(0)        c(1)
-        Current level           :               0           0           1          44           0
+    TX Coefficient              :          c(-3)       c(-2)       c(-1)        c(0)        c(1)
+        Current level           :              0           0           1          44           0
                                 :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
         + req                   :          0   0       0   0       2   2       1   1       0   0
         - req                   :          0   0       0   0       2   2       0   0       0   0

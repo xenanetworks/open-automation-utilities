@@ -42,7 +42,7 @@ Examples
 .. code-block:: text
 
     xoa-utils[123456][port0/2] > lt preset 0 1
-    Port 0/2 requests: use preset 1 on Lane 0
+    Port 0/0: use preset 0 on Lane 0 (SUCCESS)
 
     xoa-utils[123456][port0/2] >
 
