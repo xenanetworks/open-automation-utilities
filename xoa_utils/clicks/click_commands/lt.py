@@ -129,10 +129,10 @@ async def lt_inc(context: ac.Context, lane: int, emphasis: str) -> str:
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
     storage.validate_current_lane(lane)
-    await anlt_utils.lt_coeff_inc(
+    resp = await anlt_utils.lt_coeff_inc(
         port_obj, lane, enums.LinkTrainCoeffs[emphasis.upper()]
     )
-    return format_lt_inc_dec(storage, lane, emphasis, True)
+    return format_lt_inc_dec(storage, lane, emphasis, True, resp.name)
 
 
 # **************************
@@ -153,10 +153,10 @@ async def lt_dec(context: ac.Context, lane: int, emphasis: str) -> str:
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
     storage.validate_current_lane(lane)
-    await anlt_utils.lt_coeff_dec(
+    resp = await anlt_utils.lt_coeff_dec(
         port_obj, lane, enums.LinkTrainCoeffs[emphasis.upper()]
     )
-    return format_lt_inc_dec(storage, lane, emphasis, False)
+    return format_lt_inc_dec(storage, lane, emphasis, False, resp.name)
 
 
 # **************************
@@ -180,8 +180,8 @@ async def lt_encoding(context: ac.Context, lane: int, encoding: str) -> str:
     e = enums.LinkTrainEncoding[
         {"pam4pre": "PAM4_WITH_PRECODING"}.get(encoding, encoding).upper()
     ]
-    await anlt_utils.lt_encoding(port_obj, lane, e)
-    return format_lt_encoding(storage, lane, encoding)
+    resp = await anlt_utils.lt_encoding(port_obj, lane, e)
+    return format_lt_encoding(storage, lane, encoding, resp.name)
 
 
 # **************************
@@ -203,8 +203,8 @@ async def lt_preset(context: ac.Context, lane: int, preset: int) -> str:
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
     storage.validate_current_lane(lane)
-    await anlt_utils.lt_preset(port_obj, lane, enums.LinkTrainPresets(preset))
-    return format_lt_preset(storage, lane, preset)
+    resp = await anlt_utils.lt_preset(port_obj, lane, enums.LinkTrainPresets(preset))
+    return format_lt_preset(storage, lane, preset, resp.name)
 
 
 # **************************
@@ -222,8 +222,8 @@ async def lt_trained(context: ac.Context, lane: int) -> str:
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
     storage.validate_current_lane(lane)
-    await anlt_utils.lt_trained(port_obj, lane)
-    return format_lt_trained(storage, lane)
+    resp = await anlt_utils.lt_trained(port_obj, lane)
+    return format_lt_trained(storage, lane, resp.name)
 
 
 # **************************

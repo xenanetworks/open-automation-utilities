@@ -221,7 +221,7 @@ def format_recovery(storage: CmdContext, on: bool) -> str:
 
 
 def format_lt_inc_dec(
-    storage: CmdContext, lane: int, emphasis: str, increase: bool
+    storage: CmdContext, lane: int, emphasis: str, increase: bool, response: str
 ) -> str:
     change = {
         "pre3": "c(-3)",
@@ -232,23 +232,23 @@ def format_lt_inc_dec(
     }[emphasis]
     action = "increase" if increase else "decrease"
     return (
-        f"Port {storage.retrieve_port_str()}: {action} {change} by 1 on Lane {lane}\n"
+        f"Port {storage.retrieve_port_str()}: {action} {change} by 1 on Lane {lane} ({response})\n"
     )
 
 
-def format_lt_encoding(storage: CmdContext, lane: int, encoding: str) -> str:
+def format_lt_encoding(storage: CmdContext, lane: int, encoding: str, response: str) -> str:
     e = enums.LinkTrainEncoding[
         {"pam4pre": "PAM4_WITH_PRECODING"}.get(encoding, encoding).upper()
     ]
-    return f"Port {storage.retrieve_port_str()}: use {e.name} on Lane {lane}\n"
+    return f"Port {storage.retrieve_port_str()}: use {e.name} on Lane {lane} ({response})\n"
 
 
-def format_lt_preset(storage: CmdContext, lane: int, preset: int) -> str:
-    return f"Port {storage.retrieve_port_str()}: use preset {preset} on Lane {lane}.\n"
+def format_lt_preset(storage: CmdContext, lane: int, preset: int, response: str) -> str:
+    return f"Port {storage.retrieve_port_str()}: use preset {preset} on Lane {lane} ({response})\n"
 
 
-def format_lt_trained(storage: CmdContext, lane: int) -> str:
-    return f"Port {storage.retrieve_port_str()} requests: Lane {lane} is trained.\n"
+def format_lt_trained(storage: CmdContext, lane: int, response: str) -> str:
+    return f"Port {storage.retrieve_port_str()} requests: Lane {lane} is trained ({response})\n"
 
 
 def format_txtap_get(lane: int, dic: dict) -> str:
