@@ -290,8 +290,8 @@ Overrun errors    : {dic['overrun_errors']:,}
 Last IC received  : {dic['last_ic_received']}
 Last IC sent      : {dic['last_ic_sent']}
 
-TX Coefficient              :           c(-3)       c(-2)       c(-1)        c(0)        c(1)
-    Current level           :{dic['c(-3)']['current_level']:16}{dic['c(-2)']['current_level']:12}{dic['c(-1)']['current_level']:12}{dic['c(0)']['current_level']:12}{dic['c(1)']['current_level']:12}
+TX Coefficient              :          c(-3)       c(-2)       c(-1)        c(0)        c(1)
+    Current level           :{dic['c(-3)']['current_level']:15}{dic['c(-2)']['current_level']:12}{dic['c(-1)']['current_level']:12}{dic['c(0)']['current_level']:12}{dic['c(1)']['current_level']:12}
                             :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
     + req                   :{dic['c(-3)']['+req']['rx']:11}{dic['c(-3)']['+req']['tx']:4}{dic['c(-2)']['+req']['rx']:8}{dic['c(-2)']['+req']['tx']:4}{dic['c(-1)']['+req']['rx']:8}{dic['c(-1)']['+req']['tx']:4}{dic['c(0)']['+req']['rx']:8}{dic['c(0)']['+req']['tx']:4}{dic['c(1)']['+req']['rx']:8}{dic['c(1)']['+req']['tx']:4}
     - req                   :{dic['c(-3)']['-req']['rx']:11}{dic['c(-3)']['-req']['tx']:4}{dic['c(-2)']['-req']['rx']:8}{dic['c(-2)']['-req']['tx']:4}{dic['c(-1)']['-req']['rx']:8}{dic['c(-1)']['-req']['tx']:4}{dic['c(0)']['-req']['rx']:8}{dic['c(0)']['-req']['tx']:4}{dic['c(1)']['-req']['rx']:8}{dic['c(1)']['-req']['tx']:4}
