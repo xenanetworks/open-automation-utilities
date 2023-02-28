@@ -473,8 +473,11 @@ async def lt_prbs(context: ac.Context, lane: int) -> str:
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
+@ac.option(
+    "-f", "--filename", type=ac.STRING, default=""
+)
 @ac.pass_context
-async def lt_rx_analyzer_dump(context: ac.Context, lane: int) -> str:
+async def lt_rx_analyzer_dump(context: ac.Context, lane: int, filename: str) -> str:
     """
     Debug: Show the LT RX analyzer dump
 
@@ -488,4 +491,10 @@ async def lt_rx_analyzer_dump(context: ac.Context, lane: int) -> str:
     else:
         inf = await debug_utils.init(port_obj, lane)
         storage.store_anlt_low(lane, inf)
-    return str(await debug_utils.lt_rx_analyzer_dump(port_obj, lane, inf=inf))
+    ret_str = await debug_utils.lt_rx_analyzer_dump(port_obj, lane, inf=inf)
+    if filename:
+        with open(filename, "w+") as f:
+            f.write(f"{ret_str}\n")
+        return "Result stored in file"
+    else:
+        return ret_str
