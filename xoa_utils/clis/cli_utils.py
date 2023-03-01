@@ -161,20 +161,27 @@ def format_ports_status(storage: "CmdContext", all: bool) -> str:
 def format_port_status(port_id: str, status: dict, storage: "CmdContext") -> str:
     return f"""
 Port {port_id}
-    [ACTUAL STATUS]
+    [ACTUAL CONFIG]
+    Link recovery         : {status['link_recovery']}
+    Serdes count          : {status['serdes_count']}
+
     Auto-negotiation      : {status['autoneg_enabled']} (allow loopback: {'yes' if status['autoneg_allow_loopback'] else 'no'})
     Link training         : {'on' if status['link_training_mode'] != "disabled" else 'off'} ({'interactive' if status['link_training_mode'] == "interactive" else 'auto'}) (preset0: {'standard tap' if status['link_training_preset0'] == 'nrz_no_preset' else 'existing tap'} values) (timeout: {status['link_training_timeout']})
-    Link recovery         : {status['link_recovery']}
-    Lane (serdes) count   : {status['serdes_count']}
+        Initial Mod.      : {status['initial_mods']}
+        Algorithm         : {status['algorithms']}
+    
 
-    [SHADOW STATUS]
+    [SHADOW CONFIG]
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+        Initial Mod.      : {storage.retrieve_lt_initial_mod()}
+        Algorithm         : {storage.retrieve_lt_algorithm()}
 """
 
 
 def format_an_status(dic: dict) -> str:
     return f"""
+[AN STATS]
 Loopback              : {dic['loopback']}
 Duration              : {dic['duration']:,} µs
 Successful runs       : {dic['successes']}
@@ -192,9 +199,11 @@ Unformatted pages     : {dic['unformatted_pages']['rx']:6}{dic['unformatted_page
 def format_lt_config(storage: CmdContext) -> str:
     return f"""
 Port {storage.retrieve_port_str()}
-    [SHADOW STATUS]
+    [SHADOW CONFIG]
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+        Initial Mod.      : {storage.retrieve_lt_initial_mod()}
+        Algorithm         : {storage.retrieve_lt_algorithm()}
 """
 
 
@@ -209,9 +218,11 @@ def format_lt_algorithm(storage: CmdContext, lane: int) -> str:
 def format_an_config(storage: CmdContext) -> str:
     return f"""
 Port {storage.retrieve_port_str()}
-    [SHADOW STATUS]
+    [SHADOW CONFIG]
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+        Initial Mod.      : {storage.retrieve_lt_initial_mod()}
+        Algorithm         : {storage.retrieve_lt_algorithm()}
 """
 
 
@@ -268,6 +279,7 @@ def format_txtap_set(
 
 def format_lt_status(dic: dict) -> str:
     return f"""
+[LT STATS]
 Is enabled        : {str(dic['is_enabled']).lower()}
 Is trained        : {str(dic['is_trained']).lower()}
 Failure           : {dic['failure']}

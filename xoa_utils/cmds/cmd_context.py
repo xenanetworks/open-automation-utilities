@@ -56,8 +56,8 @@ class LTState:
         self.do: bool = False
         self.preset0: NRZPreset = NRZPreset.NRZ_NO_PRESET
         self.interactive: bool = False
-        self.initial_mod: dict[int, LinkTrainEncoding] = {}
-        self.algorithm: dict[int, LinkTrainAlgorithm] = {}
+        self.initial_mod: dict[str, LinkTrainEncoding] = {}
+        self.algorithm: dict[str, LinkTrainAlgorithm] = {}
 
 
 class LoopFuncState:
@@ -116,11 +116,11 @@ class CmdContext:
         e = LinkTrainEncoding[
             {"pam4pre": "PAM4_WITH_PRECODING"}.get(encoding, encoding).upper()
         ]
-        self._lt_state.initial_mod[lane] = e
+        self._lt_state.initial_mod[str(lane)] = e
 
     def store_lt_algorithm(self, lane: int, algorithm: str) -> None:
         e = LinkTrainAlgorithm[algorithm.upper()]
-        self._lt_state.algorithm[lane] = e
+        self._lt_state.algorithm[str(lane)] = e
 
     def store_an_allow_loopback(self, do: bool) -> None:
         self._an_state.allow_loopback = do
@@ -170,21 +170,21 @@ class CmdContext:
     def retrieve_an_loopback(self) -> bool:
         return self._an_state.allow_loopback
 
-    def retrieve_lt_initial_mod(self) -> dict[int, LinkTrainEncoding]:
+    def retrieve_lt_initial_mod(self) -> dict[str, LinkTrainEncoding]:
         return self._lt_state.initial_mod
 
     def retrieve_lt_initial_mod_lane(self, lane: int) -> LinkTrainEncoding:
-        if lane not in self._lt_state.initial_mod:
+        if str(lane) not in self._lt_state.initial_mod:
             raise NotInStoreError(str(lane))
-        return self._lt_state.initial_mod[lane]
+        return self._lt_state.initial_mod[str(lane)]
 
-    def retrieve_lt_algorithm(self) -> dict[int, LinkTrainAlgorithm]:
+    def retrieve_lt_algorithm(self) -> dict[str, LinkTrainAlgorithm]:
         return self._lt_state.algorithm
 
     def retrieve_lt_algorithm_lane(self, lane: int) -> LinkTrainAlgorithm:
-        if lane not in self._lt_state.algorithm:
+        if str(lane) not in self._lt_state.algorithm:
             raise NotInStoreError(str(lane))
-        return self._lt_state.algorithm[lane]
+        return self._lt_state.algorithm[str(lane)]
 
     def retrieve_lt_interactive(self) -> bool:
         return self._lt_state.interactive
