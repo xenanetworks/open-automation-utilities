@@ -1,10 +1,38 @@
 Installing XOA Utils
 ====================
 
-XOA Utils is available to install via the `Python Package Index <https://pypi.org/>`_. You can also install from the source file.
+XOA Utils is made into a Python package, `xoa-utils <https://pypi.org/project/xoa-utils/>`_ for easy installation and upgrade for all platforms. **However, it requires you to have knowledge about Python and the operating system you are using**.
+
+**For Windows (x64) users**, you can also download the **xoa-utils-x64.exe** application, which includes Python itself, `xoa-driver <https://pypi.org/project/xoa-driver/>`_, and all the dependencies. There is **no need to install anything** on your PC to run the XOA Utils SSH service application.
+
+The table below shows the distribution methods for each platform.
+
+.. list-table:: XOA Utils Distribution
+    :widths: 33 33 33
+    :header-rows: 1
+
+    * - Windows (x64)
+      - macOS
+      - Linux
+    * - Python package `xoa-utils <https://pypi.org/project/xoa-utils/>`_ (requires Python >=3.8)
+      - Python package `xoa-utils <https://pypi.org/project/xoa-utils/>`_ (requires Python >=3.8)
+      - Python package `xoa-utils <https://pypi.org/project/xoa-utils/>`_ (requires Python >=3.8)
+    * - `xoa-utils-x64-x.y.z.exe <https://github.com/xenanetworks/open-automation-utilities/releases>`_ (64-bit, no installation required)
+      - 
+      - 
+
+.. note::
+
+    Skip this section, if you are a Windows (x64) user and don't want to install XOA Utils as a Python package but simply want the **.exe** application,
+
+
+Installing XOA Utils As Python Package
+--------------------------------------
+
+XOA Utils is available to install via the `Python Package Index <https://pypi.org/>`_. You can also install from the source file. The steps below will guide you through 
 
 Prerequisites
--------------
+^^^^^^^^^^^^^
 
 Before installing XOA Utils, please make sure your environment has installed:
     
@@ -12,7 +40,7 @@ Before installing XOA Utils, please make sure your environment has installed:
 * `Install PIP`_
 
 Install Python
-^^^^^^^^^^^^^^
+""""""""""""""
 
 .. important:: 
 
@@ -57,7 +85,7 @@ After installation, open **Command Prompt** (Windows) or **Terminal** (macOS/Lin
 
 
 Install PIP
-^^^^^^^^^^^
+"""""""""""
 
 Make sure ``pip`` is installed on your system. ``pip`` is the `package installer for Python <https://packaging.python.org/guides/tool-recommendations/>`_ . You can use it to install packages from the `Python Package Index <https://pypi.org/>`_  and other indexes.
 
@@ -93,7 +121,7 @@ If you don't have ``pip`` installed, you can:
 
 
 Install From PyPi Repository
-----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``pip`` is the recommended installer for XOA Utils. The most common usage of ``pip`` is to install from the `Python Package Index <https://pypi.org/>`_ using `Requirement Specifiers <https://pip.pypa.io/en/stable/cli/pip_install/#requirement-specifiers>`_.
 
@@ -104,8 +132,8 @@ Install From PyPi Repository
 
 .. _install_core_global:
 
-Install to Global Namespace
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To Global Namespace
+"""""""""""""""""""""""""""
 
 .. tab:: Windows
     :new-set:
@@ -129,8 +157,8 @@ Install to Global Namespace
 
 .. _install_core_venv:
 
-Install to Virtual Environment
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To Virtual Environment
+""""""""""""""""""""""""""""""
 
 Install XOA Utils in a virtual environment, so it does not pollute your global namespace. 
 
@@ -177,7 +205,7 @@ Afterwards, your project folder will be:
 
 
 Upgrade From PyPi Repository
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To upgrade XOA Utils package from PyPI:
 
@@ -203,7 +231,7 @@ To upgrade XOA Utils package from PyPI:
 
 
 Install Manually From Source
-----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you don't have internet access, you can install XOA Utils manually from source, the steps are:
 
@@ -265,7 +293,7 @@ If you don't have internet access, you can install XOA Utils manually from sourc
 
 
 Generate SSH Key
-------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 XOA Utils requires an SSH key pair to run as a SSH service. To generate a SSH key pair, please open Command Prompt (Windows) or Terminal (macOS/Linux)
 
@@ -308,7 +336,7 @@ XOA Utils requires an SSH key pair to run as a SSH service. To generate a SSH ke
 
 
 Start XOA Utils SSH Server
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 After installing the package and ensuring the SSH key in place, you can start XOA Utils simply by typing ``xoa-utils``
 
@@ -319,7 +347,7 @@ After installing the package and ensuring the SSH key in place, you can start XO
         :caption: Start XOA Utils SSH service.
 
         > xoa-utils
-        (PID: 33906) XOA Utils SSH Service running on 0.0.0.0:22622.
+        (PID: 12345) XOA Utils SSH Service (1.1.0) running on 0.0.0.0:22622.
 
 
 .. tab:: macOS/Linux
@@ -328,45 +356,16 @@ After installing the package and ensuring the SSH key in place, you can start XO
         :caption: Start XOA Utils SSH service.
 
         $ xoa-utils
-        (PID: 33906) XOA Utils SSH Service running on 0.0.0.0:22622.
+        (PID: 12345) XOA Utils SSH Service (1.1.0) running on 0.0.0.0:22622.
 
 .. note::
 
     If you want to run xoa-utils SSH service on a different port, do ``xoa-utils <port number>``
 
 
-SSH to XOA Utils
-----------------
-
-After running the XOA Utils SSH Server, use another console to SSH to XOA Utils.
-
-.. tab:: Windows
-    :new-set:
-
-    .. code-block:: doscon
-        :caption: SSH to XOA Utils.
-
-        > ssh yourname@localhost -p 22622
-
-        Hello yourname, welcome to Xena OpenAutomation Utilities SSH Service.
-
-        xoa-utils > 
-
-
-.. tab:: macOS/Linux
-
-    .. code-block:: console
-        :caption: SSH to XOA Utils.
-
-        $ ssh yourname@localhost -p 22622
-
-        Hello yourname, welcome to Xena OpenAutomation Utilities SSH Service.
-
-        xoa-utils >  
-
 
 Uninstall and Remove Unused Dependencies
-----------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``pip uninstall xoa-utils`` can uninstall the package itself but not its dependencies. Leaving the package's dependencies in your environment can later create conflicting dependencies problem.
 
