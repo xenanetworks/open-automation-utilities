@@ -1,17 +1,33 @@
 Introduction
 ============
 
-XOA Utils runs as a SSH service and provides users with a clientless user interface to do interactive testing (e.g. ANLT testing) with no dependency on platforms. It provides a set of CLI commands to manage and configure test ports, collect statistics, and save logs.
+Xena OpenAutomation Utilities (:term:`XOA Utils`) is an application that provides users with a command-line user interface to do interactive testing (e.g. ANLT testing). It provides a set of CLI commands to manage and configure test ports, collect statistics, and save logs. XOA Utils uses `xoa-driver <https://pypi.org/project/xoa-driver/>`_ to communicate to Xena ANLT Testers.
+
+.. figure:: /_static/xoa_utils_sys.png
+    :scale: 100 %
+    :align: center
+
+    `XOA Utilities System`
 
 The CLI commands of XOA Utils are categorized into the following families:
 
-* Auto-Negotiation and Link Training
+* `Auto-Negotiation and Link Training`_
 
-* Test Resource Management
+  * `AN Functionalities`_
+
+  * `LT Functionalities`_
+
+* `Test Resource Management`_
 
 .. seealso::
 
-    :doc:`Cheat sheet of XOA Utils ANLT CLI commands </cli_ref/cheatsheets/index>`
+    You can view a list of XOA Utils CLI commands in :doc:`Summary of XOA Utils CLI commands </cli_ref/summary/index>`
+
+    .. figure:: /_static/cli_summary_preview.png
+        :scale: 60 %
+        :align: center
+
+        :doc:`XOA Util CLI Summary </cli_ref/summary/index>`
 
 
 Auto-Negotiation and Link Training
@@ -22,7 +38,7 @@ Auto-Negotiation and Link Training (:term:`ANLT`) provides functions to help you
 Auto-negotiation (:term:`AN`) was originally designed for Ethernet over twisted pair up to 1G. Beyond exchanging speed capabilities for the link participants, AN has evolved for today's Ethernet to include additional configuration information for establishing reliable and consistent connections. AN allows the devices at the end points of a link to negotiate common transmission parameters capabilities like speed and duplex mode, exchange extended page information and media signaling support. At higher speeds and signaling the choice of FEC may be relevant. It is during auto negotiation the end points of a link share their capabilities and choose the highest performance transmission mode they both support.
 
 .. figure:: /_static/autoneg_process.png
-    :scale: 70 %
+    :scale: 90 %
     :align: center
 
     `Auto-Negotiation Process <https://xenanetworks.com/whitepaper/autoneg-link-training/>`_
@@ -30,7 +46,7 @@ Auto-negotiation (:term:`AN`) was originally designed for Ethernet over twisted 
 Once the ports in the link have completed the requisite AN information exchange and reached agreement, the link partners move to the next step, link training (LT), the exchange of Training Sequences. This is essential to tune the channels for optimal transmission. During link training the two end points of the link will exchange signals.
 
 .. figure:: /_static/linktraining_process.png
-    :scale: 70 %
+    :scale: 100 %
     :align: center
 
     `Link Training Process <https://xenanetworks.com/whitepaper/autoneg-link-training/>`_

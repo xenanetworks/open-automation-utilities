@@ -215,6 +215,16 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
             log_pkt_ctrl = _dict_get(i, "entry", "pkt", "fields", "control")
             log_pkt_status = _dict_get(i, "entry", "pkt", "fields", "status")
             log_pkt_locked = _dict_get(i, "entry", "pkt", "fields", "locked")
+            log_mp = _dict_get(i, "entry", "pkt", "fields", "MP")
+            log_ack2 = _dict_get(i, "entry", "pkt", "fields", "Ack2")
+            log_t = _dict_get(i, "entry", "pkt", "fields", "T")
+            log_fmt_v = _dict_get(i, "entry", "pkt", "fields", "formatted message", "value")
+            log_fmt_msg = _dict_get(i, "entry", "pkt", "fields", "formatted message", "message")
+            log_ufmt_v = _dict_get(i, "entry", "pkt", "fields", "un-formatted message", "value")
+            log_ufmt_msg = _dict_get(i, "entry", "pkt", "fields", "un-formatted message", "message")
+            log_ufmt_fec = _dict_get(i, "entry", "pkt", "fields", "un-formatted message", "fec")
+            log_ufmt_ab = _dict_get(i, "entry", "pkt", "fields", "un-formatted message", "ability")
+
             if log_pkt_locked == "true":
                 log_pkt_locked = _ascii_styler(log_pkt_locked, [ASCIIStyle.GREEN_BG])
             else:
@@ -239,7 +249,14 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
                 b_str = f"{common:<32}{'MSG:':<5}{log_log}"
             elif log_type == "trace" and "direction" in log_entry and "LT" not in log_m:
                 if log_pstate == "new" or log_pstate == "":
-                    b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}\n{'':<37}FEC:{log_fec}, ABILITY:{log_ab}"
+                    if log_ptype == "base page":
+                        b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}\n{'':<37}FEC:{log_fec}, ABILITY:{log_ab}"
+                    else:
+                        print(i)
+                        if log_fmt_v:
+                            b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Formatted message:\n{'':<37}Value:{log_fmt_v}, Msg:{log_fmt_msg}"
+                        else:
+                            b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Un-formatted message:\n{'':<37}Value:{log_ufmt_v}, Msg:{log_ufmt_msg}\n{'':<37}FEC:{log_ufmt_fec}, ABILITY:{log_ufmt_ab}"
             elif log_type == "trace" and "direction" in log_entry and "LT" in log_m:
                 if log_pstate == "new" or log_pstate == "":
                     b_str = f"{common:<32}{(log_direction + ':'):<14}{log_pkt_value}, LOCKED={log_pkt_locked}, DONE={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"

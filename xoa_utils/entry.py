@@ -3,6 +3,11 @@ import asyncio
 import asyncclick
 import sys
 import os
+
+grandpa = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if grandpa not in sys.path:
+    sys.path.append(grandpa)
+
 from xoa_utils import __version__ as XOA_UTILS_VERSION
 from xoa_utils.clis import ReadConfig
 from xoa_utils.hub import Hub

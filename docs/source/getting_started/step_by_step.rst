@@ -23,6 +23,36 @@ The diagram below illustrates a basic flow of using XOA Utilities to do ANLT tes
     Commands in :xbluethick:`blue blocks` only configure the local state. You need to run ``anlt do`` to execute the configuration.
 
 
+
+SSH to XOA Utils
+----------------
+
+After running the XOA Utils SSH Server, use another console to SSH to XOA Utils.
+
+.. tab:: Windows
+    :new-set:
+
+    .. code-block:: doscon
+        :caption: SSH to XOA Utils.
+
+        > ssh yourname@localhost -p 22622
+
+        Hello yourname, welcome to Xena OpenAutomation Utilities SSH Service (1.1.0).
+
+        xoa-utils > 
+
+
+.. tab:: macOS/Linux
+
+    .. code-block:: console
+        :caption: SSH to XOA Utils.
+
+        $ ssh yourname@localhost -p 22622
+
+        Hello yourname, welcome to Xena OpenAutomation Utilities SSH Service (1.1.0).
+
+        xoa-utils >  
+
 Connect
 -------
 
@@ -65,7 +95,7 @@ Start ANLT logging by :doc:`../cli_ref/anlt/an_lt/anlt_log`.
     To **quit** the continuous display mode, press :kbd:`Control-z`.
 
 
-Use one terminal to view the ANLT protocol trace, and use another to execute ANLT commands, as shown in the sreenshot below.
+Use one terminal to view the ANLT protocol trace, and use another to execute ANLT commands, as shown in the screenshot below.
 
 .. figure:: ../_static/start_logging.png
     :width: 100 %
@@ -96,7 +126,7 @@ After disabling link recovery on the port, you can start configuring AN and LT u
 
     xoa-utils[123456][port0/0] > an config --off --no-loopback
 
-    xoa-utils[123456][port0/0] > lt config --on --preset0=standard --mode=interactive
+    xoa-utils[123456][port0/0] > lt config --on --preset0 standard --mode= nteractive
 
     xoa-utils[123456][port0/0] > lt im 0 nrz
 
@@ -152,9 +182,9 @@ If you run LT (interactive), you will need to manually control the LT parameters
 
     xoa-utils[123456][port0/0] > lt trained 0
 
-    xoa-utils[123456][port0/0] > lt txtagget 0
+    xoa-utils[123456][port0/0] > lt txtapget 0
 
-    xoa-utils[123456][port0/0] > lt txtagset 0 0 0 1 56 0
+    xoa-utils[123456][port0/0] > lt txtapset 0 0 0 1 56 0
 
 
 Check AN Status
