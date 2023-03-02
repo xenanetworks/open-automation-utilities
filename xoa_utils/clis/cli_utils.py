@@ -211,7 +211,7 @@ def format_lt_config(storage: CmdContext) -> str:
     #     algs[key] = enums.LinkTrainAlgorithm(val).name
 
     return f"""
-Port {storage.retrieve_port_str()}
+LT configuration to be on port {storage.retrieve_port_str()}
 [ SHADOW CONFIG ]
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
@@ -265,7 +265,7 @@ def format_an_config(storage: CmdContext) -> str:
     #     algs[key] = enums.LinkTrainAlgorithm(val).name
 
     return f"""
-Port {storage.retrieve_port_str()}
+AN configuration to be on port {storage.retrieve_port_str()}
 [ SHADOW CONFIG ]
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
