@@ -8,7 +8,7 @@ from xoa_utils.exceptions import (
     NotConnectedError,
     NoSuchIDError,
     NoWorkingPort,
-    NotCorrectLaneError,
+    NotCorrectSerdesError,
 )
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
 from xoa_driver.hlfuncs import anlt_ll_debug as debug_utils
@@ -42,7 +42,7 @@ class PortState:
     def __init__(self) -> None:
         self.ports: dict[str, GenericL23Port] = {}
         self.port_str: str = ""
-        self.port_lane_num: dict[str, int] = {}
+        self.port_serdes_num: dict[str, int] = {}
 
 
 class ANState:
@@ -69,7 +69,7 @@ class LoopFuncState:
 
 class AnltLowState:
     def __init__(self) -> None:
-        self.lane: int = -1
+        self.serdes: int = -1
         self.low: t.Optional[debug_utils.AnLtLowLevelInfo] = None
 
 
@@ -108,19 +108,19 @@ class CmdContext:
         port_str = f"[{p}]" if p else ""
         return f"{base_prompt}{serial}{port_str} {end_prompt} "
 
-    def store_anlt_low(self, lane: int, low: debug_utils.AnLtLowLevelInfo) -> None:
+    def store_anlt_low(self, serdes: int, low: debug_utils.AnLtLowLevelInfo) -> None:
         self._anlt_low_state.low = low
-        self._anlt_low_state.lane = lane
+        self._anlt_low_state.serdes = serdes
 
-    def store_lt_initial_mod(self, lane: int, encoding: str) -> None:
+    def store_lt_initial_mod(self, serdes: int, encoding: str) -> None:
         e = LinkTrainEncoding[
             {"pam4pre": "PAM4_WITH_PRECODING"}.get(encoding, encoding).upper()
         ]
-        self._lt_state.initial_mod[str(lane)] = e
+        self._lt_state.initial_mod[str(serdes)] = e
 
-    def store_lt_algorithm(self, lane: int, algorithm: str) -> None:
+    def store_lt_algorithm(self, serdes: int, algorithm: str) -> None:
         e = LinkTrainAlgorithm[algorithm.upper()]
-        self._lt_state.algorithm[str(lane)] = e
+        self._lt_state.algorithm[str(serdes)] = e
 
     def store_an_allow_loopback(self, do: bool) -> None:
         self._an_state.allow_loopback = do
@@ -161,8 +161,8 @@ class CmdContext:
     def retrieve_anlt_low(self) -> t.Optional[debug_utils.AnLtLowLevelInfo]:
         return self._anlt_low_state.low
 
-    def retrieve_anlt_lane(self) -> int:
-        return self._anlt_low_state.lane
+    def retrieve_anlt_serdes(self) -> int:
+        return self._anlt_low_state.serdes
 
     def retrieve_an_enable(self) -> bool:
         return self._an_state.do
@@ -173,18 +173,18 @@ class CmdContext:
     def retrieve_lt_initial_mod(self) -> dict[str, LinkTrainEncoding]:
         return self._lt_state.initial_mod
 
-    def retrieve_lt_initial_mod_lane(self, lane: int) -> LinkTrainEncoding:
-        if str(lane) not in self._lt_state.initial_mod:
-            raise NotInStoreError(str(lane))
-        return self._lt_state.initial_mod[str(lane)]
+    def retrieve_lt_initial_mod_serdes(self, serdes: int) -> LinkTrainEncoding:
+        if str(serdes) not in self._lt_state.initial_mod:
+            raise NotInStoreError(str(serdes))
+        return self._lt_state.initial_mod[str(serdes)]
 
     def retrieve_lt_algorithm(self) -> dict[str, LinkTrainAlgorithm]:
         return self._lt_state.algorithm
 
-    def retrieve_lt_algorithm_lane(self, lane: int) -> LinkTrainAlgorithm:
-        if str(lane) not in self._lt_state.algorithm:
-            raise NotInStoreError(str(lane))
-        return self._lt_state.algorithm[str(lane)]
+    def retrieve_lt_algorithm_serdes(self, serdes: int) -> LinkTrainAlgorithm:
+        if str(serdes) not in self._lt_state.algorithm:
+            raise NotInStoreError(str(serdes))
+        return self._lt_state.algorithm[str(serdes)]
 
     def retrieve_lt_interactive(self) -> bool:
         return self._lt_state.interactive
@@ -214,10 +214,10 @@ class CmdContext:
         return self._pt_state.port_str
 
     def store_port(
-        self, exact_port_id: str, port_obj: GenericL23Port, port_lane_num: int
+        self, exact_port_id: str, port_obj: GenericL23Port, port_serdes_num: int
     ) -> None:
         self._pt_state.ports[exact_port_id] = port_obj
-        self._pt_state.port_lane_num[exact_port_id] = port_lane_num
+        self._pt_state.port_serdes_num[exact_port_id] = port_serdes_num
 
     def retrieve_port(self, exact_port_id: str = "current") -> GenericL23Port:
         if self.retrieve_tester() is None:
@@ -230,12 +230,12 @@ class CmdContext:
             return self._pt_state.ports[exact_port_id]
         raise NotInStoreError(exact_port_id)
 
-    def validate_current_lane(self, lane: int) -> None:
+    def validate_current_serdes(self, serdes: int) -> None:
         current_port_id = self._pt_state.port_str
-        if current_port_id not in self._pt_state.port_lane_num:
+        if current_port_id not in self._pt_state.port_serdes_num:
             raise NotInStoreError(current_port_id)
-        if not lane in range(self._pt_state.port_lane_num[self._pt_state.port_str]):
-            raise NotCorrectLaneError(current_port_id, lane)
+        if not serdes in range(self._pt_state.port_serdes_num[self._pt_state.port_str]):
+            raise NotCorrectSerdesError(current_port_id, serdes)
 
     def remove_port(self, exact_port_id: str) -> None:
         if exact_port_id in self._pt_state.ports:
