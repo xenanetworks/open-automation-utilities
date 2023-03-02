@@ -130,22 +130,22 @@ async def do(context: ac.Context) -> str:
     help=h.HELP_ANLT_LOG_KEEP,
     default="all",
 )
-@ac.option("-l", "--lane", type=ac.STRING, help=h.HELP_ANLT_LOG_LANE, default="")
+@ac.option("-s", "--serdes", type=ac.STRING, help=h.HELP_ANLT_LOG_SERDES, default="")
 @ac.pass_context
-async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
+async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> str:
     """
     Start AN/LT logging.
     """
 
-    def _filter_log(log: str, keep: str, lane: list[int]) -> list[dict]:
+    def _filter_log(log: str, keep: str, serdes: list[int]) -> list[dict]:
         all_logs = []
         for lg in log.split("\n"):
             try:
                 content = json.loads(lg)
-                log_lane = content["lane"]
+                log_serdes = content["lane"]
                 module = content["module"]
 
-                lane_in = (lane and log_lane in lane) or (not lane)
+                serdes_in = (serdes and log_serdes in serdes) or (not serdes)
                 keep_in = any(
                     (
                         keep == "an" and "AN" in module,
@@ -153,7 +153,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
                         keep == "all",
                     )
                 )
-                if lane_in and keep_in:
+                if serdes_in and keep_in:
                     all_logs.append(content)
 
             except Exception:
@@ -189,7 +189,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
             log_type = _dict_get(i, "type")
             log_m = _dict_get(i, "module")
             log_log = _dict_get(i, "entry", "log")
-            log_lane = _dict_get(i, "lane")
+            log_serdes = _dict_get(i, "lane")
             log_m = _dict_get(i, "module")
             log_m = _dict_get(i, "module")
             log_event = _dict_get(i, "entry", "fsm", "event")
@@ -238,8 +238,8 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
 
             log_pkt_value = _dict_get(i, "entry", "pkt", "value")
 
-            lane_str = f"(L{log_lane})," if "LT" in log_m else ","
-            common = f"{log_time/1000000}, {log_m}{lane_str}"
+            serdes_str = f"(S{log_serdes})," if "LT" in log_m else ","
+            common = f"{log_time/1000000}, {log_m}{serdes_str}"
 
             if log_type == "debug":
                 b_str = f"{common:<32}{'DBG:':<5}{log_log}"
@@ -266,19 +266,19 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, lane: str) -> str:
         return "\n".join(real)
 
     async def log(
-        storage: CmdContext, filename: str, keep: str, lane: list[int]
+        storage: CmdContext, filename: str, keep: str, serdes: list[int]
     ) -> str:
         port_obj = storage.retrieve_port()
         log_str = await anlt_utils.anlt_log(port_obj)
-        filtered = _filter_log(log_str, keep, lane)
+        filtered = _filter_log(log_str, keep, serdes)
         string = _beautify(filtered)
         if filename and log_str:
             with open(filename, "a") as f:
                 f.write(f"{log_str}\n")
         return string
 
-    real_lane_list = [int(i.strip()) for i in lane.split(",")] if lane else []
-    kw = {"filename": filename, "keep": keep, "lane": real_lane_list}
+    real_serdes_list = [int(i.strip()) for i in serdes.split(",")] if serdes else []
+    kw = {"filename": filename, "keep": keep, "serdes": real_serdes_list}
     storage: CmdContext = ctx.obj
     storage.set_loop_coro(log, kw)
     return ""

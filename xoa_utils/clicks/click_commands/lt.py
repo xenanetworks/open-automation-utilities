@@ -68,44 +68,44 @@ async def lt_config(context: ac.Context, mode: str, on: bool, preset0: str) -> s
 # sub-command: lt im
 # **************************
 @lt.command(cls=cb.XenaCommand, name="im")
-@ac.argument("lane", type=ac.INT)
+@ac.argument("serdes", type=ac.INT)
 @ac.argument("encoding", type=ac.Choice(["nrz", "pam4", "pam4pre"]))
 @ac.pass_context
-async def lt_im(context: ac.Context, lane: int, encoding: str) -> str:
+async def lt_im(context: ac.Context, serdes: int, encoding: str) -> str:
     """
-    Set initial modulation for the specified lane.
+    Set initial modulation for the specified serdes.
 
-        <LANE>: Specifies the transceiver lane (serdes) index.
+        <SERDES>: Specifies the transceiver serdes index.
 
         <ENCODING>: Specifies the initial modulation. Allowed values: nrz | pam4 | pam4pre
     """
     storage: CmdContext = context.obj
     storage.retrieve_port()
-    storage.validate_current_lane(lane)
-    storage.store_lt_initial_mod(lane, encoding)
-    return format_lt_im(storage, lane)
+    storage.validate_current_serdes(serdes)
+    storage.store_lt_initial_mod(serdes, encoding)
+    return format_lt_im(storage, serdes)
 
 
 # **************************
 # sub-command: lt alg
 # **************************
 @lt.command(cls=cb.XenaCommand, name="alg")
-@ac.argument("lane", type=ac.INT)
+@ac.argument("serdes", type=ac.INT)
 @ac.argument("algorithm", type=ac.Choice(["alg0", "algn1"]))
 @ac.pass_context
-async def lt_algorithm(context: ac.Context, lane: int, algorithm: str) -> str:
+async def lt_algorithm(context: ac.Context, serdes: int, algorithm: str) -> str:
     """
-    Set the link training algorithm for the specified lane.
+    Set the link training algorithm for the specified serdes.
 
-        <LANE>: Specifies the transceiver lane (serdes) index.
+        <SERDES>: Specifies the transceiver serdes index.
 
         <ALGORITHM>: Specifies the algorithm. Allowed values: alg0 | algn1
     """
     storage: CmdContext = context.obj
     storage.retrieve_port()
-    storage.validate_current_lane(lane)
-    storage.store_lt_algorithm(lane, algorithm)
-    return format_lt_algorithm(storage, lane)
+    storage.validate_current_serdes(serdes)
+    storage.store_lt_algorithm(serdes, algorithm)
+    return format_lt_algorithm(storage, serdes)
 
 
 # **************************
@@ -115,141 +115,141 @@ async def lt_algorithm(context: ac.Context, lane: int, algorithm: str) -> str:
 # sub-command: lt inc
 # **************************
 @lt.command(cls=cb.XenaCommand, name="inc")
-@ac.argument("lane", type=ac.INT)
+@ac.argument("serdes", type=ac.INT)
 @ac.argument("emphasis", type=ac.Choice(["pre3", "pre2", "pre", "main", "post"]))
 @ac.pass_context
-async def lt_inc(context: ac.Context, lane: int, emphasis: str) -> str:
+async def lt_inc(context: ac.Context, serdes: int, emphasis: str) -> str:
     """
-    Request the remote port's lane to increase (+) an emphasis by 1.
+    Request the remote port's serdes to increase (+) an emphasis by 1.
 
-        <LANE>: Specifies the transceiver lane (serdes) index.
+        <SERDES>: Specifies the transceiver serdes index.
 
         <EMPHASIS>: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    storage.validate_current_lane(lane)
+    storage.validate_current_serdes(serdes)
     resp = await anlt_utils.lt_coeff_inc(
-        port_obj, lane, enums.LinkTrainCoeffs[emphasis.upper()]
+        port_obj, serdes, enums.LinkTrainCoeffs[emphasis.upper()]
     )
-    return format_lt_inc_dec(storage, lane, emphasis, True, resp.name)
+    return format_lt_inc_dec(storage, serdes, emphasis, True, resp.name)
 
 
 # **************************
 # sub-command: lt dec
 # **************************
 @lt.command(cls=cb.XenaCommand, name="dec")
-@ac.argument("lane", type=ac.INT)
+@ac.argument("serdes", type=ac.INT)
 @ac.argument("emphasis", type=ac.Choice(["pre3", "pre2", "pre", "main", "post"]))
 @ac.pass_context
-async def lt_dec(context: ac.Context, lane: int, emphasis: str) -> str:
+async def lt_dec(context: ac.Context, serdes: int, emphasis: str) -> str:
     """
-    Request the remote port's lane to decrease (-) an emphasis by 1.
+    Request the remote port's serdes to decrease (-) an emphasis by 1.
 
-        <LANE>: The lane (serdes) index.
+        <SERDES>: The serdes index.
 
         <EMPHASIS>: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    storage.validate_current_lane(lane)
+    storage.validate_current_serdes(serdes)
     resp = await anlt_utils.lt_coeff_dec(
-        port_obj, lane, enums.LinkTrainCoeffs[emphasis.upper()]
+        port_obj, serdes, enums.LinkTrainCoeffs[emphasis.upper()]
     )
-    return format_lt_inc_dec(storage, lane, emphasis, False, resp.name)
+    return format_lt_inc_dec(storage, serdes, emphasis, False, resp.name)
 
 
 # **************************
 # sub-command: lt encoding
 # **************************
 @lt.command(cls=cb.XenaCommand, name="encoding")
-@ac.argument("lane", type=ac.INT)
+@ac.argument("serdes", type=ac.INT)
 @ac.argument("encoding", type=ac.Choice(["nrz", "pam4", "pam4pre"]))
 @ac.pass_context
-async def lt_encoding(context: ac.Context, lane: int, encoding: str) -> str:
+async def lt_encoding(context: ac.Context, serdes: int, encoding: str) -> str:
     """
-    Request the remote port's lane to use the specified encoding.
+    Request the remote port's serdes to use the specified encoding.
 
-        <LANE>: The lane (serdes) index.
+        <SERDES>: The serdes index.
 
         <ENCODING>: Specifies the encoding. Allowed values: nrz | pam4 | pam4pre
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    storage.validate_current_lane(lane)
+    storage.validate_current_serdes(serdes)
     e = enums.LinkTrainEncoding[
         {"pam4pre": "PAM4_WITH_PRECODING"}.get(encoding, encoding).upper()
     ]
-    resp = await anlt_utils.lt_encoding(port_obj, lane, e)
-    return format_lt_encoding(storage, lane, encoding, resp.name)
+    resp = await anlt_utils.lt_encoding(port_obj, serdes, e)
+    return format_lt_encoding(storage, serdes, encoding, resp.name)
 
 
 # **************************
 # sub-command: lt preset
 # **************************
 @lt.command(cls=cb.XenaCommand, name="preset")
-@ac.argument("lane", type=ac.INT)
+@ac.argument("serdes", type=ac.INT)
 @ac.argument("preset", type=ac.IntRange(1, 5))
 @ac.pass_context
-async def lt_preset(context: ac.Context, lane: int, preset: int) -> str:
+async def lt_preset(context: ac.Context, serdes: int, preset: int) -> str:
     """
-    Request the remote port's lane to use the preset.
+    Request the remote port's serdes to use the preset.
 
-        <LANE>: The lane (serdes) index.
+        <SERDES>: The serdes index.
 
         <PRESET>: Specifies the preset index. Allowed values: 1 | 2 | 3 | 4 | 5
     """
     preset = max(preset - 1, 0)
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    storage.validate_current_lane(lane)
-    resp = await anlt_utils.lt_preset(port_obj, lane, enums.LinkTrainPresets(preset))
-    return format_lt_preset(storage, lane, preset, resp.name)
+    storage.validate_current_serdes(serdes)
+    resp = await anlt_utils.lt_preset(port_obj, serdes, enums.LinkTrainPresets(preset))
+    return format_lt_preset(storage, serdes, preset, resp.name)
 
 
 # **************************
 # sub-command: lt trained
 # **************************
 @lt.command(cls=cb.XenaCommand, name="trained")
-@ac.argument("lane", type=ac.INT)
+@ac.argument("serdes", type=ac.INT)
 @ac.pass_context
-async def lt_trained(context: ac.Context, lane: int) -> str:
+async def lt_trained(context: ac.Context, serdes: int) -> str:
     """
-    Announce the lane is trained to the remote port.
+    Announce the serdes is trained to the remote port.
 
-        <LANE>: The lane (serdes) index.
+        <SERDES>: The serdes index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    storage.validate_current_lane(lane)
-    resp = await anlt_utils.lt_trained(port_obj, lane)
-    return format_lt_trained(storage, lane, resp.name)
+    storage.validate_current_serdes(serdes)
+    resp = await anlt_utils.lt_trained(port_obj, serdes)
+    return format_lt_trained(storage, serdes, resp.name)
 
 
 # **************************
 # sub-command: txtapget
 # **************************
 @lt.command(cls=cb.XenaCommand, name="txtapget")
-@ac.argument("lane", type=ac.INT)
+@ac.argument("serdes", type=ac.INT)
 @ac.pass_context
-async def lt_txtapget(context: ac.Context, lane: int) -> str:
+async def lt_txtapget(context: ac.Context, serdes: int) -> str:
     """
-    Read the tap values of the specified lane of the working port.
+    Read the tap values of the specified serdes of the working port.
 
-        <LANE>: The lane (serdes) index.
+        <SERDES>: The serdes index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    storage.validate_current_lane(lane)
-    dic = await anlt_utils.txtap_get(port_obj, lane)
-    return format_txtap_get(lane, dic)
+    storage.validate_current_serdes(serdes)
+    dic = await anlt_utils.txtap_get(port_obj, serdes)
+    return format_txtap_get(serdes, dic)
 
 
 # **************************
 # sub-command: txtapset
 # **************************
 @lt.command(cls=cb.XenaCommand, name="txtapset")
-@ac.argument("lane", type=ac.INT)
+@ac.argument("serdes", type=ac.INT)
 @ac.argument("pre3", type=ac.INT)
 @ac.argument("pre2", type=ac.INT)
 @ac.argument("pre", type=ac.INT)
@@ -258,7 +258,7 @@ async def lt_txtapget(context: ac.Context, lane: int) -> str:
 @ac.pass_context
 async def txtapset(
     context: ac.Context,
-    lane: int,
+    serdes: int,
     pre3: int,
     pre2: int,
     pre: int,
@@ -266,9 +266,9 @@ async def txtapset(
     post: int,
 ) -> str:
     """
-    Write the tap values of the specified lane of the working port.
+    Write the tap values of the specified serdes of the working port.
 
-        <LANE>: The lane (serdes) index.
+        <SERDES>: The serdes index.
 
         <PRE3>: Specifies c(-3) value of the tap.
 
@@ -282,25 +282,25 @@ async def txtapset(
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    storage.validate_current_lane(lane)
-    await anlt_utils.txtap_set(port_obj, lane, pre3, pre2, pre, main, post)
-    return format_txtap_set(lane, pre3, pre2, pre, main, post)
+    storage.validate_current_serdes(serdes)
+    await anlt_utils.txtap_set(port_obj, serdes, pre3, pre2, pre, main, post)
+    return format_txtap_set(serdes, pre3, pre2, pre, main, post)
 
 
 # **************************
 # sub-command: lt status
 # **************************
 @lt.command(cls=cb.XenaCommand, name="status")
-@ac.argument("lane", type=ac.INT)
+@ac.argument("serdes", type=ac.INT)
 @ac.pass_context
-async def lt_status(context: ac.Context, lane: int) -> str:
+async def lt_status(context: ac.Context, serdes: int) -> str:
     """
-    Show the link training status of the lane.
+    Show the link training status of the serdes.
 
-        <LANE>: The lane (serdes) index.
+        <SERDES>: The serdes index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
-    storage.validate_current_lane(lane)
-    dic = await anlt_utils.lt_status(port_obj, lane)
+    storage.validate_current_serdes(serdes)
+    dic = await anlt_utils.lt_status(port_obj, serdes)
     return format_lt_status(dic)
