@@ -311,7 +311,7 @@ def format_lt_trained(storage: CmdContext, serdes: int, response: str) -> str:
 
 def format_txtap_get(serdes: int, dic: dict) -> str:
     return f"""
-Local Coefficient Serdes({serdes})   :           c(-3)       c(-2)       c(-1)        c(0)        c(1)
+Local Coefficient Serdes({serdes}) :           c(-3)       c(-2)       c(-1)        c(0)        c(1)
     Current level           :              {dic['c(-3)']}           {dic['c(-2)']}           {dic['c(-1)']}           {dic['c(0)']}           {dic['c(1)']}
 """
 
