@@ -30,16 +30,19 @@ Examples
 
     xoa-utils[123456][port0/0] > anlt status
     
-    Port 0/2
-        [ACTUAL STATUS]
+    [ ACTUAL CONFIG ]
+        Link recovery         : off
+        Serdes count          : 1
+
         Auto-negotiation      : on (allow loopback: yes)
         Link training         : on (auto) (preset0: standard tap values) (timeout: default)
-        Link recovery         : off
-        Lane (serdes) count   : 1
+            Initial Mod.      : {'0': 'NRZ'}
+    
 
-        [SHADOW STATUS]
-        Auto-negotiation      : off (allow loopback: no)
+    [ SHADOW CONFIG ]
+        Auto-negotiation      : on (allow loopback: no)
         Link training         : off (auto) (preset0: standard tap values)
+            Initial Mod.      : {}
     
     xoa-utils[123456][port0/2] >
 

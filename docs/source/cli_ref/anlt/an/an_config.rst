@@ -46,10 +46,11 @@ Examples
 
     xoa-utils[123456][port0/2] > an config --on --loopback
     
-    Port 0/2
-        [SHADOW STATUS]
+    AN configuration to be on port 2/0
+    [ SHADOW CONFIG ]
         Auto-negotiation      : on (allow loopback: yes)
-        Link training         : on (interactive) (preset0: existing tap values)
+        Link training         : off (auto) (preset0: standard tap values)
+            Initial Mod.      : {}
 
     xoa-utils[123456][port0/2] >
 

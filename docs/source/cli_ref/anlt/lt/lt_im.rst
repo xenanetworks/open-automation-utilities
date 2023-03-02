@@ -8,7 +8,7 @@ lt im
 Description
 -----------
 
-Set initial modulation for the specified lane.
+Set initial modulation for the specified serdes.
 
 
 
@@ -25,7 +25,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-Specifies the transceiver lane index.
+Specifies the transceiver serdes index.
 
 
 ``<ENCODING>`` (text)
@@ -52,7 +52,12 @@ Examples
 .. code-block:: text
 
     xoa-utils[123456][port0/2] > lt im 0 nrz
-    Port 0/2: initial modulation NRZ on Lane 0
+    
+    Initial modulation to be NRZ on Serdes 0
+    [ SHADOW CONFIG ]
+        Auto-negotiation      : off (allow loopback: no)
+        Link training         : on (interactive) (preset0: standard tap values)
+            Initial Mod.      : {'0': 'NRZ'}
 
     xoa-utils[123456][port0/2] >
 

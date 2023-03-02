@@ -99,11 +99,11 @@ LT Functionalities
 1. Enable/disable link training
 2. Allow/deny link training loopback
 3. Enable/disable link training timeout
-4. Tuning link partner TX EQ coefficient, use presets as a starting point to tune link partner TX EQ coefficients per lane, increment and decrement of coefficients c(-3), c(-2), c(-1), c(0), c(1).
+4. Tuning link partner TX EQ coefficient, use presets as a starting point to tune link partner TX EQ coefficients per serdes, increment and decrement of coefficients c(-3), c(-2), c(-1), c(0), c(1).
 5. Configure local TX EQ coefficients
 6. Monitor local TX EQ coefficients
-7. Link training trace log per lane
-8. Link training status per lane, provides the following LT status:
+7. Link training trace log per serdes
+8. Link training status per serdes, provides the following LT status:
 
    * Number of lost locks
    * Local value of coefficient (per coefficient)

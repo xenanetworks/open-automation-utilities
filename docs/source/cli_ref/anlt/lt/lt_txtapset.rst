@@ -4,7 +4,7 @@ lt txtapset
 Description
 -----------
 
-Write the tap values of the specified lane of the local port.
+Write the tap values of the specified serdes of the local port.
 
 
 
@@ -21,7 +21,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-Specifies the lane index.
+Specifies the serdes index.
 
 ``<PRE3>`` (integer)
 
@@ -56,7 +56,7 @@ Examples
 
     xoa-utils[123456][port0/2] > lt txtapset 5 1 6 5 80 0
     
-    Local Coefficient Lane(5)   :           c(-3)       c(-2)       c(-1)       c(0)        c(1)
+    Local Coefficient Serdes(5) :           c(-3)       c(-2)       c(-1)       c(0)        c(1)
         Current level           :              1           6           5          80           0
 
     xoa-utils[123456][port0/2] >

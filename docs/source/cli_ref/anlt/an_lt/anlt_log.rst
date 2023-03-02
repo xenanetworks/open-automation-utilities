@@ -18,7 +18,7 @@ Synopsis
     anlt log
     [-f, --filename <value: text>]
     [-k, --keep <value: text>]
-    [-l, --lane <value>]
+    [-s, --serdes <value>]
 
 
 Arguments
@@ -46,7 +46,7 @@ Allowed values:
 * `lt`, to keep lt only.
 
 
-``-l, --lane`` (int list)
+``-s, --serdes`` (int list)
     
 Specifies which lanes of LT logs to keep. If you don't know how many serdes lanes the port has, use :doc:`../an_lt/anlt_log`, default to all lanes.
 
@@ -56,7 +56,7 @@ Examples
 
 .. code-block:: text
     
-    xoa-utils[123456][port0/2] > anlt log --filename mylog.log --keep lt --lane 0
+    xoa-utils[123456][port0/2] > anlt log --filename mylog.log --keep lt --serdes 0
 
 .. figure:: ../../../_static/anlt_log.png
     :width: 100 %

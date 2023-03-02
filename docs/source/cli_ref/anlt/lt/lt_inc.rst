@@ -21,7 +21,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-Specifies the transceiver lane index.
+Specifies the transceiver serdes index.
 
 
 ``<EMPHASIS>`` (text)
@@ -52,7 +52,7 @@ Examples
 .. code-block:: text
 
     xoa-utils[123456][port0/2] > lt inc 0 main
-    Port 0/0: increase c(0) by 1 on Lane 0 (COEFF_STS_UPDATED)
+    Port 0/0: increase c(0) by 1 on Serdes 0 (COEFF_STS_UPDATED)
 
     xoa-utils[123456][port0/2] >
 

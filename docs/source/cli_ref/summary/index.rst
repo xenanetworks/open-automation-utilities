@@ -70,22 +70,19 @@ Summary
       - Configure LT of the local port
       - ``lt config --on --mode auto --preset0 standard``
     * - :doc:`../anlt/lt/lt_im`
-      - Set initial modulation for the specified lane of the local port
+      - Set initial modulation for the specified serdes of the local port
       - ``lt im 0 nrz``
-    * - :doc:`../anlt/lt/lt_alg`
-      - Set link training algorithm for the specified lane of the local port
-      - ``lt alg 0 alg0``
     * - :doc:`../anlt/lt/lt_trained`
-      - Announce that the specified lane is trained
+      - Announce that the specified serdes is trained
       - ``lt trained 0``
     * - :doc:`../anlt/lt/lt_status`
-      - Show the link training status of the specified lane of the local port
+      - Show the link training status of the specified serdes of the local port
       - ``lt status 0``
     * - :doc:`../anlt/lt/lt_txtapget`
-      - Read the tap values of the specified lane of the local port
+      - Read the tap values of the specified serdes of the local port
       - ``lt txtapget 0``
     * - :doc:`../anlt/lt/lt_txtapset`
-      - Write the tap values of the specified lane of the local port
+      - Write the tap values of the specified serdes of the local port
       - ``lt txtapset 0 1 3 4 60 1``
     * - :doc:`../anlt/lt/lt_inc`
       - Request **remote port** to increase (+) its emphasis value by 1
@@ -94,8 +91,8 @@ Summary
       - Request **remote port** to decrease (-) its emphasis value by 1
       - ``lt dec 0 main``
     * - :doc:`../anlt/lt/lt_encoding`
-      - Request **remote port** to use the specified encoding on the specified lane
+      - Request **remote port** to use the specified encoding on the specified serdes
       - ``lt encoding 0 pam4``
     * - :doc:`../anlt/lt/lt_preset`
-      - Request **remote port** to use the preset of the specified lane
+      - Request **remote port** to use the preset of the specified serdes
       - ``lt preset 0 2``
