@@ -4,7 +4,7 @@ lt encoding
 Description
 -----------
 
-Request the remote link training partner to use the specified encoding on the specified lane.
+Request the remote link training partner to use the specified encoding on the specified serdes.
 
 
 
@@ -21,7 +21,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-Specifies the transceiver lane index.
+Specifies the transceiver serdes index.
 
 
 ``<ENCODING>`` (text)
@@ -48,7 +48,7 @@ Examples
 .. code-block:: text
 
     xoa-utils[123456][port0/2] > lt encoding 0 pam4
-    Port 0/0: use PAM4 on Lane 0 (SUCCESS)
+    Port 0/0: use PAM4 on Serdes 0 (SUCCESS)
 
     xoa-utils[123456][port0/2] >
 

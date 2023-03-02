@@ -126,14 +126,14 @@ After disabling link recovery on the port, you can start configuring AN and LT u
 
     xoa-utils[123456][port0/0] > an config --off --no-loopback
 
-    xoa-utils[123456][port0/0] > lt config --on --preset0 standard --mode= nteractive
+    xoa-utils[123456][port0/0] > lt config --on --preset0 standard --mode interactive
 
     xoa-utils[123456][port0/0] > lt im 0 nrz
 
 
 .. note::
 
-    The initial modulation of each lane on a port is by default PAM2 (NRZ). If you want to change them, you can use :doc:`../cli_ref/anlt/lt/lt_im`, otherwise do nothing.
+    The initial modulation of each serdes on a port is by default PAM2 (NRZ). If you want to change them, you can use :doc:`../cli_ref/anlt/lt/lt_im`, otherwise do nothing.
 
 
 .. important::
@@ -196,17 +196,18 @@ Check AN statistics by :doc:`../cli_ref/anlt/an/an_status`.
 
     xoa-utils[123456][port0/0] > an status
     
-    Loopback              : allowed
-    Duration              : 2,068,747 µs
-    Successful runs       : 1
-    Timeouts              : 0
-    Loss of sync          : 0
-    FEC negotiation fails : 0
-    HCD negotiation fails : 0
-                                RX    TX
-    Link codewords        :      2     1
-    Next-page messages    :      0     0
-    Unformatted pages     :      0     0
+    [ AN STATUS ]
+        Loopback              : allowed
+        Duration              : 2,068,747 µs
+        Successful runs       : 1
+        Timeouts              : 0
+        Loss of sync          : 0
+        FEC negotiation fails : 0
+        HCD negotiation fails : 0
+                                    RX    TX
+        Link codewords        :      2     1
+        Next-page messages    :      0     0
+        Unformatted pages     :      0     0
 
 Check LT Status
 ---------------
@@ -217,37 +218,38 @@ Check LT statistics by :doc:`../cli_ref/anlt/lt/lt_status`.
 
     xoa-utils[123456][port0/0] > lt status 0
     
-    Is enabled        : true
-    Is trained        : true
-    Failure           : no_failure
+    [ LT STATUS ]
+        Is enabled        : true
+        Is trained        : true
+        Failure           : no_failure
 
-    Initial mod.      : nrz
-    Preset0           : standard tap values
-    Total bits        : 2,201,372,480
-    Total err. bits   : 24
-    BER               : 1.09e-08
+        Initial mod.      : nrz
+        Preset0           : standard tap values
+        Total bits        : 2,201,372,480
+        Total err. bits   : 24
+        BER               : 1.09e-08
 
-    Duration          : 2,000,250 µs
+        Duration          : 2,000,250 µs
 
-    Lock lost         : 2
-    Frame lock        : locked
-    Remote frame lock : locked
+        Lock lost         : 2
+        Frame lock        : locked
+        Remote frame lock : locked
 
-    Frame errors      : 1
-    Overrun errors    : 1
+        Frame errors      : 1
+        Overrun errors    : 1
 
-    Last IC received  : Preset 3
-    Last IC sent      : Preset 3
+        Last IC received  : Preset 3
+        Last IC sent      : Preset 3
 
-    TX Coefficient              :           c(-3)       c(-2)       c(-1)        c(0)        c(1)
-        Current level           :               0           0           1          44           0
-                                :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
-        + req                   :          0   0       0   0       2   2       1   1       0   0
-        - req                   :          0   0       0   0       2   2       0   0       0   0
-        coeff/eq limit reached  :          0   0       0   0       0   0       0   0       0   0
-        eq limit reached        :          0   0       0   0       0   0       0   0       0   0
-        coeff not supported     :          0   0       0   0       0   0       0   0       0   0
-        coeff at limit          :          0   0       0   0       0   0       0   0       0   0
+        TX Coefficient              :          c(-3)       c(-2)       c(-1)        c(0)        c(1)
+            Current level           :              0           0           1          44           0
+                                    :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
+            + req                   :          0   0       0   0       2   2       1   1       0   0
+            - req                   :          0   0       0   0       2   2       0   0       0   0
+            coeff/eq limit reached  :          0   0       0   0       0   0       0   0       0   0
+            eq limit reached        :          0   0       0   0       0   0       0   0       0   0
+            coeff not supported     :          0   0       0   0       0   0       0   0       0   0
+            coeff at limit          :          0   0       0   0       0   0       0   0       0   0
 
 
 Start Over

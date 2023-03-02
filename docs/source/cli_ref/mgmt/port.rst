@@ -47,18 +47,18 @@ Examples
 
     xoa-utils[123456] > port 0/0
     Port      Sync      Owner     
-    *0/0      IN_SYNC   You       
+    *2/0      IN_SYNC   You       
 
-    Port 0/0
-    =ACTUAL STATUS=
-    Auto-negotiation      : on
-    Link training         : start_after_autoneg
-    Link training timeout : default
-    Link recovery         : off
-    Lane (serdes) count   : 4
+    [ ACTUAL CONFIG ]
+        Link recovery         : off
+        Serdes count          : 1
 
-    =SHADOW STATUS=
-    Auto-negotiation      : off
-    Allow loopback        : no
-    Link training         : off (auto)
-    Preset0               : standard tap values
+        Auto-negotiation      : off (allow loopback: yes)
+        Link training         : on (interactive) (preset0: standard tap values) (timeout: disabled)
+            Initial Mod.      : {'0': 'NRZ'}
+        
+
+    [ SHADOW CONFIG ]
+        Auto-negotiation      : off (allow loopback: no)
+        Link training         : on (interactive) (preset0: standard tap values)
+            Initial Mod.      : {'0': 'NRZ'}
