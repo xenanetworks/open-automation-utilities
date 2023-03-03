@@ -2,7 +2,6 @@ from __future__ import annotations
 import typing as t
 from xoa_driver.testers import L23Tester
 from xoa_driver.ports import GenericL23Port
-from xoa_driver.modules import GenericAnyModule
 from xoa_utils.exceptions import (
     NotInStoreError,
     NotConnectedError,
@@ -234,7 +233,7 @@ class CmdContext:
         current_port_id = self._pt_state.port_str
         if current_port_id not in self._pt_state.port_lane_num:
             raise NotInStoreError(current_port_id)
-        if not lane in range(self._pt_state.port_lane_num[self._pt_state.port_str]):
+        if lane not in range(self._pt_state.port_lane_num[self._pt_state.port_str]):
             raise NotCorrectLaneError(current_port_id, lane)
 
     def remove_port(self, exact_port_id: str) -> None:
@@ -252,10 +251,9 @@ class CmdContext:
     def obtain_physical_ports(
         self, id_str: str = "*", update: bool = True
     ) -> dict[str, GenericL23Port]:
-        if self.retrieve_tester() is None:
-            raise NotConnectedError()
-
         tester = self.retrieve_tester()
+        if tester is None:
+            raise NotConnectedError()
         p_dics = {}
         if id_str == "*":
             m_id = p_id = -1
