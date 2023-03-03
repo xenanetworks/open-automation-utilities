@@ -7,8 +7,9 @@ if t.TYPE_CHECKING:
 
 
 class XenaGroup(ac.Group):
-    def __init__(self, *args: t.Any, **attrs: t.Any) -> None:
-        attrs["help_option_names"] = ["-h", "--help"]
+    def __init__(self, *args: t.Any, **attrs: dict) -> None:
+        attrs.setdefault("context_settings", {})
+        attrs["context_settings"].update({"help_option_names": ["-h", "--help"]})
         super().__init__(*args, **attrs)
 
     def get_help(self, ctx: ac.Context) -> str:
@@ -20,8 +21,9 @@ class XenaGroup(ac.Group):
 
 
 class XenaCommand(ac.Command):
-    def __init__(self, *args: t.Any, **attrs: t.Any) -> None:
-        attrs["help_option_names"] = ["-h", "--help"]
+    def __init__(self, *args: t.Any, **attrs: dict) -> None:
+        attrs.setdefault("context_settings", {})
+        attrs["context_settings"].update({"help_option_names": ["-h", "--help"]})
         super().__init__(*args, **attrs)
 
     def get_help(self, ctx: ac.Context) -> str:
