@@ -43,11 +43,11 @@ default to --on."
 HELP_AN_CONFIG_LOOPBACK = "Should loopback be allowed in auto-negotiation, \
 default to --no-loopback."
 
-HELP_LT_CONFIG_MODE = "The mode for link training on the working port, default to interactive."
+HELP_LT_CONFIG_MODE = "The mode for link training on the working port, default to --mode auto."
 
 HELP_LT_CONFIG_ON = "Enable or disable link training on the working port, default to --on."
 
-HELP_LT_CONFIG_PRESET0 = "Should the Out-of-Sync use standard values (--preset0) or existing tap values (--no-preset0), default to --preset0."
+HELP_LT_CONFIG_PRESET0 = "Should the Out-of-Sync use standard values (--preset0 standard) or existing tap values (--preset0 existing), default to --preset0 standard."
 
 HELP_ANLT_LOG_FILENAME = "Filename of the log."
 
@@ -57,5 +57,5 @@ all: keep both AN and LT\
 an:  keep AN only\
 lt:  keep lt only"
 
-HELP_ANLT_LOG_LANE = "Specifies which lanes of LT logs to keep. If you don't know how many\
-serdes lanes the port has, use 'anlt log', default to all lanes."
+HELP_ANLT_LOG_SERDES = "Specifies which serdes of LT logs to keep. If you don't know how many\
+serdes the port has, use 'anlt log', default to all serdes."

@@ -4,7 +4,7 @@ lt preset
 Description
 -----------
 
-To request the remote link training partner to use the preset of the specified lane.
+Request the remote link training partner to use the preset of the specified serdes.
 
 
 
@@ -21,14 +21,14 @@ Arguments
 
 ``<LANE>`` (integer)
 
-Specifies the transceiver lane index.
+Specifies the transceiver serdes index.
 
 
 ``<PRESET>`` (integer)
     
 Specifies the preset index. 
 
-Allowed values: `0, 1, 2, 3, 4`
+Allowed values: `1, 2, 3, 4, 5`
 
 
 Options
@@ -42,21 +42,7 @@ Examples
 .. code-block:: text
 
     xoa-utils[123456][port0/2] > lt preset 0 1
-    Port 0/2 requests: use preset 1 on Lane 0
-
-    xoa-utils[123456][port0/2] >
-
-.. code-block:: text
-
-    xoa-utils[123456][port0/2] > lt preset 2 3
-    Port 0/2 requests: use preset 3 on Lane 2
-
-    xoa-utils[123456][port0/2] >
-
-.. code-block:: text
-
-    xoa-utils[123456][port0/2] > lt preset 2 3
-    Port 0/2 requests: use preset 3 on Lane 2
+    Port 0/0: use preset 0 on Serdes 0 (SUCCESS)
 
     xoa-utils[123456][port0/2] >
 

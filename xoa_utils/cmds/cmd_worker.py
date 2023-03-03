@@ -2,16 +2,16 @@ from __future__ import annotations
 from asyncclick.shell_completion import ShellComplete, CompletionItem
 from asyncclick import BaseCommand
 import typing as t
-from ..clicks import xoa_util
-from ..clicks import cmd_main
-from ..hub import HubManager
-from ..clis import ReadConfig, run_coroutine_as_sync, format_error
+from xoa_utils.clicks import xoa_util
+from xoa_utils.clicks import cmd_main
+from xoa_utils.hub import HubManager
+from xoa_utils.clis import ReadConfig, run_coroutine_as_sync, format_error
 import asyncssh as ah
 import asyncclick as ac
 import os
 import asyncio
 from xoa_driver import exceptions as driver_ex
-from .cmd_context import CmdContext
+from xoa_utils.cmds.cmd_context import CmdContext
 
 if t.TYPE_CHECKING:
     from asyncssh.process import SSHServerProcess
@@ -92,7 +92,7 @@ class CmdWorker:
         self.show_prompt = True
         self.register_keys()
 
-    def autocomplete(self, line: str, pos: int) -> t.Tuple[str, int]:
+    def autocomplete(self, line: str, pos: int) -> tuple[str, int]:
         if not line:
             return line, pos
         args_raw = line.split()
@@ -116,7 +116,7 @@ class CmdWorker:
         self.channel.register_key(TAB, self.autocomplete)
         self.channel.register_key(CTRL_Z, self.stop_coro)
 
-    def stop_coro(self, line: str, pos: int) -> t.Tuple[str, int]:
+    def stop_coro(self, line: str, pos: int) -> tuple[str, int]:
         self.context.clear_loop_coro()
         self.show_prompt = True
         return line, pos

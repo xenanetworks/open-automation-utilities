@@ -4,7 +4,7 @@ ports
 Description
 -----------
 
-To list all the ports reserved by the current session.
+List all the ports reserved by the current session.
 This command works in all context.
 
 Synopsis
@@ -31,21 +31,16 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/0] > ports --all
-    Ports       Sync        Owner
-    *0/0        yes         You
-    0/1         yes         You
-    0/2         yes         You
-    0/3         yes         Others
-    0/4         yes         Others
-    0/5         yes         Others
-
-.. code-block:: text
-    
     xoa-utils[123456][port0/0] > ports
     Ports       Sync        Owner
     *0/0        yes         You
-    0/1         yes         You
-    0/2         yes         You
 
 
+.. code-block:: text
+
+    xoa-utils[123456][port0/0] > ports --all
+    Port      Sync      Owner     
+    *0/0      IN_SYNC   You       
+    0/1       IN_SYNC   Others    
+    6/0       NO_SYNC   Others    
+    6/1       NO_SYNC   Others 

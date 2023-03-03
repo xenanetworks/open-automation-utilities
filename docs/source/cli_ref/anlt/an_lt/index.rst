@@ -1,5 +1,7 @@
-AN & LT Commands
+AN/LT Commands
 ======================
+
+Commands for AN/LT.
 
 .. toctree::
     :maxdepth: 1

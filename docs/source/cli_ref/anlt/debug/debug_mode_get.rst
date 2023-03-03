@@ -3,7 +3,7 @@ debug mode-get
 
 .. important::
     
-    To debug on a lane, you must always use :doc:`debug_init` command prior to all the other debug commands.
+    To debug on a serdes, you must always use :doc:`debug_init` command prior to all the other debug commands.
 
     
 Description
@@ -26,7 +26,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-Specifies the transceiver lane index.
+Specifies the transceiver serdes index.
 
 
 Options

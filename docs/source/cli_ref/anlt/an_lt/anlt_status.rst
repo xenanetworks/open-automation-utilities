@@ -4,7 +4,7 @@ anlt status
 Description
 -----------
 
-To show the current status of the working port.
+Show AN/LT status of the working port.
 
 
 Synopsis
@@ -30,19 +30,21 @@ Examples
 
     xoa-utils[123456][port0/0] > anlt status
     
-    Port 0/0
-    =ACTUAL STATUS=
-    Auto-negotiation        : on
-    Link training           : interactive
-    Link training timeout   : default
-    Link recovery           : on
-    Lane (serdes) count     : 2
+    [ ACTUAL CONFIG ]
+        Link recovery         : off
+        Serdes count          : 1
 
-    =SHADOW STATUS=
-    Auto-negotiation        : off
-    Allow loopback          : true
-    Link training           : on (auto)
-    Preset0                 : standard tap values
+        Auto-negotiation      : on (allow loopback: yes)
+        Link training         : on (auto) (preset0: standard tap values) (timeout: default)
+            Initial Mod.      : {'0': 'NRZ'}
+    
+
+    [ SHADOW CONFIG ]
+        Auto-negotiation      : on (allow loopback: no)
+        Link training         : off (auto) (preset0: standard tap values)
+            Initial Mod.      : {}
+    
+    xoa-utils[123456][port0/2] >
 
 
 

@@ -8,20 +8,10 @@ from xoa_driver import enums
 
 if t.TYPE_CHECKING:
     from xoa_driver.ports import GenericL23Port
-    from ..cmds.cmd_context import CmdContext
+    from xoa_utils.cmds.cmd_context import CmdContext
 
 
 class ReadConfig:
-    # EXAMPLE =
-    # """[Connection]
-    # port = 22622
-    # sshkeypath = ~/.ssh/id_rsa
-
-    # [Hub]
-    # enable = false
-    # port = 10000
-    # """
-
     def __init__(
         self,
         ssh_port: str = "22622",
@@ -33,47 +23,21 @@ class ReadConfig:
             os.path.expanduser("~"), "XenaNetworks", "XOA-UTILITIES", "hub.pid"
         ),
     ) -> None:
-        # config = configparser.ConfigParser()
-        # self.config = config
-        # self._read_or_write_ini()
-        config = {
-            "Connection": {
-                "port": ssh_port,
-                "sshkeypath": ssh_key_path,
-            },
-            "Hub": {
-                "host": hub_host,
-                "port": hub_port,
-                "enable": hub_enable,
-                "pidpath": hub_pid_path,
-            },
-        }
-        conn_config = config.get("Connection", {})
-        hub_config = config.get("Hub", {})
-        hub_pid = os.path.join(
-            os.path.expanduser("~"), "XenaNetworks", "XOA-UTILITIES", "hub.pid"
-        )
-        id_rsa = os.path.join(os.path.expanduser("~"), ".ssh", "id_rsa")
-        self.conn_port = int(conn_config.get("port", "5000"))
-        self.conn_host_keys = conn_config.get("sshkeypath", id_rsa)
-        self.hub_enabled = str(hub_config.get("enable", "false")).lower() == "true"
-        self.hub_host = hub_config.get("hub_host", "localhost")
-        self.hub_port = int(hub_config.get("port", "10000"))
-        self.hub_pid_path = hub_config.get("pidpath", hub_pid)
+        try:
+            ssh_port_int = int(ssh_port)
+        except Exception:
+            ssh_port_int = 22622
+        try:
+            hub_port_int = int(hub_port)
+        except Exception:
+            hub_port_int = 10000
+        self.conn_port = ssh_port_int
+        self.conn_host_keys = ssh_key_path
+        self.hub_enabled = str(hub_enable).lower() == "true"
+        self.hub_host = hub_host
+        self.hub_port = hub_port_int
+        self.hub_pid_path = hub_pid_path
         self.hub_pid = self._read_hub_pid()
-
-    # def _read_or_write_ini(self) -> None:
-    #     folder = os.path.join(os.path.expanduser("~"), "XenaNetworks", "XOA-UTILITIES")
-    #     realpath = os.path.join(folder, "config.ini")
-    #     if not os.path.isfile(realpath):
-    #         self._write_ini(realpath)
-    #     try:
-    #         self.config.read(realpath)
-    #         for i in ("Hub", "Connection"):
-    #             assert i in self.config
-    #     except Exception:
-    #         self._write_ini(realpath)
-    #         self.config.read(realpath)
 
     def _touch(self, realpath: str) -> None:
         realpath = os.path.abspath(realpath)
@@ -86,11 +50,6 @@ class ReadConfig:
             os.makedirs(folder, exist_ok=True)
             with open(realpath, "w"):
                 pass
-
-    # def _write_ini(self, realpath: str) -> None:
-    #     self._touch(realpath)
-    #     with open(realpath, "w") as f:
-    #         f.write(type(self).EXAMPLE)
 
     def _read_hub_pid(self) -> int:
         pid = 0
@@ -159,62 +118,117 @@ def format_ports_status(storage: "CmdContext", all: bool) -> str:
 
 
 def format_port_status(port_id: str, status: dict, storage: "CmdContext") -> str:
-    return f"""
-Port {port_id}
-=ACTUAL STATUS=
-Auto-negotiation      : {status['autoneg_enabled']}
-Link training         : {status['link_training_mode']}
-Link training timeout : {status['link_training_timeout']}
-Link recovery         : {status['link_recovery']}
-Lane (serdes) count   : {status['serdes_count']}
+    ims = {}
+    # algs = {}
 
-=SHADOW STATUS=
-Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'}
-Allow loopback        : {'yes' if storage.retrieve_an_loopback() else 'no'}
-Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'})
-Preset0               : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values
+    for key, val in storage.retrieve_lt_initial_mod().items():
+        ims[key] = enums.LinkTrainEncoding(val).name
+    # for key, val in storage.retrieve_lt_algorithm().items():
+    #     algs[key] = enums.LinkTrainAlgorithm(val).name
+
+    return f"""
+[ ACTUAL CONFIG ]
+    Link recovery         : {status['link_recovery']}
+    Serdes count          : {status['serdes_count']}
+
+    Auto-negotiation      : {status['autoneg_enabled']} (allow loopback: {'yes' if status['autoneg_allow_loopback'] else 'no'})
+    Link training         : {'on' if status['link_training_mode'] != "disabled" else 'off'} ({'interactive' if status['link_training_mode'] == "interactive" else 'auto'}) (preset0: {'standard tap' if status['link_training_preset0'] == 'nrz_no_preset' else 'existing tap'} values) (timeout: {status['link_training_timeout']})
+        Initial Mod.      : {status['initial_mods']}
+    
+
+[ SHADOW CONFIG ]
+    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
+    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+        Initial Mod.      : {ims}
 """
 
 
 def format_an_status(dic: dict) -> str:
     return f"""
-Loopback              : {dic['loopback']}
-Duration              : {dic['duration']:,} µs
-Successful runs       : {dic['successes']}
-Timeouts              : {dic['timeouts']}
-Loss of sync          : {dic['loss_of_sync']}
-FEC negotiation fails : {dic['fec_negotiation_fails']}
-HCD negotiation fails : {dic['hcd_negotiation_fails']}
-                             RX    TX
-Link codewords        : {dic['link_codewords']['rx']:6}{dic['link_codewords']['tx']:6}
-Next-page messages    : {dic['next_page_messages']['rx']:6}{dic['next_page_messages']['tx']:6}
-Unformatted pages     : {dic['unformatted_pages']['rx']:6}{dic['unformatted_pages']['tx']:6}
+[ AN STATUS ]
+    Loopback              : {dic['loopback']}
+    Duration              : {dic['duration']:,} µs
+    Successful runs       : {dic['successes']}
+    Timeouts              : {dic['timeouts']}
+    Loss of sync          : {dic['loss_of_sync']}
+    FEC negotiation fails : {dic['fec_negotiation_fails']}
+    HCD negotiation fails : {dic['hcd_negotiation_fails']}
+                                RX    TX
+    Link codewords        : {dic['link_codewords']['rx']:6}{dic['link_codewords']['tx']:6}
+    Next-page messages    : {dic['next_page_messages']['rx']:6}{dic['next_page_messages']['tx']:6}
+    Unformatted pages     : {dic['unformatted_pages']['rx']:6}{dic['unformatted_pages']['tx']:6}
     """
 
 
 def format_lt_config(storage: CmdContext) -> str:
+    ims = {}
+    # algs = {}
+
+    for key, val in storage.retrieve_lt_initial_mod().items():
+        ims[key] = enums.LinkTrainEncoding(val).name
+    # for key, val in storage.retrieve_lt_algorithm().items():
+    #     algs[key] = enums.LinkTrainAlgorithm(val).name
+
     return f"""
-Port {storage.retrieve_port_str()}
-=SHADOW STATUS=
-Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'}
-Allow loopback        : {'yes' if storage.retrieve_an_loopback() else 'no'}
-Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'})
-Preset0               : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values
+LT configuration to be on port {storage.retrieve_port_str()}
+[ SHADOW CONFIG ]
+    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
+    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+        Initial Mod.      : {ims}
 """
 
 
-def format_lt_im(storage: CmdContext, lane: int) -> str:
-    return f"Port {storage.retrieve_port_str()}: initial modulation {storage.retrieve_lt_initial_mod_lane(lane).name} on Lane {lane}\n"
+def format_lt_im(storage: CmdContext, serdes: int) -> str:
+    ims = {}
+    # algs = {}
+
+    for key, val in storage.retrieve_lt_initial_mod().items():
+        ims[key] = enums.LinkTrainEncoding(val).name
+    # for key, val in storage.retrieve_lt_algorithm().items():
+    #     algs[key] = enums.LinkTrainAlgorithm(val).name
+
+    return f"""
+Initial modulation to be {storage.retrieve_lt_initial_mod_serdes(serdes).name} on Serdes {serdes}
+[ SHADOW CONFIG ]
+    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
+    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+        Initial Mod.      : {ims}
+    """
+
+
+def format_lt_algorithm(storage: CmdContext, serdes: int) -> str:
+    ims = {}
+    # algs = {}
+
+    for key, val in storage.retrieve_lt_initial_mod().items():
+        ims[key] = enums.LinkTrainEncoding(val).name
+    # for key, val in storage.retrieve_lt_algorithm().items():
+    #     algs[key] = enums.LinkTrainAlgorithm(val).name
+
+    return f"""
+LT algorithm to be {storage.retrieve_lt_algorithm_serdes(serdes).name} on Serdes {serdes}
+[ SHADOW CONFIG ]
+    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
+    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+        Initial Mod.      : {ims}
+    """
 
 
 def format_an_config(storage: CmdContext) -> str:
+    ims = {}
+    # algs = {}
+
+    for key, val in storage.retrieve_lt_initial_mod().items():
+        ims[key] = enums.LinkTrainEncoding(val).name
+    # for key, val in storage.retrieve_lt_algorithm().items():
+    #     algs[key] = enums.LinkTrainAlgorithm(val).name
+
     return f"""
-Port {storage.retrieve_port_str()}
-=SHADOW STATUS=
-Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'}
-Allow loopback        : {'yes' if storage.retrieve_an_loopback() else 'no'}
-Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'})
-Preset0               : {'standard tap' if storage.retrieve_lt_preset0_std() else 'existing tap'} values
+AN configuration to be on port {storage.retrieve_port_str()}
+[ SHADOW CONFIG ]
+    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
+    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+        Initial Mod.      : {ims}
 """
 
 
@@ -224,7 +238,7 @@ def format_recovery(storage: CmdContext, on: bool) -> str:
 
 
 def format_lt_inc_dec(
-    storage: CmdContext, lane: int, emphasis: str, increase: bool
+    storage: CmdContext, serdes: int, emphasis: str, increase: bool, response: str
 ) -> str:
     change = {
         "pre3": "c(-3)",
@@ -234,72 +248,75 @@ def format_lt_inc_dec(
         "post": "c(1)",
     }[emphasis]
     action = "increase" if increase else "decrease"
-    return (
-        f"Port {storage.retrieve_port_str()}: {action} {change} by 1 on Lane {lane}\n"
-    )
+    return f"Port {storage.retrieve_port_str()}: {action} {change} by 1 on Serdes {serdes} ({response})\n"
 
 
-def format_lt_encoding(storage: CmdContext, lane: int, encoding: str) -> str:
+def format_lt_encoding(
+    storage: CmdContext, serdes: int, encoding: str, response: str
+) -> str:
     e = enums.LinkTrainEncoding[
         {"pam4pre": "PAM4_WITH_PRECODING"}.get(encoding, encoding).upper()
     ]
-    return f"Port {storage.retrieve_port_str()}: use {e.name} on Lane {lane}\n"
+    return f"Port {storage.retrieve_port_str()}: use {e.name} on Serdes {serdes} ({response})\n"
 
 
-def format_lt_preset(storage: CmdContext, lane: int, preset: int) -> str:
-    return f"Port {storage.retrieve_port_str()}: use preset {preset} on Lane {lane}.\n"
+def format_lt_preset(
+    storage: CmdContext, serdes: int, preset: int, response: str
+) -> str:
+    return f"Port {storage.retrieve_port_str()}: use preset {preset} on Serdes {serdes} ({response})\n"
 
 
-def format_lt_trained(storage: CmdContext, lane: int) -> str:
-    return f"Port {storage.retrieve_port_str()} requests: Lane {lane} is trained.\n"
+def format_lt_trained(storage: CmdContext, serdes: int, response: str) -> str:
+    return f"Port {storage.retrieve_port_str()} requests: Serdes {serdes} is trained ({response})\n"
 
 
-def format_txtap_get(lane: int, dic: dict) -> str:
+def format_txtap_get(serdes: int, dic: dict) -> str:
     return f"""
-Local Coefficient Lane({lane})   :           c(-3)       c(-2)       c(-1)        c(0)        c(1)
+Local Coefficient Serdes({serdes}) :           c(-3)       c(-2)       c(-1)        c(0)        c(1)
     Current level           :              {dic['c(-3)']}           {dic['c(-2)']}           {dic['c(-1)']}           {dic['c(0)']}           {dic['c(1)']}
 """
 
 
 def format_txtap_set(
-    lane: int, pre3: int, pre2: int, pre: int, main: int, post: int
+    serdes: int, pre3: int, pre2: int, pre: int, main: int, post: int
 ) -> str:
     return format_txtap_get(
-        lane, {"c(-3)": pre3, "c(-2)": pre2, "c(-1)": pre, "c(0)": main, "c(1)": post}
+        serdes, {"c(-3)": pre3, "c(-2)": pre2, "c(-1)": pre, "c(0)": main, "c(1)": post}
     )
 
 
 def format_lt_status(dic: dict) -> str:
     return f"""
-Is enabled        : {str(dic['is_enabled']).lower()}
-Is trained        : {str(dic['is_trained']).lower()}
-Failure           : {dic['failure']}
+[ LT STATUS ]
+    Is enabled        : {str(dic['is_enabled']).lower()}
+    Is trained        : {str(dic['is_trained']).lower()}
+    Failure           : {dic['failure']}
 
-Initial mod.      : {dic['init_modulation']}
-Preset0           : {"standard tap" if dic['preset0'] else "existing tap"} values
-Total bits        : {dic['total_bits']:,}
-Total err. bits   : {dic['total_errored_bits']:,}
-BER               : {dic['ber']}
+    Initial mod.      : {dic['init_modulation']}
+    Preset0           : {"standard tap" if dic['preset0'] else "existing tap"} values
+    Total bits        : {dic['total_bits']:,}
+    Total err. bits   : {dic['total_errored_bits']:,}
+    BER               : {dic['ber']}
 
-Duration          : {dic['duration']:,} µs
+    Duration          : {dic['duration']:,} µs
 
-Lock lost         : {dic['lock_lost']}
-Frame lock        : {dic['frame_lock']}
-Remote frame lock : {dic['remote_frame_lock']}
+    Lock lost         : {dic['lock_lost']}
+    Frame lock        : {dic['frame_lock']}
+    Remote frame lock : {dic['remote_frame_lock']}
 
-Frame errors      : {dic['frame_errors']:,}
-Overrun errors    : {dic['overrun_errors']:,}
+    Frame errors      : {dic['frame_errors']:,}
+    Overrun errors    : {dic['overrun_errors']:,}
 
-Last IC received  : {dic['last_ic_received']}
-Last IC sent      : {dic['last_ic_sent']}
+    Last IC received  : {dic['last_ic_received']}
+    Last IC sent      : {dic['last_ic_sent']}
 
-TX Coefficient              :           c(-3)       c(-2)       c(-1)        c(0)        c(1)
-    Current level           :{dic['c(-3)']['current_level']:16}{dic['c(-2)']['current_level']:12}{dic['c(-1)']['current_level']:12}{dic['c(0)']['current_level']:12}{dic['c(1)']['current_level']:12}
-                            :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
-    + req                   :{dic['c(-3)']['+req']['rx']:11}{dic['c(-3)']['+req']['tx']:4}{dic['c(-2)']['+req']['rx']:8}{dic['c(-2)']['+req']['tx']:4}{dic['c(-1)']['+req']['rx']:8}{dic['c(-1)']['+req']['tx']:4}{dic['c(0)']['+req']['rx']:8}{dic['c(0)']['+req']['tx']:4}{dic['c(1)']['+req']['rx']:8}{dic['c(1)']['+req']['tx']:4}
-    - req                   :{dic['c(-3)']['-req']['rx']:11}{dic['c(-3)']['-req']['tx']:4}{dic['c(-2)']['-req']['rx']:8}{dic['c(-2)']['-req']['tx']:4}{dic['c(-1)']['-req']['rx']:8}{dic['c(-1)']['-req']['tx']:4}{dic['c(0)']['-req']['rx']:8}{dic['c(0)']['-req']['tx']:4}{dic['c(1)']['-req']['rx']:8}{dic['c(1)']['-req']['tx']:4}
-    coeff/eq limit reached  :{dic['c(-3)']['coeff_and_eq_limit_reached']['rx']:11}{dic['c(-3)']['coeff_and_eq_limit_reached']['tx']:4}{dic['c(-2)']['coeff_and_eq_limit_reached']['rx']:8}{dic['c(-2)']['coeff_and_eq_limit_reached']['tx']:4}{dic['c(-1)']['coeff_and_eq_limit_reached']['rx']:8}{dic['c(-1)']['coeff_and_eq_limit_reached']['tx']:4}{dic['c(0)']['coeff_and_eq_limit_reached']['rx']:8}{dic['c(0)']['coeff_and_eq_limit_reached']['tx']:4}{dic['c(1)']['coeff_and_eq_limit_reached']['rx']:8}{dic['c(1)']['coeff_and_eq_limit_reached']['tx']:4}
-    eq limit reached        :{dic['c(-3)']['eq_limit_reached']['rx']:11}{dic['c(-3)']['eq_limit_reached']['tx']:4}{dic['c(-2)']['eq_limit_reached']['rx']:8}{dic['c(-2)']['eq_limit_reached']['tx']:4}{dic['c(-1)']['eq_limit_reached']['rx']:8}{dic['c(-1)']['eq_limit_reached']['tx']:4}{dic['c(0)']['eq_limit_reached']['rx']:8}{dic['c(0)']['eq_limit_reached']['tx']:4}{dic['c(1)']['eq_limit_reached']['rx']:8}{dic['c(1)']['eq_limit_reached']['tx']:4}
-    coeff not supported     :{dic['c(-3)']['coeff_not_supported']['rx']:11}{dic['c(-3)']['coeff_not_supported']['tx']:4}{dic['c(-2)']['coeff_not_supported']['rx']:8}{dic['c(-2)']['coeff_not_supported']['tx']:4}{dic['c(-1)']['coeff_not_supported']['rx']:8}{dic['c(-1)']['coeff_not_supported']['tx']:4}{dic['c(0)']['coeff_not_supported']['rx']:8}{dic['c(0)']['coeff_not_supported']['tx']:4}{dic['c(1)']['coeff_not_supported']['rx']:8}{dic['c(1)']['coeff_not_supported']['tx']:4}
-    coeff at limit          :{dic['c(-3)']['coeff_at_limit']['rx']:11}{dic['c(-3)']['coeff_at_limit']['tx']:4}{dic['c(-2)']['coeff_at_limit']['rx']:8}{dic['c(-2)']['coeff_at_limit']['tx']:4}{dic['c(-1)']['coeff_at_limit']['rx']:8}{dic['c(-1)']['coeff_at_limit']['tx']:4}{dic['c(0)']['coeff_at_limit']['rx']:8}{dic['c(0)']['coeff_at_limit']['tx']:4}{dic['c(1)']['coeff_at_limit']['rx']:8}{dic['c(1)']['coeff_at_limit']['tx']:4}
+    TX Coefficient              :          c(-3)       c(-2)       c(-1)        c(0)        c(1)
+        Current level           :{dic['c(-3)']['current_level']:15}{dic['c(-2)']['current_level']:12}{dic['c(-1)']['current_level']:12}{dic['c(0)']['current_level']:12}{dic['c(1)']['current_level']:12}
+                                :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
+        + req                   :{dic['c(-3)']['+req']['rx']:11}{dic['c(-3)']['+req']['tx']:4}{dic['c(-2)']['+req']['rx']:8}{dic['c(-2)']['+req']['tx']:4}{dic['c(-1)']['+req']['rx']:8}{dic['c(-1)']['+req']['tx']:4}{dic['c(0)']['+req']['rx']:8}{dic['c(0)']['+req']['tx']:4}{dic['c(1)']['+req']['rx']:8}{dic['c(1)']['+req']['tx']:4}
+        - req                   :{dic['c(-3)']['-req']['rx']:11}{dic['c(-3)']['-req']['tx']:4}{dic['c(-2)']['-req']['rx']:8}{dic['c(-2)']['-req']['tx']:4}{dic['c(-1)']['-req']['rx']:8}{dic['c(-1)']['-req']['tx']:4}{dic['c(0)']['-req']['rx']:8}{dic['c(0)']['-req']['tx']:4}{dic['c(1)']['-req']['rx']:8}{dic['c(1)']['-req']['tx']:4}
+        coeff/eq limit reached  :{dic['c(-3)']['coeff_and_eq_limit_reached']['rx']:11}{dic['c(-3)']['coeff_and_eq_limit_reached']['tx']:4}{dic['c(-2)']['coeff_and_eq_limit_reached']['rx']:8}{dic['c(-2)']['coeff_and_eq_limit_reached']['tx']:4}{dic['c(-1)']['coeff_and_eq_limit_reached']['rx']:8}{dic['c(-1)']['coeff_and_eq_limit_reached']['tx']:4}{dic['c(0)']['coeff_and_eq_limit_reached']['rx']:8}{dic['c(0)']['coeff_and_eq_limit_reached']['tx']:4}{dic['c(1)']['coeff_and_eq_limit_reached']['rx']:8}{dic['c(1)']['coeff_and_eq_limit_reached']['tx']:4}
+        eq limit reached        :{dic['c(-3)']['eq_limit_reached']['rx']:11}{dic['c(-3)']['eq_limit_reached']['tx']:4}{dic['c(-2)']['eq_limit_reached']['rx']:8}{dic['c(-2)']['eq_limit_reached']['tx']:4}{dic['c(-1)']['eq_limit_reached']['rx']:8}{dic['c(-1)']['eq_limit_reached']['tx']:4}{dic['c(0)']['eq_limit_reached']['rx']:8}{dic['c(0)']['eq_limit_reached']['tx']:4}{dic['c(1)']['eq_limit_reached']['rx']:8}{dic['c(1)']['eq_limit_reached']['tx']:4}
+        coeff not supported     :{dic['c(-3)']['coeff_not_supported']['rx']:11}{dic['c(-3)']['coeff_not_supported']['tx']:4}{dic['c(-2)']['coeff_not_supported']['rx']:8}{dic['c(-2)']['coeff_not_supported']['tx']:4}{dic['c(-1)']['coeff_not_supported']['rx']:8}{dic['c(-1)']['coeff_not_supported']['tx']:4}{dic['c(0)']['coeff_not_supported']['rx']:8}{dic['c(0)']['coeff_not_supported']['tx']:4}{dic['c(1)']['coeff_not_supported']['rx']:8}{dic['c(1)']['coeff_not_supported']['tx']:4}
+        coeff at limit          :{dic['c(-3)']['coeff_at_limit']['rx']:11}{dic['c(-3)']['coeff_at_limit']['tx']:4}{dic['c(-2)']['coeff_at_limit']['rx']:8}{dic['c(-2)']['coeff_at_limit']['tx']:4}{dic['c(-1)']['coeff_at_limit']['rx']:8}{dic['c(-1)']['coeff_at_limit']['tx']:4}{dic['c(0)']['coeff_at_limit']['rx']:8}{dic['c(0)']['coeff_at_limit']['tx']:4}{dic['c(1)']['coeff_at_limit']['rx']:8}{dic['c(1)']['coeff_at_limit']['tx']:4}
 """

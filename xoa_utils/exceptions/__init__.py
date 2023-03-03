@@ -1,1 +1,1 @@
-from .exceptions import *
+from xoa_utils.exceptions.exceptions import *

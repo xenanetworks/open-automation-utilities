@@ -1,15 +1,12 @@
 from __future__ import annotations
 import asyncclick as ac
-from .. import click_backend as cb
+from xoa_utils.clicks import click_backend as cb
 from xoa_driver.hlfuncs import anlt as anlt_utils
-import asyncclick as ac
-from ...clis import (
-    format_an_status,
-    format_an_config,
-)
-from .group import xoa_util
-from .. import click_help as h
-from ...cmds import CmdContext
+from xoa_utils.clis import format_an_status, format_an_config
+from xoa_utils.clicks.click_commands.group import xoa_util
+from xoa_utils.clicks import click_help as h
+from xoa_utils.cmds import CmdContext
+
 
 # --------------------------
 # command: an
@@ -17,7 +14,7 @@ from ...cmds import CmdContext
 @xoa_util.group(cls=cb.XenaGroup)
 def an():
     """
-    To enter auto-negotiation context.\n
+    Commands for Auto-Negotiation.
     """
 
 
@@ -38,7 +35,7 @@ def an():
 @ac.pass_context
 async def an_config(context: ac.Context, on: bool, loopback: bool) -> str:
     """
-    Configure auto-negotiation for the working port.\n
+    Configure AN of the working port.
     """
     storage: CmdContext = context.obj
     storage.retrieve_port()
@@ -57,7 +54,7 @@ async def an_config(context: ac.Context, on: bool, loopback: bool) -> str:
 @ac.pass_context
 async def an_status(context: ac.Context) -> str:
     """
-    Show the auto-negotiation status.\n
+    Show AN status of the working port.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()

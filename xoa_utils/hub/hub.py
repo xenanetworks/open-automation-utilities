@@ -6,7 +6,7 @@ import os
 import sys
 from typing import Optional
 import psutil
-from ..clis import ReadConfig
+from xoa_utils.clis import ReadConfig
 
 global_list = []
 

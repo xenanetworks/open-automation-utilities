@@ -4,7 +4,7 @@ lt status
 Description
 -----------
 
-To show the link training status of the specified lane.
+Show the link training status of the specified serdes.
 
 
 
@@ -21,7 +21,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-Specifies the lane index.
+Specifies the serdes index.
 
 
 Options
@@ -34,36 +34,39 @@ Examples
 .. code-block:: text
 
     xoa-utils[123456][port0/2] > lt status 0
-    Is Enabled        : true
-    Is Trained        : false
-    Failure           : no_failure
     
-    Initial mod.      : 0
-    Preset0           : standard tap values
-    Total Bits        : 2080985280
-    Total Err. Bits   : 2
-    PRBS BER          : 9.610832038177609e-10
+    [ LT STATUS ]
+        Is enabled        : true
+        Is trained        : true
+        Failure           : no_failure
 
-    Duration          : 10 µs
+        Initial mod.      : nrz
+        Preset0           : standard tap values
+        Total bits        : 2,201,372,480
+        Total err. bits   : 24
+        BER               : 1.09e-08
 
-    Lock lost         : 0
-    Frame lock        : lost
-    Remote frame lock : lost
+        Duration          : 2,000,250 µs
 
-    Frame errors      : 4
-    Overrun errors    : 7
+        Lock lost         : 2
+        Frame lock        : locked
+        Remote frame lock : locked
 
-    Last IC received  : INDV
-    Last IC sent      : INDV
-    TX Coefficient              :           c(-3)       c(-2)       c(-1)       c(0)        c(1)
-        Current level           :              0          68           0           0           0
-                                :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
-        + req                   :          0   0       0   0       0   0       0   0       0   0
-        - req                   :          0   0       0   0       0   0       0   0       0   0
-        coeff/eq limit reached  :          0   0       0   0       0   0       0   0       0   0
-        eq limit reached        :          0   0       0   0       0   0       0   0       0   0
-        coeff not supported     :          0   0       0   0       0   0       0   0       0   0
-        coeff at limit          :          0   0       0   0       0   0       0   0       0   0
+        Frame errors      : 1
+        Overrun errors    : 1
+
+        Last IC received  : Preset 3
+        Last IC sent      : Preset 3
+
+        TX Coefficient              :          c(-3)       c(-2)       c(-1)        c(0)        c(1)
+            Current level           :              0           0           1          44           0
+                                    :         RX  TX      RX  TX      RX  TX      RX  TX      RX  TX
+            + req                   :          0   0       0   0       2   2       1   1       0   0
+            - req                   :          0   0       0   0       2   2       0   0       0   0
+            coeff/eq limit reached  :          0   0       0   0       0   0       0   0       0   0
+            eq limit reached        :          0   0       0   0       0   0       0   0       0   0
+            coeff not supported     :          0   0       0   0       0   0       0   0       0   0
+            coeff at limit          :          0   0       0   0       0   0       0   0       0   0
 
     xoa-utils[123456][port0/2] >
 

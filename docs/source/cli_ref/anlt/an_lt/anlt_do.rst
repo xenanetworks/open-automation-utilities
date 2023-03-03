@@ -4,7 +4,9 @@ anlt do
 Description
 -----------
 
-To start ANLT according to the configuration from :doc:`../an/an_config`, :doc:`../lt/lt_config`, and :doc:`../lt/lt_im`
+Apply and start AN/LT to the working port.
+
+Apply the shadow configuration from :doc:`../an/an_config`, :doc:`../lt/lt_config`, and :doc:`../lt/lt_im` to the working port, and then start AN/LT on the port.
 
 
 Synopsis

@@ -40,10 +40,10 @@ class NotInStoreError(ConfigError):
         self.msg = f"Not in store {general_id}!"
 
 
-class NotCorrectLaneError(ConfigError):
-    def __init__(self, port_id: str, lane: int) -> None:
-        self.name = "Not Correct Lane Error"
-        self.msg = f"No lane {lane} in port {port_id}!"
+class NotCorrectSerdesError(ConfigError):
+    def __init__(self, port_id: str, serdes: int) -> None:
+        self.name = "Not Correct Serdes Error"
+        self.msg = f"No serdes {serdes} in port {port_id}!"
 
 
 class NoSuchPortError(ConfigError):
@@ -82,15 +82,15 @@ class NotSupportLinkTrainError(ConfigError):
 
 
 class NotRightLaneLengthError(ConfigError):
-    def __init__(self, lane: list[int]) -> None:
-        self.name = "Not Right Lane Length Error"
-        self.msg = f"Lane {lane} should be length of 4!"
+    def __init__(self, serdes: list[int]) -> None:
+        self.name = "Not Right Serdes Length Error"
+        self.msg = f"Serdes {serdes} should be length of 4!"
 
 
 class NotRightLaneValueError(ConfigError):
-    def __init__(self, lane: list[int]) -> None:
-        self.name = "Not Right Lane Value Error"
-        self.msg = f"Lane {lane} should be a list of 4 integers ranges from 0 to 255!"
+    def __init__(self, serdes: list[int]) -> None:
+        self.name = "Not Right Serdes Value Error"
+        self.msg = f"Serdes {serdes} should be a list of 4 integers ranges from 0 to 255!"
 
 
 # class NotInChoicesError(ConfigError):

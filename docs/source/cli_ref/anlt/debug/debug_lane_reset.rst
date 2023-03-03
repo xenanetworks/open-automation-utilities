@@ -1,15 +1,15 @@
-debug lane-reset
+debug serdes-reset
 ================
 
 .. important::
     
-    To debug on a lane, you must always use :doc:`debug_init` command prior to all the other debug commands.
+    To debug on a serdes, you must always use :doc:`debug_init` command prior to all the other debug commands.
 
     
 Description
 -----------
 
-Debug, reset the lane.
+Debug, reset the serdes.
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lane*reset <LANE>
+    debug serdes*reset <LANE>
 
 
 Arguments
@@ -26,7 +26,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-Specifies the transceiver lane index.
+Specifies the transceiver serdes index.
 
 
 Options
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lane-reset 0
+    xoa-utils[123456][port0/2] > debug serdes-reset 0
 
     xoa-utils[123456][port0/2] >
 

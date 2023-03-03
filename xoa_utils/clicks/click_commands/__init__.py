@@ -1,12 +1,12 @@
 from __future__ import annotations
 import typing as t
-from ...cmds import CmdContext
-from . import an
-from . import lt
-from . import management
-from . import anlt
-from . import debug
-from .group import xoa_util
+from xoa_utils.cmds import CmdContext
+from xoa_utils.clicks.click_commands import an
+from xoa_utils.clicks.click_commands import lt
+from xoa_utils.clicks.click_commands import management
+from xoa_utils.clicks.click_commands import anlt
+from xoa_utils.clicks.click_commands import debug
+from xoa_utils.clicks.click_commands.group import xoa_util
 
 
 async def cmd_main(context: CmdContext, cmd_str: str) -> t.Any:

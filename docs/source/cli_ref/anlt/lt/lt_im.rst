@@ -3,12 +3,12 @@ lt im
 
 .. important::
 
-    This command only changes the local ANLT configuration state. To execute the configuration, you need to run :doc:`../an_lt/anlt_do`, otherwise your changes will not take effect on the tester.
+    This command only changes the local LT configuration state. To execute the configuration, you need to run :doc:`../an_lt/anlt_do`, otherwise your changes will not take effect on the tester.
 
 Description
 -----------
 
-To set the initial modulation for the lane.
+Set initial modulation for the specified serdes.
 
 
 
@@ -25,7 +25,7 @@ Arguments
 
 ``<LANE>`` (integer)
 
-Specifies the transceiver lane index.
+Specifies the transceiver serdes index.
 
 
 ``<ENCODING>`` (text)
@@ -52,23 +52,13 @@ Examples
 .. code-block:: text
 
     xoa-utils[123456][port0/2] > lt im 0 nrz
-    Port 0/2: initial modulation NRZ on Lane 0
+    
+    Initial modulation to be NRZ on Serdes 0
+    [ SHADOW CONFIG ]
+        Auto-negotiation      : off (allow loopback: no)
+        Link training         : on (interactive) (preset0: standard tap values)
+            Initial Mod.      : {'0': 'NRZ'}
 
     xoa-utils[123456][port0/2] >
-
-.. code-block:: text
-
-    xoa-utils[123456][port0/2] > lt im 4 pam4
-    Port 0/2: initial modulation PAM4 on Lane 4
-
-    xoa-utils[123456][port0/2] >
-
-.. code-block:: text
-
-    xoa-utils[123456][port0/2] > lt im 3 pam4pre
-    Port 0/2: initial modulation PAM4_WITH_PRECODING on Lane 3
-
-    xoa-utils[123456][port0/2] >
-
 
 

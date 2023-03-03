@@ -3,7 +3,7 @@ Debug Commands
 
 .. important::
     
-    To debug on a lane, you must always use :doc:`debug_init` command prior to all the other debug commands.
+    To debug on a serdes, you must always use :doc:`debug_init` command prior to all the other debug commands.
 
 .. toctree::
     :maxdepth: 1
