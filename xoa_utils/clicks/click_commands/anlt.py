@@ -8,41 +8,41 @@ from xoa_utils.clis import format_recovery, format_port_status
 from xoa_utils.clicks.click_commands.group import xoa_util
 from xoa_utils.clicks import click_help as h
 from xoa_utils.cmds import CmdContext
-from datetime import timedelta
 from enum import Enum
 
+
 class ASCIIStyle(Enum):
-    DARKRED = '\033[31m'
-    DARKGREEN = '\033[32m'
-    DARKYELLOW = '\033[33m'
-    DARKBLUE = '\033[34m'
-    DARKMAGENTA = '\033[35m'
-    DARKCYAN = '\033[36m'
+    DARKRED = "\033[31m"
+    DARKGREEN = "\033[32m"
+    DARKYELLOW = "\033[33m"
+    DARKBLUE = "\033[34m"
+    DARKMAGENTA = "\033[35m"
+    DARKCYAN = "\033[36m"
 
-    RED = '\033[91m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    BLUE = '\033[94m'
-    MAGENTA = '\033[95m'
-    CYAN = '\033[96m'
+    RED = "\033[91m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+    BLUE = "\033[94m"
+    MAGENTA = "\033[95m"
+    CYAN = "\033[96m"
 
-    DARKRED_BG = '\033[41m'
-    DARKGREEN_BG = '\033[42m'
-    DARKYELLOW_BG = '\033[43m'
-    DARKBLUE_BG = '\033[44m'
-    DARKMAGENTA_BG = '\033[45m'
-    DARKCYAN_BG = '\033[46m'
+    DARKRED_BG = "\033[41m"
+    DARKGREEN_BG = "\033[42m"
+    DARKYELLOW_BG = "\033[43m"
+    DARKBLUE_BG = "\033[44m"
+    DARKMAGENTA_BG = "\033[45m"
+    DARKCYAN_BG = "\033[46m"
 
-    RED_BG = '\033[101m'
-    GREEN_BG = '\033[102m'
-    YELLOW_BG = '\033[103m'
-    BLUE_BG = '\033[104m'
-    MAGENTA_BG = '\033[105m'
-    CYAN_BG = '\033[106m'
+    RED_BG = "\033[101m"
+    GREEN_BG = "\033[102m"
+    YELLOW_BG = "\033[103m"
+    BLUE_BG = "\033[104m"
+    MAGENTA_BG = "\033[105m"
+    CYAN_BG = "\033[106m"
 
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-    END = '\033[0m'
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
+    END = "\033[0m"
 
 
 @xoa_util.group(cls=cb.XenaGroup)
@@ -50,6 +50,7 @@ def anlt():
     """
     Commands for AN/LT.
     """
+
 
 # --------------------------
 # command: recovery
@@ -171,13 +172,9 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
     def _flatten(dic: dict[str, str]) -> str:
         return "".join((f"{k}: {v:<7}" for k, v in dic.items()))
 
-
-    def _ascii_styler(str: str, fg_style: t.List[ASCIIStyle]) -> str:
-        _END = '\033[0m'
-        style=""
-        for s in fg_style:
-            style = style + s.value
-        return f'{style}{str}{_END}'
+    def _ascii_styler(str: str, fg_style: list[ASCIIStyle]) -> str:
+        style = "".join(s.value for s in fg_style)
+        return f"{style}{str}{ASCIIStyle.END.value}"
 
     def _beautify(filtered: list[dict]) -> str:
         real = []
@@ -197,9 +194,13 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
             log_new = _dict_get(i, "entry", "fsm", "new")
             log_direction = _dict_get(i, "entry", "direction")
             if log_direction == "tx":
-                log_direction = _ascii_styler(log_direction.upper(), [ASCIIStyle.DARKBLUE_BG])
+                log_direction = _ascii_styler(
+                    log_direction.upper(), [ASCIIStyle.DARKBLUE_BG]
+                )
             else:
-                log_direction = _ascii_styler(log_direction.upper(), [ASCIIStyle.DARKGREEN_BG])
+                log_direction = _ascii_styler(
+                    log_direction.upper(), [ASCIIStyle.DARKGREEN_BG]
+                )
 
             log_value = _dict_get(i, "entry", "pkt", "value")
             log_ptype = _dict_get(i, "entry", "pkt", "type")
@@ -218,12 +219,24 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
             log_mp = _dict_get(i, "entry", "pkt", "fields", "MP")
             log_ack2 = _dict_get(i, "entry", "pkt", "fields", "Ack2")
             log_t = _dict_get(i, "entry", "pkt", "fields", "T")
-            log_fmt_v = _dict_get(i, "entry", "pkt", "fields", "formatted message", "value")
-            log_fmt_msg = _dict_get(i, "entry", "pkt", "fields", "formatted message", "message")
-            log_ufmt_v = _dict_get(i, "entry", "pkt", "fields", "un-formatted message", "value")
-            log_ufmt_msg = _dict_get(i, "entry", "pkt", "fields", "un-formatted message", "message")
-            log_ufmt_fec = _dict_get(i, "entry", "pkt", "fields", "un-formatted message", "fec")
-            log_ufmt_ab = _dict_get(i, "entry", "pkt", "fields", "un-formatted message", "ability")
+            log_fmt_v = _dict_get(
+                i, "entry", "pkt", "fields", "formatted message", "value"
+            )
+            log_fmt_msg = _dict_get(
+                i, "entry", "pkt", "fields", "formatted message", "message"
+            )
+            log_ufmt_v = _dict_get(
+                i, "entry", "pkt", "fields", "un-formatted message", "value"
+            )
+            log_ufmt_msg = _dict_get(
+                i, "entry", "pkt", "fields", "un-formatted message", "message"
+            )
+            log_ufmt_fec = _dict_get(
+                i, "entry", "pkt", "fields", "un-formatted message", "fec"
+            )
+            log_ufmt_ab = _dict_get(
+                i, "entry", "pkt", "fields", "un-formatted message", "ability"
+            )
 
             if log_pkt_locked == "true":
                 log_pkt_locked = _ascii_styler(log_pkt_locked, [ASCIIStyle.GREEN_BG])
@@ -244,7 +257,9 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
             if log_type == "debug":
                 b_str = f"{common:<32}{'DBG:':<5}{log_log}"
             elif log_type == "fsm":
-                b_str = f"{common:<32}{'FSM:':<5}({log_event}) {log_current} -> {log_new}"
+                b_str = (
+                    f"{common:<32}{'FSM:':<5}({log_event}) {log_current} -> {log_new}"
+                )
             elif log_type == "trace" and "log" in log_entry:
                 b_str = f"{common:<32}{'MSG:':<5}{log_log}"
             elif log_type == "trace" and "direction" in log_entry and "LT" not in log_m:
@@ -252,7 +267,6 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
                     if log_ptype == "base page":
                         b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}\n{'':<37}FEC:{log_fec}, ABILITY:{log_ab}"
                     else:
-                        print(i)
                         if log_fmt_v:
                             b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Formatted message:\n{'':<37}Value:{log_fmt_v}, Msg:{log_fmt_msg}"
                         else:

@@ -50,7 +50,6 @@ def lt():
     help=h.HELP_LT_CONFIG_PRESET0,
     default="standard",
 )
-
 @ac.pass_context
 async def lt_config(context: ac.Context, mode: str, on: bool, preset0: str) -> str:
     """

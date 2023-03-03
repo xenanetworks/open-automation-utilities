@@ -360,7 +360,9 @@ async def lt_rx_analyzer_rd_data_get(context: ac.Context, serdes: int) -> str:
 @ac.argument("serdes", type=ac.INT)
 @ac.argument("value", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_config_set(context: ac.Context, serdes: int, value: int) -> str:
+async def lt_rx_analyzer_config_set(
+    context: ac.Context, serdes: int, value: int
+) -> str:
     """
     Debug: Write LT RX Analyzer configuration of the specified serdes.
 
@@ -399,7 +401,9 @@ async def lt_rx_analyzer_trig_mask_set(
 @ac.argument("serdes", type=ac.INT)
 @ac.argument("value", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_rd_addr_set(context: ac.Context, serdes: int, value: int) -> str:
+async def lt_rx_analyzer_rd_addr_set(
+    context: ac.Context, serdes: int, value: int
+) -> str:
     """
     Debug: Write LT RX analyzer RD Address of the specified serdes.
 
@@ -418,7 +422,9 @@ async def lt_rx_analyzer_rd_addr_set(context: ac.Context, serdes: int, value: in
 @ac.argument("serdes", type=ac.INT)
 @ac.argument("value", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_rd_page_set(context: ac.Context, serdes: int, value: int) -> str:
+async def lt_rx_analyzer_rd_page_set(
+    context: ac.Context, serdes: int, value: int
+) -> str:
     """
     Debug: Write LT RX analyzer RD Page of the specified serdes.
 
@@ -473,9 +479,7 @@ async def lt_prbs(context: ac.Context, serdes: int) -> str:
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("serdes", type=ac.INT)
-@ac.option(
-    "-f", "--filename", type=ac.STRING, default=""
-)
+@ac.option("-f", "--filename", type=ac.STRING, default="")
 @ac.pass_context
 async def lt_rx_analyzer_dump(context: ac.Context, serdes: int, filename: str) -> str:
     """
