@@ -92,7 +92,7 @@ class CmdWorker:
         self.show_prompt = True
         self.register_keys()
 
-    def autocomplete(self, line: str, pos: int) -> t.Tuple[str, int]:
+    def autocomplete(self, line: str, pos: int) -> tuple[str, int]:
         if not line:
             return line, pos
         args_raw = line.split()
@@ -116,7 +116,7 @@ class CmdWorker:
         self.channel.register_key(TAB, self.autocomplete)
         self.channel.register_key(CTRL_Z, self.stop_coro)
 
-    def stop_coro(self, line: str, pos: int) -> t.Tuple[str, int]:
+    def stop_coro(self, line: str, pos: int) -> tuple[str, int]:
         self.context.clear_loop_coro()
         self.show_prompt = True
         return line, pos

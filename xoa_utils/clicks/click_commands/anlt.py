@@ -172,7 +172,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
     def _flatten(dic: dict[str, str]) -> str:
         return "".join((f"{k}: {v:<7}" for k, v in dic.items()))
 
-    def _ascii_styler(str: str, fg_style: t.List[ASCIIStyle]) -> str:
+    def _ascii_styler(str: str, fg_style: list[ASCIIStyle]) -> str:
         style = "".join(s.value for s in fg_style)
         return f"{style}{str}{ASCIIStyle.END.value}"
 
@@ -267,7 +267,6 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
                     if log_ptype == "base page":
                         b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}\n{'':<37}FEC:{log_fec}, ABILITY:{log_ab}"
                     else:
-                        print(i)
                         if log_fmt_v:
                             b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Formatted message:\n{'':<37}Value:{log_fmt_v}, Msg:{log_fmt_msg}"
                         else:
