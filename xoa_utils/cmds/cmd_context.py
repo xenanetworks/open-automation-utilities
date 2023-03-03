@@ -2,7 +2,6 @@ from __future__ import annotations
 import typing as t
 from xoa_driver.testers import L23Tester
 from xoa_driver.ports import GenericL23Port
-from xoa_driver.modules import GenericAnyModule
 from xoa_utils.exceptions import (
     NotInStoreError,
     NotConnectedError,
@@ -12,11 +11,7 @@ from xoa_utils.exceptions import (
 )
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
 from xoa_driver.hlfuncs import anlt_ll_debug as debug_utils
-from xoa_driver.enums import (
-    NRZPreset,
-    LinkTrainEncoding,
-    LinkTrainAlgorithm,
-)
+from xoa_driver.enums import NRZPreset, LinkTrainEncoding, LinkTrainAlgorithm
 from functools import partialmethod
 
 

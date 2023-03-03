@@ -12,16 +12,6 @@ if t.TYPE_CHECKING:
 
 
 class ReadConfig:
-    # EXAMPLE =
-    # """[Connection]
-    # port = 22622
-    # sshkeypath = ~/.ssh/id_rsa
-
-    # [Hub]
-    # enable = false
-    # port = 10000
-    # """
-
     def __init__(
         self,
         ssh_port: str = "22622",
@@ -33,47 +23,21 @@ class ReadConfig:
             os.path.expanduser("~"), "XenaNetworks", "XOA-UTILITIES", "hub.pid"
         ),
     ) -> None:
-        # config = configparser.ConfigParser()
-        # self.config = config
-        # self._read_or_write_ini()
-        config = {
-            "Connection": {
-                "port": ssh_port,
-                "sshkeypath": ssh_key_path,
-            },
-            "Hub": {
-                "host": hub_host,
-                "port": hub_port,
-                "enable": hub_enable,
-                "pidpath": hub_pid_path,
-            },
-        }
-        conn_config = config.get("Connection", {})
-        hub_config = config.get("Hub", {})
-        hub_pid = os.path.join(
-            os.path.expanduser("~"), "XenaNetworks", "XOA-UTILITIES", "hub.pid"
-        )
-        id_rsa = os.path.join(os.path.expanduser("~"), ".ssh", "id_rsa")
-        self.conn_port = int(conn_config.get("port", "5000"))
-        self.conn_host_keys = conn_config.get("sshkeypath", id_rsa)
-        self.hub_enabled = str(hub_config.get("enable", "false")).lower() == "true"
-        self.hub_host = hub_config.get("hub_host", "localhost")
-        self.hub_port = int(hub_config.get("port", "10000"))
-        self.hub_pid_path = hub_config.get("pidpath", hub_pid)
+        try:
+            ssh_port_int = int(ssh_port)
+        except Exception:
+            ssh_port_int = 22622
+        try:
+            hub_port_int = int(hub_port)
+        except Exception:
+            hub_port_int = 10000
+        self.conn_port = ssh_port_int
+        self.conn_host_keys = ssh_key_path
+        self.hub_enabled = str(hub_enable).lower() == "true"
+        self.hub_host = hub_host
+        self.hub_port = hub_port_int
+        self.hub_pid_path = hub_pid_path
         self.hub_pid = self._read_hub_pid()
-
-    # def _read_or_write_ini(self) -> None:
-    #     folder = os.path.join(os.path.expanduser("~"), "XenaNetworks", "XOA-UTILITIES")
-    #     realpath = os.path.join(folder, "config.ini")
-    #     if not os.path.isfile(realpath):
-    #         self._write_ini(realpath)
-    #     try:
-    #         self.config.read(realpath)
-    #         for i in ("Hub", "Connection"):
-    #             assert i in self.config
-    #     except Exception:
-    #         self._write_ini(realpath)
-    #         self.config.read(realpath)
 
     def _touch(self, realpath: str) -> None:
         realpath = os.path.abspath(realpath)
@@ -86,11 +50,6 @@ class ReadConfig:
             os.makedirs(folder, exist_ok=True)
             with open(realpath, "w"):
                 pass
-
-    # def _write_ini(self, realpath: str) -> None:
-    #     self._touch(realpath)
-    #     with open(realpath, "w") as f:
-    #         f.write(type(self).EXAMPLE)
 
     def _read_hub_pid(self) -> int:
         pid = 0
@@ -289,19 +248,21 @@ def format_lt_inc_dec(
         "post": "c(1)",
     }[emphasis]
     action = "increase" if increase else "decrease"
-    return (
-        f"Port {storage.retrieve_port_str()}: {action} {change} by 1 on Serdes {serdes} ({response})\n"
-    )
+    return f"Port {storage.retrieve_port_str()}: {action} {change} by 1 on Serdes {serdes} ({response})\n"
 
 
-def format_lt_encoding(storage: CmdContext, serdes: int, encoding: str, response: str) -> str:
+def format_lt_encoding(
+    storage: CmdContext, serdes: int, encoding: str, response: str
+) -> str:
     e = enums.LinkTrainEncoding[
         {"pam4pre": "PAM4_WITH_PRECODING"}.get(encoding, encoding).upper()
     ]
     return f"Port {storage.retrieve_port_str()}: use {e.name} on Serdes {serdes} ({response})\n"
 
 
-def format_lt_preset(storage: CmdContext, serdes: int, preset: int, response: str) -> str:
+def format_lt_preset(
+    storage: CmdContext, serdes: int, preset: int, response: str
+) -> str:
     return f"Port {storage.retrieve_port_str()}: use preset {preset} on Serdes {serdes} ({response})\n"
 
 

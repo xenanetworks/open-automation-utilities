@@ -1,12 +1,16 @@
 from __future__ import annotations
 import asyncclick as ac
-from typing import TYPE_CHECKING
+import typing as t
 
-if TYPE_CHECKING:
+if t.TYPE_CHECKING:
     from xoa_utils.cmds import CmdContext
 
 
 class XenaGroup(ac.Group):
+    def __init__(self, *args: t.Any, **attrs: t.Any) -> None:
+        attrs["help_option_names"] = ["-h", "--help"]
+        super().__init__(*args, **attrs)
+
     def get_help(self, ctx: ac.Context) -> str:
         e = super().get_help(ctx)
         e = e.replace("python -m entry ", "")
@@ -16,6 +20,10 @@ class XenaGroup(ac.Group):
 
 
 class XenaCommand(ac.Command):
+    def __init__(self, *args: t.Any, **attrs: t.Any) -> None:
+        attrs["help_option_names"] = ["-h", "--help"]
+        super().__init__(*args, **attrs)
+
     def get_help(self, ctx: ac.Context) -> str:
         e = super().get_help(ctx)
         e = e.replace("python -m entry ", "")
