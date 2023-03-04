@@ -26,7 +26,7 @@ def main():
         packages=setuptools.find_packages(),
         license="Apache 2.0",
         install_requires=[
-            "xoa-driver>=1.0.15",
+            "xoa-driver>=1.2",
             "typing_extensions>=4.4.0",
             "cffi>=1.15.1",
             "cryptography>=39.0.0",
