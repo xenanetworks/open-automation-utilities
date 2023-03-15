@@ -1,5 +1,5 @@
 debug serdes-reset
-================
+==================
 
 .. important::
     
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug serdes*reset <LANE>
+    debug serdes-reset <LANE>
 
 
 Arguments
