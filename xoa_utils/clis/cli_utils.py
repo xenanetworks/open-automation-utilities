@@ -127,7 +127,7 @@ def format_port_status(port_id: str, status: dict, storage: "CmdContext") -> str
         algs[key] = enums.LinkTrainAlgorithm(val).name
 
     return f"""
-[ ACTUAL CONFIG ]
+[ACTUAL CONFIG]
     Link recovery         : {status['link_recovery']}
     Serdes count          : {status['serdes_count']}
 
@@ -137,7 +137,7 @@ def format_port_status(port_id: str, status: dict, storage: "CmdContext") -> str
         Algorithm         : {status['algorithms']}
     
 
-[ SHADOW CONFIG ]
+[SHADOW CONFIG]
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
         Initial Mod.      : {ims}
@@ -147,7 +147,7 @@ def format_port_status(port_id: str, status: dict, storage: "CmdContext") -> str
 
 def format_an_status(dic: dict) -> str:
     return f"""
-[ AN STATUS ]
+[AN STATUS]
     Loopback              : {dic['loopback']}
     Duration              : {dic['duration']:,} µs
     Successful runs       : {dic['successes']}
@@ -173,7 +173,7 @@ def format_lt_config(storage: CmdContext) -> str:
 
     return f"""
 LT configuration to be on port {storage.retrieve_port_str()}
-[ SHADOW CONFIG ]
+[SHADOW CONFIG]
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
         Initial Mod.      : {ims}
@@ -192,7 +192,7 @@ def format_lt_im(storage: CmdContext, serdes: int) -> str:
 
     return f"""
 Initial modulation to be {storage.retrieve_lt_initial_mod_serdes(serdes).name} on Serdes {serdes}
-[ SHADOW CONFIG ]
+[SHADOW CONFIG]
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
         Initial Mod.      : {ims}
@@ -211,7 +211,7 @@ def format_lt_algorithm(storage: CmdContext, serdes: int) -> str:
 
     return f"""
 LT algorithm to be {storage.retrieve_lt_algorithm_serdes(serdes).name} on Serdes {serdes}
-[ SHADOW CONFIG ]
+[SHADOW CONFIG]
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
         Initial Mod.      : {ims}
@@ -230,7 +230,7 @@ def format_an_config(storage: CmdContext) -> str:
 
     return f"""
 AN configuration to be on port {storage.retrieve_port_str()}
-[ SHADOW CONFIG ]
+[SHADOW CONFIG]
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
         Initial Mod.      : {ims}
@@ -293,7 +293,7 @@ def format_txtap_set(
 
 def format_lt_status(dic: dict) -> str:
     return f"""
-[ LT STATUS ]
+[LT STATUS]
     Is enabled        : {str(dic['is_enabled']).lower()}
     Is trained        : {str(dic['is_trained']).lower()}
     Failure           : {dic['failure']}
