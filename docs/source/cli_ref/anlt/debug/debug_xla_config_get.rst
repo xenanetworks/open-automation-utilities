@@ -1,5 +1,5 @@
-debug lt-rx-analyzer-dump
-=========================
+debug xla-config-get
+===============================
 
 .. important::
     
@@ -9,8 +9,7 @@ debug lt-rx-analyzer-dump
 Description
 -----------
 
-Debug lt-rx-analyzer-dump
-
+Debug xla-config-get
 
 
 Synopsis
@@ -18,7 +17,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-dump <LANE>
+    debug xla-config-get <LANE>
 
 
 Arguments
@@ -39,7 +38,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-dump 0
+    xoa-utils[123456][port0/2] > debug xla-config-get 0
 
     xoa-utils[123456][port0/2] >
 

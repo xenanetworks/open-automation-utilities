@@ -1,4 +1,4 @@
-debug lt-rx-analyzer-rd-page-get
+debug xla-rd-page-get
 ================================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt-rx-analyzer-rd-page-get
 Description
 -----------
 
-Debug lt-rx-analyzer-rd-page-get
+Debug xla-rd-page-get
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-rd-page-get <LANE>
+    debug xla-rd-page-get <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-rd-page-get 0
+    xoa-utils[123456][port0/2] > debug xla-rd-page-get 0
 
     xoa-utils[123456][port0/2] >
 

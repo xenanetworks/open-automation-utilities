@@ -1,4 +1,4 @@
-debug lt-rx-analyzer-trig-mask-get
+debug xla-trig-mask-get
 ==================================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt-rx-analyzer-trig-mask-get
 Description
 -----------
 
-Debug lt-rx-analyzer-trig-mask-get
+Debug xla-trig-mask-get
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-trig-mask-get <LANE>
+    debug xla-trig-mask-get <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-trig-mask-get 0
+    xoa-utils[123456][port0/2] > debug xla-trig-mask-get 0
 
     xoa-utils[123456][port0/2] >
 
