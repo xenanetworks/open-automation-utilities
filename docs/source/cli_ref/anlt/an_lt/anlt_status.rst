@@ -30,7 +30,7 @@ Examples
 
     xoa-utils[123456][port0/0] > anlt status
     
-    [ ACTUAL CONFIG ]
+    [ACTUAL CONFIG]
         Link recovery         : off
         Serdes count          : 1
 
@@ -39,7 +39,7 @@ Examples
             Initial Mod.      : {'0': 'NRZ'}
     
 
-    [ SHADOW CONFIG ]
+    [SHADOW CONFIG]
         Auto-negotiation      : on (allow loopback: no)
         Link training         : off (auto) (preset0: standard tap values)
             Initial Mod.      : {}

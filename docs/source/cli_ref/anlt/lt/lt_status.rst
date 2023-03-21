@@ -13,13 +13,13 @@ Synopsis
 
 .. code-block:: text
     
-    lt status <LANE>
+    lt status <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the serdes index.
 
@@ -35,7 +35,7 @@ Examples
 
     xoa-utils[123456][port0/2] > lt status 0
     
-    [ LT STATUS ]
+    [LT STATUS]
         Is enabled        : true
         Is trained        : true
         Failure           : no_failure

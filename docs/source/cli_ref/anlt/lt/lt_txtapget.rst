@@ -13,13 +13,13 @@ Synopsis
 
 .. code-block:: text
     
-    lt txtapget <LANE>
+    lt txtapget <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the serdes index.
 

@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug xla-trig-mask-set <LANE>
+    debug xla-trig-mask-set <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 

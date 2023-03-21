@@ -17,13 +17,13 @@ Synopsis
 
 .. code-block:: text
     
-    lt im <LANE> <ENCODING>
+    lt im <SERDES> <ENCODING>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 

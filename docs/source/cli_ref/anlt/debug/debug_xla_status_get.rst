@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug xla-status-get <LANE>
+    debug xla-status-get <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 

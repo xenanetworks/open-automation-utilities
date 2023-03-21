@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug serdes-reset <LANE>
+    debug serdes-reset <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 
