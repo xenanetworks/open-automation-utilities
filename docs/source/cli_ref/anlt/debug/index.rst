@@ -9,7 +9,7 @@ Debug Commands
     :maxdepth: 1
     
     debug_init
-    debug_lane_reset
+    debug_serdes_reset
     debug_mode_get
     debug_mode_set
     debug_lt_tx_config_get

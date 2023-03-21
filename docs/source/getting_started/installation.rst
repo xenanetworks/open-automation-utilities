@@ -3,7 +3,7 @@ Installing XOA Utils
 
 XOA Utils is made into a Python package, `xoa-utils <https://pypi.org/project/xoa-utils/>`_ for easy installation and upgrade for all platforms. **However, it requires you to have knowledge about Python and the operating system you are using**.
 
-**For Windows (x64) users**, you can also download the **xoa-utils-x64.exe** application, which includes Python itself, `xoa-driver <https://pypi.org/project/xoa-driver/>`_, and all the dependencies. There is **no need to install anything** on your PC to run the XOA Utils SSH service application.
+**For Windows (x64) users**, you can also download the **xoa-utils-x64.exe** application, which includes Python itself, `xoa-driver <https://pypi.org/project/xoa-driver/>`_, and all the dependencies. There is **no need to install anything** on your PC to run the XOA Utils SSH service application, but remember you still `need to generate the SSH key <Generate SSH Key>`_.
 
 The table below shows the distribution methods for each platform.
 

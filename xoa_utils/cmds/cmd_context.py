@@ -229,7 +229,7 @@ class CmdContext:
         current_port_id = self._pt_state.port_str
         if current_port_id not in self._pt_state.port_serdes_num:
             raise NotInStoreError(current_port_id)
-        if not serdes in range(self._pt_state.port_serdes_num[self._pt_state.port_str]):
+        if serdes not in range(self._pt_state.port_serdes_num[self._pt_state.port_str]):
             raise NotCorrectSerdesError(current_port_id, serdes)
 
     def remove_port(self, exact_port_id: str) -> None:
@@ -251,6 +251,9 @@ class CmdContext:
             raise NotConnectedError()
 
         tester = self.retrieve_tester()
+        if tester is None:
+            raise NotConnectedError()
+        
         p_dics = {}
         if id_str == "*":
             m_id = p_id = -1
