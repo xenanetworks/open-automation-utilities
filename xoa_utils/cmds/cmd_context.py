@@ -247,9 +247,6 @@ class CmdContext:
     def obtain_physical_ports(
         self, id_str: str = "*", update: bool = True
     ) -> dict[str, GenericL23Port]:
-        if self.retrieve_tester() is None:
-            raise NotConnectedError()
-
         tester = self.retrieve_tester()
         if tester is None:
             raise NotConnectedError()

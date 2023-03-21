@@ -1,16 +1,15 @@
-debug lt-rx-analyzer-trig-mask-set
-==================================
+debug xla-config-set
+===============================
 
 .. important::
     
     To debug on a serdes, you must always use :doc:`debug_init` command prior to all the other debug commands.
 
-    
+
 Description
 -----------
 
-Debug lt-rx-analyzer-trig-mask-set
-
+Debug xla-config-set
 
 
 Synopsis
@@ -18,7 +17,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-trig-mask-set <LANE>
+    debug xla-config-set <LANE>
 
 
 Arguments
@@ -39,7 +38,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-trig-mask-set 0
+    xoa-utils[123456][port0/2] > debug xla-config-set 0
 
     xoa-utils[123456][port0/2] >
 

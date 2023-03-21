@@ -1,15 +1,15 @@
-debug lt-rx-analyzer-rd-data-get
-================================
+debug xla-trig-mask-set
+==================================
 
 .. important::
     
     To debug on a serdes, you must always use :doc:`debug_init` command prior to all the other debug commands.
 
-
+    
 Description
 -----------
 
-Debug lt-rx-analyzer-rd-data-get
+Debug xla-trig-mask-set
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-rd-data-get <LANE>
+    debug xla-trig-mask-set <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-rd-data-get 0
+    xoa-utils[123456][port0/2] > debug xla-trig-mask-set 0
 
     xoa-utils[123456][port0/2] >
 
