@@ -1,5 +1,5 @@
-debug xla-rd-addr-set
-================================
+debug an-rx-config-set
+======================
 
 .. important::
     
@@ -9,7 +9,7 @@ debug xla-rd-addr-set
 Description
 -----------
 
-Debug xla-rd-addr-set
+Debug an-rx-config-set
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug xla-rd-addr-set <LANE>
+    debug an-rx-config-set <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug xla-rd-addr-set 0
+    xoa-utils[123456][port0/2] > debug an-rx-config-set 0
 
     xoa-utils[123456][port0/2] >
 

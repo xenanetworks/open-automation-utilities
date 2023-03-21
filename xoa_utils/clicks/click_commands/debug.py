@@ -119,6 +119,87 @@ async def mode_set(context: ac.Context, lane: int, value: int) -> str:
 
 
 # --------------------------
+# command: an-tx-config-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.pass_context
+async def an_tx_config_get(context: ac.Context, lane: int) -> str:
+    """
+    Debug: Read AN TX configuration of the specified lane.
+
+        <LANE>: The lane (serdes) index.
+    """
+    return await _help_get(debug_utils.an_tx_config_get, context, lane)
+
+
+# --------------------------
+# command: an-tx-config-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value", type=ac.INT)
+@ac.pass_context
+async def an_tx_config_set(context: ac.Context, lane: int, value: int) -> str:
+    """
+    Debug: Write AN TX configuration of the specified lane.
+
+        <LANE>: The lane (serdes) index.
+
+        <VALUE>: Specifies the value.
+    """
+    return await _help_set(debug_utils.an_tx_config_set, context, lane, value)
+
+
+# --------------------------
+# command: an-rx-config-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.pass_context
+async def an_rx_config_get(context: ac.Context, lane: int) -> str:
+    """
+    Debug: Read AN RX configuration of the specified lane.
+
+        <LANE>: The lane (serdes) index.
+    """
+    return await _help_get(debug_utils.an_rx_config_get, context, lane)
+
+
+# --------------------------
+# command: an-rx-config-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value", type=ac.INT)
+@ac.pass_context
+async def an_rx_config_set(context: ac.Context, lane: int, value: int) -> str:
+    """
+    Debug: Write AN RX configuration of the specified lane.
+
+        <LANE>: The lane (serdes) index.
+
+        <VALUE>: Specifies the value.
+    """
+    return await _help_set(debug_utils.an_rx_config_set, context, lane, value)
+
+
+# --------------------------
+# command: an-status
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.pass_context
+async def an_status(context: ac.Context, lane: int) -> str:
+    """
+    Debug: Read the AN status of the specified lane.
+
+        <LANE>: The lane (serdes) index.
+    """
+    return await _help_get(debug_utils.an_status, context, lane)
+
+
+# --------------------------
 # command: lt-tx-config-get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
@@ -264,169 +345,169 @@ async def lt_rx_error_stat1_get(context: ac.Context, lane: int) -> str:
 
 
 # --------------------------
-# command: lt-rx-analyzer-config-get
+# command: xla-config-get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_config_get(context: ac.Context, lane: int) -> str:
+async def xla_config_get(context: ac.Context, lane: int) -> str:
     """
-    Debug: Read LT RX analyzer configuration of the specified lane.
+    Debug: Read Xena Logic Analyzer configuration of the specified lane.
 
         <LANE>: The lane (serdes) index.
     """
-    return await _help_get(debug_utils.lt_rx_analyzer_config_get, context, lane)
+    return await _help_get(debug_utils.xla_config_get, context, lane)
 
 
 # --------------------------
-# command: lt-rx-analyzer-trig-mask-get
+# command: xla-trig-mask-get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_trig_mask_get(context: ac.Context, lane: int) -> str:
+async def xla_trig_mask_get(context: ac.Context, lane: int) -> str:
     """
-    Debug: Read LT RX analyzer trigger mask of the specified lane.
+    Debug: Read Xena Logic Analyzer trigger mask of the specified lane.
 
         <LANE>: The lane (serdes) index.
     """
-    return await _help_get(debug_utils.lt_rx_analyzer_trig_mask_get, context, lane)
+    return await _help_get(debug_utils.xla_trig_mask_get, context, lane)
 
 
 # --------------------------
-# command: lt-rx-analyzer-status-get
+# command: xla-status-get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_status_get(context: ac.Context, lane: int) -> str:
+async def xla_status_get(context: ac.Context, lane: int) -> str:
     """
-    Debug: Read LT RX analyzer status of the specified lane.
+    Debug: Read Xena Logic Analyzer status of the specified lane.
 
         <LANE>: The lane (serdes) index.
     """
-    return await _help_get(debug_utils.lt_rx_analyzer_status_get, context, lane)
+    return await _help_get(debug_utils.xla_status_get, context, lane)
 
 
 # --------------------------
-# command: lt-rx-analyzer-rd-addr-get
+# command: xla-rd-addr-get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_rd_addr_get(context: ac.Context, lane: int) -> str:
+async def xla_rd_addr_get(context: ac.Context, lane: int) -> str:
     """
-    Debug: Read LT RX analyzer RD Address of the specified lane.
+    Debug: Read Xena Logic Analyzer RD Address of the specified lane.
 
         <LANE>: The lane (serdes) index.
     """
-    return await _help_get(debug_utils.lt_rx_analyzer_rd_addr_get, context, lane)
+    return await _help_get(debug_utils.xla_rd_addr_get, context, lane)
 
 
 # --------------------------
-# command: lt-rx-analyzer-rd-page-get
+# command: xla-rd-page-get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_rd_page_get(context: ac.Context, lane: int) -> str:
+async def xla_rd_page_get(context: ac.Context, lane: int) -> str:
     """
-    Debug: Read LT RX analyzer RD Page of the specified lane.
+    Debug: Read Xena Logic Analyzer RD Page of the specified lane.
 
         <LANE>: The lane (serdes) index.
     """
-    return await _help_get(debug_utils.lt_rx_analyzer_rd_page_get, context, lane)
+    return await _help_get(debug_utils.xla_rd_page_get, context, lane)
 
 
 # --------------------------
-# command: lt-rx-analyzer-rd-data-get
+# command: xla-rd-data-get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_rd_data_get(context: ac.Context, lane: int) -> str:
+async def xla_rd_data_get(context: ac.Context, lane: int) -> str:
     """
-    Debug: Read LT RX analyzer RD Data of the specified lane.
+    Debug: Read Xena Logic Analyzer RD Data of the specified lane.
 
         <LANE>: The lane (serdes) index.
     """
-    return await _help_get(debug_utils.lt_rx_analyzer_rd_data_get, context, lane)
+    return await _help_get(debug_utils.xla_rd_data_get, context, lane)
 
 
 # --------------------------
-# command: lt-rx-analyzer-config-set
+# command: xla-config-set
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
 @ac.argument("value", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_config_set(context: ac.Context, lane: int, value: int) -> str:
+async def xla_config_set(context: ac.Context, lane: int, value: int) -> str:
     """
-    Debug: Write LT RX Analyzer configuration of the specified lane.
+    Debug: Write Xena Logic Analyzer configuration of the specified lane.
 
         <LANE>: The lane (serdes) index.
         VALUE INT: Specifies the value.\n
     """
-    await _help_set(debug_utils.lt_rx_analyzer_config_set, context, lane, value)
+    await _help_set(debug_utils.xla_config_set, context, lane, value)
     return ""
 
 
 # --------------------------
-# command: lt-rx-analyzer-trig-mask-set
+# command: xla-trig-mask-set
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
 @ac.argument("value", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_trig_mask_set(
+async def xla_trig_mask_set(
     context: ac.Context, lane: int, value: int
 ) -> str:
     """
-    Debug: Write LT RX analyzer trigger mask of the specified lane.
+    Debug: Write Xena Logic Analyzer trigger mask of the specified lane.
 
         <LANE>: The lane (serdes) index.
 
         <VALUE>: Specifies the value.
     """
-    await _help_set(debug_utils.lt_rx_analyzer_trig_mask_set, context, lane, value)
+    await _help_set(debug_utils.xla_trig_mask_set, context, lane, value)
     return ""
 
 
 # --------------------------
-# command: lt-rx-analyzer-rd-addr-set
+# command: xla-rd-addr-set
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
 @ac.argument("value", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_rd_addr_set(context: ac.Context, lane: int, value: int) -> str:
+async def xla_rd_addr_set(context: ac.Context, lane: int, value: int) -> str:
     """
-    Debug: Write LT RX analyzer RD Address of the specified lane.
+    Debug: Write Xena Logic Analyzer RD Address of the specified lane.
 
         <LANE>: The lane (serdes) index.
 
         <VALUE>: Specifies the value.
     """
-    await _help_set(debug_utils.lt_rx_analyzer_rd_addr_set, context, lane, value)
+    await _help_set(debug_utils.xla_rd_addr_set, context, lane, value)
     return ""
 
 
 # --------------------------
-# command: lt-rx-analyzer-rd-page-set
+# command: xla-rd-page-set
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
 @ac.argument("value", type=ac.INT)
 @ac.pass_context
-async def lt_rx_analyzer_rd_page_set(context: ac.Context, lane: int, value: int) -> str:
+async def xla_rd_page_set(context: ac.Context, lane: int, value: int) -> str:
     """
-    Debug: Write LT RX analyzer RD Page of the specified lane.
+    Debug: Write Xena Logic Analyzer RD Page of the specified lane.
 
         <LANE>: The lane (serdes) index.
 
         <VALUE>: Specifies the value.
     """
-    await _help_set(debug_utils.lt_rx_analyzer_rd_page_set, context, lane, value)
+    await _help_set(debug_utils.xla_rd_page_set, context, lane, value)
     return ""
 
 
@@ -469,7 +550,7 @@ async def lt_prbs(context: ac.Context, lane: int) -> str:
 
 
 # --------------------------
-# command: lt-rx-analyzer-dump
+# command: xla-dump
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("lane", type=ac.INT)
@@ -477,9 +558,9 @@ async def lt_prbs(context: ac.Context, lane: int) -> str:
     "-f", "--filename", type=ac.STRING, default=""
 )
 @ac.pass_context
-async def lt_rx_analyzer_dump(context: ac.Context, lane: int, filename: str) -> str:
+async def xla_dump(context: ac.Context, lane: int, filename: str) -> str:
     """
-    Debug: Show the LT RX analyzer dump
+    Debug: Show the Xena Logic Analyzer dump
 
         <LANE>: The lane (serdes) index.
     """
@@ -491,7 +572,7 @@ async def lt_rx_analyzer_dump(context: ac.Context, lane: int, filename: str) -> 
     else:
         inf = await debug_utils.init(port_obj, lane)
         storage.store_anlt_low(lane, inf)
-    ret_str = await debug_utils.lt_rx_analyzer_dump(port_obj, lane, inf=inf)
+    ret_str = await debug_utils.xla_dump(port_obj, lane, inf=inf)
     if filename:
         with open(filename, "w+") as f:
             f.write(f"{ret_str}\n")

@@ -1,4 +1,4 @@
-debug lt-rx-analyzer-config-set
+debug xla-config-set
 ===============================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt-rx-analyzer-config-set
 Description
 -----------
 
-Debug lt-rx-analyzer-config-set
+Debug xla-config-set
 
 
 Synopsis
@@ -17,7 +17,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-config-set <LANE>
+    debug xla-config-set <LANE>
 
 
 Arguments
@@ -38,7 +38,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-config-set 0
+    xoa-utils[123456][port0/2] > debug xla-config-set 0
 
     xoa-utils[123456][port0/2] >
 

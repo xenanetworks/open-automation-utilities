@@ -1,15 +1,15 @@
-debug xla-rd-addr-set
-================================
+debug an-tx-config-set
+======================
 
 .. important::
     
     To debug on a lane, you must always use :doc:`debug_init` command prior to all the other debug commands.
 
-
+    
 Description
 -----------
 
-Debug xla-rd-addr-set
+Debug an-tx-config-set
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug xla-rd-addr-set <LANE>
+    debug an-tx-config-set <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug xla-rd-addr-set 0
+    xoa-utils[123456][port0/2] > debug an-tx-config-set 0
 
     xoa-utils[123456][port0/2] >
 

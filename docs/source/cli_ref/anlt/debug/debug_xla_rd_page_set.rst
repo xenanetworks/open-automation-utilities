@@ -1,4 +1,4 @@
-debug lt-rx-analyzer-rd-page-set
+debug xla-rd-page-set
 ================================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt-rx-analyzer-rd-page-set
 Description
 -----------
 
-Debug lt-rx-analyzer-rd-page-set
+Debug xla-rd-page-set
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-rd-page-set <LANE>
+    debug xla-rd-page-set <LANE>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-rd-page-set 0
+    xoa-utils[123456][port0/2] > debug xla-rd-page-set 0
 
     xoa-utils[123456][port0/2] >
 
