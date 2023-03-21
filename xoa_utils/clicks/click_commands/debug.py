@@ -200,6 +200,74 @@ async def an_status(context: ac.Context, lane: int) -> str:
 
 
 # --------------------------
+# command: an-tx-page0-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.pass_context
+async def an_tx_page0_get(context: ac.Context, lane: int) -> str:
+    """
+    Debug: Read AN TX page0 of the specified lane
+
+        <LANE>: The lane (serdes) index.
+    """
+    return await _help_get(debug_utils.an_tx_page0_get, context, lane)
+
+
+# --------------------------
+# command: an-tx-page0-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value", type=ac.INT)
+@ac.pass_context
+async def an_tx_page0_set(context: ac.Context, lane: int, value: int) -> str:
+    """
+    Debug: Write AN PAGE (page0,page1) to the specified lane.
+
+
+        <LANE>: The lane (serdes) index.
+
+        <VALUE>: Specifies the value.
+    """
+    return await _help_set(debug_utils.an_tx_page0_set, context, lane, value)
+
+
+# --------------------------
+# command: an-tx-page1-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.pass_context
+async def an_tx_page1_get(context: ac.Context, lane: int) -> str:
+    """
+    Debug: Read AN TX page1 of the specified lane
+
+        <LANE>: The lane (serdes) index.
+    """
+    return await _help_get(debug_utils.an_tx_page1_get, context, lane)
+
+
+# --------------------------
+# command: an-tx-page1-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("lane", type=ac.INT)
+@ac.argument("value", type=ac.INT)
+@ac.pass_context
+async def an_tx_page1_set(context: ac.Context, lane: int, value: int) -> str:
+    """
+    Debug: Set page1 of AN page to the specified lane.
+
+
+        <LANE>: The lane (serdes) index.
+
+        <VALUE>: Specifies the value.
+    """
+    return await _help_set(debug_utils.an_tx_page1_set, context, lane, value)
+
+
+# --------------------------
 # command: lt-tx-config-get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
