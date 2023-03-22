@@ -267,6 +267,35 @@ async def an_tx_page1_set(context: ac.Context, serdes: int, value: int) -> str:
     return await _help_set(debug_utils.an_tx_page1_set, context, serdes, value)
 
 
+# --------------------------
+# command: an-rx-page0-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.pass_context
+async def an_rx_page0_get(context: ac.Context, serdes: int) -> str:
+    """
+    Debug: Read AN RX page0 of the specified serdes
+
+        <SERDES>: The serdes index.
+    """
+    return await _help_get(debug_utils.an_rx_page0_get, context, serdes)
+
+
+# --------------------------
+# command: an-rx-page1-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.pass_context
+async def an_rx_page1_get(context: ac.Context, serdes: int) -> str:
+    """
+    Debug: Read AN RX page1 of the specified serdes
+
+        <SERDES>: The serdes index.
+    """
+    return await _help_get(debug_utils.an_rx_page1_get, context, serdes)
+
 
 # --------------------------
 # command: lt-tx-config-get
