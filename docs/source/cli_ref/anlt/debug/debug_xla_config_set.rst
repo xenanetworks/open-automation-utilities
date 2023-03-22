@@ -17,13 +17,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug xla-config-set <LANE>
+    debug xla-config-set <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 

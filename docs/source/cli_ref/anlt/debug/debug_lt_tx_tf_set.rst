@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-tx-tf-set <LANE>
+    debug lt-tx-tf-set <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 

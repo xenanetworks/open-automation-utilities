@@ -13,13 +13,13 @@ Synopsis
 
 .. code-block:: text
     
-    lt trained <LANE>
+    lt trained <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 

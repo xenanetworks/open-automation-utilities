@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug xla-rd-page-set <LANE>
+    debug xla-rd-page-set <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 

@@ -17,13 +17,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-prbs <LANE>
+    debug lt-prbs <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 

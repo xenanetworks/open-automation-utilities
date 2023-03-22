@@ -3,7 +3,7 @@ debug an-tx-config-get
 
 .. important::
     
-    To debug on a lane, you must always use :doc:`debug_init` command prior to all the other debug commands.
+    To debug on a serdes, you must always use :doc:`debug_init` command prior to all the other debug commands.
 
     
 Description
@@ -18,15 +18,15 @@ Synopsis
 
 .. code-block:: text
 
-    debug an-tx-config-get <LANE>
+    debug an-tx-config-get <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
-Specifies the transceiver lane index.
+Specifies the transceiver serdes index.
 
 
 Options

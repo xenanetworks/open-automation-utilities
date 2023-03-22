@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-tx-config-get <LANE>
+    debug lt-tx-config-get <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 

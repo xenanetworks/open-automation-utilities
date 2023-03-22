@@ -48,7 +48,7 @@ Allowed values:
 
 ``-s, --serdes`` (int list)
     
-Specifies which lanes of LT logs to keep. If you don't know how many serdes lanes the port has, use :doc:`../an_lt/anlt_log`, default to all lanes.
+Specifies which serdes of LT logs to keep. If you don't know how many serdes serdes the port has, use :doc:`../an_lt/anlt_log`, default to all serdes.
 
 
 Examples

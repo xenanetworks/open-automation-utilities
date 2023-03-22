@@ -13,13 +13,13 @@ Synopsis
 
 .. code-block:: text
     
-    lt preset <LANE> <PRESET>
+    lt preset <SERDES> <PRESET>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 

@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug mode-get <LANE>
+    debug mode-get <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 
