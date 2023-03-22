@@ -273,7 +273,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
                             b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Un-formatted message:\n{'':<37}Value:{log_ufmt_v}, Msg:{log_ufmt_msg}\n{'':<37}FEC:{log_ufmt_fec}, ABILITY:{log_ufmt_ab}"
             elif log_type == "trace" and "direction" in log_entry and "LT" in log_m:
                 if log_pstate == "new" or log_pstate == "":
-                    b_str = f"{common:<32}{(log_direction + ':'):<14}{log_pkt_value}, LOCKED={log_pkt_locked}, DONE={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"
+                    b_str = f"{common:<32}{(log_direction + ':'):<14}{log_pkt_value}, LOCKED={log_pkt_locked}, TRAINED={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"
 
             if b_str:
                 real.append(b_str)
