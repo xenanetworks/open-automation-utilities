@@ -237,6 +237,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
             log_ufmt_ab = _dict_get(
                 i, "entry", "pkt", "fields", "un-formatted message", "ability"
             )
+            log_errors = _dict_get(i, "entry", "pkt", "errors")
 
             if log_pkt_locked == "true":
                 log_pkt_locked = _ascii_styler(log_pkt_locked, [ASCIIStyle.GREEN_BG])
@@ -271,10 +272,14 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
                             b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Formatted message:\n{'':<37}Value:{log_fmt_v}, Msg:{log_fmt_msg}"
                         else:
                             b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Un-formatted message:\n{'':<37}Value:{log_ufmt_v}, Msg:{log_ufmt_msg}\n{'':<37}FEC:{log_ufmt_fec}, ABILITY:{log_ufmt_ab}"
+                    if log_errors:
+                        b_str += "\n" + f"{'':<37}" + _ascii_styler("ERRORS:", [ASCIIStyle.RED_BG]) + f"{log_errors}"
+
             elif log_type == "trace" and "direction" in log_entry and "LT" in log_m:
                 if log_pstate == "new" or log_pstate == "":
                     b_str = f"{common:<32}{(log_direction + ':'):<14}{log_pkt_value}, LOCKED={log_pkt_locked}, DONE={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"
-
+                    if log_errors:
+                        b_str += "\n" + f"{'':<37}" + _ascii_styler("ERRORS:", [ASCIIStyle.RED_BG]) + f"{log_errors}"
             if b_str:
                 real.append(b_str)
         return "\n".join(real)
