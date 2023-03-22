@@ -253,7 +253,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
             log_pkt_value = _dict_get(i, "entry", "pkt", "value")
 
             serdes_str = f"(S{log_serdes})," if "LT" in log_m else ","
-            common = f"{log_time/1000000}, {log_m}{serdes_str}"
+            common = f"{log_time/1000000:.6f}, {log_m}{serdes_str}"
 
             if log_type == "debug":
                 b_str = f"{common:<32}{'DBG:':<5}{log_log}"
