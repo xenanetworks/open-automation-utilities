@@ -277,7 +277,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
 
             elif log_type == "trace" and "direction" in log_entry and "LT" in log_m:
                 if log_pstate == "new" or log_pstate == "":
-                    b_str = f"{common:<32}{(log_direction + ':'):<14}{log_pkt_value}, LOCKED={log_pkt_locked}, DONE={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"
+                    b_str = f"{common:<32}{(log_direction + ':'):<14}{log_pkt_value}, LOCKED={log_pkt_locked}, TRAINED={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"
                     if log_errors:
                         b_str += "\n" + f"{'':<37}" + _ascii_styler("ERRORS:", [ASCIIStyle.RED_BG]) + f"{log_errors}"
             if b_str:
