@@ -666,7 +666,7 @@ async def xla_dump(context: ac.Context, serdes: int, filename: str) -> str:
     else:
         inf = await debug_utils.init(port_obj, serdes)
         storage.store_anlt_low(serdes, inf)
-    ret_str = await debug_utils.lt_rx_analyzer_dump(port_obj, serdes, inf=inf)
+    ret_str = await debug_utils.xla_dump(port_obj, serdes, inf=inf)
     if filename:
         with open(filename, "w+") as f:
             f.write(f"{ret_str}\n")
