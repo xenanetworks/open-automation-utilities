@@ -146,3 +146,26 @@ async def ports(context: ac.Context, all: bool) -> str:
     """
     storage: CmdContext = context.obj
     return format_ports_status(storage, all)
+
+
+# --------------------------
+# command: module
+# --------------------------
+@xoa_util.command(cls=cb.XenaCommand)
+@ac.option("--force/--no-force", type=ac.BOOL, help=h.HELP_CONNECT_FORCE, default=True)
+@ac.pass_context
+async def module(context: ac.Context, force: bool) -> str:
+    """
+    Change module media configuration
+
+        <MODULE>: Specifies the module on the specified device host. Specify a module using the format slot, e.g. 0
+
+        <MEDIA>: Specifies the media configuration type of the module. Allowed values: qsfpddpam4 |  sfpdd | sfp112 | qsfpddnrz | qsfpdd800 | qsfp112 | osfp800
+
+        <PORT_COUNT>: Specifies the port count of the module.
+
+        <PORT_SPEED>: Specifies the port speed in Gbps of the module. Allowed values: 800g | 400g | 200g | 100g
+
+    """
+    storage: CmdContext = context.obj
+    return ???
