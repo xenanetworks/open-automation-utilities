@@ -63,7 +63,7 @@ async def connect(
     if real_port_list:
         storage.store_current_port_str(first_id)
     if force or reset:
-        await asyncio.sleep(3)
+        await asyncio.sleep(2)
         # status will change when you reserve_port or reset_port, need to wait
     return format_tester_status(storage)
 
@@ -131,7 +131,7 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
         await asyncio.sleep(2)
         # status will change when you reserve_port or reset_port, need to wait
     status_dic = await anlt_utils.anlt_status(port_obj)
-    return f"{format_ports_status(storage, False)}{format_port_status(port_id, status_dic, storage)}"
+    return f"{format_ports_status(storage, False)}{format_port_status(status_dic, storage)}"
 
 
 # --------------------------
