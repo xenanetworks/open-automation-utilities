@@ -117,7 +117,7 @@ def format_ports_status(storage: "CmdContext", all: bool) -> str:
     return result_str
 
 
-def format_port_status(port_id: str, status: dict, storage: "CmdContext") -> str:
+def format_port_status(status: dict, storage: "CmdContext") -> str:
     ims = {}
     algs = {}
 

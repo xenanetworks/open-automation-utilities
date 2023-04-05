@@ -5,6 +5,9 @@ from xoa_utils.clicks.click_commands.group import xoa_util
 from xoa_utils.clicks import click_backend as cb
 from xoa_utils.cmds import CmdContext
 from xoa_driver.hlfuncs import anlt_ll_debug as debug_utils
+import time
+import json
+import csv
 
 
 @xoa_util.group(cls=cb.XenaGroup)
@@ -22,9 +25,9 @@ def debug():
 @ac.pass_context
 async def init(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Initialize debug on the specified serdes.
+    Debug: Initialize debug on the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -68,9 +71,9 @@ async def _help_set(
 @ac.pass_context
 async def serdes_reset(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Reset the specified serdes.
+    Debug: Reset the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -92,9 +95,9 @@ async def serdes_reset(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def mode_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Get mode of the specified serdes.
+    Debug: Get mode of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.mode_get, context, serdes)
 
@@ -108,11 +111,11 @@ async def mode_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def mode_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Set mode of the specified serdes.
+    Debug: Set mode of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
 
-        <VALUE>: Specifies the value.
+        <VALUE>: Value.
     """
 
     return await _help_set(debug_utils.mode_set, context, serdes, value)
@@ -126,9 +129,9 @@ async def mode_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def an_tx_config_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN TX configuration of the specified serdes.
+    Debug: Read AN TX config of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.an_tx_config_get, context, serdes)
 
@@ -142,11 +145,11 @@ async def an_tx_config_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def an_tx_config_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write AN TX configuration of the specified serdes.
+    Debug: Write AN TX config of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
 
-        <VALUE>: Specifies the value.
+        <VALUE>: Value.
     """
     return await _help_set(debug_utils.an_tx_config_set, context, serdes, value)
 
@@ -159,9 +162,9 @@ async def an_tx_config_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def an_rx_config_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN RX configuration of the specified serdes.
+    Debug: Read AN RX config of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.an_rx_config_get, context, serdes)
 
@@ -175,11 +178,11 @@ async def an_rx_config_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def an_rx_config_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write AN RX configuration of the specified serdes.
+    Debug: Write AN RX config of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
 
-        <VALUE>: Specifies the value.
+        <VALUE>: Value.
     """
     return await _help_set(debug_utils.an_rx_config_set, context, serdes, value)
 
@@ -192,9 +195,9 @@ async def an_rx_config_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def an_status(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read the AN status of the specified serdes.
+    Debug: Read AN status of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.an_status, context, serdes)
 
@@ -207,9 +210,9 @@ async def an_status(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def an_tx_page0_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN TX page0 of the specified serdes
+    Debug: Read AN TX page0 of the serdes
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.an_tx_page0_get, context, serdes)
 
@@ -223,12 +226,12 @@ async def an_tx_page0_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def an_tx_page0_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write AN PAGE (page0,page1) to the specified serdes.
+    Debug: Write AN PAGE (page0,page1) to the serdes.
 
 
-        <serdes>: The serdes (serdes) index.
+        <SERDES>: Serdes index.
 
-        <VALUE>: Specifies the value.
+        <VALUE>: Value.
     """
     return await _help_set(debug_utils.an_tx_page0_set, context, serdes, value)
 
@@ -241,9 +244,9 @@ async def an_tx_page0_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def an_tx_page1_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN TX page1 of the specified serdes
+    Debug: Read AN TX page1 of the serdes
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.an_tx_page1_get, context, serdes)
 
@@ -257,12 +260,12 @@ async def an_tx_page1_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def an_tx_page1_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Set page1 of AN page to the specified serdes.
+    Debug: Set page1 of AN page to the serdes.
 
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
 
-        <VALUE>: Specifies the value.
+        <VALUE>: Value.
     """
     return await _help_set(debug_utils.an_tx_page1_set, context, serdes, value)
 
@@ -275,9 +278,9 @@ async def an_tx_page1_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def an_rx_page0_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN RX page0 of the specified serdes
+    Debug: Read AN RX page0 of the serdes
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.an_rx_page0_get, context, serdes)
 
@@ -290,9 +293,9 @@ async def an_rx_page0_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def an_rx_page1_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN RX page1 of the specified serdes
+    Debug: Read AN RX page1 of the serdes
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.an_rx_page1_get, context, serdes)
 
@@ -305,9 +308,9 @@ async def an_rx_page1_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_tx_config_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT TX configuration of the specified serdes.
+    Debug: Read LT TX config of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.lt_tx_config_get, context, serdes)
 
@@ -321,11 +324,11 @@ async def lt_tx_config_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_tx_config_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write LT TX configuration of the specified serdes.
+    Debug: Write LT TX config of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
 
-        <VALUE>: Specifies the value.
+        <VALUE>: Value.
     """
     return await _help_set(debug_utils.lt_tx_config_set, context, serdes, value)
 
@@ -338,9 +341,9 @@ async def lt_tx_config_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def lt_rx_config_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT RX configuration of the specified serdes.
+    Debug: Read LT RX config of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.lt_rx_config_get, context, serdes)
 
@@ -354,11 +357,11 @@ async def lt_rx_config_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_rx_config_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write LT RX configuration of the specified serdes.
+    Debug: Write LT RX config of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
 
-        <VALUE>: Specifies the value.
+        <VALUE>: Value.
     """
     return await _help_set(debug_utils.lt_rx_config_set, context, serdes, value)
 
@@ -371,9 +374,9 @@ async def lt_rx_config_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def lt_tx_tf_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT TX Training Frames of the specified serdes.
+    Debug: Read LT TX Training Frames of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.lt_tx_tf_get, context, serdes)
 
@@ -387,12 +390,11 @@ async def lt_tx_tf_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_tx_tf_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write LT TX Test Frame to the specified serdes.
+    Debug: Write LT TX Test Frame to the serdes.
 
+        <SERDES>: Serdes index.
 
-        <SERDES>: The serdes index.
-
-        <VALUE>: Specifies the value.
+        <VALUE>: Value.
     """
     return await _help_set(debug_utils.lt_tx_tf_set, context, serdes, value)
 
@@ -405,9 +407,9 @@ async def lt_tx_tf_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def lt_rx_tf_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT RX Test Frame of the specified serdes.
+    Debug: Read LT RX Test Frame of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.lt_rx_tf_get, context, serdes)
 
@@ -420,9 +422,9 @@ async def lt_rx_tf_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_rx_error_stat0_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT RX Error Stat0 of the specified serdes.
+    Debug: Read LT RX Error Stat0 of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.lt_rx_error_stat0_get, context, serdes)
 
@@ -435,176 +437,11 @@ async def lt_rx_error_stat0_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_rx_error_stat1_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT RX Error Stat1 of the specified serdes.
+    Debug: Read LT RX Error Stat1 of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.lt_rx_error_stat1_get, context, serdes)
-
-
-# --------------------------
-# command: xla-config-get
-# --------------------------
-@debug.command(cls=cb.XenaCommand)
-@ac.argument("serdes", type=ac.INT)
-@ac.pass_context
-async def xla_config_get(context: ac.Context, serdes: int) -> str:
-    """
-    Debug: Read Xena Logic Analyzer configuration of the specified serdes.
-
-        <SERDES>: The serdes index.
-    """
-    return await _help_get(debug_utils.xla_config_get, context, serdes)
-
-
-# --------------------------
-# command: xla-trig-mask-get
-# --------------------------
-@debug.command(cls=cb.XenaCommand)
-@ac.argument("serdes", type=ac.INT)
-@ac.pass_context
-async def xla_trig_mask_get(context: ac.Context, serdes: int) -> str:
-    """
-    Debug: Read Xena Logic Analyzer trigger mask of the specified serdes.
-
-        <SERDES>: The serdes index.
-    """
-    return await _help_get(debug_utils.xla_trig_mask_get, context, serdes)
-
-
-# --------------------------
-# command: xla-status-get
-# --------------------------
-@debug.command(cls=cb.XenaCommand)
-@ac.argument("serdes", type=ac.INT)
-@ac.pass_context
-async def xla_status_get(context: ac.Context, serdes: int) -> str:
-    """
-    Debug: Read Xena Logic Analyzer status of the specified serdes.
-
-        <SERDES>: The serdes index.
-    """
-    return await _help_get(debug_utils.xla_status_get, context, serdes)
-
-
-# --------------------------
-# command: xla-rd-addr-get
-# --------------------------
-@debug.command(cls=cb.XenaCommand)
-@ac.argument("serdes", type=ac.INT)
-@ac.pass_context
-async def xla_rd_addr_get(context: ac.Context, serdes: int) -> str:
-    """
-    Debug: Read Xena Logic Analyzer RD Address of the specified serdes.
-
-        <SERDES>: The serdes index.
-    """
-    return await _help_get(debug_utils.xla_rd_addr_get, context, serdes)
-
-
-# --------------------------
-# command: xla-rd-page-get
-# --------------------------
-@debug.command(cls=cb.XenaCommand)
-@ac.argument("serdes", type=ac.INT)
-@ac.pass_context
-async def xla_rd_page_get(context: ac.Context, serdes: int) -> str:
-    """
-    Debug: Read Xena Logic Analyzer RD Page of the specified serdes.
-
-        <SERDES>: The serdes index.
-    """
-    return await _help_get(debug_utils.xla_rd_page_get, context, serdes)
-
-
-# --------------------------
-# command: xla-rd-data-get
-# --------------------------
-@debug.command(cls=cb.XenaCommand)
-@ac.argument("serdes", type=ac.INT)
-@ac.pass_context
-async def xla_rd_data_get(context: ac.Context, serdes: int) -> str:
-    """
-    Debug: Read Xena Logic Analyzer RD Data of the specified serdes.
-
-        <SERDES>: The serdes index.
-    """
-    return await _help_get(debug_utils.xla_rd_data_get, context, serdes)
-
-
-# --------------------------
-# command: xla-config-set
-# --------------------------
-@debug.command(cls=cb.XenaCommand)
-@ac.argument("serdes", type=ac.INT)
-@ac.argument("value", type=ac.INT)
-@ac.pass_context
-async def xla_config_set(context: ac.Context, serdes: int, value: int) -> str:
-    """
-    Debug: Write Xena Logic Analyzer configuration of the specified serdes.
-
-        <SERDES>: The serdes index.
-        VALUE INT: Specifies the value.\n
-    """
-    await _help_set(debug_utils.xla_config_set, context, serdes, value)
-    return ""
-
-
-# --------------------------
-# command: xla-trig-mask-set
-# --------------------------
-@debug.command(cls=cb.XenaCommand)
-@ac.argument("serdes", type=ac.INT)
-@ac.argument("value", type=ac.INT)
-@ac.pass_context
-async def xla_trig_mask_set(context: ac.Context, serdes: int, value: int) -> str:
-    """
-    Debug: Write Xena Logic Analyzer trigger mask of the specified serdes.
-
-        <SERDES>: The serdes index.
-
-        <VALUE>: Specifies the value.
-    """
-    await _help_set(debug_utils.xla_trig_mask_set, context, serdes, value)
-    return ""
-
-
-# --------------------------
-# command: xla-rd-addr-set
-# --------------------------
-@debug.command(cls=cb.XenaCommand)
-@ac.argument("serdes", type=ac.INT)
-@ac.argument("value", type=ac.INT)
-@ac.pass_context
-async def xla_rd_addr_set(context: ac.Context, serdes: int, value: int) -> str:
-    """
-    Debug: Write Xena Logic Analyzer RD Address of the specified serdes.
-
-        <SERDES>: The serdes index.
-
-        <VALUE>: Specifies the value.
-    """
-    await _help_set(debug_utils.xla_rd_addr_set, context, serdes, value)
-    return ""
-
-
-# --------------------------
-# command: xla-rd-page-set
-# --------------------------
-@debug.command(cls=cb.XenaCommand)
-@ac.argument("serdes", type=ac.INT)
-@ac.argument("value", type=ac.INT)
-@ac.pass_context
-async def xla_rd_page_set(context: ac.Context, serdes: int, value: int) -> str:
-    """
-    Debug: Write Xena Logic Analyzer RD Page of the specified serdes.
-
-        <SERDES>: The serdes index.
-
-        <VALUE>: Specifies the value.
-    """
-    await _help_set(debug_utils.xla_rd_page_set, context, serdes, value)
-    return ""
 
 
 # --------------------------
@@ -615,24 +452,24 @@ async def xla_rd_page_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def lt_status(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read the LT status of the specified serdes.
+    Debug: Read the LT status of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     return await _help_get(debug_utils.lt_status, context, serdes)
 
 
 # --------------------------
-# command: lt-prbs
+# command: lt-prbs-ber
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
 @ac.argument("serdes", type=ac.INT)
 @ac.pass_context
-async def lt_prbs(context: ac.Context, serdes: int) -> str:
+async def lt_prbs_ber(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read PRBS BER of the specified serdes.
+    Debug: Read LT PRBS BER of the serdes.
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -646,6 +483,172 @@ async def lt_prbs(context: ac.Context, serdes: int) -> str:
 
 
 # --------------------------
+# command: xla-config-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.pass_context
+async def xla_config_get(context: ac.Context, serdes: int) -> str:
+    """
+    Debug: Read Xena Logic Analyzer config of the serdes.
+
+        <SERDES>: Serdes index.
+    """
+    return await _help_get(debug_utils.xla_config_get, context, serdes)
+
+
+# --------------------------
+# command: xla-config-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.argument("value", type=ac.INT)
+@ac.pass_context
+async def xla_config_set(context: ac.Context, serdes: int, value: int) -> str:
+    """
+    Debug: Write Xena Logic Analyzer config of the serdes.
+
+        <SERDES>: Serdes index.
+
+        <VALUE>: Value.
+    """
+    await _help_set(debug_utils.xla_config_set, context, serdes, value)
+    return ""
+
+
+# --------------------------
+# command: xla-trig-mask-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.pass_context
+async def xla_trig_mask_get(context: ac.Context, serdes: int) -> str:
+    """
+    Debug: Read Xena Logic Analyzer trigger mask of the serdes.
+
+        <SERDES>: Serdes index.
+    """
+    return await _help_get(debug_utils.xla_trig_mask_get, context, serdes)
+
+
+# --------------------------
+# command: xla-trig-mask-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.argument("value", type=ac.INT)
+@ac.pass_context
+async def xla_trig_mask_set(context: ac.Context, serdes: int, value: int) -> str:
+    """
+    Debug: Write Xena Logic Analyzer trigger mask of the serdes.
+
+        <SERDES>: Serdes index.
+
+        <VALUE>: Value.
+    """
+    await _help_set(debug_utils.xla_trig_mask_set, context, serdes, value)
+    return ""
+
+
+# --------------------------
+# command: xla-status-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.pass_context
+async def xla_status_get(context: ac.Context, serdes: int) -> str:
+    """
+    Debug: Read Xena Logic Analyzer status of the serdes.
+
+        <SERDES>: Serdes index.
+    """
+    return await _help_get(debug_utils.xla_status_get, context, serdes)
+
+
+# --------------------------
+# command: xla-rd-addr-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.pass_context
+async def xla_rd_addr_get(context: ac.Context, serdes: int) -> str:
+    """
+    Debug: Read Xena Logic Analyzer RD Address of the serdes.
+
+        <SERDES>: Serdes index.
+    """
+    return await _help_get(debug_utils.xla_rd_addr_get, context, serdes)
+
+
+# --------------------------
+# command: xla-rd-addr-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.argument("value", type=ac.INT)
+@ac.pass_context
+async def xla_rd_addr_set(context: ac.Context, serdes: int, value: int) -> str:
+    """
+    Debug: Write Xena Logic Analyzer RD Address of the serdes.
+
+        <SERDES>: Serdes index.
+
+        <VALUE>: Value.
+    """
+    await _help_set(debug_utils.xla_rd_addr_set, context, serdes, value)
+    return ""
+
+
+# --------------------------
+# command: xla-rd-page-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.pass_context
+async def xla_rd_page_get(context: ac.Context, serdes: int) -> str:
+    """
+    Debug: Read Xena Logic Analyzer RD Page of the serdes.
+
+        <SERDES>: Serdes index.
+    """
+    return await _help_get(debug_utils.xla_rd_page_get, context, serdes)
+
+
+# --------------------------
+# command: xla-rd-page-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.argument("value", type=ac.INT)
+@ac.pass_context
+async def xla_rd_page_set(context: ac.Context, serdes: int, value: int) -> str:
+    """
+    Debug: Write Xena Logic Analyzer RD Page of the serdes.
+
+        <SERDES>: Serdes index.
+
+        <VALUE>: Value.
+    """
+    await _help_set(debug_utils.xla_rd_page_set, context, serdes, value)
+    return ""
+
+
+# --------------------------
+# command: xla-rd-data-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.pass_context
+async def xla_rd_data_get(context: ac.Context, serdes: int) -> str:
+    """
+    Debug: Read Xena Logic Analyzer RD Data of the serdes.
+
+        <SERDES>: Serdes index.
+    """
+    return await _help_get(debug_utils.xla_rd_data_get, context, serdes)
+
+
+# --------------------------
 # command: xla-dump
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
@@ -656,7 +659,7 @@ async def xla_dump(context: ac.Context, serdes: int, filename: str) -> str:
     """
     Debug: Show the Xena Logic Analyzer dump
 
-        <SERDES>: The serdes index.
+        <SERDES>: Serdes index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -666,10 +669,95 @@ async def xla_dump(context: ac.Context, serdes: int, filename: str) -> str:
     else:
         inf = await debug_utils.init(port_obj, serdes)
         storage.store_anlt_low(serdes, inf)
-    ret_str = await debug_utils.xla_dump(port_obj, serdes, inf=inf)
+    ret_dict = await debug_utils.xla_dump(port_obj, serdes, inf=inf)
+    fieldnames = []
+    for key in ret_dict.keys():
+        fieldnames.append(key)
     if filename:
-        with open(filename, "w+") as f:
-            f.write(f"{ret_str}\n")
-        return "Result stored in file"
+        with open(filename, "w+") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames = fieldnames)
+            writer.writeheader()
+            writer.writerow(ret_dict)
+        return "Result stored in csv file"
     else:
-        return ret_str
+        return json.dumps(ret_dict, indent=4)
+    
+
+# --------------------------
+# command: xla-trig-n-dump
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.option("-m", "--mask", type=ac.STRING, default="0x00000FF0")
+@ac.option("-o", "--window-offset", type=ac.STRING, default="0x0080")
+@ac.option("-s", "--trigger-select", type=ac.STRING, default="0x0001")
+@ac.option("-f", "--filename", type=ac.STRING, default="xla_dump.csv")
+@ac.pass_context
+async def xla_trig_n_dump(context: ac.Context, serdes: int, mask: str, window_offset: str, trigger_select: str, filename: str) -> str:
+    """
+    Debug: Configure the trigger and dump the Xena Logic Analyzer data
+
+        <SERDES>: Serdes index.
+    """
+    if not mask.startswith("0x"):
+        return "Missing 0x for --mask option"
+    if not window_offset.startswith("0x"):
+        return "Missing 0x for --window-offset option"
+    if not trigger_select.startswith("0x"):
+        return "Missing 0x for --trigger-select option"
+    
+    # Set the XLA trigger mask and verify the result
+    try:
+        mask_value = int(mask, 16)
+        await _help_set(debug_utils.xla_trig_mask_set, context, serdes, mask_value)
+        resp = await _help_get(debug_utils.xla_trig_mask_get, context, serdes)
+        if int(resp) != mask_value:
+            return f"Setting mask failed. (expecting {mask} but get {resp:#010x})"
+    except ValueError:
+        return "Invalid hex string for --mask option"
+    
+    # Config the XLA trigger and verify the result
+    try:
+        window_offset_value = int(window_offset, 16) << 16
+        trigger_select_value = int(trigger_select, 16)
+        config_value = window_offset_value + trigger_select_value
+        await _help_set(debug_utils.xla_config_set, context, serdes, config_value)
+        resp = await _help_get(debug_utils.xla_config_get, context, serdes)
+        if int(resp) != window_offset_value:
+            return f"Configuring trigger failed. (expecting {window_offset_value:#010x} but get {resp:#010x})"
+    except ValueError:
+        return "Invalid hex string for --window-offset and/or --trigger-select options"
+    
+    # Check status and dump data
+    xla_status = 0
+    for _ in range(10):
+        xla_status = await _help_get(debug_utils.xla_status_get, context, serdes)
+        if int(xla_status) == 1:
+            break
+        else:
+            time.sleep(1)
+    if int(xla_status) == 0:
+        return "XLA status time out"
+    
+    # Dump data
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    or_inf = inf = storage.retrieve_anlt_low()
+    if storage.retrieve_anlt_serdes() == serdes or or_inf is not None:
+        inf = or_inf
+    else:
+        inf = await debug_utils.init(port_obj, serdes)
+        storage.store_anlt_low(serdes, inf)
+    ret_dict = await debug_utils.xla_dump(port_obj, serdes, inf=inf)
+    fieldnames = []
+    for key in ret_dict.keys():
+        fieldnames.append(key)
+    if filename:
+        with open(filename, "w+") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames = fieldnames)
+            writer.writeheader()
+            writer.writerow(ret_dict)
+        return "Result stored in csv file"
+    else:
+        return json.dumps(ret_dict, indent=4)
+    
