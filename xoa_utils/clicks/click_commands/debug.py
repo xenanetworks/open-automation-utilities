@@ -1,6 +1,7 @@
 from __future__ import annotations
 import asyncclick as ac
 import typing as t
+import json
 from xoa_utils.clicks.click_commands.group import xoa_util
 from xoa_utils.clicks import click_backend as cb
 from xoa_utils.cmds import CmdContext
@@ -479,7 +480,8 @@ async def lt_prbs_ber(context: ac.Context, serdes: int) -> str:
     else:
         inf = await debug_utils.init(port_obj, serdes)
         storage.store_anlt_low(serdes, inf)
-    return str(await debug_utils.lt_prbs(port_obj, serdes, inf=inf))
+    dic = await debug_utils.lt_prbs(port_obj, serdes, inf=inf)
+    return json.dumps(dic, indent=2)
 
 
 # --------------------------
@@ -680,8 +682,8 @@ async def xla_dump(context: ac.Context, serdes: int, filename: str) -> str:
             writer.writerow(ret_dict)
         return "Result stored in csv file"
     else:
-        return json.dumps(ret_dict, indent=4)
-    
+        return json.dumps(ret_dict, indent=2)
+
 
 # --------------------------
 # command: xla-trig-n-dump
@@ -759,5 +761,5 @@ async def xla_trig_n_dump(context: ac.Context, serdes: int, mask: str, window_of
             writer.writerow(ret_dict)
         return "Result stored in csv file"
     else:
-        return json.dumps(ret_dict, indent=4)
+        return json.dumps(ret_dict, indent=2)
     

@@ -14,3 +14,9 @@ Management Commands
 
     port
     ports
+
+.. toctree::
+    :maxdepth: 1
+    :caption: Module Commands
+
+    module
