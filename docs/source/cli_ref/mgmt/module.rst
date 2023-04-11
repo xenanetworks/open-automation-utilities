@@ -11,7 +11,7 @@ Synopsis
 
 .. code-block:: text
     
-    module <MODULE> <MEDIA> <PORT_COUNT> <PORT_SPEED>
+    module_config <MODULE> <MEDIA> <PORT_COUNT> <PORT_SPEED>
     [--force/--no-force]
 
 
@@ -37,13 +37,13 @@ Allowed values:
 
 * `sfp28`
 
-* `qsfp28nrz`
+* `qsfp28_nrz`
 
-* `qsfp28pam4`
+* `qsfp28_pam4`
 
-* `qsfp56pam4`
+* `qsfp56_pam4`
 
-* `qsfpddpam4`
+* `qsfpdd_pam4`
 
 * `sfp56`
 
@@ -51,13 +51,13 @@ Allowed values:
 
 * `sfp112`
 
-* `qsfpddnrz`
+* `qsfpdd_nrz`
 
 * `cfp`
 
-* `baset1`
+* `base_t1`
 
-* `baset1s`
+* `base_t1s`
 
 * `qsfpdd800`
 
