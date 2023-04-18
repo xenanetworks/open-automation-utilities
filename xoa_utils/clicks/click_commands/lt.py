@@ -79,10 +79,11 @@ async def lt_im(context: ac.Context, serdes: int, encoding: str) -> str:
         <ENCODING>: Specifies the initial modulation. Allowed values: nrz | pam4 | pam4pre
     """
     storage: CmdContext = context.obj
-    storage.retrieve_port()
+    port_obj = storage.retrieve_port()
     storage.validate_current_serdes(serdes)
     storage.store_lt_initial_mod(serdes, encoding)
-    return format_lt_im(storage, serdes)
+    status_dic = await anlt_utils.lt_im_status(port_obj)
+    return format_lt_im(status_dic, storage, serdes)
 
 
 # **************************
@@ -101,10 +102,11 @@ async def lt_algorithm(context: ac.Context, serdes: int, algorithm: str) -> str:
         <ALGORITHM>: Specifies the algorithm. Allowed values: alg0 | algn1
     """
     storage: CmdContext = context.obj
-    storage.retrieve_port()
+    port_obj = storage.retrieve_port()
     storage.validate_current_serdes(serdes)
     storage.store_lt_algorithm(serdes, algorithm)
-    return format_lt_algorithm(storage, serdes)
+    status_dic = await anlt_utils.lt_algorithm_status(port_obj)
+    return format_lt_algorithm(status_dic, storage, serdes)
 
 
 # **************************
