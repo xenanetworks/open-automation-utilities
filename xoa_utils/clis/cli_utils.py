@@ -118,14 +118,6 @@ def format_ports_status(storage: "CmdContext", all: bool) -> str:
 
 
 def format_port_status(status: dict, storage: "CmdContext") -> str:
-    ims = {}
-    algs = {}
-
-    for key, val in storage.retrieve_lt_initial_mod().items():
-        ims[key] = enums.LinkTrainEncoding(val).name
-    for key, val in storage.retrieve_lt_algorithm().items():
-        algs[key] = enums.LinkTrainAlgorithm(val).name
-
     return f"""
 [ACTUAL CONFIG]
     Link recovery         : {status['link_recovery']}
@@ -133,15 +125,11 @@ def format_port_status(status: dict, storage: "CmdContext") -> str:
 
     Auto-negotiation      : {status['autoneg_enabled']} (allow loopback: {'yes' if status['autoneg_allow_loopback'] else 'no'})
     Link training         : {'on' if status['link_training_mode'] != "disabled" else 'off'} ({'interactive' if status['link_training_mode'] == "interactive" else 'auto'}) (preset0: {'standard tap' if status['link_training_preset0'] == 'nrz_no_preset' else 'existing tap'} values) (timeout: {status['link_training_timeout']})
-        Initial Mod.      : {status['initial_mods']}
-        Algorithm         : {status['algorithms']}
     
 
 [SHADOW CONFIG]
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
-        Initial Mod.      : {ims}
-        Algorithm         : {algs}
 """
 
 
@@ -163,25 +151,14 @@ def format_an_status(dic: dict) -> str:
 
 
 def format_lt_config(storage: CmdContext) -> str:
-    ims = {}
-    algs = {}
-
-    for key, val in storage.retrieve_lt_initial_mod().items():
-        ims[key] = enums.LinkTrainEncoding(val).name
-    for key, val in storage.retrieve_lt_algorithm().items():
-        algs[key] = enums.LinkTrainAlgorithm(val).name
-
     return f"""
 LT configuration to be on port {storage.retrieve_port_str()}
 [SHADOW CONFIG]
-    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
-        Initial Mod.      : {ims}
-        Algorithm         : {algs}
 """
 
 
-def format_lt_im(storage: CmdContext, serdes: int) -> str:
+def format_lt_im(status: dict, storage: CmdContext, serdes: int) -> str:
     ims = {}
     algs = {}
 
@@ -191,16 +168,18 @@ def format_lt_im(storage: CmdContext, serdes: int) -> str:
         algs[key] = enums.LinkTrainAlgorithm(val).name
 
     return f"""
+[ACTUAL CONFIG]
+    Link training         :
+        Initial Mod.      : {status['initial_mods']}
+
 Initial modulation to be {storage.retrieve_lt_initial_mod_serdes(serdes).name} on Serdes {serdes}
 [SHADOW CONFIG]
-    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
         Initial Mod.      : {ims}
-        Algorithm         : {algs}
     """
 
 
-def format_lt_algorithm(storage: CmdContext, serdes: int) -> str:
+def format_lt_algorithm(status: dict, storage: CmdContext, serdes: int) -> str:
     ims = {}
     algs = {}
 
@@ -210,31 +189,24 @@ def format_lt_algorithm(storage: CmdContext, serdes: int) -> str:
         algs[key] = enums.LinkTrainAlgorithm(val).name
 
     return f"""
+[ACTUAL CONFIG]
+    Link training         :
+        Algorithm         : {status['algorithms']}
+
 LT algorithm to be {storage.retrieve_lt_algorithm_serdes(serdes).name} on Serdes {serdes}
 [SHADOW CONFIG]
-    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
-        Initial Mod.      : {ims}
         Algorithm         : {algs}
     """
 
 
 def format_an_config(storage: CmdContext) -> str:
-    ims = {}
-    algs = {}
-
-    for key, val in storage.retrieve_lt_initial_mod().items():
-        ims[key] = enums.LinkTrainEncoding(val).name
-    for key, val in storage.retrieve_lt_algorithm().items():
-        algs[key] = enums.LinkTrainAlgorithm(val).name
 
     return f"""
 AN configuration to be on port {storage.retrieve_port_str()}
 [SHADOW CONFIG]
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
-        Initial Mod.      : {ims}
-        Algorithm         : {algs}
 """
 
 
