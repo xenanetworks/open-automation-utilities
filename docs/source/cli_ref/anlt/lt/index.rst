@@ -23,6 +23,7 @@ Commands for Link Training.
     lt_trained
     lt_txtapget
     lt_txtapset
+    lt_txtap_autotune
 
 
 .. toctree::

@@ -100,6 +100,9 @@ Summary
     * - :doc:`../anlt/lt/lt_txtapset`
       - Write the tap values of the specified serdes of the local port
       - ``lt txtapset 0 1 3 4 60 1``
+    * - :doc:`../anlt/lt/lt_txtap_autotune`
+      - Auto tune the tap values of the specified serdes of the local port
+      - ``lt txtap-autotune 0``
     
     
     

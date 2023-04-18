@@ -226,7 +226,7 @@ async def lt_trained(context: ac.Context, serdes: int) -> str:
 
 
 # **************************
-# sub-command: txtapget
+# sub-command: lt txtapget
 # **************************
 @lt.command(cls=cb.XenaCommand, name="txtapget")
 @ac.argument("serdes", type=ac.INT)
@@ -245,7 +245,7 @@ async def lt_txtapget(context: ac.Context, serdes: int) -> str:
 
 
 # **************************
-# sub-command: txtapset
+# sub-command: lt txtapset
 # **************************
 @lt.command(cls=cb.XenaCommand, name="txtapset")
 @ac.argument("serdes", type=ac.INT)
@@ -255,7 +255,7 @@ async def lt_txtapget(context: ac.Context, serdes: int) -> str:
 @ac.argument("main", type=ac.INT)
 @ac.argument("post", type=ac.INT)
 @ac.pass_context
-async def txtapset(
+async def lt_txtapset(
     context: ac.Context,
     serdes: int,
     pre3: int,
@@ -303,3 +303,27 @@ async def lt_status(context: ac.Context, serdes: int) -> str:
     storage.validate_current_serdes(serdes)
     dic = await anlt_utils.lt_status(port_obj, serdes)
     return format_lt_status(dic)
+
+
+# ******************************
+# sub-command: lt txtap-autotune
+# ******************************
+@lt.command(cls=cb.XenaCommand, name="txtap-autotune")
+@ac.argument("serdes", type=ac.INT)
+@ac.pass_context
+async def lt_txtap_autotune(
+    context: ac.Context,
+    serdes: int,
+) -> str:
+    """
+    Auto tune the tx tap values of the specified serdes of the working port.
+
+        <SERDES>: The serdes index.
+
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    storage.validate_current_serdes(serdes)
+    await anlt_utils.txtap_autotune(port_obj, serdes)
+    dic = await anlt_utils.txtap_get(port_obj, serdes)
+    return format_txtap_get(serdes, dic)
