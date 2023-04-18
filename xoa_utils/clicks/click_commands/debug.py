@@ -763,3 +763,70 @@ async def xla_trig_n_dump(context: ac.Context, serdes: int, mask: str, window_of
     else:
         return json.dumps(ret_dict, indent=2)
     
+
+# --------------------------
+# command: px-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.argument("page", type=ac.STRING)
+@ac.argument("reg", type=ac.STRING)
+@ac.pass_context
+async def px_get(context: ac.Context, page: str, reg: str) -> str:
+    """
+    Debug: Get register value.
+
+        <PAGE_ADDRESS>: Page address in HEX string.
+
+        <REG_ADDRESS>: Register address in HEX string.
+    """
+    if not page.startswith("0x"):
+        return "Missing 0x for <PAGE_ADDRESS>"
+    if not reg.startswith("0x"):
+        return "Missing 0x for <REG_ADDRESS>"
+    
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+
+    resp = await debug_utils.px_get(port_obj, page_address=int(page, 16), register_address=int(reg,16))
+    if resp[0] == False:
+        return f"\033[91mError\033[0m: PAGE_ADDRESS: {page}, REG_ADDRESS: {reg}, value: {resp[1]}"
+    else:
+        return f"PAGE_ADDRESS: {page}, REG_ADDRESS: {reg}, value: {resp[1]}"
+
+# --------------------------
+# command: px-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.argument("page", type=ac.STRING)
+@ac.argument("reg", type=ac.STRING)
+@ac.argument("value", type=ac.STRING)
+@ac.pass_context
+async def mode_set(context: ac.Context, page: str, reg: str, value: str) -> str:
+    """
+    Debug: Set mode of the serdes.
+
+        <PAGE_ADDRESS>: Page address in HEX string.
+
+        <REG_ADDRESS>: Register address in HEX string.
+
+        <VALUE>: Value to write in HEX string
+    """
+    
+    if not page.startswith("0x"):
+        return "Missing 0x for <PAGE_ADDRESS>"
+    if not reg.startswith("0x"):
+        return "Missing 0x for <REG_ADDRESS>"
+    if not value.startswith("0x"):
+        return "Missing 0x for <VALUE>"
+    
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+
+    await debug_utils.px_set(port_obj, page_address=int(page, 16), register_address=int(reg,16), value=int(value,16))
+    resp = await debug_utils.px_get(port_obj, page_address=int(page, 16), register_address=int(reg,16))
+    if resp[0] == False:
+        return f"\033[91mFailed\033[0m: PAGE_ADDRESS: {page}, REG_ADDRESS: {reg}, value: {resp[1]}"
+    else:
+        return f"\033[92mSuccess\033[0m: PAGE_ADDRESS: {page}, REG_ADDRESS: {reg}, value: {resp[1]}"
