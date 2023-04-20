@@ -45,13 +45,15 @@ async def start_server(config: ReadConfig) -> None:
     )
 
 
-def main() -> None:
-    loop = asyncio.get_event_loop()
+async def main() -> None:
+    # loop = asyncio.get_event_loop()
     argv = (sys.argv[1],) if len(sys.argv) >= 2 else tuple()
     config = ReadConfig(*argv)
     try:
-        loop.run_until_complete(start_server(config))
-        loop.run_forever()
+        asyncio.create_task(start_server(config))
+        await asyncio.Event().wait()
+        # loop.run_until_complete(start_server(config))
+        # loop.run_forever()
     except (OSError, asyncssh.Error) as exc:
         sys.exit(f"Error starting server: <{type(str(exc))}> {exc}")
     except KeyboardInterrupt:
@@ -59,4 +61,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    asyncio.run(main())
