@@ -9,6 +9,9 @@ from xoa_driver.hlfuncs import anlt_ll_debug as debug_utils
 import time
 import json
 import csv
+from xoa_utils.clis import (
+    format_debug_init
+)
 
 
 @xoa_util.group(cls=cb.XenaGroup)
@@ -34,7 +37,14 @@ async def init(context: ac.Context, serdes: int) -> str:
     port_obj = storage.retrieve_port()
     inf = await debug_utils.init(port_obj, serdes)
     storage.store_anlt_low(serdes, inf)
-    return str(inf)
+    inf_dic = {
+        "base": inf.base,
+        "rx_gtm_base": inf.rx_gtm_base,
+        "tx_gtm_base": inf.tx_gtm_base,
+        "rx_serdes": inf.rx_serdes,
+        "tx_serdes": inf.tx_serdes
+    }
+    return format_debug_init(inf_dic)
 
 
 async def _help_get(func: t.Callable, context: ac.Context, serdes: int) -> str:
@@ -803,7 +813,7 @@ async def px_get(context: ac.Context, page: str, reg: str) -> str:
 @ac.argument("reg", type=ac.STRING)
 @ac.argument("value", type=ac.STRING)
 @ac.pass_context
-async def mode_set(context: ac.Context, page: str, reg: str, value: str) -> str:
+async def px_set(context: ac.Context, page: str, reg: str, value: str) -> str:
     """
     Debug: Set mode of the serdes.
 
