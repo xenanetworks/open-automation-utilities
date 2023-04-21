@@ -25,7 +25,7 @@ class XenaSSHCLIHandle:
         setattr(out, "flush", out._chan._flush_send_buf)
         # patch the flush() method since it doesn't exist.
         asyncclick.echo(
-            f"Hello {process.get_extra_info('username')}, welcome to Xena OpenAutomation Utilities SSH Service ({XOA_UTILS_VERSION}).",
+            f"Hello {process.get_extra_info('username')}, welcome to Xena OpenAutomation Utilities SSH Service ({XOA_UTILS_VERSION})",
             file=t.cast(t.IO, out),
         )
         worker = CmdWorker(process)
