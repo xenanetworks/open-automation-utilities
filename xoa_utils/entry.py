@@ -3,16 +3,17 @@ import asyncio
 import asyncclick
 import sys
 import os
+import typing as t
 
 grandpa = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if grandpa not in sys.path:
     sys.path.append(grandpa)
 
-from xoa_utils import __version__ as XOA_UTILS_VERSION
-from xoa_utils.clis import ReadConfig
-from xoa_utils.hub import Hub
-from xoa_utils.ssh_server import XenaSSHServer
-from xoa_utils.cmds import CmdWorker
+from xoa_utils import __version__ as XOA_UTILS_VERSION  # noqa: E402
+from xoa_utils.clis import ReadConfig  # noqa: E402
+from xoa_utils.hub import Hub  # noqa: E402
+from xoa_utils.ssh_server import XenaSSHServer  # noqa: E402
+from xoa_utils.cmds import CmdWorker  # noqa: E402
 
 
 class XenaSSHCLIHandle:
@@ -25,7 +26,7 @@ class XenaSSHCLIHandle:
         # patch the flush() method since it doesn't exist.
         asyncclick.echo(
             f"Hello {process.get_extra_info('username')}, welcome to Xena OpenAutomation Utilities SSH Service ({XOA_UTILS_VERSION}).",
-            file=out,
+            file=t.cast(t.IO, out),
         )
         worker = CmdWorker(process)
         await worker.run(self.config)
@@ -36,13 +37,14 @@ async def start_server(config: ReadConfig) -> None:
     print(
         f"(PID: {os.getpid()}) Xena OpenAutomation Utilities SSH Service ({XOA_UTILS_VERSION}) running on 0.0.0.0:{config.conn_port}"
     )
-    await asyncssh.create_server(
+    server = await asyncssh.create_server(
         XenaSSHServer,
         "0.0.0.0",
         config.conn_port,
         server_host_keys=[config.conn_host_keys],
         process_factory=XenaSSHCLIHandle(config).handle_client,
     )
+    await server.wait_closed()
 
 
 async def main() -> None:
