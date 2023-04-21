@@ -83,7 +83,7 @@ async def status(context: ac.Context) -> str:
     port_obj = storage.retrieve_port()
     status_dic = await anlt_utils.anlt_status(port_obj)
     port_id = storage.retrieve_port_str()
-    return format_port_status(port_id, status_dic, storage)
+    return format_port_status(status_dic, storage)
 
 
 # --------------------------
