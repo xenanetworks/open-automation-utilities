@@ -803,7 +803,7 @@ async def px_get(context: ac.Context, page: str, reg: str) -> str:
 @ac.argument("reg", type=ac.STRING)
 @ac.argument("value", type=ac.STRING)
 @ac.pass_context
-async def mode_set(context: ac.Context, page: str, reg: str, value: str) -> str:
+async def px_set(context: ac.Context, page: str, reg: str, value: str) -> str:
     """
     Debug: Set mode of the serdes.
 
