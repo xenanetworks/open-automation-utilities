@@ -240,7 +240,7 @@ class CmdContext:
             if not self._md_state.module_str:
                 raise NoWorkingPort()
             exact_module_id = self._md_state.module_str
-        if exact_module_id in self._pt_state.ports:
+        if exact_module_id in self._md_state.modules:
             return self._md_state.modules[exact_module_id]
         raise NotInStoreError(exact_module_id)
 
