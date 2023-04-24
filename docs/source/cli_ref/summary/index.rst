@@ -42,6 +42,12 @@ Summary
     * - :doc:`../anlt/an_lt/anlt_status`
       - Show AN/LT status of the local port
       - ``anlt status``
+    * - :doc:`../anlt/an_lt/anlt_strict`
+      - Enable/disable ANLt strict mode
+      - ``anlt strict --on``
+    * - :doc:`../anlt/an_lt/anlt_log_control`
+      - Control what should be logged in ANLT by xenaserver
+      - ``anlt log-control``
     
 
 .. list-table:: AN Command Summary

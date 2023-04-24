@@ -307,3 +307,38 @@ def format_debug_init(dic: dict) -> str:
     tx_gtm_base: 0x{dic["tx_gtm_base"]:0>8X}
     tx_serdes:   {dic["tx_serdes"]}
 """
+
+def format_strict(storage: CmdContext, on: bool) -> str:
+    enable = "on" if on else "off"
+    return f"Port {storage.retrieve_port_str()} ANLT strict mode: {enable}\n"
+
+def format_log_control(
+        storage: CmdContext, 
+        debug: bool, 
+        an_trace: bool, 
+        lt_trace: bool, 
+        alg_trace: bool,
+        fsm_port: bool,
+        fsm_an: bool,
+        fsm_an_stimuli: bool,
+        fsm_lt: bool,
+        fsm_lt_coeff: bool,
+        fsm_lt_stimuli: bool,
+        fsm_lt_alg0: bool,
+        fsm_lt_algn1: bool
+        ) -> str:
+    return f"""
+Port {storage.retrieve_port_str()} log control:
+    Type debug:             {'On' if debug else 'Off'}
+    Type AN trace:          {'On' if an_trace else 'Off'}
+    Type LT trace:          {'On' if lt_trace else 'Off'}
+    Type ALG trace:         {'On' if alg_trace else 'Off'}
+    Type FSM port:          {'On' if fsm_port else 'Off'}
+    Type FSM AN:            {'On' if fsm_an else 'Off'}
+    Type FSM AN Stimuli:    {'On' if fsm_an_stimuli else 'Off'}
+    Type FSM LT:            {'On' if fsm_lt else 'Off'}
+    Type FSM LT Coeff:      {'On' if fsm_lt_coeff else 'Off'}
+    Type FSM LT Stimuli:    {'On' if fsm_lt_stimuli else 'Off'}
+    Type FSM LT ALG  0:     {'On' if fsm_lt_alg0 else 'Off'}
+    Type FSM LT ALG -1:     {'On' if fsm_lt_algn1 else 'Off'}
+"""

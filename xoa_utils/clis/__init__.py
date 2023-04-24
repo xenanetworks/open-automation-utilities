@@ -19,4 +19,6 @@ from xoa_utils.clis.cli_utils import (
     format_txtap_set,
     format_lt_status,
     format_debug_init,
+    format_strict,
+    format_log_control,
 )
