@@ -4,7 +4,13 @@ import json
 import typing as t
 from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_utils.clicks import click_backend as cb
-from xoa_utils.clis import format_recovery, format_port_status
+from xoa_utils.clis import (
+    format_recovery,
+    format_port_status,
+    format_strict,
+    format_log_control
+    )
+from xoa_driver.enums import AnLtLogControl
 from xoa_utils.clicks.click_commands.group import xoa_util
 from xoa_utils.clicks import click_help as h
 from xoa_utils.cmds import CmdContext
@@ -117,9 +123,9 @@ async def do(context: ac.Context) -> str:
     return ""
 
 
-# **************************
+# --------------------------
 # command: log
-# **************************
+# --------------------------
 @anlt.command(cls=cb.XenaCommand, name="log")
 @ac.option(
     "-f", "--filename", type=ac.STRING, help=h.HELP_ANLT_LOG_FILENAME, default=""
@@ -305,3 +311,102 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
     storage: CmdContext = ctx.obj
     storage.set_loop_coro(log, kw)
     return ""
+
+
+# --------------------------
+# command: strict
+# --------------------------
+@anlt.command(cls=cb.XenaCommand)
+@ac.option("--on/--off", type=ac.BOOL, help=h.HELP_STRICT_ON, default=True)
+@ac.pass_context
+async def strict(context: ac.Context, on: bool) -> str:
+    """
+    Enable/disable ANLt strict mode.
+    If enable, errored frames will be ignored.
+    """
+    storage: CmdContext = context.obj
+
+    port_obj = storage.retrieve_port()
+    await anlt_utils.anlt_strict(port_obj, on)
+    return format_strict(storage, on)
+
+# --------------------------
+# command: log-control
+# --------------------------
+@anlt.command(cls=cb.XenaCommand)
+@ac.option("-D/-d", "--debug/--no-debug", type=ac.BOOL, help=h.HELP_LOG_CONTROL_DEBUG_ON, default=True)
+@ac.option("-A/-a", "--an-trace/--no-an-trace", type=ac.BOOL, help=h.HELP_LOG_CONTROL_AN_TRACE_ON, default=True)
+@ac.option("-L/-l", "--lt-trace/--no-lt-trace", type=ac.BOOL, help=h.HELP_LOG_CONTROL_LT_TRACE_ON, default=True)
+@ac.option("-G/-g", "--alg-trace/--no-alg-trace", type=ac.BOOL, help=h.HELP_LOG_CONTROL_ALG_TRACE_ON, default=True)
+@ac.option("-P/-p", "--fsm-port/--no-fsm-port", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_PORT_ON, default=False)
+@ac.option("-N/-n", "--fsm-an/--no-fsm-an", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_AN_ON, default=True)
+@ac.option("-M/-m", "--fsm-an-stimuli/--no-fsm-an-stimuli", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_AN_STIMULI_ON, default=False)
+@ac.option("-T/-t", "--fsm-lt/--no-fsm-lt", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_ON, default=True)
+@ac.option("-C/-c", "--fsm-lt-coeff/--no-fsm-lt-coeff", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_COEFF_ON, default=False)
+@ac.option("-S/-s", "--fsm-lt-stimuli/--no-fsm-lt-stimuli", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_STIMULI_ON, default=False)
+@ac.option("-Z/-z", "--fsm-lt-alg0/--no-fsm-lt-alg0", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_ALG0_ON, default=True)
+@ac.option("-O/-o", "--fsm-lt-algn1/--no-fsm-lt-algn1", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_ALGN1_ON, default=True)
+@ac.pass_context
+async def log_control(
+    context: ac.Context, 
+    debug: bool, 
+    an_trace: bool, 
+    lt_trace: bool, 
+    alg_trace: bool,
+    fsm_port: bool,
+    fsm_an: bool,
+    fsm_an_stimuli: bool,
+    fsm_lt: bool,
+    fsm_lt_coeff: bool,
+    fsm_lt_stimuli: bool,
+    fsm_lt_alg0: bool,
+    fsm_lt_algn1: bool,
+    ) -> str:
+    """
+    Control what should be logged in ANLT by xenaserver
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    types = []
+    if debug:
+        types.append(AnLtLogControl.LOG_TYPE_DEBUG)
+    if an_trace:
+        types.append(AnLtLogControl.LOG_TYPE_AN_TRACE)
+    if lt_trace:
+        types.append(AnLtLogControl.LOG_TYPE_LT_TRACE)
+    if alg_trace:
+        types.append(AnLtLogControl.LOG_TYPE_ALG_TRACE)
+    if fsm_port:
+        types.append(AnLtLogControl.LOG_TYPE_FSM_PORT)
+    if fsm_an:
+        types.append(AnLtLogControl.LOG_TYPE_FSM_ANEG)
+    if fsm_an_stimuli:
+        types.append(AnLtLogControl.LOG_TYPE_FSM_ANEG_STIMULI)
+    if fsm_lt:
+        types.append(AnLtLogControl.LOG_TYPE_FSM_LT)
+    if fsm_lt_coeff:
+        types.append(AnLtLogControl.LOG_TYPE_FSM_LT_COEFF)
+    if fsm_lt_stimuli:
+        types.append(AnLtLogControl.LOG_TYPE_FSM_LT_STIMULI)
+    if fsm_lt_alg0:
+        types.append(AnLtLogControl.LOG_TYPE_FSM_LT_ALG0)
+    if fsm_lt_algn1:
+        types.append(AnLtLogControl.LOG_TYPE_FSM_LT_ALG1)
+
+
+    await anlt_utils.anlt_log_control(port_obj, types)
+    return format_log_control(
+        storage, 
+        debug, 
+        an_trace, 
+        lt_trace, 
+        alg_trace,
+        fsm_port,
+        fsm_an,
+        fsm_an_stimuli,
+        fsm_lt,
+        fsm_lt_coeff,
+        fsm_lt_stimuli,
+        fsm_lt_alg0,
+        fsm_lt_algn1
+        )

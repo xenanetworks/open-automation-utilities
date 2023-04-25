@@ -10,3 +10,5 @@ Commands for AN/LT.
     anlt_recovery
     anlt_status
     anlt_log
+    anlt_log_control
+    anlt_strict
