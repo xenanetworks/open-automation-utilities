@@ -321,8 +321,7 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
 @ac.pass_context
 async def strict(context: ac.Context, on: bool) -> str:
     """
-    Enable/disable ANLt strict mode.
-    If enable, errored frames will be ignored.
+    ANLT strict mode ignores errored frames.
     """
     storage: CmdContext = context.obj
 
