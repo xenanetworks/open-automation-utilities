@@ -829,7 +829,7 @@ async def px_set(context: ac.Context, page: int, reg: str, value: str) -> str:
     port_obj = storage.retrieve_port()
 
     await debug_utils.px_set(port_obj, page_address=page, register_address=int(reg,16), value=int(value,16))
-    resp = await debug_utils.px_get(port_obj, page_address=page, register_address=int(reg,16))
+    resp = await debug_utils.px_set(port_obj, page_address=page, register_address=int(reg,16))
     if resp[0] == False:
         return f"\033[91mFailed\033[0m: PAGE_ADDRESS: {page}, REG_ADDRESS: {reg}, value: {resp[1]}"
     else:
