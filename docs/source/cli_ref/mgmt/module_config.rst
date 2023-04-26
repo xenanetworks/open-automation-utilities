@@ -1,5 +1,5 @@
-module
-======
+module-config
+=============
 
 Description
 -----------
@@ -11,7 +11,7 @@ Synopsis
 
 .. code-block:: text
     
-    module_config <MODULE> <MEDIA> <PORT_COUNT> <PORT_SPEED>
+    module-config <MODULE> <MEDIA> <PORT_COUNT> <PORT_SPEED>
     [--force/--no-force]
 
 
@@ -107,4 +107,4 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456] > module 0 qsfp56 8 100g
+    xoa-utils[123456] > module-config 0 osfp800 8 100g

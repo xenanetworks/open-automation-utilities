@@ -91,18 +91,18 @@ Examples
 
     xoa-utils[123456][port0/2] > anlt log-control
     Port 0/2 log control:
-        Type debug:             On
-        Type AN trace:          On
-        Type LT trace:          On
-        Type ALG trace:         On
-        Type FSM port:          Off
-        Type FSM AN:            On
-        Type FSM AN Stimuli:    Off
-        Type FSM LT:            On
-        Type FSM LT Coeff:      Off
-        Type FSM LT Stimuli:    Off
-        Type FSM LT ALG  0:     On
-        Type FSM LT ALG -1:     On
+        Type debug:             on
+        Type AN trace:          on
+        Type LT trace:          on
+        Type ALG trace:         on
+        Type FSM port:          on
+        Type FSM AN:            on
+        Type FSM AN Stimuli:    off
+        Type FSM LT:            on
+        Type FSM LT Coeff:      off
+        Type FSM LT Stimuli:    off
+        Type FSM LT ALG  0:     on
+        Type FSM LT ALG -1:     on
 
     xoa-utils[123456][port0/2] >
 

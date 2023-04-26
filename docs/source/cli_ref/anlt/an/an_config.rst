@@ -50,7 +50,6 @@ Examples
     [SHADOW CONFIG]
         Auto-negotiation      : on (allow loopback: yes)
         Link training         : off (auto) (preset0: standard tap values)
-            Initial Mod.      : {}
 
     xoa-utils[123456][port0/2] >
 

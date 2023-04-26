@@ -167,7 +167,7 @@ async def ports(context: ac.Context, all: bool) -> str:
 
 
 # --------------------------
-# command: module
+# command: module-config
 # --------------------------
 @xoa_util.command(cls=cb.XenaCommand)
 @ac.argument("module", type=ac.INT)
