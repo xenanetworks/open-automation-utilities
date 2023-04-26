@@ -36,12 +36,13 @@ Examples
     xoa-utils[123456][port0/2] > lt status 0
     
     [LT STATUS]
-        Is enabled        : true
-        Is trained        : true
+        Mode              : on
+        Status            : trained
         Failure           : no_failure
 
         Initial mod.      : nrz
         Preset0           : standard tap values
+        
         Total bits        : 2,201,372,480
         Total err. bits   : 24
         BER               : 1.09e-08

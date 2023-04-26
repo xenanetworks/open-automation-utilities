@@ -58,7 +58,6 @@ Examples
         Auto-negotiation      : off (allow loopback: no)
         Link training         : on (interactive) (preset0: standard tap values)
             Initial Mod.      : {'0': 'NRZ'}
-            Algorithm         : {}
 
     xoa-utils[123456][port0/2] >
 

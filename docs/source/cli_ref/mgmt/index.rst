@@ -19,4 +19,4 @@ Management Commands
     :maxdepth: 1
     :caption: Module Commands
 
-    module
+    module_config
