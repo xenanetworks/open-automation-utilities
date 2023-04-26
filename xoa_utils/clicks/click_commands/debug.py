@@ -778,7 +778,6 @@ async def xla_trig_n_dump(context: ac.Context, serdes: int, mask: str, window_of
 # command: px-get
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument("serdes", type=ac.INT)
 @ac.argument("page", type=ac.STRING)
 @ac.argument("reg", type=ac.STRING)
 @ac.pass_context
@@ -808,7 +807,6 @@ async def px_get(context: ac.Context, page: str, reg: str) -> str:
 # command: px-set
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
-@ac.argument("serdes", type=ac.INT)
 @ac.argument("page", type=ac.STRING)
 @ac.argument("reg", type=ac.STRING)
 @ac.argument("value", type=ac.STRING)
