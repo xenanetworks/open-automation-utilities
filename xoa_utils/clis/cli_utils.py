@@ -123,12 +123,12 @@ def format_port_status(status: dict, storage: "CmdContext") -> str:
     Link recovery         : {status['link_recovery']}
     Serdes count          : {status['serdes_count']}
 
-    Auto-negotiation      : {status['autoneg_enabled']} (allow loopback: {'yes' if status['autoneg_allow_loopback'] else 'no'})
+    Auto-negotiation      : {status['autoneg_enabled']} ({'allow' if status['autoneg_allow_loopback'] else 'not allow'} loopback)
     Link training         : {'on' if status['link_training_mode'] != "disabled" else 'off'} ({'interactive' if status['link_training_mode'] == "interactive" else 'auto'}) (preset0: {'standard tap' if status['link_training_preset0'] == 'nrz_no_preset' else 'existing tap'} values) (timeout: {status['link_training_timeout']})
     
 
 [SHADOW CONFIG]
-    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
+    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
 """
 
@@ -136,8 +136,11 @@ def format_port_status(status: dict, storage: "CmdContext") -> str:
 def format_an_status(dic: dict) -> str:
     return f"""
 [AN STATUS]
+    Mode                  : {'enabled' if dic['is_enabled'] else 'disabled'}
     Loopback              : {dic['loopback']}
-    Duration              : {dic['duration']:,} µs
+
+    Duration              : {dic['duration']:,} µs {'(N/A)' if dic['duration'] == 0 else ''}
+
     Successful runs       : {dic['successes']}
     Timeouts              : {dic['timeouts']}
     Loss of sync          : {dic['loss_of_sync']}
@@ -205,7 +208,7 @@ def format_an_config(storage: CmdContext) -> str:
     return f"""
 AN configuration to be on port {storage.retrieve_port_str()}
 [SHADOW CONFIG]
-    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
+    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
 """
 
@@ -266,17 +269,18 @@ def format_txtap_set(
 def format_lt_status(dic: dict) -> str:
     return f"""
 [LT STATUS]
-    Is enabled        : {str(dic['is_enabled']).lower()}
-    Is trained        : {str(dic['is_trained']).lower()}
+    Mode              : {'enabled' if dic['is_enabled'] else 'disabled'}
+    Status            : {'trained' if dic['is_trained'] else 'not trained'}
     Failure           : {dic['failure']}
 
     Initial mod.      : {dic['init_modulation']}
-    Preset0           : {"standard tap" if dic['preset0'] else "existing tap"} values
+    Preset0 (oos)     : {"standard tap" if dic['preset0'] else "existing tap"} values
+
     Total bits        : {dic['total_bits']:,}
     Total err. bits   : {dic['total_errored_bits']:,}
     BER               : {dic['ber']}
 
-    Duration          : {dic['duration']:,} µs
+    Duration          : {dic['duration']:,} µs {'(N/A)' if dic['duration'] == 0 else ''}
 
     Lock lost         : {dic['lock_lost']}
     Frame lock        : {dic['frame_lock']}
@@ -329,16 +333,16 @@ def format_log_control(
         ) -> str:
     return f"""
 Port {storage.retrieve_port_str()} log control:
-    Type debug:             {'On' if debug else 'Off'}
-    Type AN trace:          {'On' if an_trace else 'Off'}
-    Type LT trace:          {'On' if lt_trace else 'Off'}
-    Type ALG trace:         {'On' if alg_trace else 'Off'}
-    Type FSM port:          {'On' if fsm_port else 'Off'}
-    Type FSM AN:            {'On' if fsm_an else 'Off'}
-    Type FSM AN Stimuli:    {'On' if fsm_an_stimuli else 'Off'}
-    Type FSM LT:            {'On' if fsm_lt else 'Off'}
-    Type FSM LT Coeff:      {'On' if fsm_lt_coeff else 'Off'}
-    Type FSM LT Stimuli:    {'On' if fsm_lt_stimuli else 'Off'}
-    Type FSM LT ALG  0:     {'On' if fsm_lt_alg0 else 'Off'}
-    Type FSM LT ALG -1:     {'On' if fsm_lt_algn1 else 'Off'}
+    Type debug:             {'on' if debug else 'off'}
+    Type AN trace:          {'on' if an_trace else 'off'}
+    Type LT trace:          {'on' if lt_trace else 'off'}
+    Type ALG trace:         {'on' if alg_trace else 'off'}
+    Type FSM port:          {'on' if fsm_port else 'off'}
+    Type FSM AN:            {'on' if fsm_an else 'off'}
+    Type FSM AN Stimuli:    {'on' if fsm_an_stimuli else 'off'}
+    Type FSM LT:            {'on' if fsm_lt else 'off'}
+    Type FSM LT Coeff:      {'on' if fsm_lt_coeff else 'off'}
+    Type FSM LT Stimuli:    {'on' if fsm_lt_stimuli else 'off'}
+    Type FSM LT ALG  0:     {'on' if fsm_lt_alg0 else 'off'}
+    Type FSM LT ALG -1:     {'on' if fsm_lt_algn1 else 'off'}
 """
