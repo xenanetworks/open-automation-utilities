@@ -5,7 +5,9 @@ import json
 from xoa_utils.clicks.click_commands.group import xoa_util
 from xoa_utils.clicks import click_backend as cb
 from xoa_utils.cmds import CmdContext
-from xoa_driver.hlfuncs import anlt_ll_debug as debug_utils
+from xoa_driver.hlfuncs import (
+    anlt_ll_debug as debug_utils,
+)
 import time
 import json
 import csv
@@ -29,7 +31,7 @@ def debug():
 @ac.pass_context
 async def init(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Initialize debug on the serdes.
+    Debug: Initialize debug
 
         <SERDES>: Serdes index.
     """
@@ -82,7 +84,7 @@ async def _help_set(
 @ac.pass_context
 async def serdes_reset(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Reset the serdes.
+    Debug: Reset serdes
 
         <SERDES>: Serdes index.
     """
@@ -106,7 +108,7 @@ async def serdes_reset(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def mode_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Get mode of the serdes.
+    Debug: Get mode
 
         <SERDES>: Serdes index.
     """
@@ -122,7 +124,7 @@ async def mode_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def mode_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Set mode of the serdes.
+    Debug: Set mode
 
         <SERDES>: Serdes index.
 
@@ -140,7 +142,7 @@ async def mode_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def an_tx_config_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN TX config of the serdes.
+    Debug: Read AN TX config
 
         <SERDES>: Serdes index.
     """
@@ -156,7 +158,7 @@ async def an_tx_config_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def an_tx_config_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write AN TX config of the serdes.
+    Debug: Write AN TX config
 
         <SERDES>: Serdes index.
 
@@ -173,7 +175,7 @@ async def an_tx_config_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def an_rx_config_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN RX config of the serdes.
+    Debug: Read AN RX config
 
         <SERDES>: Serdes index.
     """
@@ -189,7 +191,7 @@ async def an_rx_config_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def an_rx_config_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write AN RX config of the serdes.
+    Debug: Write AN RX config
 
         <SERDES>: Serdes index.
 
@@ -224,8 +226,8 @@ async def an_rx_dme_mv_range_set(context: ac.Context, serdes: int, value: int) -
     Debug: Write AN MV range
 
         <SERDES>: Serdes index.
-        <VALUE>: Value.
 
+        <VALUE>: Value.
     """
     return await _help_set(debug_utils.an_rx_dme_mv_range_set, context, serdes, value)
 
@@ -250,13 +252,13 @@ async def an_rx_dme_bit_range_get(context: ac.Context, serdes: int) -> str:
 @ac.argument("serdes", type=ac.INT)
 @ac.argument("value", type=ac.INT)
 @ac.pass_context
-async def an_rx_dme_bit_range_get(context: ac.Context, serdes: int, value:int) -> str:
+async def an_rx_dme_bit_range_set(context: ac.Context, serdes: int, value:int) -> str:
     """
     Debug: Write AN MV range
 
         <SERDES>: Serdes index.
-        <VALUE>: Value.
 
+        <VALUE>: Value.
     """
     return await _help_set(debug_utils.an_rx_dme_bit_range_set, context, serdes, value)
 
@@ -268,7 +270,7 @@ async def an_rx_dme_bit_range_get(context: ac.Context, serdes: int, value:int) -
 @ac.pass_context
 async def an_status(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN status of the serdes.
+    Debug: Read AN status
 
         <SERDES>: Serdes index.
     """
@@ -283,7 +285,7 @@ async def an_status(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def an_tx_page0_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN TX page0 of the serdes
+    Debug: Read AN TX page0
 
         <SERDES>: Serdes index.
     """
@@ -299,7 +301,7 @@ async def an_tx_page0_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def an_tx_page0_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write AN PAGE (page0,page1) to the serdes.
+    Debug: Write AN PAGE (page0, page1)
 
 
         <SERDES>: Serdes index.
@@ -317,7 +319,7 @@ async def an_tx_page0_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def an_tx_page1_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN TX page1 of the serdes
+    Debug: Read AN TX page1
 
         <SERDES>: Serdes index.
     """
@@ -333,7 +335,7 @@ async def an_tx_page1_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def an_tx_page1_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Set page1 of AN page to the serdes.
+    Debug: Set page1 of AN page
 
 
         <SERDES>: Serdes index.
@@ -351,7 +353,7 @@ async def an_tx_page1_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def an_rx_page0_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN RX page0 of the serdes
+    Debug: Read AN RX page0
 
         <SERDES>: Serdes index.
     """
@@ -366,7 +368,7 @@ async def an_rx_page0_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def an_rx_page1_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read AN RX page1 of the serdes
+    Debug: Read AN RX page1
 
         <SERDES>: Serdes index.
     """
@@ -381,7 +383,7 @@ async def an_rx_page1_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_tx_config_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT TX config of the serdes.
+    Debug: Read LT TX config
 
         <SERDES>: Serdes index.
     """
@@ -397,7 +399,7 @@ async def lt_tx_config_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_tx_config_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write LT TX config of the serdes.
+    Debug: Write LT TX config
 
         <SERDES>: Serdes index.
 
@@ -414,7 +416,7 @@ async def lt_tx_config_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def lt_rx_config_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT RX config of the serdes.
+    Debug: Read LT RX config
 
         <SERDES>: Serdes index.
     """
@@ -430,7 +432,7 @@ async def lt_rx_config_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_rx_config_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write LT RX config of the serdes.
+    Debug: Write LT RX config
 
         <SERDES>: Serdes index.
 
@@ -447,7 +449,7 @@ async def lt_rx_config_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def lt_tx_tf_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT TX Training Frames of the serdes.
+    Debug: Read LT TX Training Frames
 
         <SERDES>: Serdes index.
     """
@@ -463,7 +465,7 @@ async def lt_tx_tf_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_tx_tf_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write LT TX Test Frame to the serdes.
+    Debug: Write LT TX Test Frame
 
         <SERDES>: Serdes index.
 
@@ -480,7 +482,7 @@ async def lt_tx_tf_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def lt_rx_tf_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT RX Test Frame of the serdes.
+    Debug: Read LT RX Test Frame
 
         <SERDES>: Serdes index.
     """
@@ -495,7 +497,7 @@ async def lt_rx_tf_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_rx_error_stat0_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT RX Error Stat0 of the serdes.
+    Debug: Read LT RX Error Stat0
 
         <SERDES>: Serdes index.
     """
@@ -510,7 +512,7 @@ async def lt_rx_error_stat0_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_rx_error_stat1_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT RX Error Stat1 of the serdes.
+    Debug: Read LT RX Error Stat1
 
         <SERDES>: Serdes index.
     """
@@ -525,7 +527,7 @@ async def lt_rx_error_stat1_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_status(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read the LT status of the serdes.
+    Debug: Read LT status
 
         <SERDES>: Serdes index.
     """
@@ -540,7 +542,7 @@ async def lt_status(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_prbs_ber(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read LT PRBS BER of the serdes.
+    Debug: Read LT BRPS-13 BER
 
         <SERDES>: Serdes index.
     """
@@ -564,7 +566,7 @@ async def lt_prbs_ber(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def xla_config_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read Xena Logic Analyzer config of the serdes.
+    Debug: Read Xena Logic Analyzer config
 
         <SERDES>: Serdes index.
     """
@@ -580,7 +582,7 @@ async def xla_config_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def xla_config_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write Xena Logic Analyzer config of the serdes.
+    Debug: Write Xena Logic Analyzer config
 
         <SERDES>: Serdes index.
 
@@ -598,7 +600,7 @@ async def xla_config_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def xla_trig_mask_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read Xena Logic Analyzer trigger mask of the serdes.
+    Debug: Read Xena Logic Analyzer trigger mask
 
         <SERDES>: Serdes index.
     """
@@ -614,7 +616,7 @@ async def xla_trig_mask_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def xla_trig_mask_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write Xena Logic Analyzer trigger mask of the serdes.
+    Debug: Write Xena Logic Analyzer trigger mask
 
         <SERDES>: Serdes index.
 
@@ -632,7 +634,7 @@ async def xla_trig_mask_set(context: ac.Context, serdes: int, value: int) -> str
 @ac.pass_context
 async def xla_status_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read Xena Logic Analyzer status of the serdes.
+    Debug: Read Xena Logic Analyzer status
 
         <SERDES>: Serdes index.
     """
@@ -647,7 +649,7 @@ async def xla_status_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def xla_rd_addr_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read Xena Logic Analyzer RD Address of the serdes.
+    Debug: Read Xena Logic Analyzer RD Address
 
         <SERDES>: Serdes index.
     """
@@ -663,7 +665,7 @@ async def xla_rd_addr_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def xla_rd_addr_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write Xena Logic Analyzer RD Address of the serdes.
+    Debug: Write Xena Logic Analyzer RD Address
 
         <SERDES>: Serdes index.
 
@@ -681,7 +683,7 @@ async def xla_rd_addr_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def xla_rd_page_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read Xena Logic Analyzer RD Page of the serdes.
+    Debug: Read Xena Logic Analyzer RD Page
 
         <SERDES>: Serdes index.
     """
@@ -697,7 +699,7 @@ async def xla_rd_page_get(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def xla_rd_page_set(context: ac.Context, serdes: int, value: int) -> str:
     """
-    Debug: Write Xena Logic Analyzer RD Page of the serdes.
+    Debug: Write Xena Logic Analyzer RD Page
 
         <SERDES>: Serdes index.
 
@@ -715,7 +717,7 @@ async def xla_rd_page_set(context: ac.Context, serdes: int, value: int) -> str:
 @ac.pass_context
 async def xla_rd_data_get(context: ac.Context, serdes: int) -> str:
     """
-    Debug: Read Xena Logic Analyzer RD Data of the serdes.
+    Debug: Read Xena Logic Analyzer RD Data
 
         <SERDES>: Serdes index.
     """
@@ -769,7 +771,7 @@ async def xla_dump(context: ac.Context, serdes: int, filename: str) -> str:
 @ac.pass_context
 async def xla_trig_n_dump(context: ac.Context, serdes: int, mask: str, window_offset: str, trigger_select: str, filename: str) -> str:
     """
-    Debug: Configure the trigger and dump the Xena Logic Analyzer data
+    Debug: Trigger and dump the Xena Logic Analyzer data
 
         <SERDES>: Serdes index.
     """
@@ -873,7 +875,7 @@ async def px_get(context: ac.Context, page: int, reg: str) -> str:
 @ac.pass_context
 async def px_set(context: ac.Context, page: int, reg: str, value: str) -> str:
     """
-    Debug: Set mode of the serdes.
+    Debug: Set register value
 
         <PAGE_ADDRESS>: Page address in decimal.
 
@@ -896,3 +898,19 @@ async def px_set(context: ac.Context, page: int, reg: str, value: str) -> str:
         return f"\033[91mFailed\033[0m: PAGE_ADDRESS: {page}, REG_ADDRESS: {reg}, value: {resp[1]}"
     else:
         return f"\033[92mSuccess\033[0m: PAGE_ADDRESS: {page}, REG_ADDRESS: {reg}, value: {resp[1]}"
+    
+
+# --------------------------
+# command: xla-dump-ctrl
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.option("--on/--off", type=ac.BOOL, default=True)
+@ac.pass_context
+async def xla_dump_ctrl(context: ac.Context, on: bool) -> str:
+    """
+    Debug: Control XLA auto dump
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    await debug_utils.xla_dump_ctrl(port_obj, on)
+    return f"XLA auto dump {'on' if on else 'off'}"
