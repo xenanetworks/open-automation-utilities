@@ -199,6 +199,68 @@ async def an_rx_config_set(context: ac.Context, serdes: int, value: int) -> str:
 
 
 # --------------------------
+# command: an-rx-dme-mv-range-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.pass_context
+async def an_rx_dme_mv_range_get(context: ac.Context, serdes: int) -> str:
+    """
+    Debug: Read AN MV range
+
+        <SERDES>: Serdes index.
+    """
+    return await _help_get(debug_utils.an_rx_dme_mv_range_get, context, serdes)
+
+# --------------------------
+# command: an-rx-dme-mv-range-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.argument("value", type=ac.INT)
+@ac.pass_context
+async def an_rx_dme_mv_range_set(context: ac.Context, serdes: int, value: int) -> str:
+    """
+    Debug: Write AN MV range
+
+        <SERDES>: Serdes index.
+        <VALUE>: Value.
+
+    """
+    return await _help_set(debug_utils.an_rx_dme_mv_range_set, context, serdes, value)
+
+# --------------------------
+# command: an-rx-dme-bit-range-get
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.pass_context
+async def an_rx_dme_bit_range_get(context: ac.Context, serdes: int) -> str:
+    """
+    Debug: Read AN TX config of the serdes.
+
+        <SERDES>: Serdes index.
+    """
+    return await _help_get(debug_utils.an_rx_dme_bit_range_get, context, serdes)
+
+# --------------------------
+# command: an-rx-dme-bit-range-set
+# --------------------------
+@debug.command(cls=cb.XenaCommand)
+@ac.argument("serdes", type=ac.INT)
+@ac.argument("value", type=ac.INT)
+@ac.pass_context
+async def an_rx_dme_bit_range_get(context: ac.Context, serdes: int, value:int) -> str:
+    """
+    Debug: Write AN MV range
+
+        <SERDES>: Serdes index.
+        <VALUE>: Value.
+
+    """
+    return await _help_set(debug_utils.an_rx_dme_bit_range_set, context, serdes, value)
+
+# --------------------------
 # command: an-status
 # --------------------------
 @debug.command(cls=cb.XenaCommand)
