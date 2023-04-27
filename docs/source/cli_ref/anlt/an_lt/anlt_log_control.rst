@@ -4,7 +4,7 @@ anlt log-ctrl
 Description
 -----------
 
-Control what should be logged in ANLT by xenaserver.
+Control what types of ANLT log messages are sent by xenaserver. This command is different from the ``--keep`` option of :doc:`anlt_log`. ``anlt log-ctrl`` control the log message from its source, where ``anlt_log`` filters the messages for display output.
 
 
 Synopsis
@@ -13,7 +13,18 @@ Synopsis
 .. code-block:: text
     
     anlt log-ctrl
-    [--on/--off]
+    [-D/-d, --debug/--no-debug]
+    [-A/-a, --an-trace/--no-an-trace]
+    [-L/-l, --lt-trace/--no-lt-trace]
+    [-G/-g, --alg-trace/--no-alg-trace]
+    [-P/-p, --fsm-port/--no-fsm-port]
+    [-N/-n, --fsm-an/--no-fsm-an]
+    [-M/-m, --fsm-an-stimuli/--no-fsm-an-stimuli]
+    [-T/-t, --fsm-lt/--no-fsm-lt]
+    [-C/-c, --fsm-lt-coeff/--no-fsm-lt-coeff]
+    [-S/-s, --fsm-lt-stimuli/--no-fsm-lt-stimuli]
+    [-Z/-z, --fsm-lt-alg0/--no-fsm-lt-alg0]
+    [-O/-o, --fsm-lt-algn1/--no-fsm-lt-algn1]
 
 
 Arguments
@@ -48,7 +59,7 @@ Link training algorithm trace output, default to --alg-trace, -G
 Port state machine transitions output, default to --no-fsm-port, -p
 
 
-`-N/-n, --fsm-an/--no-fsm-an``
+``-N/-n, --fsm-an/--no-fsm-an``
 
 Auto-negotiation state machine transitions, default to --fsm-an, -N
 

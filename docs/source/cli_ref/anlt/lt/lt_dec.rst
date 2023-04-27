@@ -13,7 +13,7 @@ Synopsis
 
 .. code-block:: text
     
-lt dec <SERDES> <EMPHASIS>
+    lt dec <SERDES> <EMPHASIS>
 
 
 Arguments

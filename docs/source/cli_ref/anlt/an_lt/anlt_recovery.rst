@@ -4,9 +4,7 @@ anlt recovery
 Description
 -----------
 
-Enable/disable link recovery on the working port.
-
-If enable, the port will keep doing AN/LT when no link-up signal is detected.
+Enable/disable link recovery on the working port. If enable, the port will keep doing AN/LT when no link-up signal is detected.
 
 
 Synopsis

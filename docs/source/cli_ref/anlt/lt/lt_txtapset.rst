@@ -13,7 +13,7 @@ Synopsis
 
 .. code-block:: text
     
-    lt txtapget <SERDES>
+    lt txtapset <SERDES> <PRE3> <PRE2> <PRE> <MAIN> <POST>
 
 
 Arguments

@@ -4,9 +4,7 @@ anlt strict
 Description
 -----------
 
-Enable/disable ANLt strict mode.
-
-If enable, errored frames will be ignored.
+Enable/disable ANLt strict mode. If enable, errored frames will be ignored.
 
 
 Synopsis

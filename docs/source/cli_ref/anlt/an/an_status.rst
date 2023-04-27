@@ -4,7 +4,7 @@ an status
 Description
 -----------
 
-Show AN status of the working port.
+Show the auto-negotiation status of the working port.
 
 
 
@@ -29,7 +29,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > an status
+    xoa-utils[123456][port0/2] > an status                                     
     
     [AN STATUS]
         Mode                  : enabled
