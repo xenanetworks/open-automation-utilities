@@ -330,7 +330,7 @@ async def strict(context: ac.Context, on: bool) -> str:
     return format_strict(storage, on)
 
 # --------------------------
-# command: log-control
+# command: log-ctrl
 # --------------------------
 @anlt.command(cls=cb.XenaCommand)
 @ac.option("-D/-d", "--debug/--no-debug", type=ac.BOOL, help=h.HELP_LOG_CONTROL_DEBUG_ON, default=True)
@@ -346,7 +346,7 @@ async def strict(context: ac.Context, on: bool) -> str:
 @ac.option("-Z/-z", "--fsm-lt-alg0/--no-fsm-lt-alg0", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_ALG0_ON, default=True)
 @ac.option("-O/-o", "--fsm-lt-algn1/--no-fsm-lt-algn1", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_ALGN1_ON, default=True)
 @ac.pass_context
-async def log_control(
+async def log_ctrl(
     context: ac.Context, 
     debug: bool, 
     an_trace: bool, 

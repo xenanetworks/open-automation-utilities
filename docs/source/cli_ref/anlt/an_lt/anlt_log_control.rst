@@ -1,4 +1,4 @@
-anlt log-control
+anlt log-ctrl
 ================
 
 Description
@@ -12,7 +12,7 @@ Synopsis
 
 .. code-block:: text
     
-    anlt recovery
+    anlt log-ctrl
     [--on/--off]
 
 
@@ -89,7 +89,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > anlt log-control
+    xoa-utils[123456][port0/2] > anlt log-ctrl
     Port 0/2 log control:
         Type debug:             on
         Type AN trace:          on
