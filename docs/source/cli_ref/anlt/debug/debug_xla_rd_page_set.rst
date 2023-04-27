@@ -1,4 +1,4 @@
-debug lt-rx-analyzer-rd-addr-set
+debug xla-rd-page-set
 ================================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt-rx-analyzer-rd-addr-set
 Description
 -----------
 
-Debug lt-rx-analyzer-rd-addr-set
+Debug xla-rd-page-set
 
 
 
@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-rd-addr-set <LANE>
+    debug xla-rd-page-set <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-rd-addr-set 0
+    xoa-utils[123456][port0/2] > debug xla-rd-page-set 0
 
     xoa-utils[123456][port0/2] >
 

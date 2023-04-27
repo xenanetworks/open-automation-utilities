@@ -59,3 +59,29 @@ lt:  keep lt only"
 
 HELP_ANLT_LOG_SERDES = "Specifies which serdes of LT logs to keep. If you don't know how many\
 serdes the port has, use 'anlt log', default to all serdes."
+
+HELP_STRICT_ON = "Should enable ANLT strict mode, default to --on."
+
+HELP_LOG_CONTROL_DEBUG_ON = "Debug log out, default to --debug, -D"
+
+HELP_LOG_CONTROL_AN_TRACE_ON = "Auto-negotiation trace output, default to --an-trace, -A"
+
+HELP_LOG_CONTROL_LT_TRACE_ON = "Link training algorithm trace, default to --lt-trace, -L"
+
+HELP_LOG_CONTROL_ALG_TRACE_ON = "Link training algorithm trace output, default to --alg-trace, -G"
+
+HELP_LOG_CONTROL_FSM_PORT_ON = "Port state machine transitions output, default to --no-fsm-port, -p"
+
+HELP_LOG_CONTROL_FSM_AN_ON = "Auto-negotiation state machine transitions, default to --fsm-an, -N"
+
+HELP_LOG_CONTROL_FSM_AN_STIMULI_ON = "Auto-negotiation stimuli state machine transitions, default to --no-fsm-an-stimuli, -m"
+
+HELP_LOG_CONTROL_FSM_LT_ON = "Link training state machine transitions, default to --fsm-lt, -T"
+
+HELP_LOG_CONTROL_FSM_LT_COEFF_ON = "Link training coefficient state machine transitions, default to --no-fsm-lt-coeff, -c"
+
+HELP_LOG_CONTROL_FSM_LT_STIMULI_ON = "Link training stimuli state machine transitions, default to --no-fsm-lt-stimuli, -s"
+
+HELP_LOG_CONTROL_FSM_LT_ALG0_ON = "Link training algorithm 0 state machine transitions, default to --fsm-lt-alg0, -Z"
+
+HELP_LOG_CONTROL_FSM_LT_ALGN1_ON = "Link training algorithm -1 state machine transitions, default to --fsm-lt-algn1, -O"

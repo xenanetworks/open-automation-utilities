@@ -1,5 +1,5 @@
-debug serdes-reset
-================
+debug px-get
+======================
 
 .. important::
     
@@ -9,7 +9,7 @@ debug serdes-reset
 Description
 -----------
 
-Debug, reset the serdes.
+Debug px-get
 
 
 
@@ -18,15 +18,15 @@ Synopsis
 
 .. code-block:: text
 
-    debug serdes*reset <LANE>
+    debug px-get <PAGE_ADDRESS> <REG_ADDRESS>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<PAGE_ADDRESS>`` (integer)
 
-Specifies the transceiver serdes index.
+``<REG_ADDRESS>`` (string)
 
 
 Options
@@ -39,9 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug serdes-reset 0
-
-    xoa-utils[123456][port0/2] >
+    xoa-utils[123456][port0/2] > debug px-get 2000 0x2f505
 
 
 

@@ -1,5 +1,5 @@
-debug lt-rx-analyzer-rd-data-get
-================================
+debug an-rx-config-set
+======================
 
 .. important::
     
@@ -9,7 +9,7 @@ debug lt-rx-analyzer-rd-data-get
 Description
 -----------
 
-Debug lt-rx-analyzer-rd-data-get
+Debug an-rx-config-set
 
 
 
@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-rd-data-get <LANE>
+    debug an-rx-config-set <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-rd-data-get 0
+    xoa-utils[123456][port0/2] > debug an-rx-config-set 0
 
     xoa-utils[123456][port0/2] >
 

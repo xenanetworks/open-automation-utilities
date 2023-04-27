@@ -1,15 +1,15 @@
-debug lt-tx-config-get
-======================
+debug xla-rd-data-get
+================================
 
 .. important::
     
     To debug on a serdes, you must always use :doc:`debug_init` command prior to all the other debug commands.
 
-    
+
 Description
 -----------
 
-Debug lt-tx-config-get
+Debug xla-rd-data-get
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-tx-config-get <SERDES>
+    debug xla-rd-data-get <SERDES>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-tx-config-get 0
+    xoa-utils[123456][port0/2] > debug xla-rd-data-get 0
 
     xoa-utils[123456][port0/2] >
 

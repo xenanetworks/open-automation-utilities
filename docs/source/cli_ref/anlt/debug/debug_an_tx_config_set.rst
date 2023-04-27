@@ -1,4 +1,4 @@
-debug lt-tx-config-get
+debug an-tx-config-set
 ======================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt-tx-config-get
 Description
 -----------
 
-Debug lt-tx-config-get
+Debug an-tx-config-set
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-tx-config-get <SERDES>
+    debug an-tx-config-set <SERDES>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-tx-config-get 0
+    xoa-utils[123456][port0/2] > debug an-tx-config-set 0
 
     xoa-utils[123456][port0/2] >
 

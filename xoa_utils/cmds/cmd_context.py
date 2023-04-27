@@ -1,6 +1,7 @@
 from __future__ import annotations
 import typing as t
 from xoa_driver.testers import L23Tester
+from xoa_driver.modules import GenericL23Module
 from xoa_driver.ports import GenericL23Port
 from xoa_utils.exceptions import (
     NotInStoreError,
@@ -31,6 +32,12 @@ class TesterState:
         self.con_info: str = ""
         self.username: str = ""
         self.obj: t.Optional[L23Tester] = None
+
+
+class ModuleState:
+    def __init__(self) -> None:
+        self.modules: dict[str, GenericL23Module] = {}
+        self.module_str: str = ""
 
 
 class PortState:
@@ -74,6 +81,7 @@ class CmdContext:
 
     def clear_all(self) -> None:
         self._tr_state: TesterState = TesterState()
+        self._md_state: ModuleState = ModuleState()
         self._pt_state: PortState = PortState()
         self._error: ErrorString = ErrorString()
         self._an_state: ANState = ANState()
@@ -135,6 +143,11 @@ class CmdContext:
         else:
             self._lt_state.preset0 = NRZPreset.NRZ_WITH_PRESET
 
+    def store_current_module_str(self, current_module_str: str) -> None:
+        if current_module_str not in self._md_state.modules:
+            raise NotInStoreError(current_module_str)
+        self._md_state.module_str = current_module_str
+
     def store_current_port_str(self, current_port_str: str) -> None:
         if current_port_str not in self._pt_state.ports:
             raise NotInStoreError(current_port_str)
@@ -193,6 +206,9 @@ class CmdContext:
     def retrieve_ports(self) -> dict[str, GenericL23Port]:
         return self._pt_state.ports
 
+    def retrieve_modules(self) -> dict[str, GenericL23Module]:
+        return self._md_state.modules
+
     def retrieve_tester_username(self) -> str:
         return self._tr_state.username
 
@@ -208,11 +224,25 @@ class CmdContext:
     def retrieve_port_str(self) -> str:
         return self._pt_state.port_str
 
+    def store_module(self, exact_module_id: str, module_obj: GenericL23Module) -> None:
+        self._md_state.modules[exact_module_id] = module_obj
+
     def store_port(
         self, exact_port_id: str, port_obj: GenericL23Port, port_serdes_num: int
     ) -> None:
         self._pt_state.ports[exact_port_id] = port_obj
         self._pt_state.port_serdes_num[exact_port_id] = port_serdes_num
+
+    def retrieve_module(self, exact_module_id: str = "current") -> GenericL23Module:
+        if self.retrieve_tester() is None:
+            raise NotConnectedError()
+        if exact_module_id == "current":
+            if not self._md_state.module_str:
+                raise NoWorkingPort()
+            exact_module_id = self._md_state.module_str
+        if exact_module_id in self._md_state.modules:
+            return self._md_state.modules[exact_module_id]
+        raise NotInStoreError(exact_module_id)
 
     def retrieve_port(self, exact_port_id: str = "current") -> GenericL23Port:
         if self.retrieve_tester() is None:
@@ -229,12 +259,19 @@ class CmdContext:
         current_port_id = self._pt_state.port_str
         if current_port_id not in self._pt_state.port_serdes_num:
             raise NotInStoreError(current_port_id)
-        if not serdes in range(self._pt_state.port_serdes_num[self._pt_state.port_str]):
+        if serdes not in range(self._pt_state.port_serdes_num[self._pt_state.port_str]):
             raise NotCorrectSerdesError(current_port_id, serdes)
+
+    def remove_module(self, exact_module_id: str) -> None:
+        if exact_module_id in self._md_state.modules:
+            del self._md_state.modules[exact_module_id]
 
     def remove_port(self, exact_port_id: str) -> None:
         if exact_port_id in self._pt_state.ports:
             del self._pt_state.ports[exact_port_id]
+
+    def remove_ports(self) -> None:
+        self._pt_state = PortState()
 
     def set_error(self, error_str: str) -> None:
         self._error.set_val(error_str)
@@ -244,13 +281,32 @@ class CmdContext:
     def get_error(self) -> str:
         return self._error.err_str
 
+    def obtain_physical_modules(
+        self, id_str: str = "*", update=True
+    ) -> dict[str, GenericL23Module]:
+        tester = self.retrieve_tester()
+        if tester is None:
+            raise NotConnectedError()
+        m_dics = {}
+        if id_str == "*":
+            for m in mgmt_utils.get_modules(tester):
+                m_dics[str(m.module_id)] = m
+        else:
+            module_id = id_str.split("/")[0]
+            m = mgmt_utils.get_module(tester, int(module_id))
+            m_dics[str(m.module_id)] = m
+
+        if update:
+            self._md_state.modules.update(m_dics)
+        return m_dics
+
     def obtain_physical_ports(
         self, id_str: str = "*", update: bool = True
     ) -> dict[str, GenericL23Port]:
-        if self.retrieve_tester() is None:
+        tester = self.retrieve_tester()
+        if tester is None:
             raise NotConnectedError()
 
-        tester = self.retrieve_tester()
         p_dics = {}
         if id_str == "*":
             m_id = p_id = -1

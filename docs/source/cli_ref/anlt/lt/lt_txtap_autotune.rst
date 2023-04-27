@@ -1,10 +1,10 @@
-lt txtapget
-===========
+lt txtap-autotune
+=================
 
 Description
 -----------
 
-Read the tap values of the specified serdes of the local port.
+Auto tune the tap values of the specified serdes of the local port.
 
 
 
@@ -13,7 +13,7 @@ Synopsis
 
 .. code-block:: text
     
-    lt txtapget <SERDES>
+    lt txtap-autotune <SERDES>
 
 
 Arguments
@@ -33,7 +33,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > lt txtapget 0
+    xoa-utils[123456][port0/2] > lt txtap-autotune 0
 
     Local Coefficient Serdes(0) :           c(-3)       c(-2)       c(-1)       c(0)        c(1)
         Current level           :              0           0           0          42           0

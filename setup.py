@@ -26,7 +26,6 @@ def main():
         packages=setuptools.find_packages(),
         license="Apache 2.0",
         install_requires=[
-            "xoa-driver>=1.2",
             "typing_extensions>=4.4.0",
             "cffi>=1.15.1",
             "cryptography>=39.0.0",
@@ -40,9 +39,8 @@ def main():
             "pdoc>=12.3.1",
             "pytest>=7.2.1",
             "asyncclick>=8.1.3.4",
-            "asyncssh>=2.13.0",
-            "anyio>=3.6.2",
             "psutil>=5.9.4",
+            "xoa-driver>=1.3",
         ],
         classifiers=[
             "Development Status :: 5 - Production/Stable",

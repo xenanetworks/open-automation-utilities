@@ -31,8 +31,10 @@ Examples
 
     xoa-utils[123456][port0/2] > an status
     
-    [ AN STATUS ]
+    [AN STATUS]
+        Mode                  : enabled
         Loopback              : allowed
+
         Duration              : 2,068,747 µs
         Successful runs       : 1
         Timeouts              : 0

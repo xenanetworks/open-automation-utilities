@@ -17,13 +17,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug init <LANE>
+    debug init <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index
 

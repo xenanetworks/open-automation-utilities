@@ -27,5 +27,5 @@ Glossary of Terms
     LT
         Link Training
 
-    XOA Utils
-        Xena OpenAutomation Utilities
+    XOA ANLT Utility
+        Xena OpenAutomation Utilities for ANLT

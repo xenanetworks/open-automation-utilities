@@ -1,5 +1,5 @@
-debug lt-tx-config-get
-======================
+debug xla-rd-addr-get
+================================
 
 .. important::
     
@@ -9,7 +9,7 @@ debug lt-tx-config-get
 Description
 -----------
 
-Debug lt-tx-config-get
+Debug xla-rd-addr-get
 
 
 
@@ -18,7 +18,7 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-tx-config-get <SERDES>
+    debug xla-rd-addr-get <SERDES>
 
 
 Arguments
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-tx-config-get 0
+    xoa-utils[123456][port0/2] > debug xla-rd-addr-get 0
 
     xoa-utils[123456][port0/2] >
 

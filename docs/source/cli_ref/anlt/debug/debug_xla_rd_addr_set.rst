@@ -1,5 +1,5 @@
-debug lt-rx-analyzer-dump
-=========================
+debug xla-rd-addr-set
+================================
 
 .. important::
     
@@ -9,7 +9,7 @@ debug lt-rx-analyzer-dump
 Description
 -----------
 
-Debug lt-rx-analyzer-dump
+Debug xla-rd-addr-set
 
 
 
@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-dump <LANE>
+    debug xla-rd-addr-set <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-dump 0
+    xoa-utils[123456][port0/2] > debug xla-rd-addr-set 0
 
     xoa-utils[123456][port0/2] >
 

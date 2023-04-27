@@ -1,5 +1,5 @@
-lt im
-=====
+lt alg
+======
 
 .. important::
 
@@ -8,7 +8,7 @@ lt im
 Description
 -----------
 
-Set initial modulation for the specified serdes.
+Set the link training algorithm for the specified serdes.
 
 
 
@@ -17,7 +17,7 @@ Synopsis
 
 .. code-block:: text
     
-    lt im <SERDES> <ENCODING>
+    lt alg <SERDES> <ALGORITHM>
 
 
 Arguments
@@ -28,17 +28,15 @@ Arguments
 Specifies the transceiver serdes index.
 
 
-``<ENCODING>`` (text)
+``<ALGORITHM>`` (text)
     
-Specifies the initial modulation.
+Specifies the algorithm.
 
 Allowed values:
 
-* `nrz`
+* `alg0`
 
-* `pam4`
-
-* `pam4pre`
+* `algn1`
 
 
 Options
@@ -51,13 +49,13 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > lt im 0 nrz
+    xoa-utils[123456][port0/2] > lt alg 0 alg0
     
     Initial modulation to be NRZ on Serdes 0
     [SHADOW CONFIG]
         Auto-negotiation      : off (allow loopback: no)
         Link training         : on (interactive) (preset0: standard tap values)
-            Initial Mod.      : {'0': 'NRZ'}
+            Algorithm         : {'0': 'ALG0'}
 
     xoa-utils[123456][port0/2] >
 

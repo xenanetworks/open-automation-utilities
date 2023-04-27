@@ -13,13 +13,13 @@ Synopsis
 
 .. code-block:: text
     
-lt dec <LANE> <EMPHASIS>
+lt dec <SERDES> <EMPHASIS>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 

@@ -1,15 +1,16 @@
-debug lt-rx-analyzer-config-get
-===============================
+debug serdes-reset
+==================
 
 .. important::
     
     To debug on a serdes, you must always use :doc:`debug_init` command prior to all the other debug commands.
 
-
+    
 Description
 -----------
 
-Debug lt-rx-analyzer-config-get
+Debug, reset the serdes.
+
 
 
 Synopsis
@@ -17,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-config-get <LANE>
+    debug serdes-reset <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 
@@ -38,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-config-get 0
+    xoa-utils[123456][port0/2] > debug serdes-reset 0
 
     xoa-utils[123456][port0/2] >
 

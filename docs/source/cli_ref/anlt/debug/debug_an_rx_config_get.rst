@@ -1,5 +1,5 @@
-debug lt-rx-analyzer-trig-mask-set
-==================================
+debug an-rx-config-get
+======================
 
 .. important::
     
@@ -9,7 +9,7 @@ debug lt-rx-analyzer-trig-mask-set
 Description
 -----------
 
-Debug lt-rx-analyzer-trig-mask-set
+Debug an-rx-config-get
 
 
 
@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-trig-mask-set <LANE>
+    debug an-rx-config-get <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-trig-mask-set 0
+    xoa-utils[123456][port0/2] > debug an-rx-config-get 0
 
     xoa-utils[123456][port0/2] >
 

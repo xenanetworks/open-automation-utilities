@@ -117,37 +117,30 @@ def format_ports_status(storage: "CmdContext", all: bool) -> str:
     return result_str
 
 
-def format_port_status(port_id: str, status: dict, storage: "CmdContext") -> str:
-    ims = {}
-    # algs = {}
-
-    for key, val in storage.retrieve_lt_initial_mod().items():
-        ims[key] = enums.LinkTrainEncoding(val).name
-    # for key, val in storage.retrieve_lt_algorithm().items():
-    #     algs[key] = enums.LinkTrainAlgorithm(val).name
-
+def format_port_status(status: dict, storage: "CmdContext") -> str:
     return f"""
-[ ACTUAL CONFIG ]
+[ACTUAL CONFIG]
     Link recovery         : {status['link_recovery']}
     Serdes count          : {status['serdes_count']}
 
-    Auto-negotiation      : {status['autoneg_enabled']} (allow loopback: {'yes' if status['autoneg_allow_loopback'] else 'no'})
+    Auto-negotiation      : {status['autoneg_enabled']} ({'allow' if status['autoneg_allow_loopback'] else 'not allow'} loopback)
     Link training         : {'on' if status['link_training_mode'] != "disabled" else 'off'} ({'interactive' if status['link_training_mode'] == "interactive" else 'auto'}) (preset0: {'standard tap' if status['link_training_preset0'] == 'nrz_no_preset' else 'existing tap'} values) (timeout: {status['link_training_timeout']})
-        Initial Mod.      : {status['initial_mods']}
     
 
-[ SHADOW CONFIG ]
-    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
+[SHADOW CONFIG]
+    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
-        Initial Mod.      : {ims}
 """
 
 
 def format_an_status(dic: dict) -> str:
     return f"""
-[ AN STATUS ]
+[AN STATUS]
+    Mode                  : {'enabled' if dic['is_enabled'] else 'disabled'}
     Loopback              : {dic['loopback']}
-    Duration              : {dic['duration']:,} µs
+
+    Duration              : {dic['duration']:,} µs {'(N/A)' if dic['duration'] == 0 else ''}
+
     Successful runs       : {dic['successes']}
     Timeouts              : {dic['timeouts']}
     Loss of sync          : {dic['loss_of_sync']}
@@ -161,74 +154,62 @@ def format_an_status(dic: dict) -> str:
 
 
 def format_lt_config(storage: CmdContext) -> str:
-    ims = {}
-    # algs = {}
-
-    for key, val in storage.retrieve_lt_initial_mod().items():
-        ims[key] = enums.LinkTrainEncoding(val).name
-    # for key, val in storage.retrieve_lt_algorithm().items():
-    #     algs[key] = enums.LinkTrainAlgorithm(val).name
-
     return f"""
 LT configuration to be on port {storage.retrieve_port_str()}
-[ SHADOW CONFIG ]
-    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
+[SHADOW CONFIG]
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
-        Initial Mod.      : {ims}
 """
 
 
-def format_lt_im(storage: CmdContext, serdes: int) -> str:
+def format_lt_im(status: dict, storage: CmdContext, serdes: int) -> str:
     ims = {}
-    # algs = {}
+    algs = {}
 
     for key, val in storage.retrieve_lt_initial_mod().items():
         ims[key] = enums.LinkTrainEncoding(val).name
-    # for key, val in storage.retrieve_lt_algorithm().items():
-    #     algs[key] = enums.LinkTrainAlgorithm(val).name
+    for key, val in storage.retrieve_lt_algorithm().items():
+        algs[key] = enums.LinkTrainAlgorithm(val).name
 
     return f"""
+[ACTUAL CONFIG]
+    Link training         :
+        Initial Mod.      : {status['initial_mods']}
+
 Initial modulation to be {storage.retrieve_lt_initial_mod_serdes(serdes).name} on Serdes {serdes}
-[ SHADOW CONFIG ]
-    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
+[SHADOW CONFIG]
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
         Initial Mod.      : {ims}
     """
 
 
-def format_lt_algorithm(storage: CmdContext, serdes: int) -> str:
+def format_lt_algorithm(status: dict, storage: CmdContext, serdes: int) -> str:
     ims = {}
-    # algs = {}
+    algs = {}
 
     for key, val in storage.retrieve_lt_initial_mod().items():
         ims[key] = enums.LinkTrainEncoding(val).name
-    # for key, val in storage.retrieve_lt_algorithm().items():
-    #     algs[key] = enums.LinkTrainAlgorithm(val).name
+    for key, val in storage.retrieve_lt_algorithm().items():
+        algs[key] = enums.LinkTrainAlgorithm(val).name
 
     return f"""
+[ACTUAL CONFIG]
+    Link training         :
+        Algorithm         : {status['algorithms']}
+
 LT algorithm to be {storage.retrieve_lt_algorithm_serdes(serdes).name} on Serdes {serdes}
-[ SHADOW CONFIG ]
-    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
+[SHADOW CONFIG]
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
-        Initial Mod.      : {ims}
+        Algorithm         : {algs}
     """
 
 
 def format_an_config(storage: CmdContext) -> str:
-    ims = {}
-    # algs = {}
-
-    for key, val in storage.retrieve_lt_initial_mod().items():
-        ims[key] = enums.LinkTrainEncoding(val).name
-    # for key, val in storage.retrieve_lt_algorithm().items():
-    #     algs[key] = enums.LinkTrainAlgorithm(val).name
 
     return f"""
 AN configuration to be on port {storage.retrieve_port_str()}
-[ SHADOW CONFIG ]
-    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} (allow loopback: {'yes' if storage.retrieve_an_loopback() else 'no'})
+[SHADOW CONFIG]
+    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
-        Initial Mod.      : {ims}
 """
 
 
@@ -287,18 +268,19 @@ def format_txtap_set(
 
 def format_lt_status(dic: dict) -> str:
     return f"""
-[ LT STATUS ]
-    Is enabled        : {str(dic['is_enabled']).lower()}
-    Is trained        : {str(dic['is_trained']).lower()}
+[LT STATUS]
+    Mode              : {'enabled' if dic['is_enabled'] else 'disabled'}
+    Status            : {'trained' if dic['is_trained'] else 'not trained'}
     Failure           : {dic['failure']}
 
     Initial mod.      : {dic['init_modulation']}
-    Preset0           : {"standard tap" if dic['preset0'] else "existing tap"} values
+    Preset0 (oos)     : {"standard tap" if dic['preset0'] else "existing tap"} values
+
     Total bits        : {dic['total_bits']:,}
     Total err. bits   : {dic['total_errored_bits']:,}
     BER               : {dic['ber']}
 
-    Duration          : {dic['duration']:,} µs
+    Duration          : {dic['duration']:,} µs {'(N/A)' if dic['duration'] == 0 else ''}
 
     Lock lost         : {dic['lock_lost']}
     Frame lock        : {dic['frame_lock']}
@@ -319,4 +301,48 @@ def format_lt_status(dic: dict) -> str:
         eq limit reached        :{dic['c(-3)']['eq_limit_reached']['rx']:11}{dic['c(-3)']['eq_limit_reached']['tx']:4}{dic['c(-2)']['eq_limit_reached']['rx']:8}{dic['c(-2)']['eq_limit_reached']['tx']:4}{dic['c(-1)']['eq_limit_reached']['rx']:8}{dic['c(-1)']['eq_limit_reached']['tx']:4}{dic['c(0)']['eq_limit_reached']['rx']:8}{dic['c(0)']['eq_limit_reached']['tx']:4}{dic['c(1)']['eq_limit_reached']['rx']:8}{dic['c(1)']['eq_limit_reached']['tx']:4}
         coeff not supported     :{dic['c(-3)']['coeff_not_supported']['rx']:11}{dic['c(-3)']['coeff_not_supported']['tx']:4}{dic['c(-2)']['coeff_not_supported']['rx']:8}{dic['c(-2)']['coeff_not_supported']['tx']:4}{dic['c(-1)']['coeff_not_supported']['rx']:8}{dic['c(-1)']['coeff_not_supported']['tx']:4}{dic['c(0)']['coeff_not_supported']['rx']:8}{dic['c(0)']['coeff_not_supported']['tx']:4}{dic['c(1)']['coeff_not_supported']['rx']:8}{dic['c(1)']['coeff_not_supported']['tx']:4}
         coeff at limit          :{dic['c(-3)']['coeff_at_limit']['rx']:11}{dic['c(-3)']['coeff_at_limit']['tx']:4}{dic['c(-2)']['coeff_at_limit']['rx']:8}{dic['c(-2)']['coeff_at_limit']['tx']:4}{dic['c(-1)']['coeff_at_limit']['rx']:8}{dic['c(-1)']['coeff_at_limit']['tx']:4}{dic['c(0)']['coeff_at_limit']['rx']:8}{dic['c(0)']['coeff_at_limit']['tx']:4}{dic['c(1)']['coeff_at_limit']['rx']:8}{dic['c(1)']['coeff_at_limit']['tx']:4}
+"""
+
+def format_debug_init(dic: dict) -> str:
+    return f"""
+    base:        0x{dic["base"]:0>8X}
+    rx_gtm_base: 0x{dic["rx_gtm_base"]:0>8X}
+    rx_serdes:   {dic["rx_serdes"]}
+    tx_gtm_base: 0x{dic["tx_gtm_base"]:0>8X}
+    tx_serdes:   {dic["tx_serdes"]}
+"""
+
+def format_strict(storage: CmdContext, on: bool) -> str:
+    enable = "on" if on else "off"
+    return f"Port {storage.retrieve_port_str()} ANLT strict mode: {enable}\n"
+
+def format_log_control(
+        storage: CmdContext, 
+        debug: bool, 
+        an_trace: bool, 
+        lt_trace: bool, 
+        alg_trace: bool,
+        fsm_port: bool,
+        fsm_an: bool,
+        fsm_an_stimuli: bool,
+        fsm_lt: bool,
+        fsm_lt_coeff: bool,
+        fsm_lt_stimuli: bool,
+        fsm_lt_alg0: bool,
+        fsm_lt_algn1: bool
+        ) -> str:
+    return f"""
+Port {storage.retrieve_port_str()} log control:
+    Type debug:             {'on' if debug else 'off'}
+    Type AN trace:          {'on' if an_trace else 'off'}
+    Type LT trace:          {'on' if lt_trace else 'off'}
+    Type ALG trace:         {'on' if alg_trace else 'off'}
+    Type FSM port:          {'on' if fsm_port else 'off'}
+    Type FSM AN:            {'on' if fsm_an else 'off'}
+    Type FSM AN Stimuli:    {'on' if fsm_an_stimuli else 'off'}
+    Type FSM LT:            {'on' if fsm_lt else 'off'}
+    Type FSM LT Coeff:      {'on' if fsm_lt_coeff else 'off'}
+    Type FSM LT Stimuli:    {'on' if fsm_lt_stimuli else 'off'}
+    Type FSM LT ALG  0:     {'on' if fsm_lt_alg0 else 'off'}
+    Type FSM LT ALG -1:     {'on' if fsm_lt_algn1 else 'off'}
 """

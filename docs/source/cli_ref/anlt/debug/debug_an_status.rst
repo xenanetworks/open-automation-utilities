@@ -1,5 +1,5 @@
-debug lt-rx-analyzer-status-get
-================================
+debug an-status
+======================
 
 .. important::
     
@@ -9,7 +9,7 @@ debug lt-rx-analyzer-status-get
 Description
 -----------
 
-Debug lt-rx-analyzer-status-get
+Debug an-status
 
 
 
@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-status-get <LANE>
+    debug an-status <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-status-get 0
+    xoa-utils[123456][port0/2] > debug an-status 0
 
     xoa-utils[123456][port0/2] >
 

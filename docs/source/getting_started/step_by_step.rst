@@ -6,7 +6,7 @@ Step-by-Step Guide
 
 This section provides a step-by-step guide on how to use XOA Utility to do interactive ANLT test.
 
-The diagram below illustrates a basic flow of using XOA Utilities to do ANLT testing.
+The diagram below illustrates a basic flow of using XOA ANLT Utility to do ANLT testing.
 
 .. figure:: ../_static/anlt_use_flow.png
     :width: 100 %
@@ -24,16 +24,16 @@ The diagram below illustrates a basic flow of using XOA Utilities to do ANLT tes
 
 
 
-SSH to XOA Utils
-----------------
+SSH to XOA ANLT Utility
+-----------------------
 
-After running the XOA Utils SSH Server, use another console to SSH to XOA Utils.
+After running the XOA ANLT Utility SSH Server, use another console to SSH to XOA ANLT Utility.
 
 .. tab:: Windows
     :new-set:
 
     .. code-block:: doscon
-        :caption: SSH to XOA Utils.
+        :caption: SSH to XOA ANLT Utility.
 
         > ssh yourname@localhost -p 22622
 
@@ -45,7 +45,7 @@ After running the XOA Utils SSH Server, use another console to SSH to XOA Utils.
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: SSH to XOA Utils.
+        :caption: SSH to XOA ANLT Utility.
 
         $ ssh yourname@localhost -p 22622
 
@@ -116,10 +116,10 @@ This will disturb your manual link training procedure if you don't disable it pr
     xoa-utils[123456][port0/0] > anlt recovery --off
 
 
-Configure AN & LT
------------------
+Set ANLT Shadow Configuration
+-----------------------------
 
-After disabling link recovery on the port, you can start configuring AN and LT using :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, and :doc:`../cli_ref/anlt/lt/lt_im` as the example shown below.
+After disabling link recovery on the port, you can start setting ANLT shadow configuration using :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, :doc:`../cli_ref/anlt/lt/lt_im`, and :doc:`../cli_ref/anlt/lt/lt_alg` as the example shown below.
 
 
 .. code-block:: text
@@ -138,14 +138,21 @@ After disabling link recovery on the port, you can start configuring AN and LT u
 
 .. important::
 
-    :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, and :doc:`../cli_ref/anlt/lt/lt_im` only change the local ANLT configuration state. To execute the configuration, you need to run :doc:`../cli_ref/anlt/an_lt/anlt_do`, otherwise your changes will not take effect on the tester.
+    :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, and :doc:`../cli_ref/anlt/lt/lt_im` **only change the shadow ANLT configuration**. **To apply the configuration**, you need to run :doc:`../cli_ref/anlt/an_lt/anlt_do`, otherwise your changes will not take effect on the tester.
 
 
 
 Start ANLT
 ----------
 
-After configuring the ANLT scenario on the port, you should execute :doc:`../cli_ref/anlt/an_lt/anlt_do` to let XOA Utilities application send low-level commands to the tester to start the ANLT procedure, either AN-only, or AN + LT, or LT (auto), or LT (interactive).
+After configuring the ANLT shadow configuration, you should execute :doc:`../cli_ref/anlt/an_lt/anlt_do` to **apply the shadow configuration and let the ANLT tester to start the ANLT procedure**:
+
+* AN on, LT on (auto)
+* AN on, LT on (interactive)
+* AN on, LT off
+* AN off, LT on (auto)
+* AN off, LT on (interactive)
+* AN off, LT off
 
 .. seealso::
 
@@ -196,7 +203,7 @@ Check AN statistics by :doc:`../cli_ref/anlt/an/an_status`.
 
     xoa-utils[123456][port0/0] > an status
     
-    [ AN STATUS ]
+    [AN STATUS]
         Loopback              : allowed
         Duration              : 2,068,747 µs
         Successful runs       : 1
@@ -218,7 +225,7 @@ Check LT statistics by :doc:`../cli_ref/anlt/lt/lt_status`.
 
     xoa-utils[123456][port0/0] > lt status 0
     
-    [ LT STATUS ]
+    [LT STATUS]
         Is enabled        : true
         Is trained        : true
         Failure           : no_failure

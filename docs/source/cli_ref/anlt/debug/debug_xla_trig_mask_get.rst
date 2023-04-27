@@ -1,15 +1,15 @@
-debug lt-rx-analyzer-rd-page-set
-================================
+debug xla-trig-mask-get
+==================================
 
 .. important::
     
     To debug on a serdes, you must always use :doc:`debug_init` command prior to all the other debug commands.
 
-
+    
 Description
 -----------
 
-Debug lt-rx-analyzer-rd-page-set
+Debug xla-trig-mask-get
 
 
 
@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-rd-page-set <LANE>
+    debug xla-trig-mask-get <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-rd-page-set 0
+    xoa-utils[123456][port0/2] > debug xla-trig-mask-get 0
 
     xoa-utils[123456][port0/2] >
 

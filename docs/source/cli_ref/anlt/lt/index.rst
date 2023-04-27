@@ -9,6 +9,7 @@ Commands for Link Training.
 
     lt_config
     lt_im
+    lt_alg
     
 
 .. toctree::
@@ -22,6 +23,7 @@ Commands for Link Training.
     lt_trained
     lt_txtapget
     lt_txtapset
+    lt_txtap_autotune
 
 
 .. toctree::

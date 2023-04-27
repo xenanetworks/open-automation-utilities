@@ -1,4 +1,4 @@
-debug lt-tx-config-get
+debug px-set
 ======================
 
 .. important::
@@ -9,7 +9,7 @@ debug lt-tx-config-get
 Description
 -----------
 
-Debug lt-tx-config-get
+Debug px-set
 
 
 
@@ -18,16 +18,17 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-tx-config-get <SERDES>
+    debug px-set <PAGE_ADDRESS> <REG_ADDRESS> <VALUE>
 
 
 Arguments
 ---------
 
-``<SERDES>`` (integer)
+``<PAGE_ADDRESS>`` (integer)
 
-Specifies the transceiver serdes index.
+``<REG_ADDRESS>`` (string)
 
+``<VALUE>`` (string)
 
 Options
 -------
@@ -39,9 +40,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-tx-config-get 0
-
-    xoa-utils[123456][port0/2] >
+    xoa-utils[123456][port0/2] > debug px-set 2000 0x2f50 0x0101
 
 
 

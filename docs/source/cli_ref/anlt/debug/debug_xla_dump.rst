@@ -1,15 +1,15 @@
-debug lt-rx-analyzer-rd-addr-get
-================================
+debug xla-dump
+=========================
 
 .. important::
     
     To debug on a serdes, you must always use :doc:`debug_init` command prior to all the other debug commands.
 
-    
+
 Description
 -----------
 
-Debug lt-rx-analyzer-rd-addr-get
+Debug xla-dump
 
 
 
@@ -18,13 +18,13 @@ Synopsis
 
 .. code-block:: text
 
-    debug lt-rx-analyzer-rd-addr-get <LANE>
+    debug xla-dump <SERDES>
 
 
 Arguments
 ---------
 
-``<LANE>`` (integer)
+``<SERDES>`` (integer)
 
 Specifies the transceiver serdes index.
 
@@ -39,7 +39,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > debug lt-rx-analyzer-rd-addr-get 0
+    xoa-utils[123456][port0/2] > debug xla-dump 0
 
     xoa-utils[123456][port0/2] >
 

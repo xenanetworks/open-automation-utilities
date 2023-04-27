@@ -5,6 +5,7 @@ from xoa_utils.clicks import click_backend as cb
 from xoa_driver.hlfuncs import anlt as anlt_utils
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
 from xoa_driver.testers import L23Tester
+from xoa_driver.enums import MediaConfigurationType
 from xoa_utils.clis import format_tester_status, format_ports_status, format_port_status
 from xoa_utils.clicks.click_commands.group import xoa_util
 from xoa_utils.clicks import click_help as h
@@ -48,6 +49,9 @@ async def connect(
     count = 0
     first_id = ""
     for id_str in real_port_list:
+        this_module_dic = storage.obtain_physical_modules(id_str)
+        for module_id, module_obj in this_module_dic.items():
+            storage.store_module(module_id, module_obj)
         this_port_dic = storage.obtain_physical_ports(id_str)
         for port_id, port_obj in this_port_dic.items():
             if force:
@@ -59,11 +63,11 @@ async def connect(
             if count == 0:
                 first_id = port_id
             count += 1
-
     if real_port_list:
+        storage.store_current_module_str(first_id.split("/")[0])
         storage.store_current_port_str(first_id)
     if force or reset:
-        await asyncio.sleep(3)
+        await asyncio.sleep(2)
         # status will change when you reserve_port or reset_port, need to wait
     return format_tester_status(storage)
 
@@ -82,12 +86,17 @@ async def exit(context: ac.Context, reset: bool, release: bool) -> str:
     Exit the session. Exit by terminating port reservations, disconnecting from the chassis, releasing system resources, and removing the specified port configurations.
     """
     storage: CmdContext = context.obj
+    for module_id, module_obj in storage.retrieve_modules().copy().items():
+        if release:
+            await mgmt_utils.free_module(module_obj)
+        storage.remove_module(module_id)
     for port_id, port_obj in storage.retrieve_ports().copy().items():
         if reset:
             await mgmt_utils.reset_port(port_obj)
         if release:
             await mgmt_utils.free_port(port_obj)
         storage.remove_port(port_id)
+
     return ""
 
 
@@ -106,6 +115,15 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
         <PORT>: The port on the specified device host. Specify a port using the format slot/port, e.g. 0/0
     """
     storage: CmdContext = context.obj
+    module_id = port.split("/")[0]
+    try:
+        storage.store_current_module_str(module_id)
+        p_obj = storage.retrieve_module(module_id)
+    except ex.NotInStoreError:
+        module_dic = storage.obtain_physical_modules(module_id)
+        for m_id, m_obj in module_dic.items():
+            storage.store_module(m_id, m_obj)
+            storage.store_current_module_str(m_id)
     try:
         storage.store_current_port_str(port)
         p_obj = storage.retrieve_port()
@@ -120,9 +138,9 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
     port_obj = storage.retrieve_port()
     port_id = storage.retrieve_port_str()
     tester_obj = storage.retrieve_tester()
-    module_id = int(port.split("/")[0])
+
     if force:
-        module_obj = mgmt_utils.get_module(tester_obj, module_id)
+        module_obj = mgmt_utils.get_module(tester_obj, int(module_id))
         await mgmt_utils.free_module(module_obj)
         await mgmt_utils.reserve_port(port_obj, force)
     if reset:
@@ -131,7 +149,7 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
         await asyncio.sleep(2)
         # status will change when you reserve_port or reset_port, need to wait
     status_dic = await anlt_utils.anlt_status(port_obj)
-    return f"{format_ports_status(storage, False)}{format_port_status(port_id, status_dic, storage)}"
+    return f"{format_ports_status(storage, False)}{format_port_status(status_dic, storage)}"
 
 
 # --------------------------
@@ -146,3 +164,79 @@ async def ports(context: ac.Context, all: bool) -> str:
     """
     storage: CmdContext = context.obj
     return format_ports_status(storage, all)
+
+
+# --------------------------
+# command: module-config
+# --------------------------
+@xoa_util.command(cls=cb.XenaCommand)
+@ac.argument("module", type=ac.INT)
+@ac.argument(
+    "media",
+    type=ac.Choice(
+        [
+            "cfp4",
+            "cxp",
+            "sfp28",
+            "qsfp28_nrz",
+            "qsfp28_pam4",
+            "qsfp56_pam4",
+            "qsfpdd_pam4",
+            "sfp56",
+            "sfpdd",
+            "sfp112",
+            "qsfpdd_nrz",
+            "cfp",
+            "base_t1",
+            "base_t1s",
+            "qsfpdd800",
+            "qsfp112",
+            "osfp800",
+        ]
+    ),
+)
+@ac.argument("port_count", type=ac.INT)
+@ac.argument(
+    "port_speed",
+    type=ac.Choice(
+        [
+            "800g",
+            "400g",
+            "200g",
+            "100g",
+        ]
+    ),
+)
+@ac.option("--force/--no-force", type=ac.BOOL, help=h.HELP_CONNECT_FORCE, default=True)
+@ac.pass_context
+async def module_config(
+    context: ac.Context,
+    module: int,
+    media: str,
+    port_count: int,
+    port_speed: str,
+    force: bool,
+) -> str:
+    """
+    Change module media configuration
+
+        <MODULE>: Specifies the module on the specified device host. Specify a module using the format slot, e.g. 0
+
+        <MEDIA>: Specifies the media configuration type of the module. Allowed values: qsfpddpam4 | sfpdd | sfp112 | qsfpddnrz | qsfpdd800 | qsfp112 | osfp800
+
+        <PORT_COUNT>: Specifies the port count of the module.
+
+        <PORT_SPEED>: Specifies the port speed in Gbps of the module. Allowed values: 800g | 400g | 200g | 100g
+
+    """
+    storage: CmdContext = context.obj
+    module_obj = storage.retrieve_module(str(module))
+    await mgmt_utils.set_module_media_config(
+        module_obj, MediaConfigurationType[media.upper()], force
+    )
+    await mgmt_utils.set_module_port_config(
+        module_obj, port_count, int(port_speed.replace("g", "000000000")), force
+    )
+    await module_obj._setup()
+    storage.remove_ports()
+    return ""
