@@ -47,7 +47,7 @@ async def start_server(config: ReadConfig) -> None:
     await server.wait_closed()
 
 
-async def main() -> None:
+async def xoa_utility() -> None:
     argv = (sys.argv[1],) if len(sys.argv) >= 2 else tuple()
     config = ReadConfig(*argv)
     try:
@@ -57,6 +57,8 @@ async def main() -> None:
     except KeyboardInterrupt:
         os.remove(config.hub_pid_path)
 
+def main() -> None:
+    asyncio.run(xoa_utility())
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
