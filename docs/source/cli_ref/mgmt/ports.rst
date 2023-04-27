@@ -4,8 +4,7 @@ ports
 Description
 -----------
 
-List all the ports reserved by the current session.
-This command works in all context.
+List all the ports reserved by the current session. This command works in all context.
 
 Synopsis
 --------
@@ -13,6 +12,7 @@ Synopsis
 .. code-block:: text
     
     ports
+    [--all/--no-all]
 
 
 Arguments

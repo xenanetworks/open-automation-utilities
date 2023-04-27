@@ -4,7 +4,7 @@ anlt status
 Description
 -----------
 
-Show AN/LT status of the working port.
+Show auto-negotiation and link training actual and shadow configurations of the working port.
 
 
 Synopsis

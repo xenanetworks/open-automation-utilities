@@ -17,6 +17,10 @@ Debug Commands
     debug_an_tx_config_set
     debug_an_rx_config_get
     debug_an_rx_config_set
+    debug_an_rx_dme_mv_range_get
+    debug_an_rx_dme_mv_range_set
+    debug_an_rx_dme_bit_range_get
+    debug_an_rx_dme_bit_range_set
     debug_lt_tx_config_get
     debug_lt_tx_config_set
     debug_lt_rx_config_get
@@ -39,6 +43,7 @@ Debug Commands
     debug_xla_rd_data_get
     debug_lt_prbs
     debug_xla_dump
+    debug_xla_dump_ctrl
     debug_xla_trig_n_dump
     debug_px_get
     debug_px_set

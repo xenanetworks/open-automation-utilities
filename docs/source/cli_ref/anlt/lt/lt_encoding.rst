@@ -13,7 +13,7 @@ Synopsis
 
 .. code-block:: text
     
-lt encoding <SERDES> <ENCODING>
+    lt encoding <SERDES> <ENCODING>
 
 
 Arguments

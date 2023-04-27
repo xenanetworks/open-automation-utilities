@@ -4,8 +4,7 @@ port
 Description
 -----------
 
-Reserve and switch port. If the port is not yet reserved, reserve the port. 
-This command changes the working port and will stay in the same context.
+Reserve and switch port. If the port is not yet reserved, reserve the port. This command changes the working port and will stay in the same context.
 
 Synopsis
 --------
