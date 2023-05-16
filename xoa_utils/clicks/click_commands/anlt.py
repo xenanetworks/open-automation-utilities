@@ -308,7 +308,7 @@ async def anlt_log(ctx: ac.Context, filename: str, read: bool, keep: str, serdes
             log_str = await anlt_utils.anlt_log(port_obj)
         filtered = _filter_log(log_str, keep, serdes)
         string = _beautify(filtered)
-        if filename and log_str:
+        if not read and filename and log_str:
             with open(filename, "a") as f:
                 f.write(f"{log_str}\n")
         return string
