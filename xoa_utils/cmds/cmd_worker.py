@@ -154,11 +154,11 @@ class CmdWorker:
         except ac.UsageError as error:
             response = format_error(error)
             success = False
-        except driver_ex.BadStatus as ee:
-            response = f"{type(ee).__name__}: Driver BadStatus error.\n"
+        except driver_ex.XoaException as ee:
+            response = f"{type(ee).__name__}: Driver error.\n"
             success = False
         except Exception as e:
-            response = f"{type(e).__name__}: {e}\n"
+            response = f"{type(e).__name__}: {getattr(e, 'msg', str(e))}\n"
             success = False
         if response is not None:
             self.write(f"{response}")

@@ -15,6 +15,8 @@ from xoa_utils import exceptions as ex
 # --------------------------
 # command: connect
 # --------------------------
+
+
 @xoa_util.command(cls=cb.XenaCommand)
 @ac.argument("device", type=ac.STRING)
 @ac.argument("username", type=ac.STRING)
@@ -43,7 +45,7 @@ async def connect(
     """
     storage: CmdContext = context.obj
     real_port_list = [i.strip() for i in ports.split(",")] if ports else []
-    tester = await L23Tester(device, username, password, tcp, debug=False)
+    tester = await L23Tester(device, username, password, tcp)
     con_info = f"{device}:{tcp}"
     storage.store_current_tester(username, con_info, tester)
     count = 0
@@ -235,7 +237,8 @@ async def module_config(
         module_obj, MediaConfigurationType[media.upper()], force
     )
     await mgmt_utils.set_module_port_config(
-        module_obj, port_count, int(port_speed.replace("g", "000000000")), force
+        module_obj, port_count, int(
+            port_speed.replace("g", "000000000")), force
     )
     await module_obj._setup()
     storage.remove_ports()

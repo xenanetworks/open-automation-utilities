@@ -57,8 +57,10 @@ async def xoa_utility() -> None:
     except KeyboardInterrupt:
         os.remove(config.hub_pid_path)
 
+
 def main() -> None:
     asyncio.run(xoa_utility())
+
 
 if __name__ == "__main__":
     main()
