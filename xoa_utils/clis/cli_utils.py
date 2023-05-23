@@ -232,6 +232,19 @@ def format_lt_inc_dec(
     return f"Port {storage.retrieve_port_str()}: {action} {change} by 1 on Serdes {serdes} ({response})\n"
 
 
+def format_lt_no_eq(
+    storage: CmdContext, serdes: int, emphasis: str, response: str
+) -> str:
+    change = {
+        "pre3": "c(-3)",
+        "pre2": "c(-2)",
+        "pre": "c(-1)",
+        "main": "c(0)",
+        "post": "c(1)",
+    }[emphasis]
+    return f"Port {storage.retrieve_port_str()}: Turning off equalizer on {change} on Serdes {serdes} ({response})\n"
+
+
 def format_lt_encoding(
     storage: CmdContext, serdes: int, encoding: str, response: str
 ) -> str:

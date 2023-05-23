@@ -85,6 +85,9 @@ Summary
     * - :doc:`../anlt/lt/lt_dec`
       - Request **remote port** to decrease (-) its emphasis value by 1
       - ``lt dec 0 main``
+    * - :doc:`../anlt/lt/lt_no_eq`
+      - Request **remote port** to turn off equalizer on its emphasis
+      - ``lt dec 0 main``
     * - :doc:`../anlt/lt/lt_encoding`
       - Request **remote port** to use the specified encoding on the specified serdes
       - ``lt encoding 0 pam4``
