@@ -1,10 +1,10 @@
-module-config
-=============
+module-config-set
+==================
 
 Description
 -----------
 
-Change module's media configuration and port speed configuration.
+Set module's media configuration and port speed configuration.
 
 Synopsis
 --------
@@ -107,4 +107,4 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456] > module-config 0 osfp800 8 100g
+    xoa-utils[123456] > module-config-set 0 osfp800 8 100g
