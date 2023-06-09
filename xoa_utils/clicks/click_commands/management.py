@@ -202,10 +202,14 @@ async def ports(context: ac.Context, all: bool) -> str:
     "port_speed",
     type=ac.Choice(
         [
-            "800g",
-            "400g",
-            "200g",
+            "10g",
+            "25g",
+            "50g",
             "100g",
+            "200g",
+            "400g",
+            "800g",
+
         ]
     ),
 )
@@ -238,8 +242,7 @@ async def module_config(
     )
     await mgmt_utils.set_module_port_config(
         module_obj, port_count, int(
-            port_speed.replace("g", "000000000")), force
+            port_speed.replace("g", "000")), force
     )
-    await module_obj._setup()
     storage.remove_ports()
     return ""
