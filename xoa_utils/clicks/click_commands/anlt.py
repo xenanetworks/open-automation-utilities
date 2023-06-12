@@ -131,6 +131,9 @@ async def do(context: ac.Context) -> str:
     "-f", "--filename", type=ac.STRING, help=h.HELP_ANLT_LOG_FILENAME, default=""
 )
 @ac.option(
+    "--read", is_flag=True, help="Read the file", default=False
+)
+@ac.option(
     "-k",
     "--keep",
     type=ac.Choice(["all", "an", "lt"]),
@@ -139,7 +142,7 @@ async def do(context: ac.Context) -> str:
 )
 @ac.option("-s", "--serdes", type=ac.STRING, help=h.HELP_ANLT_LOG_SERDES, default="")
 @ac.pass_context
-async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> str:
+async def anlt_log(ctx: ac.Context, filename: str, read: bool, keep: str, serdes: str) -> str:
     """
     Start AN/LT logging.
     """
@@ -295,22 +298,29 @@ async def anlt_log(ctx: ac.Context, filename: str, keep: str, serdes: str) -> st
         return "\n".join(real)
 
     async def log(
-        storage: CmdContext, filename: str, keep: str, serdes: list[int]
+        storage: CmdContext, filename: str, read: bool, keep: str, serdes: list[int]
     ) -> str:
-        port_obj = storage.retrieve_port()
-        log_str = await anlt_utils.anlt_log(port_obj)
+        if read:
+            with open(filename, "r") as f:
+                log_str = f.read()
+        else:
+            port_obj = storage.retrieve_port()
+            log_str = await anlt_utils.anlt_log(port_obj)
         filtered = _filter_log(log_str, keep, serdes)
         string = _beautify(filtered)
-        if filename and log_str:
+        if not read and filename and log_str:
             with open(filename, "a") as f:
                 f.write(f"{log_str}\n")
         return string
 
     real_serdes_list = [int(i.strip()) for i in serdes.split(",")] if serdes else []
-    kw = {"filename": filename, "keep": keep, "serdes": real_serdes_list}
-    storage: CmdContext = ctx.obj
-    storage.set_loop_coro(log, kw)
-    return ""
+    if read:
+        return await log(storage=None, filename=filename, read=read, keep=keep, serdes=real_serdes_list)
+    else:
+        kw = {"filename": filename, "read": read, "keep": keep, "serdes": real_serdes_list}
+        storage: CmdContext = ctx.obj
+        storage.set_loop_coro(log, kw)
+        return ""
 
 
 # --------------------------

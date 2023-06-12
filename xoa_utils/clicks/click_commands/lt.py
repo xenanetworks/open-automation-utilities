@@ -8,6 +8,7 @@ from xoa_utils.clis import (
     format_lt_config,
     format_lt_im,
     format_lt_inc_dec,
+    format_lt_no_eq,
     format_lt_encoding,
     format_lt_preset,
     format_lt_trained,
@@ -158,6 +159,33 @@ async def lt_dec(context: ac.Context, serdes: int, emphasis: str) -> str:
         port_obj, serdes, enums.LinkTrainCoeffs[emphasis.upper()]
     )
     return format_lt_inc_dec(storage, serdes, emphasis, False, resp.name)
+
+
+# **************************
+# Type: Control
+# **************************
+# **************************
+# sub-command: lt no_eq
+# **************************
+@lt.command(cls=cb.XenaCommand, name="no_eq")
+@ac.argument("serdes", type=ac.INT)
+@ac.argument("emphasis", type=ac.Choice(["pre3", "pre2", "pre", "main", "post"]))
+@ac.pass_context
+async def lt_no_eq(context: ac.Context, serdes: int, emphasis: str) -> str:
+    """
+    Request the remote port's serdes to turn off equalizing.
+
+        <SERDES>: Specifies the transceiver serdes index.
+
+        <EMPHASIS>: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    storage.validate_current_serdes(serdes)
+    resp = await anlt_utils.lt_coeff_no_eq(
+        port_obj, serdes, enums.LinkTrainCoeffs[emphasis.upper()]
+    )
+    return format_lt_no_eq(storage, serdes, emphasis, resp.name)
 
 
 # **************************

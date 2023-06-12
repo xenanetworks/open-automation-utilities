@@ -18,6 +18,7 @@ Commands for Link Training.
     
     lt_inc
     lt_dec
+    lt_no_eq
     lt_encoding
     lt_preset
     lt_trained
