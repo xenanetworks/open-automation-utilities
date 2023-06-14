@@ -40,7 +40,7 @@ def main():
             "pytest>=7.2.1",
             "asyncclick>=8.1.3.4",
             "psutil>=5.9.4",
-            "xoa-driver>=1.3",
+            "xoa-driver>=2.0",
         ],
         classifiers=[
             "Development Status :: 5 - Production/Stable",
