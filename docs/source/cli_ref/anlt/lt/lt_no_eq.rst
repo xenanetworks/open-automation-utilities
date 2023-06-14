@@ -1,5 +1,5 @@
-lt dec
-======
+lt no_eq
+=========
 
 Description
 -----------
