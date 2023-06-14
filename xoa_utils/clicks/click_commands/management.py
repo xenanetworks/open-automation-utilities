@@ -193,7 +193,10 @@ async def ports(context: ac.Context, all: bool) -> str:
             "base_t1s",
             "qsfpdd800",
             "qsfp112",
-            "osfp800",
+            "osfp800"
+            "qsfpdd800_anlt",
+            "qsfp112_anlt",
+            "osfp800_anlt"
         ]
     ),
 )
