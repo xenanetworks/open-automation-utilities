@@ -15,6 +15,8 @@ from xoa_utils import exceptions as ex
 # --------------------------
 # command: connect
 # --------------------------
+
+
 @xoa_util.command(cls=cb.XenaCommand)
 @ac.argument("device", type=ac.STRING)
 @ac.argument("username", type=ac.STRING)
@@ -43,7 +45,7 @@ async def connect(
     """
     storage: CmdContext = context.obj
     real_port_list = [i.strip() for i in ports.split(",")] if ports else []
-    tester = await L23Tester(device, username, password, tcp, debug=False)
+    tester = await L23Tester(device, username, password, tcp)
     con_info = f"{device}:{tcp}"
     storage.store_current_tester(username, con_info, tester)
     count = 0
@@ -192,6 +194,9 @@ async def ports(context: ac.Context, all: bool) -> str:
             "qsfpdd800",
             "qsfp112",
             "osfp800",
+            "qsfpdd800_anlt",
+            "qsfp112_anlt",
+            "osfp800_anlt"
         ]
     ),
 )
@@ -200,10 +205,14 @@ async def ports(context: ac.Context, all: bool) -> str:
     "port_speed",
     type=ac.Choice(
         [
-            "800g",
-            "400g",
-            "200g",
+            "10g",
+            "25g",
+            "50g",
             "100g",
+            "200g",
+            "400g",
+            "800g",
+
         ]
     ),
 )
@@ -222,11 +231,11 @@ async def module_config(
 
         <MODULE>: Specifies the module on the specified device host. Specify a module using the format slot, e.g. 0
 
-        <MEDIA>: Specifies the media configuration type of the module. Allowed values: qsfpddpam4 | sfpdd | sfp112 | qsfpddnrz | qsfpdd800 | qsfp112 | osfp800
+        <MEDIA>: Specifies the media configuration type of the module. Allowed values: cfp4 | cxp | sfp28 | qsfp28_nrz | qsfp28_pam4 | qsfp56_pam4 | qsfpdd_pam4 | sfp56 | sfpdd | sfp112 | qsfpdd_nrz | cfp | base_t1 | base_t1s | qsfpdd800 | qsfp112 | osfp800 | qsfpdd800_anlt | qsfp112_anlt | osfp800_anlt
 
         <PORT_COUNT>: Specifies the port count of the module.
 
-        <PORT_SPEED>: Specifies the port speed in Gbps of the module. Allowed values: 800g | 400g | 200g | 100g
+        <PORT_SPEED>: Specifies the port speed in Gbps of the module. Allowed values: 800g | 400g | 200g | 100g | 50g | 25g | 10g
 
     """
     storage: CmdContext = context.obj
@@ -235,8 +244,8 @@ async def module_config(
         module_obj, MediaConfigurationType[media.upper()], force
     )
     await mgmt_utils.set_module_port_config(
-        module_obj, port_count, int(port_speed.replace("g", "000000000")), force
+        module_obj, port_count, int(
+            port_speed.replace("g", "000")), force
     )
-    await module_obj._setup()
     storage.remove_ports()
     return ""

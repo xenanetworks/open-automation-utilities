@@ -12,6 +12,7 @@ from xoa_utils.clis.cli_utils import (
     format_error,
     format_an_config,
     format_lt_inc_dec,
+    format_lt_no_eq,
     format_lt_encoding,
     format_lt_preset,
     format_lt_trained,

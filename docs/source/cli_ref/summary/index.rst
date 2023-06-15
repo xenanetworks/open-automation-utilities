@@ -18,9 +18,12 @@ Summary
     * - :doc:`../mgmt/ports`
       - List ports
       - ``ports | ports --all``
-    * - :doc:`../mgmt/module_config`
-      - List ports
-      - ``module-config 0 osfp800 8 100g``
+    * - :doc:`../mgmt/module_config_set`
+      - Set module media and port config
+      - ``module-config-set 0 osfp800 8 100g``
+    * - :doc:`../mgmt/module_config_get`
+      - Get module media and port config
+      - ``module-config-get``
     * - :doc:`../mgmt/exit`
       - Exit the session
       - ``exit``
@@ -84,6 +87,9 @@ Summary
       - ``lt config --on --mode auto --preset0 standard``
     * - :doc:`../anlt/lt/lt_dec`
       - Request **remote port** to decrease (-) its emphasis value by 1
+      - ``lt dec 0 main``
+    * - :doc:`../anlt/lt/lt_no_eq`
+      - Request **remote port** to turn off equalizer on its emphasis
       - ``lt dec 0 main``
     * - :doc:`../anlt/lt/lt_encoding`
       - Request **remote port** to use the specified encoding on the specified serdes
