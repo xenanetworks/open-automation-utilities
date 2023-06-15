@@ -18,12 +18,9 @@ Summary
     * - :doc:`../mgmt/ports`
       - List ports
       - ``ports | ports --all``
-    * - :doc:`../mgmt/module_config_set`
+    * - :doc:`../mgmt/module_config`
       - Set module media and port config
-      - ``module-config-set 0 osfp800 8 100g``
-    * - :doc:`../mgmt/module_config_get`
-      - Get module media and port config
-      - ``module-config-get``
+      - ``module-config 0 osfp800 8 100g``
     * - :doc:`../mgmt/exit`
       - Exit the session
       - ``exit``
