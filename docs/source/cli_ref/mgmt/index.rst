@@ -19,5 +19,4 @@ Management Commands
     :maxdepth: 1
     :caption: Module Commands
 
-    module_config_set
-    module_config_get
+    module_config

@@ -11,7 +11,7 @@ Synopsis
 
 .. code-block:: text
     
-    module-config <MODULE>
+    module-config-get <MODULE>
 
 
 Arguments
