@@ -165,9 +165,9 @@ async def lt_dec(context: ac.Context, serdes: int, emphasis: str) -> str:
 # Type: Control
 # **************************
 # **************************
-# sub-command: lt no_eq
+# sub-command: lt no-eq
 # **************************
-@lt.command(cls=cb.XenaCommand, name="no_eq")
+@lt.command(cls=cb.XenaCommand, name="no-eq")
 @ac.argument("serdes", type=ac.INT)
 @ac.argument("emphasis", type=ac.Choice(["pre3", "pre2", "pre", "main", "post"]))
 @ac.pass_context

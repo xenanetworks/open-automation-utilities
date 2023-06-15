@@ -1,4 +1,4 @@
-lt no_eq
+lt no-eq
 =========
 
 Description
@@ -13,7 +13,7 @@ Synopsis
 
 .. code-block:: text
     
-    lt no_eq <SERDES> <EMPHASIS>
+    lt no-eq <SERDES> <EMPHASIS>
 
 
 Arguments
@@ -51,7 +51,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > lt no_eq 0 main
+    xoa-utils[123456][port0/2] > lt no-eq 0 main
     Port 0/0: Turning off equalizer on c(0) on Serdes 0 (COEFF_STS_UPDATED)
 
     xoa-utils[123456][port0/2] >
