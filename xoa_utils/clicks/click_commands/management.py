@@ -193,7 +193,7 @@ async def ports(context: ac.Context, all: bool) -> str:
             "base_t1s",
             "qsfpdd800",
             "qsfp112",
-            "osfp800"
+            "osfp800",
             "qsfpdd800_anlt",
             "qsfp112_anlt",
             "osfp800_anlt"
@@ -231,11 +231,11 @@ async def module_config(
 
         <MODULE>: Specifies the module on the specified device host. Specify a module using the format slot, e.g. 0
 
-        <MEDIA>: Specifies the media configuration type of the module. Allowed values: qsfpddpam4 | sfpdd | sfp112 | qsfpddnrz | qsfpdd800 | qsfp112 | osfp800
+        <MEDIA>: Specifies the media configuration type of the module. Allowed values: cfp4 | cxp | sfp28 | qsfp28_nrz | qsfp28_pam4 | qsfp56_pam4 | qsfpdd_pam4 | sfp56 | sfpdd | sfp112 | qsfpdd_nrz | cfp | base_t1 | base_t1s | qsfpdd800 | qsfp112 | osfp800 | qsfpdd800_anlt | qsfp112_anlt | osfp800_anlt
 
         <PORT_COUNT>: Specifies the port count of the module.
 
-        <PORT_SPEED>: Specifies the port speed in Gbps of the module. Allowed values: 800g | 400g | 200g | 100g
+        <PORT_SPEED>: Specifies the port speed in Gbps of the module. Allowed values: 800g | 400g | 200g | 100g | 50g | 25g | 10g
 
     """
     storage: CmdContext = context.obj
