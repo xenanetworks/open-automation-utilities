@@ -1,13 +1,13 @@
 Introduction
 ============
 
-Xena OpenAutomation Utilities (:term:`XOA ANLT Utility`) is an application that provides users with a command-line user interface to do interactive testing (e.g. ANLT testing). It provides a set of CLI commands to manage and configure test ports, collect statistics, and save logs. XOA ANLT Utility uses `xoa-driver <https://pypi.org/project/xoa-driver/>`_ to communicate to Xena ANLT Testers.
+Xena OpenAutomation ANLT Utility (:term:`XOA ANLT Utility`) is an application that provides users with a command-line user interface to do interactive testing (e.g. ANLT testing). It provides a set of CLI commands to manage and configure test ports, collect statistics, and save logs. XOA ANLT Utility uses `xoa-driver <https://pypi.org/project/xoa-driver/>`_ to communicate to Xena ANLT Testers.
 
 .. figure:: /_static/xoa_utils_sys.png
-    :scale: 100 %
+    :scale: 30 %
     :align: center
 
-    `XOA Utilities System`
+    `XOA ANLT Utility System`
 
 The CLI commands of XOA ANLT Utility are categorized into the following families:
 
