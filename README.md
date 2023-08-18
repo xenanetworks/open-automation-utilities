@@ -1,4 +1,4 @@
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/xoa-utils) [![PyPI](https://img.shields.io/pypi/v/xoa-utils)](https://pypi.python.org/pypi/xoa-utils) ![GitHub](https://img.shields.io/github/license/xenanetworks/open-automation-utilities) [![Documentation Status](https://readthedocs.org/projects/xena-openautomation-utilities/badge/?version=stable)](https://xena-openautomation-utilities.readthedocs.io/en/stable/?badge=stable)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/xoa-utils) [![PyPI](https://img.shields.io/pypi/v/xoa-utils)](https://pypi.python.org/pypi/xoa-utils) ![GitHub](https://img.shields.io/github/license/xenanetworks/open-automation-utilities) [![Documentation Status](https://readthedocs.com/projects/xena-networks-open-automation-utilities/badge/?version=latest)](https://docs.xenanetworks.com/projects/xoa-utilities/en/latest/?badge=latest)
 
 # Xena OpenAutomation Utilities
 
