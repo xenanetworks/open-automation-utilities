@@ -28,4 +28,4 @@ Glossary of Terms
         Link Training
 
     XOA ANLT Utility
-        Xena OpenAutomation Utilities for ANLT
+        Xena OpenAutomation ANLT Utility
