@@ -5,11 +5,48 @@ import os
 import typing as t
 import asyncclick as ac
 from xoa_driver import enums
+from enum import Enum
 
 if t.TYPE_CHECKING:
     from xoa_driver.ports import GenericL23Port
     from xoa_utils.cmds.cmd_context import CmdContext
 
+class ASCIIStyle(Enum):
+    DARKRED = "\033[31m"
+    DARKGREEN = "\033[32m"
+    DARKYELLOW = "\033[33m"
+    DARKBLUE = "\033[34m"
+    DARKMAGENTA = "\033[35m"
+    DARKCYAN = "\033[36m"
+
+    RED = "\033[91m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+    BLUE = "\033[94m"
+    MAGENTA = "\033[95m"
+    CYAN = "\033[96m"
+
+    DARKRED_BG = "\033[41m"
+    DARKGREEN_BG = "\033[42m"
+    DARKYELLOW_BG = "\033[43m"
+    DARKBLUE_BG = "\033[44m"
+    DARKMAGENTA_BG = "\033[45m"
+    DARKCYAN_BG = "\033[46m"
+
+    RED_BG = "\033[101m"
+    GREEN_BG = "\033[102m"
+    YELLOW_BG = "\033[103m"
+    BLUE_BG = "\033[104m"
+    MAGENTA_BG = "\033[105m"
+    CYAN_BG = "\033[106m"
+
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
+    END = "\033[0m"
+
+def _ascii_styler(str: str, fg_style: list[ASCIIStyle]) -> str:
+        style = "".join(s.value for s in fg_style)
+        return f"{style}{str}{ASCIIStyle.END.value}"
 
 class ReadConfig:
     def __init__(
@@ -87,7 +124,7 @@ def format_error(error: ac.UsageError) -> str:
 
 
 def _port_dic_status(current_id: str, port_dic: dict[str, GenericL23Port]) -> str:
-    string = f"Port      Sync      Owner     \n"
+    string = f"------------------------------\nPort      Sync      Owner     \n------------------------------\n"
     for name, port in port_dic.items():
         new_name = f"*{name}" if current_id == name else name
         owner = "You" if port.is_reserved_by_me() else "Others"
@@ -118,18 +155,27 @@ def format_ports_status(storage: "CmdContext", all: bool) -> str:
 
 
 def format_port_status(status: dict, storage: "CmdContext") -> str:
+    ims = {}
+    algs = {}
+
+    for key, val in storage.retrieve_lt_initial_mod().items():
+        ims[key] = enums.LinkTrainEncoding(val).name
+    for key, val in storage.retrieve_lt_algorithm().items():
+        algs[key] = enums.LinkTrainAlgorithm(val).name
+
     return f"""
-[ACTUAL CONFIG]
+{_ascii_styler("[ACTUAL CONFIG]", [ASCIIStyle.DARKGREEN_BG])}
     Link recovery         : {status['link_recovery']}
     Serdes count          : {status['serdes_count']}
 
     Auto-negotiation      : {status['autoneg_enabled']} ({'allow' if status['autoneg_allow_loopback'] else 'not allow'} loopback)
     Link training         : {'on' if status['link_training_mode'] != "disabled" else 'off'} ({'interactive' if status['link_training_mode'] == "interactive" else 'auto'}) (preset0: {'standard tap' if status['link_training_preset0'] == 'nrz_no_preset' else 'existing tap'} values) (timeout: {status['link_training_timeout']})
-    
-
-[SHADOW CONFIG]
+- - - - - - - - - - - - - - - - - - - - - - - - - - -
+{_ascii_styler("[SHADOW CONFIG]", [ASCIIStyle.MAGENTA_BG])}
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+        Initial Mod.      : {ims}
+        Algorithm         : {algs}
 """
 
 
@@ -154,10 +200,21 @@ def format_an_status(dic: dict) -> str:
 
 
 def format_lt_config(storage: CmdContext) -> str:
+    ims = {}
+    algs = {}
+
+    for key, val in storage.retrieve_lt_initial_mod().items():
+        ims[key] = enums.LinkTrainEncoding(val).name
+    for key, val in storage.retrieve_lt_algorithm().items():
+        algs[key] = enums.LinkTrainAlgorithm(val).name
+
     return f"""
-LT configuration to be on port {storage.retrieve_port_str()}
-[SHADOW CONFIG]
+<!>LT config to be on port {storage.retrieve_port_str()}
+{_ascii_styler("[SHADOW CONFIG]", [ASCIIStyle.MAGENTA_BG])}
+    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+        Initial Mod.      : {ims}
+        Algorithm         : {algs}
 """
 
 
@@ -171,14 +228,16 @@ def format_lt_im(status: dict, storage: CmdContext, serdes: int) -> str:
         algs[key] = enums.LinkTrainAlgorithm(val).name
 
     return f"""
-[ACTUAL CONFIG]
+{_ascii_styler("[ACTUAL CONFIG]", [ASCIIStyle.DARKGREEN_BG])}
     Link training         :
-        Initial Mod.      : {status['initial_mods']}
-
-Initial modulation to be {storage.retrieve_lt_initial_mod_serdes(serdes).name} on Serdes {serdes}
-[SHADOW CONFIG]
+        Initial mod.      : {status['initial_mods']}
+- - - - - - - - - - - - - - - - - - - - - - - - - - -
+<!>LT initial modulation to be {storage.retrieve_lt_initial_mod_serdes(serdes).name} on Serdes {serdes}
+{_ascii_styler("[SHADOW CONFIG]", [ASCIIStyle.MAGENTA_BG])}
+    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
         Initial Mod.      : {ims}
+        Algorithm         : {algs}
     """
 
 
@@ -192,24 +251,35 @@ def format_lt_algorithm(status: dict, storage: CmdContext, serdes: int) -> str:
         algs[key] = enums.LinkTrainAlgorithm(val).name
 
     return f"""
-[ACTUAL CONFIG]
+{_ascii_styler("[ACTUAL CONFIG]", [ASCIIStyle.DARKGREEN_BG])}
     Link training         :
         Algorithm         : {status['algorithms']}
-
-LT algorithm to be {storage.retrieve_lt_algorithm_serdes(serdes).name} on Serdes {serdes}
-[SHADOW CONFIG]
+- - - - - - - - - - - - - - - - - - - - - - - - - - -
+<!>LT algorithm to be {storage.retrieve_lt_algorithm_serdes(serdes).name} on Serdes {serdes}
+{_ascii_styler("[SHADOW CONFIG]", [ASCIIStyle.MAGENTA_BG])}
+    Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+        Initial Mod.      : {ims}
         Algorithm         : {algs}
     """
 
 
 def format_an_config(storage: CmdContext) -> str:
+    ims = {}
+    algs = {}
+
+    for key, val in storage.retrieve_lt_initial_mod().items():
+        ims[key] = enums.LinkTrainEncoding(val).name
+    for key, val in storage.retrieve_lt_algorithm().items():
+        algs[key] = enums.LinkTrainAlgorithm(val).name
 
     return f"""
-AN configuration to be on port {storage.retrieve_port_str()}
-[SHADOW CONFIG]
+<!>AN config to be on port {storage.retrieve_port_str()}
+{_ascii_styler("[SHADOW CONFIG]", [ASCIIStyle.MAGENTA_BG])}
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
     Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+        Initial Mod.      : {ims}
+        Algorithm         : {algs}
 """
 
 
