@@ -13,8 +13,8 @@ def main():
             ]
         },
         description=(
-            "Xena OpenAutomation Utilities provides a shell-like command-line interface for users to do explorative"
-            " tests interactively, such as ANLT test."
+            "Xena OpenAutomation ANLT Utility provides a shell-like command-line interface for users to do"
+            " ANLT tests interactively."
         ),
         long_description=long_description,
         long_description_content_type="text/markdown",
@@ -38,9 +38,8 @@ def main():
             "loguru>=0.6.0",
             "pdoc>=12.3.1",
             "pytest>=7.2.1",
-            "asyncclick>=8.1.3.4",
             "psutil>=5.9.4",
-            "xoa-driver>=2.1",
+            "xoa-driver>=2.1.4",
         ],
         classifiers=[
             "Development Status :: 5 - Production/Stable",
