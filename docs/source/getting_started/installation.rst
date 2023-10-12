@@ -33,8 +33,12 @@ XOA ANLT Utility requires an SSH key pair to run as a SSH service. To generate a
 
         > ssh-keygen -t rsa
 
-    Press :kbd:`Enter` to finish **Enter file in which to save the key**. The filename will be default to ``id_rsa``.
+    Press :kbd:`Enter` to finish **Enter file in which to save the key**.  
     
+    .. important::
+        
+        The filename of the key should be ``id_rsa``. Please don't use other filenames otherwise the application won't be able to run. 
+
     Press :kbd:`Enter` to skip passphrase.
     
     Press :kbd:`Enter` again to confirm passphrase.
@@ -49,7 +53,11 @@ XOA ANLT Utility requires an SSH key pair to run as a SSH service. To generate a
 
         $ ssh-keygen -t rsa
     
-    Press :kbd:`Enter` to finish **Enter file in which to save the key**. The filename will be default to ``id_rsa``.
+    Press :kbd:`Enter` to finish **Enter file in which to save the key**.
+
+    .. important::
+        
+        The filename of the key should be ``id_rsa``. Please don't use other filenames otherwise the application won't be able to run.
     
     Press :kbd:`Enter` to skip passphrase.
     
@@ -177,11 +185,14 @@ Install From PyPi Repository
     
     If you install XOA ANLT Utility using ``pip install xoa-utils``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically installed.
 
+.. important::
+
+    You can **either** install xoa-utils in your global Python namespace/package inventory **or** you can create a virtual Python environment to prevent polluting your global Python package inventory
 
 .. _install_core_global:
 
-To Global Namespace
-"""""""""""""""""""""""""""
+If Install To Global Namespace
+"""""""""""""""""""""""""""""""
 
 .. tab:: Windows
     :new-set:
@@ -205,8 +216,8 @@ To Global Namespace
 
 .. _install_core_venv:
 
-To Virtual Environment
-""""""""""""""""""""""""""""""
+If Install  To Virtual Environment
+""""""""""""""""""""""""""""""""""
 
 Install XOA ANLT Utility in a virtual environment, so it does not pollute your global namespace. 
 
