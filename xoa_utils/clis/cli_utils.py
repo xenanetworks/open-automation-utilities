@@ -165,7 +165,9 @@ def format_port_status(status: dict, storage: "CmdContext") -> str:
 
     return f"""
 {_ascii_styler("[ACTUAL CONFIG]", [ASCIIStyle.DARKGREEN_BG])}
-    Link recovery         : {status['link_recovery']}
+    ANLT auto-restart on link down         : {status['restart_link_down']}
+    ANLT auto-restart on LT failure        : {status['restart_lt_fail']}
+    
     Serdes count          : {status['serdes_count']}
 
     Auto-negotiation      : {status['autoneg_enabled']} ({'allow' if status['autoneg_allow_loopback'] else 'not allow'} loopback)
@@ -283,9 +285,14 @@ def format_an_config(storage: CmdContext) -> str:
 """
 
 
-def format_recovery(storage: CmdContext, on: bool) -> str:
-    enable = "on" if on else "off"
-    return f"Port {storage.retrieve_port_str()} link recovery: {enable}\n"
+def format_recovery(storage: CmdContext, link_down: bool, lt_fail: bool) -> str:
+    link_down = "on" if link_down else "off"
+    lt_fail = "on" if lt_fail else "off"
+    return f"""
+Port {storage.retrieve_port_str()} ANLT Auto-Restart: 
+    When link down detected:             {link_down}
+    When link training failure detected: {link_down}
+"""
 
 
 def format_lt_inc_dec(

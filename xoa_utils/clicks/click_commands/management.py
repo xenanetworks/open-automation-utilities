@@ -37,7 +37,7 @@ async def connect(
     tcp: int,
 ) -> str:
     """
-    Connect to a tester for the current session.
+    Connect to tester for the current session
 
         <DEVICE>: The chassis address to connect. Address can be in IPv4 format (e.g. 10.10.10.10), or a host name (e.g. demo.xenanetworks.com)
 
@@ -45,7 +45,7 @@ async def connect(
     """
     storage: CmdContext = context.obj
     real_port_list = [i.strip() for i in ports.split(",")] if ports else []
-    tester = await L23Tester(device, username, password, tcp)
+    tester = await L23Tester(device, username, password, tcp, enable_logging=False)
     con_info = f"{device}:{tcp}"
     storage.store_current_tester(username, con_info, tester)
     count = 0
@@ -85,7 +85,7 @@ async def connect(
 @ac.pass_context
 async def exit(context: ac.Context, reset: bool, release: bool) -> str:
     """
-    Exit the session. Exit by terminating port reservations, disconnecting from the chassis, releasing system resources, and removing the specified port configurations.
+    Exit session
     """
     storage: CmdContext = context.obj
     for module_id, module_obj in storage.retrieve_modules().copy().items():
@@ -112,7 +112,7 @@ async def exit(context: ac.Context, reset: bool, release: bool) -> str:
 @ac.pass_context
 async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
     """
-    Switch the working port. If the port is not yet reserved, reserve the port. Update the working port in the cache.
+    Switch the working port
 
         <PORT>: The port on the specified device host. Specify a port using the format slot/port, e.g. 0/0
     """
@@ -162,7 +162,7 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
 @ac.pass_context
 async def ports(context: ac.Context, all: bool) -> str:
     """
-    List all the ports reserved by the current session.
+    List all ports reserved by current session
     """
     storage: CmdContext = context.obj
     return format_ports_status(storage, all)

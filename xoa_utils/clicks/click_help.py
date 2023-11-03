@@ -35,7 +35,9 @@ HELP_EXIT_RELEASE = "Determines whether the ports should be released before exit
 
 HELP_PORTS_ALL = "Show all ports of the tester, default to --no-all"
 
-HELP_RECOVERY_ON = "Should xenaserver automatically do link recovery when detecting down signal, default to --on."
+HELP_ANLT_RESTART_LINK_DOWN_ON = "Should port enables AN+LT auto-restart when a link down condition is detected, default to --no-link-down."
+
+HELP_ANLT_RESTART_LT_FAIL_ON = "Should port initiates the AN+LT restart process repeatedly when LT experiences failure until LT succeeds, default to --no-lt-fail."
 
 HELP_AN_CONFIG_ON = "Enable or disable auto-negotiation on the working port, \
 default to --on."

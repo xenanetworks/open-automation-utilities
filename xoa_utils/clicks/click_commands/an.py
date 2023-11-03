@@ -35,7 +35,7 @@ def an():
 @ac.pass_context
 async def an_config(context: ac.Context, on: bool, loopback: bool) -> str:
     """
-    Configure AN of the working port.
+    Configure Auto-Negotiation
     """
     storage: CmdContext = context.obj
     storage.retrieve_port()
@@ -54,7 +54,7 @@ async def an_config(context: ac.Context, on: bool, loopback: bool) -> str:
 @ac.pass_context
 async def an_status(context: ac.Context) -> str:
     """
-    Show AN status of the working port.
+    Show Auto-Negotiation status
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
