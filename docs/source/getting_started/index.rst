@@ -2,8 +2,7 @@ Getting Started
 ===============
 
 
-
 .. toctree::
 
-    installation
+    installation/index
     step_by_step
