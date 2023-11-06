@@ -291,7 +291,7 @@ def format_recovery(storage: CmdContext, link_down: bool, lt_fail: bool) -> str:
     return f"""
 Port {storage.retrieve_port_str()} ANLT Auto-Restart: 
     When link down detected:             {link_down}
-    When link training failure detected: {link_down}
+    When link training failure detected: {lt_fail}
 """
 
 
