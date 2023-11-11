@@ -6,7 +6,7 @@ Step-by-Step Guide
 
 This section provides a step-by-step guide on how to use XOA Utility to do interactive ANLT test.
 
-The diagram below illustrates a basic flow of using XOA ANLT Utility to do ANLT testing.
+The diagram below illustrates a basic flow of using ANLT Utility to do ANLT testing.
 
 .. figure:: ../_static/anlt_use_flow.png
     :width: 100 %
@@ -24,16 +24,16 @@ The diagram below illustrates a basic flow of using XOA ANLT Utility to do ANLT 
 
 
 
-SSH to XOA ANLT Utility
+SSH to ANLT Utility
 -----------------------
 
-After running the XOA ANLT Utility SSH Server, use another console to SSH to XOA ANLT Utility.
+After running the ANLT Utility SSH Server, use another console to SSH to ANLT Utility.
 
 .. tab:: Windows
     :new-set:
 
     .. code-block:: doscon
-        :caption: SSH to XOA ANLT Utility.
+        :caption: SSH to ANLT Utility.
 
         > ssh yourname@localhost -p 22622
 
@@ -45,7 +45,7 @@ After running the XOA ANLT Utility SSH Server, use another console to SSH to XOA
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: SSH to XOA ANLT Utility.
+        :caption: SSH to ANLT Utility.
 
         $ ssh yourname@localhost -p 22622
 

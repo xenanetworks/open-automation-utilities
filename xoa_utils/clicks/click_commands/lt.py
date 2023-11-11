@@ -54,7 +54,7 @@ def lt():
 @ac.pass_context
 async def lt_config(context: ac.Context, mode: str, on: bool, preset0: str) -> str:
     """
-    Configure LT for the working port.
+    Configure Link Training
     """
     storage: CmdContext = context.obj
     storage.retrieve_port()
@@ -73,7 +73,7 @@ async def lt_config(context: ac.Context, mode: str, on: bool, preset0: str) -> s
 @ac.pass_context
 async def lt_im(context: ac.Context, serdes: int, encoding: str) -> str:
     """
-    Set initial modulation for the specified serdes.
+    Set Initial Modulation for serdes
 
         <SERDES>: Specifies the transceiver serdes index.
 
@@ -96,7 +96,7 @@ async def lt_im(context: ac.Context, serdes: int, encoding: str) -> str:
 @ac.pass_context
 async def lt_algorithm(context: ac.Context, serdes: int, algorithm: str) -> str:
     """
-    Set the link training algorithm for the specified serdes.
+    Set Link Training algorithm for serdes
 
         <SERDES>: Specifies the transceiver serdes index.
 
@@ -122,7 +122,7 @@ async def lt_algorithm(context: ac.Context, serdes: int, algorithm: str) -> str:
 @ac.pass_context
 async def lt_inc(context: ac.Context, serdes: int, emphasis: str) -> str:
     """
-    Request the remote port's serdes to increase (+) an emphasis by 1.
+    Request remote port serdes to increase (+) an emphasis by 1
 
         <SERDES>: Specifies the transceiver serdes index.
 
@@ -146,7 +146,7 @@ async def lt_inc(context: ac.Context, serdes: int, emphasis: str) -> str:
 @ac.pass_context
 async def lt_dec(context: ac.Context, serdes: int, emphasis: str) -> str:
     """
-    Request the remote port's serdes to decrease (-) an emphasis by 1.
+    Request remote port serdes to decrease (-) an emphasis by 1
 
         <SERDES>: The serdes index.
 
@@ -173,7 +173,7 @@ async def lt_dec(context: ac.Context, serdes: int, emphasis: str) -> str:
 @ac.pass_context
 async def lt_no_eq(context: ac.Context, serdes: int, emphasis: str) -> str:
     """
-    Request the remote port's serdes to turn off equalizing.
+    Request remote port serdes to turn off equalizing
 
         <SERDES>: Specifies the transceiver serdes index.
 
@@ -197,7 +197,7 @@ async def lt_no_eq(context: ac.Context, serdes: int, emphasis: str) -> str:
 @ac.pass_context
 async def lt_encoding(context: ac.Context, serdes: int, encoding: str) -> str:
     """
-    Request the remote port's serdes to use the specified encoding.
+    Request remote port serdes to use encoding
 
         <SERDES>: The serdes index.
 
@@ -222,7 +222,7 @@ async def lt_encoding(context: ac.Context, serdes: int, encoding: str) -> str:
 @ac.pass_context
 async def lt_preset(context: ac.Context, serdes: int, preset: int) -> str:
     """
-    Request the remote port's serdes to use the preset.
+    Request remote port serdes to use preset
 
         <SERDES>: The serdes index.
 
@@ -244,7 +244,7 @@ async def lt_preset(context: ac.Context, serdes: int, preset: int) -> str:
 @ac.pass_context
 async def lt_trained(context: ac.Context, serdes: int) -> str:
     """
-    Announce the serdes is trained to the remote port.
+    Announce serdes trained
 
         <SERDES>: The serdes index.
     """
@@ -263,7 +263,7 @@ async def lt_trained(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_txtapget(context: ac.Context, serdes: int) -> str:
     """
-    Read the tap values of the specified serdes of the working port.
+    Read TX tap values
 
         <SERDES>: The serdes index.
     """
@@ -295,7 +295,7 @@ async def lt_txtapset(
     post: int,
 ) -> str:
     """
-    Write the tap values of the specified serdes of the working port.
+    Set TX tap values
 
         <SERDES>: The serdes index.
 
@@ -324,7 +324,7 @@ async def lt_txtapset(
 @ac.pass_context
 async def lt_status(context: ac.Context, serdes: int) -> str:
     """
-    Show the link training status of the serdes.
+    Show Link Training status of specified serdes
 
         <SERDES>: The serdes index.
     """
@@ -346,7 +346,7 @@ async def lt_txtap_autotune(
     serdes: int,
 ) -> str:
     """
-    Auto tune the tx tap values of the specified serdes of the working port.
+    Auto-tune TX tap values of specified serdes
 
         <SERDES>: The serdes index.
 

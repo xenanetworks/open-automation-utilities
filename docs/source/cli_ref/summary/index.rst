@@ -40,8 +40,8 @@ Summary
       - Show AN/LT protocol trace log and save to a file
       - ``anlt log --filename mylog.log``
     * - :doc:`../anlt/an_lt/anlt_recovery`
-      - Enable/disable link recovery on the local port
-      - ``anlt recovery --off``
+      - Control AN/LT auto-restart
+      - ``anlt recovery --link-down --lt-fail``
     * - :doc:`../anlt/an_lt/anlt_status`
       - Show AN/LT status of the local port
       - ``anlt status``

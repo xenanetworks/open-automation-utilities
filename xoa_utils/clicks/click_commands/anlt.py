@@ -61,19 +61,19 @@ def anlt():
 # --------------------------
 # command: recovery
 # --------------------------
-@anlt.command(cls=cb.XenaCommand)
-@ac.option("--on/--off", type=ac.BOOL, help=h.HELP_RECOVERY_ON, default=True)
+@anlt.command(cls=cb.XenaCommand, name="recovery")
+@ac.option("--link-down/--no-link-down", type=ac.BOOL, help=h.HELP_ANLT_RESTART_LINK_DOWN_ON, default=False)
+@ac.option("--lt-fail/--no-lt-fail", type=ac.BOOL, help=h.HELP_ANLT_RESTART_LT_FAIL_ON, default=False)
 @ac.pass_context
-async def recovery(context: ac.Context, on: bool) -> str:
+async def recovery(context: ac.Context, link_down: bool, lt_fail: bool) -> str:
     """
-    Enable/disable link recovery on the working port.
-    If enable, the port will keep doing AN/LT when no link-up signal is detected.
+    Control AN/LT auto-restart
     """
     storage: CmdContext = context.obj
 
     port_obj = storage.retrieve_port()
-    await anlt_utils.anlt_link_recovery(port_obj, on)
-    return format_recovery(storage, on)
+    await anlt_utils.anlt_link_recovery(port_obj, link_down, lt_fail)
+    return format_recovery(storage, link_down, lt_fail)
 
 
 # --------------------------
@@ -83,7 +83,7 @@ async def recovery(context: ac.Context, on: bool) -> str:
 @ac.pass_context
 async def status(context: ac.Context) -> str:
     """
-    Show AN/LT status of the working port.
+    Show AN/LT status
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -99,7 +99,7 @@ async def status(context: ac.Context) -> str:
 @ac.pass_context
 async def do(context: ac.Context) -> str:
     """
-    Apply and start AN/LT to the working port.
+    Apply and start AN/LT
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -144,7 +144,7 @@ async def do(context: ac.Context) -> str:
 @ac.pass_context
 async def anlt_log(ctx: ac.Context, filename: str, read: bool, keep: str, serdes: str) -> str:
     """
-    Start AN/LT logging.
+    Control AN/LT logging
     """
 
     def _filter_log(log: str, keep: str, serdes: list[int]) -> list[dict]:
@@ -331,7 +331,7 @@ async def anlt_log(ctx: ac.Context, filename: str, read: bool, keep: str, serdes
 @ac.pass_context
 async def strict(context: ac.Context, on: bool) -> str:
     """
-    ANLT strict mode ignores errored frames.
+    Control AN/LT strict mode
     """
     storage: CmdContext = context.obj
 
@@ -372,7 +372,7 @@ async def log_ctrl(
     fsm_lt_algn1: bool,
     ) -> str:
     """
-    Control what should be logged in ANLT by xenaserver
+    Control AN/LT log output from xenaserver
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()

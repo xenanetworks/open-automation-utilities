@@ -23,8 +23,7 @@ The CLI commands of XOA ANLT Utility are categorized into the following families
 
     You can view a list of XOA ANLT Utility CLI commands in :doc:`Summary of XOA ANLT Utility CLI commands </cli_ref/summary/index>`
 
-    .. figure:: /_static/cli_summary_preview.png
-        :scale: 60 %
+    .. figure:: /_static/cli_summary_preview_2.png
         :align: center
 
         :doc:`XOA Util CLI Summary </cli_ref/summary/index>`

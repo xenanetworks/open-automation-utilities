@@ -4,7 +4,7 @@ anlt recovery
 Description
 -----------
 
-Enable/disable link recovery on the working port. If enable, the port will keep doing AN/LT when no link-up signal is detected.
+Control AN/LT auto-restart.
 
 
 Synopsis
@@ -13,7 +13,8 @@ Synopsis
 .. code-block:: text
     
     anlt recovery
-    [--on/--off]
+    [--link-down/--no-link-down]
+    [--lt-fail/--no-lt-fail]
 
 
 Arguments
@@ -23,9 +24,13 @@ Arguments
 Options
 -------
 
-``--on/--off``
+``--link-down/--no-link-down``
 
-Should xenaserver automatically do link recovery when detecting down signal, default to ``--on``.
+Should port enables AN+LT auto-restart when a link down condition is detected, default to ``--no-link-down``
+
+``--lt-fail/--no-lt-fail``
+
+Should port initiates the AN+LT restart process repeatedly when LT experiences failure until LT succeeds, default to ``--no-lt-fail``.
 
 
 Examples
@@ -33,10 +38,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > anlt recovery --off
-    Port 0/2 link recovery: off
-
-    xoa-utils[123456][port0/2] >
+    xoa-utils[123456][port0/2] > anlt recovery --link-down --lt-fail
 
 
 
