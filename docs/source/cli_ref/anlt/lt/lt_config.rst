@@ -20,6 +20,7 @@ Synopsis
     [--on/--off]
     [-m, --mode <value: text>]
     [--preset0 <value: text>]
+    [--timeout <value: text>]
 
 
 Arguments
@@ -56,13 +57,23 @@ Allowed values:
 * `existing`:    Use the existing tap values as preset0
 
 
+``--timeout`` (text)
+
+Timeout mode, default to `enable``.
+
+Allowed values:
+
+* `enable`:    Enable timeout for LT auto
+
+* `disable`:   Disable timeout for LT auto
+
 
 Examples
 --------
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > lt config --on --preset0=existing --mode=interactive
+    xoa-utils[123456][port0/2] > lt config --on --preset0=existing --mode=interactive --timeout disable
     
     LT configuration to be on port 2/0
     [SHADOW CONFIG]

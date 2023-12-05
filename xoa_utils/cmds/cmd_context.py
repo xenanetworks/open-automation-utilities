@@ -60,6 +60,7 @@ class LTState:
         self.interactive: bool = False
         self.initial_mod: dict[str, LinkTrainEncoding] = {}
         self.algorithm: dict[str, LinkTrainAlgorithm] = {}
+        self.timeout: bool = True
 
 
 class LoopFuncState:
@@ -134,6 +135,9 @@ class CmdContext:
     def store_should_do_lt(self, do: bool) -> None:
         self._lt_state.do = do
 
+    def store_should_enable_lt_timeout(self, should_enable: bool) -> None:
+        self._lt_state.timeout = should_enable
+
     def store_lt_interactive(self, do: bool) -> None:
         self._lt_state.interactive = do
 
@@ -199,6 +203,9 @@ class CmdContext:
 
     def retrieve_lt_enable(self) -> bool:
         return self._lt_state.do
+    
+    def retrieve_lt_timeout(self) -> bool:
+        return self._lt_state.timeout
 
     def retrieve_lt_preset0(self) -> NRZPreset:
         return self._lt_state.preset0

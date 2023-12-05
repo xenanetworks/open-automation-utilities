@@ -110,6 +110,7 @@ async def do(context: ac.Context) -> str:
     lt_initial_modulations = storage.retrieve_lt_initial_mod()
     lt_interactive = storage.retrieve_lt_interactive()
     lt_algorithm = storage.retrieve_lt_algorithm()
+    should_lt_timeout = storage.retrieve_lt_timeout()
     await anlt_utils.anlt_start(
         port_obj,
         an_enable,
@@ -119,6 +120,7 @@ async def do(context: ac.Context) -> str:
         lt_initial_modulations,
         lt_interactive,
         lt_algorithm,
+        should_lt_timeout,
     )
     return ""
 

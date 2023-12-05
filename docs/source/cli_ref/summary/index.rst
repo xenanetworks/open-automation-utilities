@@ -81,7 +81,7 @@ Summary
       - ``lt alg 0 alg0``
     * - :doc:`../anlt/lt/lt_config`
       - Configure LT of the local port
-      - ``lt config --on --mode auto --preset0 standard``
+      - ``lt config --on --mode auto --preset0 standard --timeout enable``
     * - :doc:`../anlt/lt/lt_dec`
       - Request **remote port** to decrease (-) its emphasis value by 1
       - ``lt dec 0 main``
