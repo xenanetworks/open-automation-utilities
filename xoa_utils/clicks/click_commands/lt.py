@@ -58,7 +58,7 @@ def lt():
     default="enable",
 )
 @ac.pass_context
-async def lt_config(context: ac.Context, mode: str, on: bool, preset0: str, timeout: bool) -> str:
+async def lt_config(context: ac.Context, mode: str, on: bool, preset0: str, timeout: str) -> str:
     """
     Configure Link Training
     """
@@ -67,7 +67,7 @@ async def lt_config(context: ac.Context, mode: str, on: bool, preset0: str, time
     storage.store_should_do_lt(on)
     storage.store_lt_preset0(preset0)
     storage.store_lt_interactive(True if mode == "interactive" else False)
-    storage.store_should_enable_lt_timeout(should_enable=timeout)
+    storage.store_should_enable_lt_timeout(True if timeout == "enable" else False)
     return format_lt_config(storage)
 
 
