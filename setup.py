@@ -39,7 +39,7 @@ def main():
             "pdoc>=12.3.1",
             "pytest>=7.2.1",
             "psutil>=5.9.4",
-            "xoa-driver>=2.3.0",
+            "xoa-driver>=2.4.0",
         ],
         classifiers=[
             "Development Status :: 5 - Production/Stable",
