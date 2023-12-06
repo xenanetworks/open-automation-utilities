@@ -1,15 +1,15 @@
 Introduction
 ============
 
-Xena OpenAutomation ANLT Utility (:term:`XOA ANLT Utility`) is an application that provides users with a command-line user interface to do interactive testing (e.g. ANLT testing). It provides a set of CLI commands to manage and configure test ports, collect statistics, and save logs. XOA ANLT Utility uses `xoa-driver <https://pypi.org/project/xoa-driver/>`_ to communicate to Xena ANLT Testers.
+Xena OpenAutomation ANLT Utility (:term:`Xena ANLT Utility`) is an application that provides users with a command-line user interface to do interactive testing (e.g. ANLT testing). It provides a set of CLI commands to manage and configure test ports, collect statistics, and save logs. Xena ANLT Utility uses `xoa-driver <https://pypi.org/project/xoa-driver/>`_ to communicate to Xena ANLT Testers.
 
 .. figure:: /_static/xoa_utils_sys.png
     :scale: 30 %
     :align: center
 
-    `XOA ANLT Utility System`
+    `Xena ANLT Utility System`
 
-The CLI commands of XOA ANLT Utility are categorized into the following families:
+The CLI commands of Xena ANLT Utility are categorized into the following families:
 
 * `Auto-Negotiation and Link Training`_
 
@@ -21,7 +21,7 @@ The CLI commands of XOA ANLT Utility are categorized into the following families
 
 .. seealso::
 
-    You can view a list of XOA ANLT Utility CLI commands in :doc:`Summary of XOA ANLT Utility CLI commands </cli_ref/summary/index>`
+    You can view a list of Xena ANLT Utility CLI commands in :doc:`Summary of Xena ANLT Utility CLI commands </cli_ref/summary/index>`
 
     .. figure:: /_static/cli_summary_preview_2.png
         :align: center
@@ -75,7 +75,7 @@ Auto Negotiation and Link Training are in principle two **independent** processe
     Read more about `Auto Negotiation and Link Training on NRZ and PAM4 based Ethernet Interfaces <https://xenanetworks.com/whitepaper/autoneg-link-training/>`_.
 
 
-In XOA ANLT Utility, you can find the following functionalities to do auto-negotiation and link training interactive tests.
+In Xena ANLT Utility, you can find the following functionalities to do auto-negotiation and link training interactive tests.
 
 AN Functionalities
 ^^^^^^^^^^^^^^^^^^^^

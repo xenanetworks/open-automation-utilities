@@ -4,7 +4,7 @@
 Step-by-Step Guide
 ===================
 
-This section provides a step-by-step guide on how to use XOA Utility to do interactive ANLT test.
+This section provides a step-by-step guide on how to use ANLT Utility to do interactive ANLT test.
 
 The diagram below illustrates a basic flow of using ANLT Utility to do ANLT testing.
 
@@ -37,7 +37,7 @@ After running the ANLT Utility SSH Server, use another console to SSH to ANLT Ut
 
         > ssh yourname@localhost -p 22622
 
-        Hello yourname, welcome to Xena OpenAutomation Utilities SSH Service (1.1.0).
+        Hello yourname, welcome to Xena ANLT Utility SSH Service (1.1.0).
 
         xoa-utils > 
 
@@ -49,7 +49,7 @@ After running the ANLT Utility SSH Server, use another console to SSH to ANLT Ut
 
         $ ssh yourname@localhost -p 22622
 
-        Hello yourname, welcome to Xena OpenAutomation Utilities SSH Service (1.1.0).
+        Hello yourname, welcome to Xena ANLT Utility SSH Service (1.1.0).
 
         xoa-utils >  
 
