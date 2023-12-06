@@ -77,7 +77,7 @@ ANLT Utility requires that you `download and install Python3 <https://www.python
 
     If you use **Windows**, remember to check **Add python.exe to PATH**.
 
-    .. figure:: ../_static/python_installation.png
+    .. figure:: ../../_static/python_installation.png
         :width: 100 %
         :align: center
 

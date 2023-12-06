@@ -43,10 +43,10 @@ def get_short_version(rel_path):
 
 # -- Project information -----------------------------------------------------
 
-project = u'Xena OpenAutomation ANLT Utility'
-copyright = u'2023, Xena Networks'
-author = u'Xena Networks'
-title = u'Xena OpenAutomation ANLT Utility Documentation'
+project = u'Xena ANLT Utility'
+copyright = u'2023, Teledyne LeCroy Xena'
+author = u'Teledyne LeCroy Xena'
+title = u'Xena ANLT Utility Documentation'
 
 # The full version, including alpha/beta/rc tags.
 release = get_version("../../xoa_utils/__init__.py")
@@ -131,9 +131,9 @@ html_show_copyright = True
 html_show_sphinx = False
 
 html_theme_options = {
-    "light_logo": "xoa_logo_light.png",
-    "dark_logo": "xoa_logo_dark.png",
-    "source_repository": "https://github.com/xenanetworks/open-automation-core",
+    "light_logo": "tlc_c1.png",
+    "dark_logo": "tlc_c1.png",
+    "source_repository": "https://github.com/xenanetworks/open-automation-utilities",
     "light_css_variables": {
         "color-brand-primary": "#0076c0",
         "color-brand-content": "#0076c0",
@@ -160,7 +160,7 @@ intersphinx_disabled_domains = ['std']
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'xoa_anlt_utility_doc', title, author, 'xoa_anlt_utility_doc', 'Xena OpenAutomation ANLT Utility', 'Miscellaneous'),
+    (master_doc, 'xoa_anlt_utility_doc', title, author, 'xoa_anlt_utility_doc', 'Xena ANLT Utility', 'Miscellaneous'),
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -194,7 +194,7 @@ latex_documents = [(master_doc, 'xoa_anlt_utility_doc.tex', title, author, 'manu
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-latex_logo = './_static/pdf_logo.png'
+latex_logo = './_static/tlc_pdf.png'
 
 # -- Options for manual page output -----------------------------------------------------
 
