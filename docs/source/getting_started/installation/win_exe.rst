@@ -11,7 +11,7 @@ ANLT Utility requires an SSH key pair to run as a SSH service. To generate a SSH
 
     > ssh-keygen -t rsa
 
-You will be prompted to save and name the key.
+You will be prompted to save and name the key. **If not found**, read `Generate SSH Keys in Windows 10/11 <https://linuxhint.com/generate-ssh-keys-windows-11/>`_.
 
 .. code-block:: doscon
 
@@ -43,6 +43,9 @@ This will generate two files, by default called ``id_rsa`` and ``id_rsa.pub`` in
 
     You can read more about `Generating SSH Key <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key>`_ 
 
+.. attention::
+
+    If your machine doesn't have internet access, you should generate the SSK keys on another machine and copy the keys to your target machine.
 
 Download Windows Executable
 -----------------------------------------
