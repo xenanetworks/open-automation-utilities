@@ -170,7 +170,7 @@ def format_port_status(status: dict, storage: "CmdContext") -> str:
     
     Serdes count          : {status['serdes_count']}
 
-    Auto-negotiation      : {status['autoneg_enabled']} ({'allow' if status['autoneg_allow_loopback'] else 'not allow'} loopback)
+    Auto-negotiation      : {status['autoneg_mode']} ({'allow' if status['autoneg_allow_loopback'] else 'not allow'} loopback)
     Link training         : {'on' if status['link_training_mode'] != "disabled" else 'off'} ({'interactive' if status['link_training_mode'] == "interactive" else 'auto'}, timeout: {status['link_training_timeout']}) (preset0: {'standard tap' if status['link_training_preset0'] == 'nrz_no_preset' else 'existing tap'} values)
 - - - - - - - - - - - - - - - - - - - - - - - - - - -
 {_ascii_styler("[SHADOW CONFIG]", [ASCIIStyle.MAGENTA_BG])}
@@ -192,8 +192,12 @@ def format_an_status(dic: dict) -> str:
     Successful runs       : {dic['successes']}
     Timeouts              : {dic['timeouts']}
     Loss of sync          : {dic['loss_of_sync']}
-    FEC negotiation fails : {dic['fec_negotiation_fails']}
+    
+    HCD                   : {dic['hcd']}
     HCD negotiation fails : {dic['hcd_negotiation_fails']}
+    FEC result            : {dic['fec_result']}
+    FEC negotiation fails : {dic['fec_negotiation_fails']}
+    
                                 RX    TX
     Link codewords        : {dic['link_codewords']['rx']:6}{dic['link_codewords']['tx']:6}
     Next-page messages    : {dic['next_page_messages']['rx']:6}{dic['next_page_messages']['tx']:6}
@@ -364,7 +368,7 @@ def format_lt_status(dic: dict) -> str:
     Failure           : {dic['failure']}
 
     Initial mod.      : {dic['init_modulation']}
-    Preset0 (oos)     : {"standard tap" if dic['preset0'] else "existing tap"} values
+    Preset0 (oos)     : {dic['oos_preset']}
 
     Total bits        : {dic['total_bits']:,}
     Total err. bits   : {dic['total_errored_bits']:,}

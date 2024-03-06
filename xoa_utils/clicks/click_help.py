@@ -51,7 +51,7 @@ HELP_LT_TIMEOUT_MODE = "The timeout mode for link training (auto) on the working
 
 HELP_LT_CONFIG_ON = "Enable or disable link training on the working port, default to --on."
 
-HELP_LT_CONFIG_PRESET0 = "Should the Out-of-Sync use standard values (--preset0 standard) or existing tap values (--preset0 existing), default to --preset0 standard."
+HELP_LT_CONFIG_PRESET0 = "Should the Out-of-Sync use IEEE values (--preset0 ieee) or existing tap values (--preset0 existing), default to --preset0 ieee."
 
 HELP_ANLT_LOG_FILENAME = "Filename of the log."
 
