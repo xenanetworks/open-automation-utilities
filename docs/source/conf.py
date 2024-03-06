@@ -44,7 +44,7 @@ def get_short_version(rel_path):
 # -- Project information -----------------------------------------------------
 
 project = u'Xena ANLT Utility'
-copyright = u'2023, Teledyne LeCroy Xena'
+copyright = u'2024, Teledyne LeCroy Xena'
 author = u'Teledyne LeCroy Xena'
 title = u'Xena ANLT Utility Documentation'
 
