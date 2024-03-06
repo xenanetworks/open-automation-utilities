@@ -1,4 +1,4 @@
-anlt log-ctrl
+anlt logctrl
 ================
 
 Description
@@ -12,7 +12,7 @@ Synopsis
 
 .. code-block:: text
     
-    anlt log-ctrl
+    anlt logctrl
     [-D/-d, --debug/--no-debug]
     [-A/-a, --an-trace/--no-an-trace]
     [-L/-l, --lt-trace/--no-lt-trace]
@@ -100,7 +100,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > anlt log-ctrl
+    xoa-utils[123456][port0/2] > anlt logctrl
     Port 0/2 log control:
         Type debug:             on
         Type AN trace:          on

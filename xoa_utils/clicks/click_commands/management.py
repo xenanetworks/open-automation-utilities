@@ -17,7 +17,7 @@ from xoa_utils import exceptions as ex
 # --------------------------
 
 
-@xoa_util.command(cls=cb.XenaCommand)
+@xoa_util.command(cls=cb.XenaCommand, name="connect")
 @ac.argument("device", type=ac.STRING)
 @ac.argument("username", type=ac.STRING)
 @ac.option("-p", "--ports", type=ac.STRING, help=h.HELP_CONNECT_PORT_LIST, default="")
@@ -37,7 +37,7 @@ async def connect(
     tcp: int,
 ) -> str:
     """
-    Connect to tester for the current session
+    Connect to tester
 
         <DEVICE>: The chassis address to connect. Address can be in IPv4 format (e.g. 10.10.10.10), or a host name (e.g. demo.xenanetworks.com)
 
@@ -77,7 +77,7 @@ async def connect(
 # --------------------------
 # command: exit
 # --------------------------
-@xoa_util.command(cls=cb.XenaCommand)
+@xoa_util.command(cls=cb.XenaCommand, name="exit")
 @ac.option("--reset/--no-reset", type=ac.BOOL, help=h.HELP_CONNECT_RESET, default=True)
 @ac.option(
     "--release/--no-release", type=ac.BOOL, help=h.HELP_EXIT_RELEASE, default=True
@@ -105,14 +105,14 @@ async def exit(context: ac.Context, reset: bool, release: bool) -> str:
 # --------------------------
 # command: port
 # --------------------------
-@xoa_util.command(cls=cb.XenaCommand)
+@xoa_util.command(cls=cb.XenaCommand, name="port")
 @ac.argument("port", type=ac.STRING)
 @ac.option("--reset/--no-reset", type=ac.BOOL, help=h.HELP_CONNECT_RESET, default=False)
 @ac.option("--force/--no-force", type=ac.BOOL, help=h.HELP_CONNECT_FORCE, default=True)
 @ac.pass_context
 async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
     """
-    Switch the working port
+    Use port
 
         <PORT>: The port on the specified device host. Specify a port using the format slot/port, e.g. 0/0
     """
@@ -157,12 +157,12 @@ async def port(context: ac.Context, port: str, reset: bool, force: bool) -> str:
 # --------------------------
 # command: ports
 # --------------------------
-@xoa_util.command(cls=cb.XenaCommand)
+@xoa_util.command(cls=cb.XenaCommand, name="ports")
 @ac.option("--all/--no-all", type=ac.BOOL, help=h.HELP_PORTS_ALL, default=False)
 @ac.pass_context
 async def ports(context: ac.Context, all: bool) -> str:
     """
-    List all ports reserved by current session
+    List reserved ports
     """
     storage: CmdContext = context.obj
     return format_ports_status(storage, all)
@@ -171,7 +171,7 @@ async def ports(context: ac.Context, all: bool) -> str:
 # --------------------------
 # command: module-config
 # --------------------------
-@xoa_util.command(cls=cb.XenaCommand)
+@xoa_util.command(cls=cb.XenaCommand, name="module-config")
 @ac.argument("module", type=ac.INT)
 @ac.argument(
     "media",
@@ -227,7 +227,7 @@ async def module_config(
     force: bool,
 ) -> str:
     """
-    Change module media configuration
+    Config module media
 
         <MODULE>: Specifies the module on the specified device host. Specify a module using the format slot, e.g. 0
 

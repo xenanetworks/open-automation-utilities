@@ -12,7 +12,7 @@ from xoa_utils.exceptions import (
 )
 from xoa_driver.hlfuncs import mgmt as mgmt_utils
 from xoa_driver.hlfuncs import anlt_ll_debug as debug_utils
-from xoa_driver.enums import NRZPreset, LinkTrainEncoding, LinkTrainAlgorithm
+from xoa_driver.enums import LinkTrainEncoding, LinkTrainAlgorithm, FreyaOutOfSyncPreset
 from functools import partialmethod
 
 
@@ -56,7 +56,7 @@ class ANState:
 class LTState:
     def __init__(self) -> None:
         self.do: bool = False
-        self.preset0: NRZPreset = NRZPreset.NRZ_NO_PRESET
+        self.preset0: FreyaOutOfSyncPreset = FreyaOutOfSyncPreset.CURRENT
         self.interactive: bool = False
         self.initial_mod: dict[str, LinkTrainEncoding] = {}
         self.algorithm: dict[str, LinkTrainAlgorithm] = {}
@@ -142,10 +142,10 @@ class CmdContext:
         self._lt_state.interactive = do
 
     def store_lt_preset0(self, preset0: str) -> None:
-        if preset0 == "standard":
-            self._lt_state.preset0 = NRZPreset.NRZ_NO_PRESET
+        if preset0 == "ieee":
+            self._lt_state.preset0 = FreyaOutOfSyncPreset.IEEE
         else:
-            self._lt_state.preset0 = NRZPreset.NRZ_WITH_PRESET
+            self._lt_state.preset0 = FreyaOutOfSyncPreset.CURRENT
 
     def store_current_module_str(self, current_module_str: str) -> None:
         if current_module_str not in self._md_state.modules:
@@ -207,7 +207,7 @@ class CmdContext:
     def retrieve_lt_timeout(self) -> bool:
         return self._lt_state.timeout
 
-    def retrieve_lt_preset0(self) -> NRZPreset:
+    def retrieve_lt_preset0(self) -> FreyaOutOfSyncPreset:
         return self._lt_state.preset0
 
     def retrieve_ports(self) -> dict[str, GenericL23Port]:

@@ -14,7 +14,7 @@ from xoa_utils.cmds import CmdContext
 @xoa_util.group(cls=cb.XenaGroup)
 def an():
     """
-    Commands for Auto-Negotiation.
+    Autoneg group
     """
 
 
@@ -35,7 +35,7 @@ def an():
 @ac.pass_context
 async def an_config(context: ac.Context, on: bool, loopback: bool) -> str:
     """
-    Configure Auto-Negotiation
+    Auto-negotiation config
     """
     storage: CmdContext = context.obj
     storage.retrieve_port()
@@ -54,7 +54,7 @@ async def an_config(context: ac.Context, on: bool, loopback: bool) -> str:
 @ac.pass_context
 async def an_status(context: ac.Context) -> str:
     """
-    Show Auto-Negotiation status
+    Auto-negotiation status
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()

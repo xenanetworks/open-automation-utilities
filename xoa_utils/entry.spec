@@ -28,7 +28,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='entry',
+    name='xoa-anlt-utility-win-x64-2.2.0',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -41,5 +41,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['D:\\Working\\open-automation-utility\\Icon-144.png'],
+    icon=['C:\\icons\\Icon-144.png'],
 )

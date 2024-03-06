@@ -6,22 +6,9 @@ Step-by-Step Guide
 
 This section provides a step-by-step guide on how to use ANLT Utility to do interactive ANLT test.
 
-The diagram below illustrates a basic flow of using ANLT Utility to do ANLT testing.
-
-.. figure:: ../_static/anlt_use_flow.png
-    :width: 100 %
-    :align: center
-
 .. note::
 
     ⚡️ You can use **tab key** to auto-complete a command to speed up your input speed.
-
-.. important::
-
-    Commands in :xgreenthick:`green blocks` instruct the tester to take action immediately.
-
-    Commands in :xbluethick:`blue blocks` only configure the local state. You need to run ``anlt do`` to execute the configuration.
-
 
 
 SSH to ANLT Utility
@@ -37,7 +24,7 @@ After running the ANLT Utility SSH Server, use another console to SSH to ANLT Ut
 
         > ssh yourname@localhost -p 22622
 
-        Hello yourname, welcome to Xena ANLT Utility SSH Service (1.1.0).
+        Hello yourname, welcome to Xena OpenAutomation ANLT Utility server (2.2.0)
 
         xoa-utils > 
 
@@ -49,7 +36,7 @@ After running the ANLT Utility SSH Server, use another console to SSH to ANLT Ut
 
         $ ssh yourname@localhost -p 22622
 
-        Hello yourname, welcome to Xena ANLT Utility SSH Service (1.1.0).
+        Hello yourname, welcome to Xena OpenAutomation ANLT Utility server (2.2.0)
 
         xoa-utils >  
 
@@ -86,7 +73,7 @@ Start ANLT logging by :doc:`../cli_ref/anlt/an_lt/anlt_log`.
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/0] > anlt log -f mylog.log
+    xoa-utils[123456][0/0] > anlt log -f mylog.log
 
 .. note::
 
@@ -102,20 +89,6 @@ Use one terminal to view the ANLT protocol trace, and use another to execute ANL
     :align: center
 
 
-Disable Link Recovery
----------------------
-
-Before doing ANLT testing, remember to disable link recovery on the port using command :doc:`../cli_ref/anlt/an_lt/anlt_recovery`.
-
-This is because the port always tries to re-do ANLT command sequence every five seconds if it detects no sync on the port.
-
-This will disturb your manual link training procedure if you don't disable it prior to your interactive test.
-
-.. code-block:: text
-
-    xoa-utils[123456][port0/0] > anlt recovery --off
-
-
 Set ANLT Shadow Configuration
 -----------------------------
 
@@ -124,11 +97,9 @@ After disabling link recovery on the port, you can start setting ANLT shadow con
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/0] > an config --off --no-loopback
+    xoa-utils[123456][0/0] > an config --off --no-loopback
 
-    xoa-utils[123456][port0/0] > lt config --on --preset0 standard --mode interactive
-
-    xoa-utils[123456][port0/0] > lt im 0 nrz
+    xoa-utils[123456][0/0] > lt config --on --preset0 ieee --mode interactive
 
 
 .. note::
@@ -138,21 +109,14 @@ After disabling link recovery on the port, you can start setting ANLT shadow con
 
 .. important::
 
-    :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, and :doc:`../cli_ref/anlt/lt/lt_im` **only change the shadow ANLT configuration**. **To apply the configuration**, you need to run :doc:`../cli_ref/anlt/an_lt/anlt_do`, otherwise your changes will not take effect on the tester.
+    :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, and :doc:`../cli_ref/anlt/lt/lt_im` **only change the shadow ANLT configuration**. **To apply the configuration**, you need to run :doc:`../cli_ref/anlt/an_lt/anlt_start`, otherwise your changes will not take effect on the tester.
 
 
 
 Start ANLT
 ----------
 
-After configuring the ANLT shadow configuration, you should execute :doc:`../cli_ref/anlt/an_lt/anlt_do` to **apply the shadow configuration and let the ANLT tester to start the ANLT procedure**:
-
-* AN on, LT on (auto)
-* AN on, LT on (interactive)
-* AN on, LT off
-* AN off, LT on (auto)
-* AN off, LT on (interactive)
-* AN off, LT off
+After configuring the ANLT shadow configuration, you should execute :doc:`../cli_ref/anlt/an_lt/anlt_start` to **apply the shadow configuration and let the ANLT tester to start the ANLT procedure**.
 
 .. seealso::
 
@@ -160,7 +124,7 @@ After configuring the ANLT shadow configuration, you should execute :doc:`../cli
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/0] > anlt do
+    xoa-utils[123456][0/0] > anlt start
 
 Use one terminal to view the ANLT protocol trace, and use another to execute ANLT commands, as shown in the sreenshot below.
     
@@ -177,21 +141,21 @@ If you run LT (interactive), you will need to manually control the LT parameters
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/0] > lt preset 0 2
+    xoa-utils[123456][0/0] > lt preset 0 2
 
-    xoa-utils[123456][port0/0] > lt inc 0 pre3
+    xoa-utils[123456][0/0] > lt inc 0 pre3
 
-    xoa-utils[123456][port0/0] > lt inc 0 main
+    xoa-utils[123456][0/0] > lt inc 0 main
 
-    xoa-utils[123456][port0/0] > lt dec 0 post
+    xoa-utils[123456][0/0] > lt dec 0 post
 
-    xoa-utils[123456][port0/0] > lt status 0
+    xoa-utils[123456][0/0] > lt status 0
 
-    xoa-utils[123456][port0/0] > lt trained 0
+    xoa-utils[123456][0/0] > lt trained 0
 
-    xoa-utils[123456][port0/0] > lt txtapget 0
+    xoa-utils[123456][0/0] > lt txtapget 0
 
-    xoa-utils[123456][port0/0] > lt txtapset 0 0 0 1 56 0
+    xoa-utils[123456][0/0] > lt txtapset 0 0 0 1 56 0
 
 
 Check AN Status
@@ -201,16 +165,22 @@ Check AN statistics by :doc:`../cli_ref/anlt/an/an_status`.
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/0] > an status
+    xoa-utils[123456][0/0] > an status
     
     [AN STATUS]
+        Mode                  : enabled
         Loopback              : allowed
+
         Duration              : 2,068,747 µs
         Successful runs       : 1
         Timeouts              : 0
         Loss of sync          : 0
-        FEC negotiation fails : 0
+
+        HCD                   : IEEE_800GBASE_CR8_KR8
         HCD negotiation fails : 0
+        FEC result            : RS_FEC_KP
+        FEC negotiation fails : 0
+        
                                     RX    TX
         Link codewords        :      2     1
         Next-page messages    :      0     0
@@ -223,7 +193,7 @@ Check LT statistics by :doc:`../cli_ref/anlt/lt/lt_status`.
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/0] > lt status 0
+    xoa-utils[123456][0/0] > lt status 0
     
     [LT STATUS]
         Is enabled        : true
@@ -259,15 +229,13 @@ Check LT statistics by :doc:`../cli_ref/anlt/lt/lt_status`.
             coeff at limit          :          0   0       0   0       0   0       0   0       0   0
 
 
-Start Over
-----------
+Stop ANLT and Restart
+----------------------
 
-If you want to start over on the port, you can reset the port by ``port <PORT> --reset`` as shown below.
-
-This will bring the port back to its default state.
+To stop and start ANLT again:
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/0] > port 0/0 --reset
+    xoa-utils[123456][0/0] > anlt stop
 
-
+    xoa-utils[123456][0/0] > anlt start

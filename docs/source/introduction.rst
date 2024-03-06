@@ -23,10 +23,10 @@ The CLI commands of Xena ANLT Utility are categorized into the following familie
 
     You can view a list of Xena ANLT Utility CLI commands in :doc:`Summary of Xena ANLT Utility CLI commands </cli_ref/summary/index>`
 
-    .. figure:: /_static/cli_summary_preview_2.png
+    .. figure:: /_static/cli_summary_preview.png
         :align: center
 
-        :doc:`XOA Util CLI Summary </cli_ref/summary/index>`
+        :doc:`Command Summary </cli_ref/summary/index>`
 
 
 Auto-Negotiation and Link Training

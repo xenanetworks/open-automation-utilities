@@ -34,7 +34,7 @@ Allowed values:
 
 * `pre2`
 
-* `pre``
+* `pre`
 
 * `main`
 

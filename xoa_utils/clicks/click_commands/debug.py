@@ -19,7 +19,7 @@ from xoa_utils.clis import (
 @xoa_util.group(cls=cb.XenaGroup)
 def debug():
     """
-    Commands for debugging.\n
+    Debug group
     """
 
 
