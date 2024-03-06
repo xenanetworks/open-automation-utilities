@@ -27,7 +27,7 @@ from xoa_utils.cmds import CmdContext
 @xoa_util.group(cls=cb.XenaGroup)
 def lt():
     """
-    Commands for Link Training.
+    Link training group
     """
 
 
@@ -47,9 +47,9 @@ def lt():
 @ac.option("--on/--off", type=ac.BOOL, help=h.HELP_LT_CONFIG_ON, default=True)
 @ac.option(
     "--preset0",
-    type=ac.Choice(["standard", "existing"]),
+    type=ac.Choice(["ieee", "existing"]),
     help=h.HELP_LT_CONFIG_PRESET0,
-    default="standard",
+    default="ieee",
 )
 @ac.option(
     "--timeout",
@@ -60,7 +60,7 @@ def lt():
 @ac.pass_context
 async def lt_config(context: ac.Context, mode: str, on: bool, preset0: str, timeout: str) -> str:
     """
-    Configure Link Training
+    Link training config
     """
     storage: CmdContext = context.obj
     storage.retrieve_port()
@@ -80,9 +80,11 @@ async def lt_config(context: ac.Context, mode: str, on: bool, preset0: str, time
 @ac.pass_context
 async def lt_im(context: ac.Context, serdes: int, encoding: str) -> str:
     """
-    Set Initial Modulation for serdes
+    LT initial modulation config
 
-        <SERDES>: Specifies the transceiver serdes index.
+        Configure link training initial modulation for a lane.
+
+        <SERDES>: Specifies the transceiver lane index.
 
         <ENCODING>: Specifies the initial modulation. Allowed values: nrz | pam4 | pam4pre
     """
@@ -103,9 +105,11 @@ async def lt_im(context: ac.Context, serdes: int, encoding: str) -> str:
 @ac.pass_context
 async def lt_algorithm(context: ac.Context, serdes: int, algorithm: str) -> str:
     """
-    Set Link Training algorithm for serdes
+    LT algorithm config
 
-        <SERDES>: Specifies the transceiver serdes index.
+        Configure link training algorithm for a lane
+
+        <SERDES>: Specifies the transceiver lane index.
 
         <ALGORITHM>: Specifies the algorithm. Allowed values: alg0 | algn1
     """
@@ -129,9 +133,11 @@ async def lt_algorithm(context: ac.Context, serdes: int, algorithm: str) -> str:
 @ac.pass_context
 async def lt_inc(context: ac.Context, serdes: int, emphasis: str) -> str:
     """
-    Request remote port serdes to increase (+) an emphasis by 1
+    Request increment coeff
 
-        <SERDES>: Specifies the transceiver serdes index.
+        Request remote port to increment (+) an emphasis by 1 on a lane
+
+        <SERDES>: Specifies the transceiver lane index.
 
         <EMPHASIS>: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post
     """
@@ -153,9 +159,11 @@ async def lt_inc(context: ac.Context, serdes: int, emphasis: str) -> str:
 @ac.pass_context
 async def lt_dec(context: ac.Context, serdes: int, emphasis: str) -> str:
     """
-    Request remote port serdes to decrease (-) an emphasis by 1
+    Request decrement coeff
 
-        <SERDES>: The serdes index.
+        Request remote port to decrement (-) an emphasis by 1 on a lane
+
+        <SERDES>: Specifies the transceiver lane index.
 
         <EMPHASIS>: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post
     """
@@ -180,9 +188,11 @@ async def lt_dec(context: ac.Context, serdes: int, emphasis: str) -> str:
 @ac.pass_context
 async def lt_no_eq(context: ac.Context, serdes: int, emphasis: str) -> str:
     """
-    Request remote port serdes to turn off equalizing
+    Request equalizing to off
 
-        <SERDES>: Specifies the transceiver serdes index.
+        Request remote port serdes to turn off equalizing on a lane
+
+        <SERDES>: Specifies the transceiver lane index.
 
         <EMPHASIS>: The emphasis (coefficient) of the link partner. Allowed values: pre3 | pre2 | pre | main | post
     """
@@ -204,9 +214,11 @@ async def lt_no_eq(context: ac.Context, serdes: int, emphasis: str) -> str:
 @ac.pass_context
 async def lt_encoding(context: ac.Context, serdes: int, encoding: str) -> str:
     """
-    Request remote port serdes to use encoding
+    Request an encoding
 
-        <SERDES>: The serdes index.
+        Request remote port to use a modulation encoding on a lane
+
+        <SERDES>: Specifies the transceiver lane index.
 
         <ENCODING>: Specifies the encoding. Allowed values: nrz | pam4 | pam4pre
     """
@@ -229,9 +241,11 @@ async def lt_encoding(context: ac.Context, serdes: int, encoding: str) -> str:
 @ac.pass_context
 async def lt_preset(context: ac.Context, serdes: int, preset: int) -> str:
     """
-    Request remote port serdes to use preset
+    Request a preset
 
-        <SERDES>: The serdes index.
+        Request remote port to use preset on a lane
+
+        <SERDES>: Specifies the transceiver lane index.
 
         <PRESET>: Specifies the preset index. Allowed values: 1 | 2 | 3 | 4 | 5
     """
@@ -251,9 +265,11 @@ async def lt_preset(context: ac.Context, serdes: int, preset: int) -> str:
 @ac.pass_context
 async def lt_trained(context: ac.Context, serdes: int) -> str:
     """
-    Announce serdes trained
+    Announce trained
 
-        <SERDES>: The serdes index.
+        Announce trained to remote port on a lane.
+
+        <SERDES>: Specifies the transceiver lane index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -270,9 +286,11 @@ async def lt_trained(context: ac.Context, serdes: int) -> str:
 @ac.pass_context
 async def lt_txtapget(context: ac.Context, serdes: int) -> str:
     """
-    Read TX tap values
+    Read tap values
 
-        <SERDES>: The serdes index.
+        Read TX tap values of the port
+
+        <SERDES>: Specifies the transceiver lane index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -302,9 +320,11 @@ async def lt_txtapset(
     post: int,
 ) -> str:
     """
-    Set TX tap values
+    Write tap values
 
-        <SERDES>: The serdes index.
+        Write TX tap values of the port
+
+        <SERDES>: Specifies the transceiver lane index.
 
         <PRE3>: Specifies c(-3) value of the tap.
 
@@ -331,9 +351,11 @@ async def lt_txtapset(
 @ac.pass_context
 async def lt_status(context: ac.Context, serdes: int) -> str:
     """
-    Show Link Training status of specified serdes
+    LT status
 
-        <SERDES>: The serdes index.
+        Show LT status of a specified lane
+
+        <SERDES>: Specifies the transceiver lane index.
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
@@ -353,9 +375,11 @@ async def lt_txtap_autotune(
     serdes: int,
 ) -> str:
     """
-    Auto-tune TX tap values of specified serdes
+    Autotune tap values
 
-        <SERDES>: The serdes index.
+        Autotune TX tap values of a specified lane
+
+        <SERDES>: Specifies the transceiver lane index.
 
     """
     storage: CmdContext = context.obj
