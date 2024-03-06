@@ -41,5 +41,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['C:\\icons\\xoa_ico.ico'],
+    icon=['C:\\icons\\Icon-144.png'],
 )
