@@ -1,10 +1,10 @@
-anlt recovery
-=============
+anlt autorestart
+================
 
 Description
 -----------
 
-Control AN/LT auto-restart.
+Control AN/LT autorestart.
 
 
 Synopsis
@@ -12,7 +12,7 @@ Synopsis
 
 .. code-block:: text
     
-    anlt recovery
+    anlt autorestart
     [--link-down/--no-link-down]
     [--lt-fail/--no-lt-fail]
 
@@ -26,7 +26,7 @@ Options
 
 ``--link-down/--no-link-down``
 
-Should port enables AN+LT auto-restart when a link down condition is detected, default to ``--no-link-down``
+Should port enables AN+LT autorestart when a link down condition is detected, default to ``--no-link-down``
 
 ``--lt-fail/--no-lt-fail``
 
@@ -38,7 +38,7 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > anlt recovery --link-down --lt-fail
+    xoa-utils[123456][port0/2] > anlt autorestart --link-down --lt-fail
 
 
 

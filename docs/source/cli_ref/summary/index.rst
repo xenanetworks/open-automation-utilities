@@ -33,15 +33,18 @@ Summary
     * - Command
       - Description
       - Example
-    * - :doc:`../anlt/an_lt/anlt_do`
-      - Apply and start AN/LT to the local port
-      - ``anlt do``
+    * - :doc:`../anlt/an_lt/anlt_start`
+      - Apply and start AN/LT on the port
+      - ``anlt start``
+    * - :doc:`../anlt/an_lt/anlt_stop`
+      - Stop AN/LT on the port
+      - ``anlt stop``
     * - :doc:`../anlt/an_lt/anlt_log`
       - Show AN/LT protocol trace log and save to a file
       - ``anlt log --filename mylog.log``
-    * - :doc:`../anlt/an_lt/anlt_recovery`
-      - Control AN/LT auto-restart
-      - ``anlt recovery --link-down --lt-fail``
+    * - :doc:`../anlt/an_lt/anlt_autorestart`
+      - Control AN/LT autorestart
+      - ``anlt autorestart --link-down --lt-fail``
     * - :doc:`../anlt/an_lt/anlt_status`
       - Show AN/LT status of the local port
       - ``anlt status``
@@ -50,7 +53,7 @@ Summary
       - ``anlt strict --on``
     * - :doc:`../anlt/an_lt/anlt_log_control`
       - Control what should be logged in ANLT by xenaserver
-      - ``anlt log-ctrl -DALGPNmTcsZO``
+      - ``anlt logctrl -DALGPNmTcsZO``
     
 
 .. list-table:: AN Command Summary
@@ -76,36 +79,37 @@ Summary
     * - Command
       - Description
       - Example
-    * - :doc:`../anlt/lt/lt_alg`
-      - Set the link training algorithm for the specified serdes
-      - ``lt alg 0 alg0``
+    
     * - :doc:`../anlt/lt/lt_config`
       - Configure LT of the local port
-      - ``lt config --on --mode auto --preset0 standard --timeout enable``
-    * - :doc:`../anlt/lt/lt_dec`
-      - Request **remote port** to decrease (-) its emphasis value by 1
-      - ``lt dec 0 main``
-    * - :doc:`../anlt/lt/lt_no_eq`
-      - Request **remote port** to turn off equalizer on its emphasis
-      - ``lt dec 0 main``
+      - ``lt config --on --mode auto --preset0 ieee --timeout enable``
     * - :doc:`../anlt/lt/lt_encoding`
       - Request **remote port** to use the specified encoding on the specified serdes
       - ``lt encoding 0 pam4``
-    * - :doc:`../anlt/lt/lt_im`
-      - Set initial modulation for the specified serdes of the local port
-      - ``lt im 0 nrz``
-    * - :doc:`../anlt/lt/lt_inc`
-      - Request **remote port** to increase (+) its emphasis value by 1
-      - ``lt inc 0 main``
     * - :doc:`../anlt/lt/lt_preset`
       - Request **remote port** to use the preset of the specified serdes
       - ``lt preset 0 2``
+    * - :doc:`../anlt/lt/lt_inc`
+      - Request **remote port** to increase (+) its emphasis value by 1
+      - ``lt inc 0 main``
+    * - :doc:`../anlt/lt/lt_dec`
+      - Request **remote port** to decrease (-) its emphasis value by 1
+      - ``lt dec 0 main``
     * - :doc:`../anlt/lt/lt_status`
       - Show the link training status of the specified serdes of the local port
       - ``lt status 0``
     * - :doc:`../anlt/lt/lt_trained`
       - Announce that the specified serdes is trained
       - ``lt trained 0``
+    * - :doc:`../anlt/lt/lt_no_eq`
+      - Request **remote port** to turn off equalizer on its emphasis
+      - ``lt no-eq 0 main``
+    * - :doc:`../anlt/lt/lt_im`
+      - Set initial modulation for the specified serdes of the local port
+      - ``lt im 0 nrz``
+    * - :doc:`../anlt/lt/lt_alg`
+      - Set the link training algorithm for the specified serdes
+      - ``lt alg 0 alg0``
     * - :doc:`../anlt/lt/lt_txtapget`
       - Read the tap values of the specified serdes of the local port
       - ``lt txtapget 0``

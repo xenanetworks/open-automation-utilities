@@ -16,10 +16,3 @@ Xena ANLT Utility (:term:`Xena ANLT Utility`) provides an **interactive shell** 
    cli_ref/index
    glossary
 
-
-Indices and Tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

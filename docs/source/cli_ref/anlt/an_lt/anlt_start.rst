@@ -1,4 +1,4 @@
-anlt do
+anlt start
 ===================
 
 Description
@@ -14,7 +14,7 @@ Synopsis
 
 .. code-block:: text
     
-    anlt do
+    anlt start
 
 Arguments
 ---------
@@ -29,6 +29,6 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/0] > anlt do
+    xoa-utils[123456][port0/0] > anlt start
 
     xoa-utils[123456][port0/0] >
