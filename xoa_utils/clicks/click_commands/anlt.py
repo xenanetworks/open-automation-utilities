@@ -54,20 +54,20 @@ class ASCIIStyle(Enum):
 @xoa_util.group(cls=cb.XenaGroup)
 def anlt():
     """
-    Commands for AN/LT.
+    ANLT group
     """
 
 
 # --------------------------
-# command: recovery
+# command: autorestart
 # --------------------------
-@anlt.command(cls=cb.XenaCommand, name="recovery")
+@anlt.command(cls=cb.XenaCommand, name="autorestart")
 @ac.option("--link-down/--no-link-down", type=ac.BOOL, help=h.HELP_ANLT_RESTART_LINK_DOWN_ON, default=False)
 @ac.option("--lt-fail/--no-lt-fail", type=ac.BOOL, help=h.HELP_ANLT_RESTART_LT_FAIL_ON, default=False)
 @ac.pass_context
-async def recovery(context: ac.Context, link_down: bool, lt_fail: bool) -> str:
+async def autorestart(context: ac.Context, link_down: bool, lt_fail: bool) -> str:
     """
-    Control AN/LT auto-restart
+    Control AN/LT autorestart
     """
     storage: CmdContext = context.obj
 
@@ -79,7 +79,7 @@ async def recovery(context: ac.Context, link_down: bool, lt_fail: bool) -> str:
 # --------------------------
 # command: status
 # --------------------------
-@anlt.command(cls=cb.XenaCommand)
+@anlt.command(cls=cb.XenaCommand, name="status")
 @ac.pass_context
 async def status(context: ac.Context) -> str:
     """
@@ -93,11 +93,11 @@ async def status(context: ac.Context) -> str:
 
 
 # --------------------------
-# command: do
+# command: start
 # --------------------------
-@anlt.command(cls=cb.XenaCommand)
+@anlt.command(cls=cb.XenaCommand, name="start")
 @ac.pass_context
-async def do(context: ac.Context) -> str:
+async def start(context: ac.Context) -> str:
     """
     Apply and start AN/LT
     """
@@ -124,6 +124,21 @@ async def do(context: ac.Context) -> str:
     )
     return ""
 
+# --------------------------
+# command: stop
+# --------------------------
+@anlt.command(cls=cb.XenaCommand, name="stop")
+@ac.pass_context
+async def stop(context: ac.Context) -> str:
+    """
+    Stop AN/LT
+    """
+    storage: CmdContext = context.obj
+    port_obj = storage.retrieve_port()
+    await anlt_utils.anlt_stop(
+        port_obj,
+    )
+    return ""
 
 # --------------------------
 # command: log
@@ -146,7 +161,7 @@ async def do(context: ac.Context) -> str:
 @ac.pass_context
 async def anlt_log(ctx: ac.Context, filename: str, read: bool, keep: str, serdes: str) -> str:
     """
-    Control AN/LT logging
+    AN/LT logging
     """
 
     def _filter_log(log: str, keep: str, serdes: list[int]) -> list[dict]:
@@ -328,12 +343,14 @@ async def anlt_log(ctx: ac.Context, filename: str, read: bool, keep: str, serdes
 # --------------------------
 # command: strict
 # --------------------------
-@anlt.command(cls=cb.XenaCommand)
+@anlt.command(cls=cb.XenaCommand, name="strict")
 @ac.option("--on/--off", type=ac.BOOL, help=h.HELP_STRICT_ON, default=True)
 @ac.pass_context
 async def strict(context: ac.Context, on: bool) -> str:
     """
-    Control AN/LT strict mode
+    AN/LT strict mode
+
+        Enable/disable ANLt strict mode. If enable, errored frames will be ignored.
     """
     storage: CmdContext = context.obj
 
@@ -344,7 +361,7 @@ async def strict(context: ac.Context, on: bool) -> str:
 # --------------------------
 # command: log-ctrl
 # --------------------------
-@anlt.command(cls=cb.XenaCommand)
+@anlt.command(cls=cb.XenaCommand, name="logctrl")
 @ac.option("-D/-d", "--debug/--no-debug", type=ac.BOOL, help=h.HELP_LOG_CONTROL_DEBUG_ON, default=True)
 @ac.option("-A/-a", "--an-trace/--no-an-trace", type=ac.BOOL, help=h.HELP_LOG_CONTROL_AN_TRACE_ON, default=True)
 @ac.option("-L/-l", "--lt-trace/--no-lt-trace", type=ac.BOOL, help=h.HELP_LOG_CONTROL_LT_TRACE_ON, default=True)
@@ -374,7 +391,11 @@ async def log_ctrl(
     fsm_lt_algn1: bool,
     ) -> str:
     """
-    Control AN/LT log output from xenaserver
+    AN/LT log output
+
+        Control what types of ANLT log messages are sent by xenaserver.
+
+        anlt logctrl -DALGPNmTcsZO
     """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
