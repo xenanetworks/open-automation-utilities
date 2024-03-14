@@ -32,6 +32,10 @@ Options
 
 Specifies the filename for the log messages to be stored.
 
+``-r, --read`` (text)
+
+Specifies the filepath of the log file to display.
+
 
 ``-k, --keep`` (text)
     
