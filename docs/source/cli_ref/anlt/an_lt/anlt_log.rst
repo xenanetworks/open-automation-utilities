@@ -32,7 +32,7 @@ Options
 
 Specifies the filename for the log messages to be stored.
 
-``-r, --read`` (text)
+``--read -f`` (text)
 
 Specifies the filepath of the log file to display.
 
