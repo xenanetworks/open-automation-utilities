@@ -8,11 +8,12 @@ Xena ANLT Utility (:term:`Xena ANLT Utility`) provides an **interactive shell** 
 -----------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Table of Content
 
    introduction
    getting_started/index
+   read_log/index
    cli_ref/index
    glossary
 

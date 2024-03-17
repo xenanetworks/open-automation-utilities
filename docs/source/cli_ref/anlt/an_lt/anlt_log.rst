@@ -19,6 +19,7 @@ Synopsis
     [-f, --filename <value: text>]
     [-k, --keep <value: text>]
     [-s, --serdes <value>]
+    [--read, <value: text>]
 
 
 Arguments
@@ -31,6 +32,10 @@ Options
 ``-f, --filename`` (text)
 
 Specifies the filename for the log messages to be stored.
+
+``--read -f`` (text)
+
+Specifies the filepath of the log file to display.
 
 
 ``-k, --keep`` (text)

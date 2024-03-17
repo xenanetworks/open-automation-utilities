@@ -148,7 +148,7 @@ async def stop(context: ac.Context) -> str:
     "-f", "--filename", type=ac.STRING, help=h.HELP_ANLT_LOG_FILENAME, default=""
 )
 @ac.option(
-    "--read", is_flag=True, help="Read the file", default=False
+    "-r", "--read", is_flag=True, help="Read log file", default=False
 )
 @ac.option(
     "-k",

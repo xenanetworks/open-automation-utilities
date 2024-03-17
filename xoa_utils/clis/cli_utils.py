@@ -171,11 +171,11 @@ def format_port_status(status: dict, storage: "CmdContext") -> str:
     Serdes count          : {status['serdes_count']}
 
     Auto-negotiation      : {status['autoneg_mode']} ({'allow' if status['autoneg_allow_loopback'] else 'not allow'} loopback)
-    Link training         : {'on' if status['link_training_mode'] != "disabled" else 'off'} ({'interactive' if status['link_training_mode'] == "interactive" else 'auto'}, timeout: {status['link_training_timeout']}) (preset0: {'standard tap' if status['link_training_preset0'] == 'nrz_no_preset' else 'existing tap'} values)
+    Link training         : {'on' if status['link_training_mode'] != "disabled" else 'off'} ({'interactive' if status['link_training_mode'] == "interactive" else 'auto'}, timeout: {status['link_training_timeout']}) (preset0: {'standard tap' if status['link_training_preset0'] == 'ieee' else 'existing tap'} values)
 - - - - - - - - - - - - - - - - - - - - - - - - - - -
 {_ascii_styler("[SHADOW CONFIG]", [ASCIIStyle.MAGENTA_BG])}
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
-    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}, timeout: {'enable' if storage.retrieve_lt_timeout() else 'disable'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}, timeout: {'enable' if storage.retrieve_lt_timeout() else 'disable'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.FreyaOutOfSyncPreset.IEEE else 'existing tap'} values)
         Initial Mod.      : {ims}
         Algorithm         : {algs}
 """
@@ -218,7 +218,7 @@ def format_lt_config(storage: CmdContext) -> str:
 <!>LT config to be on port {storage.retrieve_port_str()}
 {_ascii_styler("[SHADOW CONFIG]", [ASCIIStyle.MAGENTA_BG])}
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
-    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}, timeout: {'enable' if storage.retrieve_lt_timeout() else 'disable'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}, timeout: {'enable' if storage.retrieve_lt_timeout() else 'disable'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.FreyaOutOfSyncPreset.IEEE else 'existing tap'} values)
         Initial Mod.      : {ims}
         Algorithm         : {algs}
 """
@@ -241,7 +241,7 @@ def format_lt_im(status: dict, storage: CmdContext, serdes: int) -> str:
 <!>LT initial modulation to be {storage.retrieve_lt_initial_mod_serdes(serdes).name} on Serdes {serdes}
 {_ascii_styler("[SHADOW CONFIG]", [ASCIIStyle.MAGENTA_BG])}
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
-    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}, timeout: {'enable' if storage.retrieve_lt_timeout() else 'disable'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}, timeout: {'enable' if storage.retrieve_lt_timeout() else 'disable'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.FreyaOutOfSyncPreset.IEEE else 'existing tap'} values)
         Initial Mod.      : {ims}
         Algorithm         : {algs}
     """
@@ -264,7 +264,7 @@ def format_lt_algorithm(status: dict, storage: CmdContext, serdes: int) -> str:
 <!>LT algorithm to be {storage.retrieve_lt_algorithm_serdes(serdes).name} on Serdes {serdes}
 {_ascii_styler("[SHADOW CONFIG]", [ASCIIStyle.MAGENTA_BG])}
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
-    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}, timeout: {'enable' if storage.retrieve_lt_timeout() else 'disable'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}, timeout: {'enable' if storage.retrieve_lt_timeout() else 'disable'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.FreyaOutOfSyncPreset.IEEE else 'existing tap'} values)
         Initial Mod.      : {ims}
         Algorithm         : {algs}
     """
@@ -283,7 +283,7 @@ def format_an_config(storage: CmdContext) -> str:
 <!>AN config to be on port {storage.retrieve_port_str()}
 {_ascii_styler("[SHADOW CONFIG]", [ASCIIStyle.MAGENTA_BG])}
     Auto-negotiation      : {'on' if storage.retrieve_an_enable() else 'off'} ({'allow' if storage.retrieve_an_loopback() else 'not allow'} loopback)
-    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}, timeout: {'enable' if storage.retrieve_lt_timeout() else 'disable'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.NRZPreset.NRZ_NO_PRESET else 'existing tap'} values)
+    Link training         : {'on' if storage.retrieve_lt_enable() else 'off'} ({'interactive' if storage.retrieve_lt_interactive() else 'auto'}, timeout: {'enable' if storage.retrieve_lt_timeout() else 'disable'}) (preset0: {'standard tap' if storage.retrieve_lt_preset0() == enums.FreyaOutOfSyncPreset.IEEE else 'existing tap'} values)
         Initial Mod.      : {ims}
         Algorithm         : {algs}
 """

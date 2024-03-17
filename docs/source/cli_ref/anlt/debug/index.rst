@@ -1,4 +1,4 @@
-Debug Commands
+Debug Group
 =========================
 
 .. important::
