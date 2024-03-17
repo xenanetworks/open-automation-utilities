@@ -1,4 +1,4 @@
-LT Commands
+LT Group
 ======================
 
 Commands for Link Training.

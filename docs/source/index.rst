@@ -13,6 +13,7 @@ Xena ANLT Utility (:term:`Xena ANLT Utility`) provides an **interactive shell** 
 
    introduction
    getting_started/index
+   read_log/index
    cli_ref/index
    glossary
 

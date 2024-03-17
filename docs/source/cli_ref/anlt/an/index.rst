@@ -1,4 +1,4 @@
-AN Commands
+AN Group
 =========================
 
 Commands for Auto-Negotiation.
