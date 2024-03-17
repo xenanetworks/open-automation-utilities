@@ -42,6 +42,9 @@ Summary
     * - :doc:`../anlt/an_lt/anlt_log`
       - Show AN/LT protocol trace log and save to a file
       - ``anlt log --filename mylog.log``
+    * - :doc:`../anlt/an_lt/anlt_log`
+      - Read saved log file
+      - ``anlt log --read -f saved_mylog.log``
     * - :doc:`../anlt/an_lt/anlt_autorestart`
       - Control AN/LT autorestart
       - ``anlt autorestart --link-down --lt-fail``
