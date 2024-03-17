@@ -7,7 +7,7 @@ ANEG FSM
 .. literalinclude:: anlt.log
     :lines: 10-11
 
-ANEG FSM messages show you the FSM state transition of ANEG.
+ANEG FSM messages show you the FSM state transition of ANEG. See IEEE 802.3 Figure 73-11.
 
 ANEG MSG
 ----------
@@ -25,6 +25,19 @@ ANEG TX & RX
     :emphasize-lines: 2-5, 8-11
 
 The raw hex value of the transmitted and received ANEG test frames are shown first. Decoding of each field are shown after the raw value.
+
+* ``NP``: Next Page, IEEE 802.3 Claus 73.6.9
+* ``RF``: Remote Fault, IEEE 802.3 Claus 73.6.7
+* ``TN``: Transmitted Nonce Field, IEEE 802.3 Claus 73.6.3
+* ``EN``: Echoed Nonce, IEEE 802.3 Claus 73.6.2
+* ``C``: Pause Ability, IEEE 802.3 Claus 73.6.6
+* ``FEC``: FEC capability, IEEE 802.3 Claus 73.6.5
+* ``ABILITY``: Technology Ability, IEEE 802.3 Claus 73.6.4
+
+* ``ACK``: Acknowledge Bit, IEEE 802.3 Claus 37.2.4.3.3
+* ``ACK2``: Acknowledge 2, IEEE 802.3 Clause 37.2.4.3.5
+* ``MP``: Message Page, IEEE 802.3 Clause 37.2.4.3.4
+* ``T``: Toggle, IEEE 802.3 Clause 37.2.4.3.6
 
 
 LT FSM
@@ -61,7 +74,19 @@ LT TX & RX
 
 The raw hex value of the transmitted and received LT test frames are shown first. Decoding of each field are shown after the raw value.
 
-The first line ``C_REQ, C_SEL, IC_REQ, PAM_MOD`` is control information. The second line ``C_ECH, C_STS, IC_STS, PAM_MOD`` is status information.
+The first line ``C_REQ, C_SEL, IC_REQ, PAM_MOD`` is control field information.
+
+* ``C_REQ``: Coefficient request, IEEE 802.3ck Table 162-9 
+* ``C_SELD``: Coefficient select, IEEE 802.3ck Table 162-9 
+* ``IC_REQ``, Initial condition request, IEEE 802.3ck Table 162-9 
+* ``PAM_MOD``, Modulation and precoding request, IEEE 802.3ck Table 162-9 
+
+The second line ``C_ECH, C_STS, IC_STS, PAM_MOD`` is status information.
+
+* ``C_ECH``: Coefficient select echo, IEEE 802.3ck Table 162-10
+* ``C_STS``: Coefficient status, IEEE 802.3ck Table 162-10
+* ``IC_STS``, Initial condition status, IEEE 802.3ck Table 162-10
+* ``PAM_MOD``, Modulation and precoding status, IEEE 802.3ck Table 162-10
 
 The example above demonstrates a 4-way handshake of the link training transaction.
 
