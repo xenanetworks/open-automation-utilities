@@ -28,7 +28,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='xoa-anlt-utility-win-x64-2.2.2',
+    name='xoa-utils-win-x64.2.2.3',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
