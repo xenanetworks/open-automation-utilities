@@ -4,7 +4,7 @@ Explanation
 ANEG FSM
 ----------
 
-.. literalinclude:: anlt.log
+.. literalinclude:: anlt.txt
     :lines: 10-11
 
 ANEG FSM messages show you the FSM state transition of ANEG. See IEEE 802.3 Figure 73-11.
@@ -12,7 +12,7 @@ ANEG FSM messages show you the FSM state transition of ANEG. See IEEE 802.3 Figu
 ANEG MSG
 ----------
 
-.. literalinclude:: anlt.log
+.. literalinclude:: anlt.txt
     :lines: 46
 
 ANEG MSG messages show log messages from ANEG.
@@ -20,21 +20,21 @@ ANEG MSG messages show log messages from ANEG.
 ANEG TX & RX
 ------------
 
-.. literalinclude:: anlt.log
+.. literalinclude:: anlt.txt
     :lines: 25-36
     :emphasize-lines: 2-5, 8-11
 
 The raw hex value of the transmitted and received ANEG test frames are shown first. Decoding of each field are shown after the raw value.
 
-* ``NP``: Next Page, IEEE 802.3 Claus 73.6.9
-* ``RF``: Remote Fault, IEEE 802.3 Claus 73.6.7
-* ``TN``: Transmitted Nonce Field, IEEE 802.3 Claus 73.6.3
-* ``EN``: Echoed Nonce, IEEE 802.3 Claus 73.6.2
-* ``C``: Pause Ability, IEEE 802.3 Claus 73.6.6
-* ``FEC``: FEC capability, IEEE 802.3 Claus 73.6.5
-* ``ABILITY``: Technology Ability, IEEE 802.3 Claus 73.6.4
+* ``NP``: Next Page, IEEE 802.3 Clause 73.6.9
+* ``RF``: Remote Fault, IEEE 802.3 Clause 73.6.7
+* ``TN``: Transmitted Nonce Field, IEEE 802.3 Clause 73.6.3
+* ``EN``: Echoed Nonce, IEEE 802.3 Clause 73.6.2
+* ``C``: Pause Ability, IEEE 802.3 Clause 73.6.6
+* ``FEC``: FEC capability, IEEE 802.3 Clause 73.6.5
+* ``ABILITY``: Technology Ability, IEEE 802.3 Clause 73.6.4
 
-* ``ACK``: Acknowledge Bit, IEEE 802.3 Claus 37.2.4.3.3
+* ``ACK``: Acknowledge Bit, IEEE 802.3 Clause 37.2.4.3.3
 * ``ACK2``: Acknowledge 2, IEEE 802.3 Clause 37.2.4.3.5
 * ``MP``: Message Page, IEEE 802.3 Clause 37.2.4.3.4
 * ``T``: Toggle, IEEE 802.3 Clause 37.2.4.3.6
@@ -43,7 +43,7 @@ The raw hex value of the transmitted and received ANEG test frames are shown fir
 LT FSM
 ----------
 
-.. literalinclude:: anlt.log
+.. literalinclude:: anlt.txt
     :lines: 12-17
 
 LT FSM messages show you the FSM state transition of LT for each serdes lane, e.g. ``LT(S0)`` for lane 0, and ``LT(S1)`` for lane 1.
@@ -51,7 +51,7 @@ LT FSM messages show you the FSM state transition of LT for each serdes lane, e.
 LT MSG
 ----------
 
-.. literalinclude:: anlt.log
+.. literalinclude:: anlt.txt
     :lines: 104
 
 LT MSG messages show log messages from a serdes lane of LT.
@@ -59,7 +59,7 @@ LT MSG messages show log messages from a serdes lane of LT.
 LT COEFF MSG
 -------------
 
-.. literalinclude:: anlt.log
+.. literalinclude:: anlt.txt
     :lines: 108-114
     :emphasize-lines: 2-6
 
@@ -68,7 +68,7 @@ LT COEFF MSG messages show log messages of coefficient change of a serdes lane f
 LT TX & RX
 ----------
 
-.. literalinclude:: anlt.log
+.. literalinclude:: anlt.txt
     :lines: 188-203
     :emphasize-lines: 1-3, 5-10, 14-16
 
@@ -77,7 +77,7 @@ The raw hex value of the transmitted and received LT test frames are shown first
 The first line ``C_REQ, C_SEL, IC_REQ, PAM_MOD`` is control field information.
 
 * ``C_REQ``: Coefficient request, IEEE 802.3ck Table 162-9 
-* ``C_SELD``: Coefficient select, IEEE 802.3ck Table 162-9 
+* ``C_SEL``: Coefficient select, IEEE 802.3ck Table 162-9 
 * ``IC_REQ``, Initial condition request, IEEE 802.3ck Table 162-9 
 * ``PAM_MOD``, Modulation and precoding request, IEEE 802.3ck Table 162-9 
 
@@ -101,4 +101,5 @@ Full Example
 
 A complete log example is shown below.
 
-.. literalinclude:: anlt.log
+.. literalinclude:: anlt.txt
+    :linenos:
