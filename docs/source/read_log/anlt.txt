@@ -1,0 +1,544 @@
+Last login: Sun Mar 17 12:35:57 on ttys014
+leonardyu@HRW-L000058 ~ % ssh 2342@localhost -p 22622
+Hello 2342, welcome to Xena OpenAutomation ANLT Utility server (2.2.0)
+
+xoa-utils > anlt log --read -f 20240317_1.log
+171406.514179, LT(S0),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171406.515194, LT(S1),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171406.515279, LT(S0),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171406.515291, LT(S1),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171406.515335, ANEG,            FSM: (EVENT_INIT_DONE) IDLE -> WAIT_ANEG_ENABLE
+171406.515382, ANEG,            FSM: (EVENT_AUTONEG_DISABLE) WAIT_ANEG_ENABLE -> AN_GOOD_CHECK
+171406.515404, LT(S0),          FSM: (EVENT_TRAINING_ENABLE) INITIALIZE -> START_DELAY1
+171406.515426, LT(S1),          FSM: (EVENT_TRAINING_ENABLE) INITIALIZE -> START_DELAY1
+171406.518225, LT(S0),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171406.519238, LT(S1),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171406.519323, LT(S0),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171406.519336, LT(S1),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171406.519359, ANEG,            FSM: (EVENT_INIT_DONE) IDLE -> WAIT_ANEG_ENABLE
+171406.519385, ANEG,            FSM: (EVENT_AUTONEG_ENABLE) WAIT_ANEG_ENABLE -> TRANSMIT_DISABLE
+171406.519396, ANEG,            MSG: Setting coeff c(-1) PRE1 to 0
+171406.519407, ANEG,            MSG: Setting coeff c(0)  MAIN to 68
+171406.519417, ANEG,            MSG: Setting coeff c(1)  POST to 0
+171406.519428, ANEG,            MSG: Setting coeff c(-2) PRE2 to 0
+171406.519438, ANEG,            MSG: Setting coeff c(-3) PRE3 to 0
+171406.519452, ANEG,            MSG: TRANSMIT_DISABLE - ANEG restart
+171406.519462, ANEG,            TX:  0x004000198001, base page, NP:1, ACK:0, RF:0, TN:25, EN:0, C:0
+                                     FEC:[], ABILITY:['200GBASE_KR2_CR2']
+171406.519481, ANEG,            RX:  0x004000198001, base page, NP:1, ACK:0, RF:0, TN:25, EN:0, C:0
+                                     FEC:[], ABILITY:['200GBASE_KR2_CR2']
+171406.586888, ANEG,            FSM: (EVENT_BREAK_LINK_TIMER_DONE) TRANSMIT_DISABLE -> ABILITY_DETECT
+171406.586905, ANEG,            MSG: SYNC=true, SYNC LOST=false, NEW_PAGE=true
+171406.586917, ANEG,            TX:  0x004000198001, base page, NP:1, ACK:0, RF:0, TN:25, EN:0, C:0
+                                     FEC:[], ABILITY:['200GBASE_KR2_CR2']
+171406.586935, ANEG,            RX:  0x004000198001, base page, NP:1, ACK:0, RF:0, TN:25, EN:0, C:0
+                                     FEC:[], ABILITY:['200GBASE_KR2_CR2']
+171406.586984, ANEG,            FSM: (EVENT_ABILITY_MATCH_NONCE) ABILITY_DETECT -> TRANSMIT_DISABLE
+171406.586995, ANEG,            MSG: Setting coeff c(-1) PRE1 to 0
+171406.587005, ANEG,            MSG: Setting coeff c(0)  MAIN to 68
+171406.587015, ANEG,            MSG: Setting coeff c(1)  POST to 0
+171406.587026, ANEG,            MSG: Setting coeff c(-2) PRE2 to 0
+171406.587036, ANEG,            MSG: Setting coeff c(-3) PRE3 to 0
+171406.587050, ANEG,            MSG: TRANSMIT_DISABLE - ANEG restart
+171406.587059, ANEG,            TX:  0x004000078001, base page, NP:1, ACK:0, RF:0, TN:7, EN:0, C:0
+                                     FEC:[], ABILITY:['200GBASE_KR2_CR2']
+171406.654488, ANEG,            FSM: (EVENT_BREAK_LINK_TIMER_DONE) TRANSMIT_DISABLE -> ABILITY_DETECT
+171406.654505, ANEG,            MSG: SYNC=false, SYNC LOST=true, NEW_PAGE=true
+171406.654517, ANEG,            TX:  0x004000078001, base page, NP:1, ACK:0, RF:0, TN:7, EN:0, C:0
+                                     FEC:[], ABILITY:['200GBASE_KR2_CR2']
+171406.654535, ANEG,            RX:  0x004000198001, base page, NP:1, ACK:0, RF:0, TN:25, EN:0, C:0
+                                     FEC:[], ABILITY:['200GBASE_KR2_CR2']
+171406.654566, ANEG,            MSG: SYNC=true, SYNC LOST=true, NEW_PAGE=true
+171406.654579, ANEG,            RX:  0x0040001B8001, base page, NP:1, ACK:0, RF:0, TN:27, EN:0, C:0
+                                     FEC:[], ABILITY:['200GBASE_KR2_CR2']
+171406.654612, ANEG,            MSG: SYNC=true, SYNC LOST=false, NEW_PAGE=true
+171406.654641, ANEG,            FSM: (EVENT_ABILITY_MATCH_N_NONCE) ABILITY_DETECT -> ACKNOWLEDGE_DETECT
+171406.654653, ANEG,            TX:  0x00400007C361, base page, NP:1, ACK:1, RF:0, TN:7, EN:27, C:0
+                                     FEC:[], ABILITY:['200GBASE_KR2_CR2']
+171406.654707, ANEG,            RX:  0x0040001BC0E1, base page, NP:1, ACK:1, RF:0, TN:27, EN:7, C:0
+                                     FEC:[], ABILITY:['200GBASE_KR2_CR2']
+171406.654739, ANEG,            FSM: (EVENT_ACKNOWLEDGE_DETECT) ACKNOWLEDGE_DETECT -> COMPLETE_ACKNOWLEDGE
+171406.654806, ANEG,            FSM: (EVENT_ACK_NP) COMPLETE_ACKNOWLEDGE -> NEXT_PAGE_WAIT
+171406.654818, ANEG,            TX:  0x04DF0353A805, next page, NP:1, ACK:0, MP:1, ACK2:0, T:1
+                                     Formatted message:
+                                     Value:0x0005, Msg:OUI Tagged: 0x6a737c (preliminary)
+171406.654837, ANEG,            RX:  0x04DF0353A805, next page, NP:1, ACK:0, MP:1, ACK2:0, T:1
+                                     Formatted message:
+                                     Value:0x0005, Msg:OUI Tagged: 0x6a737c (preliminary)
+171406.654889, ANEG,            FSM: (EVENT_NEXT_PAGE) NEXT_PAGE_WAIT -> ACKNOWLEDGE_DETECT
+171406.654901, ANEG,            TX:  0x04DF0353E805, next page, NP:1, ACK:1, MP:1, ACK2:0, T:1
+                                     Formatted message:
+                                     Value:0x0005, Msg:OUI Tagged: 0x6a737c (preliminary)
+171406.654939, ANEG,            RX:  0x04DF0353E805, next page, NP:1, ACK:1, MP:1, ACK2:0, T:1
+                                     Formatted message:
+                                     Value:0x0005, Msg:OUI Tagged: 0x6a737c (preliminary)
+171406.654973, ANEG,            FSM: (EVENT_ACKNOWLEDGE_DETECT) ACKNOWLEDGE_DETECT -> COMPLETE_ACKNOWLEDGE
+171406.655022, ANEG,            FSM: (EVENT_ACK_NP) COMPLETE_ACKNOWLEDGE -> NEXT_PAGE_WAIT
+171406.655034, ANEG,            TX:  0x000000000203, next page, NP:0, ACK:0, MP:0, ACK2:0, T:0
+                                     Un-formatted message:
+                                     Value:0x0203, Msg:OUI Tagged: 0x6a737d (final) Ethernet Technology Consortium
+                                     FEC:[], ABILITY:[]
+171406.655049, ANEG,            RX:  0x000000000203, next page, NP:0, ACK:0, MP:0, ACK2:0, T:0
+                                     Un-formatted message:
+                                     Value:0x0203, Msg:OUI Tagged: 0x6a737d (final) Ethernet Technology Consortium
+                                     FEC:[], ABILITY:[]
+171406.656373, ANEG,            FSM: (EVENT_NEXT_PAGE) NEXT_PAGE_WAIT -> ACKNOWLEDGE_DETECT
+171406.656386, ANEG,            TX:  0x000000004203, next page, NP:0, ACK:1, MP:0, ACK2:0, T:0
+                                     Un-formatted message:
+                                     Value:0x0203, Msg:OUI Tagged: 0x6a737d (final) Ethernet Technology Consortium
+                                     FEC:[], ABILITY:[]
+171406.658021, ANEG,            RX:  0x000000004203, next page, NP:0, ACK:1, MP:0, ACK2:0, T:0
+                                     Un-formatted message:
+                                     Value:0x0203, Msg:OUI Tagged: 0x6a737d (final) Ethernet Technology Consortium
+                                     FEC:[], ABILITY:[]
+171406.658050, ANEG,            FSM: (EVENT_ACKNOWLEDGE_DETECT) ACKNOWLEDGE_DETECT -> COMPLETE_ACKNOWLEDGE
+171406.658080, ANEG,            FSM: (EVENT_ACK_N_NP) COMPLETE_ACKNOWLEDGE -> AN_GOOD_CHECK
+171406.658103, LT(S0),          FSM: (EVENT_TRAINING_ENABLE) INITIALIZE -> START_DELAY1
+171406.658125, LT(S1),          FSM: (EVENT_TRAINING_ENABLE) INITIALIZE -> START_DELAY1
+171406.683096, LT(S0),          FSM: (EVENT_WAIT_TIMER_DONE) START_DELAY1 -> START_DELAY2
+171406.683127, LT(S1),          FSM: (EVENT_WAIT_TIMER_DONE) START_DELAY1 -> START_DELAY2
+171406.708103, LT(S0),          FSM: (EVENT_WAIT_TIMER_DONE) START_DELAY2 -> SEND_TF
+171406.708115, LT(S0),          TX:  0x00000000, LOCKED=false, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM2
+171406.708127, LT(S0),          MSG: LOCK=true, SYNC LOST=true, NEW_FRAME=true, OVERRUN=false
+171406.708143, LT(S0),          RX:  0x00000000, LOCKED=false, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM2
+171406.708154, LT_COEF(S0),     FSM: (EVENT_RESET_DEASSERT) IDLE -> OUT_OF_SYNC
+171406.708165, LT_COEF(S0),     MSG: Setting coeff c(-1) PRE1 to 0
+171406.708175, LT_COEF(S0),     MSG: Setting coeff c(0)  MAIN to 68
+171406.708185, LT_COEF(S0),     MSG: Setting coeff c(1)  POST to 0
+171406.708196, LT_COEF(S0),     MSG: Setting coeff c(-2) PRE2 to 0
+171406.708206, LT_COEF(S0),     MSG: Setting coeff c(-3) PRE3 to 0
+171406.708217, LT(S0),          TX:  0x00000300, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM2
+171406.708230, LT_ALG0(S0),     FSM: (EVENT_RESET_DEASSERT) IDLE -> STATE_ALG_INIT
+171406.708240, LT_ALG1(S0),     FSM: (EVENT_RESET_DEASSERT) IDLE -> STATE_ALG_INIT
+171406.708251, LT(S1),          FSM: (EVENT_WAIT_TIMER_DONE) START_DELAY2 -> SEND_TF
+171406.708263, LT(S1),          TX:  0x00000000, LOCKED=false, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM2
+171406.708275, LT(S1),          MSG: LOCK=true, SYNC LOST=true, NEW_FRAME=true, OVERRUN=true
+171406.708291, LT(S1),          RX:  0x00000000, LOCKED=false, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM2
+171406.708303, LT_COEF(S1),     FSM: (EVENT_RESET_DEASSERT) IDLE -> OUT_OF_SYNC
+171406.708313, LT_COEF(S1),     MSG: Setting coeff c(-1) PRE1 to 0
+171406.708324, LT_COEF(S1),     MSG: Setting coeff c(0)  MAIN to 68
+171406.708334, LT_COEF(S1),     MSG: Setting coeff c(1)  POST to 0
+171406.708345, LT_COEF(S1),     MSG: Setting coeff c(-2) PRE2 to 0
+171406.708355, LT_COEF(S1),     MSG: Setting coeff c(-3) PRE3 to 0
+171406.708366, LT(S1),          TX:  0x00000300, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM2
+171406.708379, LT_ALG0(S1),     FSM: (EVENT_RESET_DEASSERT) IDLE -> STATE_ALG_INIT
+171406.708390, LT_ALG1(S1),     FSM: (EVENT_RESET_DEASSERT) IDLE -> STATE_ALG_INIT
+171406.708415, LT(S0),          RX:  0x00000300, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM2
+171406.708428, LT_COEF(S0),     FSM: (EVENT_LOCAL_TF_LOCK) OUT_OF_SYNC -> NEW_INDEX
+171406.708439, LT(S0),          TX:  0x00000280, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM2
+171406.708454, LT(S1),          MSG: LOCK=true, SYNC LOST=false, NEW_FRAME=true, OVERRUN=false
+171406.708466, LT(S1),          RX:  0x00000180, LOCKED=false, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM2
+171406.708478, LT_COEF(S1),     FSM: (EVENT_LOCAL_TF_LOCK) OUT_OF_SYNC -> NEW_INDEX
+171406.708490, LT(S1),          TX:  0x00000280, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM2
+171406.708517, LT(S0),          FSM: (EVENT_TEST_FRAME_LOCK) SEND_TF -> TRAIN_LOCAL
+171406.708529, LT(S0),          RX:  0x00000280, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM2
+171406.708552, LT_ALG0(S0),     FSM: (EVENT_ALG_SWITCH_PAM4) STATE_ALG_INIT -> STATE_ALG_PAM4
+171406.708575, LT(S1),          RX:  0x00000280, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM2
+171406.708607, LT(S1),          FSM: (EVENT_TEST_FRAME_LOCK) SEND_TF -> TRAIN_LOCAL
+171406.708629, LT_ALG0(S1),     FSM: (EVENT_ALG_SWITCH_PAM4) STATE_ALG_INIT -> STATE_ALG_PAM4
+171406.708665, LT(S0),          TX:  0x02000200, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM2
+171406.708682, LT(S1),          RX:  0x02000200, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM2
+171406.708697, LT(S1),          TX:  0x00000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM2
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.708726, LT(S0),          RX:  0x02000200, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM2
+171406.708741, LT(S0),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.712900, LT(S0),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.713344, LT(S1),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.713418, LT(S1),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.758160, LT_ALG0(S0),     FSM: (EVENT_ALG_SCAN_PRESET) STATE_ALG_PAM4 -> STATE_ALG_PRESET
+171406.758221, LT(S0),          TX:  0x12000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 1   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.758319, LT_ALG0(S1),     FSM: (EVENT_ALG_SCAN_PRESET) STATE_ALG_PAM4 -> STATE_ALG_PRESET
+171406.758355, LT(S0),          RX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.758393, LT(S0),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.758410, LT(S1),          TX:  0x12000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 1   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.758461, LT(S0),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.758561, LT(S1),          RX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.758597, LT(S1),          RX:  0x12000B80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 1   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.758611, LT_COEF(S1),     FSM: (EVENT_NEW_IC) NEW_INDEX -> NEW_IC
+171406.758622, LT_COEF(S1),     MSG: Setting coeff c(-1) PRE1 to 0
+171406.758633, LT_COEF(S1),     MSG: Setting coeff c(0)  MAIN to 68
+171406.758643, LT_COEF(S1),     MSG: Setting coeff c(1)  POST to 0
+171406.758653, LT_COEF(S1),     MSG: Setting coeff c(-2) PRE2 to 0
+171406.758664, LT_COEF(S1),     MSG: Setting coeff c(-3) PRE3 to 0
+171406.758675, LT(S1),          TX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.758748, LT(S1),          RX:  0x12000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 1   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.758784, LT(S1),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.758798, LT_COEF(S1),     FSM: (EVENT_NEW_REQ) NEW_IC -> NEW_INDEX
+171406.758809, LT(S1),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.783254, LT(S0),          RX:  0x12000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 1   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.783269, LT_COEF(S0),     FSM: (EVENT_NEW_IC) NEW_INDEX -> NEW_IC
+171406.783280, LT_COEF(S0),     MSG: Setting coeff c(-1) PRE1 to 0
+171406.783290, LT_COEF(S0),     MSG: Setting coeff c(0)  MAIN to 68
+171406.783300, LT_COEF(S0),     MSG: Setting coeff c(1)  POST to 0
+171406.783311, LT_COEF(S0),     MSG: Setting coeff c(-2) PRE2 to 0
+171406.783321, LT_COEF(S0),     MSG: Setting coeff c(-3) PRE3 to 0
+171406.783332, LT(S0),          TX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.783440, LT(S0),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.783454, LT_COEF(S0),     FSM: (EVENT_NEW_REQ) NEW_IC -> NEW_INDEX
+171406.783466, LT(S0),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.808169, LT_ALG0(S0),     FSM: (EVENT_ALG_NEXT) STATE_ALG_PRESET -> STATE_ALG_PRESET
+171406.808230, LT(S0),          TX:  0x22000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 2   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.808365, LT(S0),          RX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.808415, LT_ALG0(S1),     FSM: (EVENT_ALG_NEXT) STATE_ALG_PRESET -> STATE_ALG_PRESET
+171406.808451, LT(S0),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.808468, LT(S1),          RX:  0x22000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 2   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.808483, LT_COEF(S1),     FSM: (EVENT_NEW_IC) NEW_INDEX -> NEW_IC
+171406.808494, LT_COEF(S1),     MSG: Setting coeff c(-1) PRE1 to 0
+171406.808504, LT_COEF(S1),     MSG: Setting coeff c(0)  MAIN to 42
+171406.808514, LT_COEF(S1),     MSG: Setting coeff c(1)  POST to 0
+171406.808524, LT_COEF(S1),     MSG: Setting coeff c(-2) PRE2 to 0
+171406.808535, LT_COEF(S1),     MSG: Setting coeff c(-3) PRE3 to 0
+171406.808545, LT(S1),          TX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.808576, LT(S0),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.808595, LT(S1),          TX:  0x22000B80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 2   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.808711, LT(S1),          RX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.808725, LT_COEF(S1),     FSM: (EVENT_NEW_REQ) NEW_IC -> NEW_INDEX
+171406.808737, LT(S1),          TX:  0x22000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 2   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.808771, LT(S1),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.808865, LT(S1),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.858203, LT_ALG0(S0),     FSM: (EVENT_ALG_NEXT) STATE_ALG_PRESET -> STATE_ALG_PRESET
+171406.858264, LT(S0),          TX:  0x32000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 3   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.858298, LT(S0),          RX:  0x22000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 2   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.858313, LT_COEF(S0),     FSM: (EVENT_NEW_IC) NEW_INDEX -> NEW_IC
+171406.858324, LT_COEF(S0),     MSG: Setting coeff c(-1) PRE1 to 0
+171406.858334, LT_COEF(S0),     MSG: Setting coeff c(0)  MAIN to 42
+171406.858345, LT_COEF(S0),     MSG: Setting coeff c(1)  POST to 0
+171406.858355, LT_COEF(S0),     MSG: Setting coeff c(-2) PRE2 to 0
+171406.858365, LT_COEF(S0),     MSG: Setting coeff c(-3) PRE3 to 0
+171406.858376, LT(S0),          TX:  0x32000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 3   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.858411, LT(S0),          RX:  0x22000B80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 2   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.858461, LT_ALG0(S1),     FSM: (EVENT_ALG_NEXT) STATE_ALG_PRESET -> STATE_ALG_PRESET
+171406.858497, LT(S0),          TX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.858532, LT(S0),          RX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.858546, LT_COEF(S0),     FSM: (EVENT_NEW_REQ) NEW_IC -> NEW_INDEX
+171406.858558, LT(S0),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.858574, LT(S1),          RX:  0x32000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 3   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.858589, LT_COEF(S1),     FSM: (EVENT_NEW_IC) NEW_INDEX -> NEW_IC
+171406.858600, LT_COEF(S1),     MSG: Setting coeff c(-1) PRE1 to 8
+171406.858610, LT_COEF(S1),     MSG: Setting coeff c(0)  MAIN to 52
+171406.858621, LT_COEF(S1),     MSG: Setting coeff c(1)  POST to 0
+171406.858631, LT_COEF(S1),     MSG: Setting coeff c(-2) PRE2 to 0
+171406.858641, LT_COEF(S1),     MSG: Setting coeff c(-3) PRE3 to 0
+171406.858652, LT(S1),          TX:  0x32000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 3   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.858683, LT(S0),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.858783, LT(S1),          RX:  0x32000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 3   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.858819, LT(S1),          RX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.858833, LT_COEF(S1),     FSM: (EVENT_NEW_REQ) NEW_IC -> NEW_INDEX
+171406.858844, LT(S1),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.858918, LT(S1),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.908314, LT(S0),          RX:  0x32000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 3   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.908329, LT_COEF(S0),     FSM: (EVENT_NEW_IC) NEW_INDEX -> NEW_IC
+171406.908340, LT_COEF(S0),     MSG: Setting coeff c(-1) PRE1 to 8
+171406.908350, LT_COEF(S0),     MSG: Setting coeff c(0)  MAIN to 52
+171406.908361, LT_COEF(S0),     MSG: Setting coeff c(1)  POST to 0
+171406.908371, LT_COEF(S0),     MSG: Setting coeff c(-2) PRE2 to 0
+171406.908381, LT_COEF(S0),     MSG: Setting coeff c(-3) PRE3 to 0
+171406.908392, LT(S0),          TX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.908541, LT(S0),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.908555, LT_COEF(S0),     FSM: (EVENT_NEW_REQ) NEW_IC -> NEW_INDEX
+171406.908567, LT(S0),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.908583, LT(S1),          RX:  0x0A000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 4   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.908598, LT_COEF(S1),     FSM: (EVENT_NEW_IC) NEW_INDEX -> NEW_IC
+171406.908609, LT_COEF(S1),     MSG: Setting coeff c(-1) PRE1 to 18
+171406.908619, LT_COEF(S1),     MSG: Setting coeff c(0)  MAIN to 52
+171406.908630, LT_COEF(S1),     MSG: Setting coeff c(1)  POST to 0
+171406.908640, LT_COEF(S1),     MSG: Setting coeff c(-2) PRE2 to 5
+171406.908650, LT_COEF(S1),     MSG: Setting coeff c(-3) PRE3 to 0
+171406.908661, LT(S1),          TX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.908736, LT(S1),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.908750, LT_COEF(S1),     FSM: (EVENT_NEW_REQ) NEW_IC -> NEW_INDEX
+171406.908761, LT(S1),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.933241, LT_ALG0(S0),     FSM: (EVENT_ALG_NEXT) STATE_ALG_PRESET -> STATE_ALG_PRESET
+171406.933302, LT(S0),          TX:  0x0A000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 4   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.933437, LT(S0),          RX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.933486, LT_ALG0(S1),     FSM: (EVENT_ALG_NEXT) STATE_ALG_PRESET -> STATE_ALG_PRESET
+171406.933524, LT(S0),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.933562, LT(S1),          TX:  0x0A000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 4   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.933593, LT(S0),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.933693, LT(S1),          RX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.933729, LT(S1),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.933803, LT(S1),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.958569, LT(S1),          RX:  0x32000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 3   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.958584, LT_COEF(S1),     FSM: (EVENT_NEW_IC) NEW_INDEX -> NEW_IC
+171406.958595, LT_COEF(S1),     MSG: Setting coeff c(-1) PRE1 to 8
+171406.958605, LT_COEF(S1),     MSG: Setting coeff c(0)  MAIN to 52
+171406.958615, LT_COEF(S1),     MSG: Setting coeff c(1)  POST to 0
+171406.958626, LT_COEF(S1),     MSG: Setting coeff c(-2) PRE2 to 0
+171406.958636, LT_COEF(S1),     MSG: Setting coeff c(-3) PRE3 to 0
+171406.958647, LT(S1),          TX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.958741, LT(S1),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.958755, LT_COEF(S1),     FSM: (EVENT_NEW_REQ) NEW_IC -> NEW_INDEX
+171406.958766, LT(S1),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.983247, LT_ALG0(S0),     FSM: (EVENT_ALG_NEXT) STATE_ALG_PRESET -> STATE_ALG_PRESET
+171406.983308, LT(S0),          TX:  0x32000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 3   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.983343, LT(S0),          RX:  0x0A000A00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 4   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.983358, LT_COEF(S0),     FSM: (EVENT_NEW_IC) NEW_INDEX -> NEW_IC
+171406.983369, LT_COEF(S0),     MSG: Setting coeff c(-1) PRE1 to 18
+171406.983379, LT_COEF(S0),     MSG: Setting coeff c(0)  MAIN to 52
+171406.983390, LT_COEF(S0),     MSG: Setting coeff c(1)  POST to 0
+171406.983400, LT_COEF(S0),     MSG: Setting coeff c(-2) PRE2 to 5
+171406.983410, LT_COEF(S0),     MSG: Setting coeff c(-3) PRE3 to 0
+171406.983421, LT(S0),          TX:  0x32000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 3   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.983456, LT(S0),          RX:  0x0A000B80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 4   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.983506, LT_ALG0(S1),     FSM: (EVENT_ALG_NEXT) STATE_ALG_PRESET -> STATE_ALG_PRESET
+171406.983542, LT(S0),          RX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.983556, LT_COEF(S0),     FSM: (EVENT_NEW_REQ) NEW_IC -> NEW_INDEX
+171406.983568, LT(S0),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.983606, LT(S1),          TX:  0x32000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 3   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.983657, LT(S0),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.983737, LT(S1),          RX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171406.983773, LT(S1),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171406.983867, LT(S1),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171407.033343, LT(S0),          RX:  0x32000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 3   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171407.033358, LT_COEF(S0),     FSM: (EVENT_NEW_IC) NEW_INDEX -> NEW_IC
+171407.033369, LT_COEF(S0),     MSG: Setting coeff c(-1) PRE1 to 8
+171407.033379, LT_COEF(S0),     MSG: Setting coeff c(0)  MAIN to 52
+171407.033390, LT_COEF(S0),     MSG: Setting coeff c(1)  POST to 0
+171407.033400, LT_COEF(S0),     MSG: Setting coeff c(-2) PRE2 to 0
+171407.033410, LT_COEF(S0),     MSG: Setting coeff c(-3) PRE3 to 0
+171407.033422, LT(S0),          TX:  0x02000B00, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: Upd    PAM_MOD: PAM4
+171407.033510, LT(S0),          RX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171407.033524, LT_COEF(S0),     FSM: (EVENT_NEW_REQ) NEW_IC -> NEW_INDEX
+171407.033536, LT(S0),          TX:  0x02000A80, LOCKED=true, TRAINED=false
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171407.033653, LT(S1),          RX:  0x02008A00, LOCKED=true, TRAINED=true
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171407.058271, LT_ALG0(S0),     FSM: (EVENT_ALG_DONE) STATE_ALG_PRESET -> STATE_ALG_DONE
+171407.058292, LT_ALG0(S0),     MSG: {'cmds': [{'ber': ['56', '68'], 'cmd': 'SET PRESET_1', 'flags': ['DONE', 'LOCK'], 'prbs': [{'bits': 2081396800, 'errors': 68, 'result': '3.267e-08'}], 'result': 'success'}, {'ber': ['20745', '199'], 'cmd': 'SET PRESET_2', 'flags': ['DONE', 'LOCK'], 'prbs': [{'bits': 2082624640, 'errors': 199, 'result': '9.555e-08'}], 'result': 'success'}, {'ber': ['1114', '1', '0'], 'cmd': 'SET PRESET_3', 'flags': ['DONE', 'LOCK'], 'prbs': [{'bits': 4164585280, 'errors': 1, 'result': '2.401e-10'}], 'result': 'success'}, {'ber': ['11397', '1775'], 'cmd': 'SET PRESET_4', 'flags': ['DONE', 'LOCK'], 'prbs': [{'bits': 2081435520, 'errors': 1775, 'result': '8.528e-07'}], 'result': 'success'}, {'ber': ['20857', '0', '3'], 'cmd': 'SET PRESET_3', 'flags': ['DONE', 'LOCK'], 'prbs': [{'bits': 4164583040, 'errors': 3, 'result': '7.204e-10'}], 'result': 'success'}, {'cmd': 'LOCAL_TRAINED'}]}
+171407.058340, LT(S0),          FSM: (EVENT_LOCAL_TRAINED) TRAIN_LOCAL -> TRAIN_REMOTE
+171407.058352, LT(S0),          TX:  0x02008A00, LOCKED=true, TRAINED=true
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171407.058520, LT_ALG0(S1),     FSM: (EVENT_ALG_DONE) STATE_ALG_PRESET -> STATE_ALG_DONE
+171407.058541, LT_ALG0(S1),     MSG: {'cmds': [{'ber': ['193', '131'], 'cmd': 'SET PRESET_1', 'flags': ['DONE', 'LOCK'], 'prbs': [{'bits': 2084357760, 'errors': 131, 'result': '6.285e-08'}], 'result': 'success'}, {'ber': ['7456', '872'], 'cmd': 'SET PRESET_2', 'flags': ['DONE', 'LOCK'], 'prbs': [{'bits': 2084303360, 'errors': 872, 'result': '4.184e-07'}], 'result': 'success'}, {'ber': ['443', '2', '2'], 'cmd': 'SET PRESET_3', 'flags': ['DONE', 'LOCK'], 'prbs': [{'bits': 4163505280, 'errors': 4, 'result': '9.607e-10'}], 'result': 'success'}, {'ber': ['15475', '214'], 'cmd': 'SET PRESET_4', 'flags': ['DONE', 'LOCK'], 'prbs': [{'bits': 2081495680, 'errors': 214, 'result': '1.028e-07'}], 'result': 'success'}, {'ber': ['1166', '3', '4'], 'cmd': 'SET PRESET_3', 'flags': ['DONE', 'LOCK'], 'prbs': [{'bits': 4163755520, 'errors': 7, 'result': '1.681e-09'}], 'result': 'success'}, {'cmd': 'LOCAL_TRAINED'}]}
+171407.058588, LT(S1),          FSM: (EVENT_LOCAL_TRAINED) TRAIN_LOCAL -> TRAIN_REMOTE
+171407.058601, LT(S1),          TX:  0x02008A00, LOCKED=true, TRAINED=true
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171407.058634, LT(S1),          FSM: (EVENT_REMOTE_RX_READY) TRAIN_REMOTE -> LINK_READY
+171407.058765, LT(S1),          FSM: (EVENT_WAIT_TIMER_DONE) LINK_READY -> SEND_DATA
+171407.058776, LT_COEF(S1),     FSM: (XFSM_EVENT_SELF) NEW_INDEX -> IDLE
+171407.058787, LT_ALG0(S1),     FSM: (XFSM_EVENT_SELF) STATE_ALG_DONE -> IDLE
+171407.058797, LT_ALG1(S1),     FSM: (XFSM_EVENT_SELF) STATE_ALG_INIT -> IDLE
+171407.108387, LT(S0),          RX:  0x02008A00, LOCKED=true, TRAINED=true
+                                     C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
+                                     C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
+171407.108419, LT(S0),          FSM: (EVENT_REMOTE_RX_READY) TRAIN_REMOTE -> LINK_READY
+171407.108555, LT(S0),          FSM: (EVENT_WAIT_TIMER_DONE) LINK_READY -> SEND_DATA
+171407.108567, LT_COEF(S0),     FSM: (XFSM_EVENT_SELF) NEW_INDEX -> IDLE
+171407.108577, LT_ALG0(S0),     FSM: (XFSM_EVENT_SELF) STATE_ALG_DONE -> IDLE
+171407.108588, LT_ALG1(S0),     FSM: (XFSM_EVENT_SELF) STATE_ALG_INIT -> IDLE
+171407.108615, ANEG,            FSM: (EVENT_LINK_HCD_OK) AN_GOOD_CHECK -> AN_GOOD
+171415.054007, LT(S0),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171415.054970, LT(S1),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171415.055053, LT(S0),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171415.055065, LT(S1),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171415.055111, ANEG,            FSM: (EVENT_INIT_DONE) IDLE -> WAIT_ANEG_ENABLE
+171415.055158, ANEG,            FSM: (EVENT_AUTONEG_ENABLE) WAIT_ANEG_ENABLE -> TRANSMIT_DISABLE
+171415.055169, ANEG,            MSG: Setting coeff c(-1) PRE1 to 0
+171415.055179, ANEG,            MSG: Setting coeff c(0)  MAIN to 68
+171415.055190, ANEG,            MSG: Setting coeff c(1)  POST to 0
+171415.055200, ANEG,            MSG: Setting coeff c(-2) PRE2 to 0
+171415.055210, ANEG,            MSG: Setting coeff c(-3) PRE3 to 0
+171415.055224, ANEG,            MSG: TRANSMIT_DISABLE - ANEG restart
+171415.055233, ANEG,            TX:  0x004000158001, base page, NP:1, ACK:0, RF:0, TN:21, EN:0, C:0
+                                     FEC:[], ABILITY:['200GBASE_KR2_CR2']
+171415.057863, LT(S0),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171415.058993, LT(S1),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171415.059100, LT(S0),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171415.059112, LT(S1),          FSM: (EVENT_RESET_DEASSERT) IDLE -> INITIALIZE
+171415.059136, ANEG,            FSM: (EVENT_INIT_DONE) IDLE -> WAIT_ANEG_ENABLE
+171415.059162, ANEG,            FSM: (EVENT_AUTONEG_DISABLE) WAIT_ANEG_ENABLE -> AN_GOOD_CHECK
+171415.059175, LT(S0),          FSM: (EVENT_TRAINING_DISABLE) INITIALIZE -> SEND_DATA
+171415.059187, LT(S1),          FSM: (EVENT_TRAINING_DISABLE) INITIALIZE -> SEND_DATA
+171415.059212, ANEG,            FSM: (EVENT_LINK_HCD_OK) AN_GOOD_CHECK -> AN_GOOD
+xoa-utils >
