@@ -184,7 +184,7 @@ xoa-utils > anlt log --read -f 20240317_1.log
 171406.713418, LT(S1),          RX:  0x02000A80, LOCKED=true, TRAINED=false
                                      C_REQ: Hold   C_SEL: c(0)   IC_REQ: INDV   PAM_MOD: PAM4
                                      C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4
-171406.758160, LT_ALG0(S0),     FSM: (EVENT_ALG_SCAN_PRESET) STATE_ALG_PAM4 -> STATE_ALG_PRESET
+171406.758160, LT_ALG0(S0),     FSM: (EVENT_ALG_SCAN_PRESET) STATE_ALG_PRESET -> STATE_ALG_PRESET
 171406.758221, LT(S0),          TX:  0x12000A00, LOCKED=true, TRAINED=false
                                      C_REQ: Hold   C_SEL: c(0)   IC_REQ: IC 1   PAM_MOD: PAM4
                                      C_ECH: c(0)   C_STS: No upd IC_STS: No upd PAM_MOD: PAM4

@@ -8,7 +8,7 @@ A log message consists of 4 parts
 3. Message Type (yellow block)
 4. Message Content (green block)
 
-.. figure:: log_struct.png
+.. figure:: images/log_struct.png
 
 Timestamp
 ---------
