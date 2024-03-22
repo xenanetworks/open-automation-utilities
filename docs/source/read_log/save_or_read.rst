@@ -13,7 +13,7 @@ With Freya, you not only have the capability to manually control the link traini
 
 You can use ANLT Utility as a log file reader. Reading a save log file doesn't need to reserve a port or connect to the chassis, as shown in the screenshot below.
 
-.. figure:: read_log.png
+.. figure:: images/read_log.png
 
 .. note::
 
