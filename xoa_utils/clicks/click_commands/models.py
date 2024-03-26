@@ -32,23 +32,23 @@ class EntryModel(BaseModel):
     entry_value: Any
 
 # entry_discriminator: log
-# class PRBSLogModel(BaseModel):
-#     bits: int
-#     errors: int
-#     result: str
+class PRBSLogModel(BaseModel):
+    bits: int
+    errors: int
+    result: str
 
-# class AlgLogModel(BaseModel):
-#     ber: List[str]
-#     cmd: str
-#     flags: List[str]
-#     prbs: List[PRBSLogModel]
-#     result: str
+class AlgLogModel(BaseModel):
+    ber: Optional[List[str]] = None
+    cmd: str
+    flags: Optional[List[str]] = None
+    prbs: Optional[List[PRBSLogModel]] = None
+    result: Optional[str] = None
 
-# class CmdEntryValueModel(BaseModel):
-#     cmds: List[AlgLogModel]
+class CmdEntryValueModel(BaseModel):
+    cmds: List[AlgLogModel]
 
-# class LogEntryValueModel(BaseModel):
-#     log: Optional[CmdEntryValueModel]
+class LogEntryValueModel(BaseModel):
+    log: CmdEntryValueModel
 
 # entry_discriminator: fsm
 class FSMEntryValueModel(BaseModel):
@@ -161,4 +161,5 @@ class AnegNpEntryValueModel(BaseModel):
 # if data.entry_discriminator == EntryDiscriminatorEnum.log.name:
 #     if data.entry_value != None:
 #         data = LogEntryValueModel(**data.entry_value)
-#         print(data.log.cmds)
+#         for cmd in data.log.cmds:
+#             print(f"cmd: {cmd.cmd}, result: {cmd.result}, prbs: {cmd.prbs}, flags: ")

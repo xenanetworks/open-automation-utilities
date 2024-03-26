@@ -531,7 +531,9 @@ async def anlt_log2(ctx: ac.Context, filename: str, read: bool, keep: str, serde
         else:
             str = _ascii_styler(str.title(), [ASCIIStyle.BLUE_BG])
         return str
-
+    
+    def _ber_styler(str: str) -> str:
+        return _ascii_styler(str, [ASCIIStyle.YELLOW])
     
     def _beautify(filtered: list[dict]) -> str:
         real = []
@@ -557,14 +559,17 @@ async def anlt_log2(ctx: ac.Context, filename: str, read: bool, keep: str, serde
                 log_event = data.event
                 log_current = data.current
                 log_new = data.new
-                b_str = (
-                    f"{common:<32}{'FSM:':<5}({log_event}) {log_current} -> {log_new}"
-                )
+                b_str = f"{common:<32}{'FSM:':<5}({log_event}) {log_current} -> {log_new}"
+
             elif _entry_discriminator == EntryDiscriminatorEnum.log.name:
+                log_log = ""
                 if _entry_value != None:
-                    # data = LogEntryValueModel(**_entry_value)
-                    # log_log = data.log
-                    log_log = ""
+                    data = LogEntryValueModel(**_entry_value)
+                    for cmd in data.log.cmds:
+                        if cmd.result != None:
+                            log_log += f"cmd: {cmd.cmd}, result: {cmd.result}, prbs: bits={cmd.prbs[0].bits:} errors={cmd.prbs[0].errors} ber={_ber_styler(cmd.prbs[0].result)}, flags: {cmd.flags}\n{'':<37}"
+                        else:
+                            log_log += f"cmd: {cmd.cmd}"
                 else:
                     log_log = ""
                 b_str = f"{common:<32}{'MSG:':<5}{log_log}"
