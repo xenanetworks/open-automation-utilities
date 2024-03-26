@@ -9,12 +9,13 @@ from xoa_utils.clis import (
     format_port_status,
     format_strict,
     format_log_control
-    )
+)
 from xoa_driver.enums import AnLtLogControl
 from xoa_utils.clicks.click_commands.group import xoa_util
 from xoa_utils.clicks import click_help as h
 from xoa_utils.cmds import CmdContext
 from enum import Enum
+from xoa_utils.clicks.click_commands.models import *
 
 
 class ASCIIStyle(Enum):
@@ -292,12 +293,12 @@ async def anlt_log(ctx: ac.Context, filename: str, read: bool, keep: str, serdes
             elif log_type == "trace" and "direction" in log_entry and "LT" not in log_m:
                 if log_pstate == "new" or log_pstate == "":
                     if log_ptype == "base page":
-                        b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}\n{'':<37}FEC:{log_fec}, ABILITY:{log_ab}"
+                        b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}\n{'':<37}FEC:{log_fec}\n{'':<37}ABILITY:{log_ab}"
                     else:
                         if log_fmt_v:
                             b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Formatted message:\n{'':<37}Value:{log_fmt_v}, Msg:{log_fmt_msg}"
                         else:
-                            b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Un-formatted message:\n{'':<37}Value:{log_ufmt_v}, Msg:{log_ufmt_msg}\n{'':<37}FEC:{log_ufmt_fec}, ABILITY:{log_ufmt_ab}"
+                            b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}, NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Un-formatted message:\n{'':<37}Value:{log_ufmt_v}, Msg:{log_ufmt_msg}\n{'':<37}FEC:{log_ufmt_fec}\n{'':<37}ABILITY:{log_ufmt_ab}"
                     if log_errors:
                         b_str += "\n" + f"{'':<37}" + _ascii_styler("ERRORS:", [ASCIIStyle.RED_BG]) + f"{log_errors}"
 
@@ -442,3 +443,231 @@ async def log_ctrl(
         fsm_lt_alg0,
         fsm_lt_algn1
         )
+
+
+# --------------------------
+# command: log2
+# --------------------------
+@anlt.command(cls=cb.XenaCommand, name="log2")
+@ac.option(
+    "-f", "--filename", type=ac.STRING, help=h.HELP_ANLT_LOG_FILENAME, default=""
+)
+@ac.option(
+    "-r", "--read", is_flag=True, help="Read log file", default=False
+)
+@ac.option(
+    "-k",
+    "--keep",
+    type=ac.Choice(["all", "an", "lt"]),
+    help=h.HELP_ANLT_LOG_KEEP,
+    default="all",
+)
+@ac.option("-s", "--serdes", type=ac.STRING, help=h.HELP_ANLT_LOG_SERDES, default="")
+@ac.pass_context
+async def anlt_log2(ctx: ac.Context, filename: str, read: bool, keep: str, serdes: str) -> str:
+    """
+    AN/LT logging v2
+    """
+
+    def _filter_log(log: str, keep: str, serdes: list[int]) -> list[dict]:
+        all_logs = []
+        for lg in log.split("\n"):
+            try:
+                content = json.loads(lg)
+                log_serdes = content["lane"]
+                module = content["module"]
+
+                serdes_in = (serdes and log_serdes in serdes) or (not serdes)
+                keep_in = any(
+                    (
+                        keep == "an" and LogModuleEnum.ANEG.name in module,
+                        keep == "lt" and LogModuleEnum.LT.name in module,
+                        keep == "all",
+                    )
+                )
+                if serdes_in and keep_in:
+                    all_logs.append(content)
+
+            except Exception:
+                pass
+        return all_logs
+
+    def _dict_get(dic: dict, *keys: str) -> t.Any:
+        current = dic
+        for k in keys:
+            current = current.get(k, "")
+            if current == "":
+                break
+        return current
+    
+    def _flatten(dic: dict[str, str]) -> str:
+        return "".join((f"{k}: {v:<7}" for k, v in dic.items()))
+
+    def _ascii_styler(str: str, fg_style: list[ASCIIStyle]) -> str:
+        style = "".join(s.value for s in fg_style)
+        return f"{style}{str}{ASCIIStyle.END.value}"
+
+    def _direction_styler(str: str) -> str:
+        if str == "tx":
+            str = _ascii_styler(
+                str.upper(), [ASCIIStyle.DARKBLUE_BG]
+            )
+        else:
+            str = _ascii_styler(
+                str.upper(), [ASCIIStyle.DARKGREEN_BG]
+            )
+        return str
+
+    def _true_false_styler(str: str) -> str:
+        if str == "true":
+            str = _ascii_styler(str, [ASCIIStyle.GREEN_BG])
+        else:
+            str = _ascii_styler(str, [ASCIIStyle.RED_BG])
+        return str
+    
+    def _an_page_styler(str: str) -> str:
+        if str == "base page":
+            str = _ascii_styler(str.title(), [ASCIIStyle.DARKBLUE_BG])
+        else:
+            str = _ascii_styler(str.title(), [ASCIIStyle.BLUE_BG])
+        return str
+
+    
+    def _beautify(filtered: list[dict]) -> str:
+        real = []
+        for i in filtered:
+            b_str = ""
+
+            data = BaseLogModel(**i)
+            log_time = data.time
+            log_m = data.module
+            log_serdes = data.lane
+            log_type = data.type
+            log_entry = data.entry
+
+            serdes_str = f"(S{log_serdes})," if "LT" in log_m else ","
+            common = f"{log_time/1000000:.6f}, {log_m}{serdes_str}"
+
+            _entry_data = EntryModel(**log_entry)
+            _entry_discriminator = _entry_data.entry_discriminator
+            _entry_value = _entry_data.entry_value
+
+            if _entry_discriminator == EntryDiscriminatorEnum.fsm.name:
+                data = FSMEntryValueModel(**_entry_value)
+                log_event = data.event
+                log_current = data.current
+                log_new = data.new
+                b_str = (
+                    f"{common:<32}{'FSM:':<5}({log_event}) {log_current} -> {log_new}"
+                )
+            elif _entry_discriminator == EntryDiscriminatorEnum.log.name:
+                if _entry_value != None:
+                    # data = LogEntryValueModel(**_entry_value)
+                    # log_log = data.log
+                    log_log = ""
+                else:
+                    log_log = ""
+                b_str = f"{common:<32}{'MSG:':<5}{log_log}"
+
+            elif _entry_discriminator == EntryDiscriminatorEnum.aneg_bp.name:
+                if "log" in _entry_value.keys():
+                    data = AnegLogEntryValueModel(**_entry_value)
+                    log_log = data.log
+                    b_str = f"{common:<32}{'MSG:':<5}{log_log}"
+                else:
+                    data = AnegBpEntryValueModel(**_entry_value)
+                    log_direction = _direction_styler(data.direction)
+                    log_value = data.pkt.value
+                    log_ptype = _an_page_styler(data.pkt.type)
+                    log_prev_count = data.pkt.prev_count
+
+                    log_np = data.pkt.fields.NP
+                    log_ack = data.pkt.fields.Ack
+                    log_rf = data.pkt.fields.RF
+                    log_tn = data.pkt.fields.TN
+                    log_en = data.pkt.fields.EN
+                    log_c = data.pkt.fields.C
+                    log_fec = data.pkt.fields.fec
+                    log_ab = data.pkt.fields.ability
+
+                    b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}\n{'':<37}FEC:    {log_fec}\n{'':<37}ABILITY:{log_ab}"
+
+            elif _entry_discriminator == EntryDiscriminatorEnum.aneg_np.name:
+                if "log" in _entry_value.keys():
+                    data = AnegLogEntryValueModel(**_entry_value)
+                    log_log = data.log
+                    b_str = f"{common:<32}{'MSG:':<5}{log_log}"
+                else:
+                    data = AnegNpEntryValueModel(**_entry_value)
+                    log_direction = _direction_styler(data.direction)
+                    log_value = data.pkt.value
+                    log_ptype = _an_page_styler(data.pkt.type)
+                    log_prev_count = data.pkt.prev_count
+
+                    log_np = data.pkt.fields.NP
+                    log_ack = data.pkt.fields.Ack
+                    log_mp = data.pkt.fields.MP
+                    log_ack2 = data.pkt.fields.Ack2
+                    log_t = data.pkt.fields.T
+                    
+                    if (data.pkt.fields.formatted_message != None):
+                        log_fmt_v = data.pkt.fields.formatted_message.value
+                        log_fmt_msg = data.pkt.fields.formatted_message.message
+
+                        b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Formatted message:\n{'':<37}Value:{log_fmt_v}, Msg:{log_fmt_msg}"
+
+                    elif (data.pkt.fields.unformatted_message != None):
+                        log_ufmt_v = data.pkt.fields.unformatted_message.value
+                        log_ufmt_msg = data.pkt.fields.unformatted_message.message
+                        log_ufmt_fec = data.pkt.fields.unformatted_message.fec
+                        log_ufmt_ab = data.pkt.fields.unformatted_message.ability
+
+                        b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Unformatted message:\n{'':<37}Value:{log_ufmt_v}, Msg:{log_ufmt_msg}\n{'':<37}FEC:    {log_ufmt_fec}\n{'':<37}ABILITY:{log_ufmt_ab}"
+
+            elif _entry_discriminator == EntryDiscriminatorEnum.lt.name:
+                if "log" in _entry_value.keys():
+                    data = LTLogEntryValueModel(**_entry_value)
+                    log_log = data.log
+                    b_str = f"{common:<32}{'MSG:':<5}{log_log}"
+                else:
+                    data = LTEntryValueModel(**_entry_value)
+                    log_direction = _direction_styler(data.direction)
+                    log_value = data.pkt.value
+                    log_prev_count = data.pkt.prev_count
+
+                    log_pkt_locked = _true_false_styler(data.pkt.fields.locked)
+                    log_pkt_done = _true_false_styler(data.pkt.fields.done)
+                    log_pkt_ctrl = data.pkt.fields.control.model_dump()
+                    log_pkt_status = data.pkt.fields.status.model_dump()
+
+                    b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, LOCKED={log_pkt_locked}, TRAINED={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"
+
+            if b_str:
+                real.append(b_str)
+            # print(b_str)
+        return "\n".join(real)
+
+    async def log2(
+        storage: CmdContext, filename: str, read: bool, keep: str, serdes: list[int]
+    ) -> str:
+        if read:
+            with open(filename, "r") as f:
+                log_str = f.read()
+        else:
+            port_obj = storage.retrieve_port()
+            log_str = await anlt_utils.anlt_log(port_obj)
+        filtered = _filter_log(log_str, keep, serdes)
+        string = _beautify(filtered)
+        if not read and filename and log_str:
+            with open(filename, "a") as f:
+                f.write(f"{log_str}\n")
+        return string
+
+    real_serdes_list = [int(i.strip()) for i in serdes.split(",")] if serdes else []
+    if read:
+        return await log2(storage=None, filename=filename, read=read, keep=keep, serdes=real_serdes_list)
+    else:
+        kw = {"filename": filename, "read": read, "keep": keep, "serdes": real_serdes_list}
+        storage: CmdContext = ctx.obj
+        storage.set_loop_coro(log2, kw)
+        return ""

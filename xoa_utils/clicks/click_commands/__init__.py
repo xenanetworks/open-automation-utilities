@@ -6,6 +6,7 @@ from xoa_utils.clicks.click_commands import lt
 from xoa_utils.clicks.click_commands import management
 from xoa_utils.clicks.click_commands import anlt
 from xoa_utils.clicks.click_commands import debug
+from xoa_utils.clicks.click_commands import models
 from xoa_utils.clicks.click_commands.group import xoa_util
 
 

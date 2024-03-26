@@ -40,6 +40,7 @@ def main():
             "pytest>=7.2.1",
             "psutil>=5.9.4",
             "xoa-driver>=2.5.3",
+            "pydantic>=2.6.4",
         ],
         classifiers=[
             "Development Status :: 5 - Production/Stable",
