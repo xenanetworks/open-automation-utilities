@@ -607,27 +607,27 @@ async def log_ctrl(
         )
 
 
-# --------------------------
-# command: log2
-# --------------------------
-@anlt.command(cls=cb.XenaCommand, name="log2")
-@ac.option(
-    "-f", "--filename", type=ac.STRING, help=h.HELP_ANLT_LOG_FILENAME, default=""
-)
-@ac.option(
-    "-r", "--read", is_flag=True, help="Read log file", default=False
-)
-@ac.option(
-    "-k",
-    "--keep",
-    type=ac.Choice(["all", "an", "lt"]),
-    help=h.HELP_ANLT_LOG_KEEP,
-    default="all",
-)
-@ac.option("-s", "--serdes", type=ac.STRING, help=h.HELP_ANLT_LOG_SERDES, default="")
-@ac.option("-p", "--polls", type=ac.INT, help=h.HELP_ANLT_LOG_SERDES, default=10)
-@ac.pass_context
-async def anlt_log2(ctx: ac.Context, filename: str, read: bool, keep: str, serdes: str, polls: int) -> str:
+# # --------------------------
+# # command: log2
+# # --------------------------
+# @anlt.command(cls=cb.XenaCommand, name="log2")
+# @ac.option(
+#     "-f", "--filename", type=ac.STRING, help=h.HELP_ANLT_LOG_FILENAME, default=""
+# )
+# @ac.option(
+#     "-r", "--read", is_flag=True, help="Read log file", default=False
+# )
+# @ac.option(
+#     "-k",
+#     "--keep",
+#     type=ac.Choice(["all", "an", "lt"]),
+#     help=h.HELP_ANLT_LOG_KEEP,
+#     default="all",
+# )
+# @ac.option("-s", "--serdes", type=ac.STRING, help=h.HELP_ANLT_LOG_SERDES, default="")
+# @ac.option("-p", "--polls", type=ac.INT, help=h.HELP_ANLT_LOG_SERDES, default=10)
+# @ac.pass_context
+# async def anlt_log2(ctx: ac.Context, filename: str, read: bool, keep: str, serdes: str, polls: int) -> str:
     """
     AN/LT logging v2
     """
