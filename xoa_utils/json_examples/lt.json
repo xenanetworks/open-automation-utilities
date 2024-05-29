@@ -1,0 +1,78 @@
+{
+    "entry":{
+        "entry_discriminator":"lt",
+        "entry_value":{
+            "log":"Setting coeff c(-1) PRE1 to 0"
+        }
+    },
+    "lane":0,
+    "module":"ANEG",
+    "time":82803036929,
+    "type":"trace"
+}
+
+{
+    "entry":{
+        "entry_discriminator":"lt",
+        "entry_value":{
+            "direction":"rx",
+            "pkt":{
+                "fields":{
+                    "control":{
+                        "C_REQ":"Hold",
+                        "C_SEL":"c(0)",
+                        "IC_REQ":"INDV",
+                        "PAM_MOD":"PAM2"
+                        },
+                    "done":"false",
+                    "locked":"false",
+                    "status":{
+                        "C_ECH":"c(0)",
+                        "C_STS":"No upd",
+                        "IC_STS":"No upd",
+                        "PAM_MOD":"PAM2"
+                        }
+                    },
+                "prev_count":"0",
+                "value":"0x00000000"
+                }
+            }
+        },
+    "lane":0,
+    "module":"LT",
+    "time":82803155806,
+    "type":"trace"
+}
+
+{
+    "entry":{
+        "entry_discriminator":"lt",
+        "entry_value":{
+            "direction":"tx",
+            "pkt":{
+                "fields":{
+                    "control":{
+                        "C_REQ":"Hold",
+                        "C_SEL":"c(0)",
+                        "IC_REQ":"INDV",
+                        "PAM_MOD":"PAM2"
+                        },
+                    "done":"false",
+                    "locked":"false",
+                    "status":{
+                        "C_ECH":"c(0)",
+                        "C_STS":"No upd",
+                        "IC_STS":"No upd",
+                        "PAM_MOD":"PAM2"
+                        }
+                    },
+                "prev_count":"0",
+                "value":"0x00000000"
+                }
+            }
+        },
+    "lane":0,
+    "module":"LT",
+    "time":82803155778,
+    "type":"trace"
+}
