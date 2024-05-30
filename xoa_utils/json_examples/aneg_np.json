@@ -1,0 +1,119 @@
+{
+    "entry":{
+        "entry_discriminator":"aneg_np",
+        "entry_value":{
+            "direction":"tx",
+            "pkt":{
+                "fields":{
+                    "Ack":"0x00",
+                    "Ack2":"0x00",
+                    "MP":"0x01",
+                    "NP":"0x01",
+                    "T":"0x01",
+                    "formatted_message":{
+                        "message":"OUI Tagged: 0x6a737c (preliminary)",
+                        "value":"0x0005"
+                        }
+                    },
+                "prev_count":"281",
+                "type":"next page",
+                "value":"0x04DF0353A805"
+                }
+            }
+        },
+    "lane":0,
+    "module":"ANEG",
+    "time":82803104634,
+    "type":"trace"
+}
+
+{
+    "entry":{
+        "entry_discriminator":"aneg_np",
+        "entry_value":{
+            "direction":"rx",
+            "pkt":{
+                "fields":{
+                    "Ack":"0x00",
+                    "Ack2":"0x00",
+                    "MP":"0x01",
+                    "NP":"0x01",
+                    "T":"0x01",
+                    "formatted_message":{
+                        "message":"OUI Tagged: 0x6a737c (preliminary)",
+                        "value":"0x0005"
+                    }
+                },
+            "prev_count":"295",
+            "type":"next page",
+            "value":"0x04DF0353A805"
+            }
+        }
+    },
+    "lane":0,
+    "module":"ANEG",
+    "time":82803104653,
+    "type":"trace"
+}
+
+{
+    "entry":{
+        "entry_discriminator":"aneg_np",
+        "entry_value":{
+            "direction":"tx",
+            "pkt":{
+                "fields":{
+                    "Ack":"0x00",
+                    "Ack2":"0x00",
+                    "MP":"0x00",
+                    "NP":"0x00",
+                    "T":"0x00",
+                    "unformatted_message":{
+                        "ability":[],
+                        "fec":[],
+                        "message":"OUI Tagged: 0x6a737d (final) Ethernet Technology Consortium",
+                        "value":"0x0203"
+                        }
+                    },
+                "prev_count":"248",
+                "type":"next page",
+                "value":"0x000000000203"
+                }
+            }
+        },
+    "lane":0,
+    "module":"ANEG",
+    "time":82803104809,
+    "type":"trace"
+}
+
+{
+    "entry":{
+        "entry_discriminator":"aneg_np",
+        "entry_value":{
+            "direction":"rx",
+            "pkt":{
+                "fields":{
+                    "Ack":"0x00",
+                    "Ack2":"0x00",
+                    "MP":"0x00",
+                    "NP":"0x00",
+                    "T":"0x00",
+                    "unformatted_message":{
+                        "ability":[],
+                        "fec":[],
+                        "message":"OUI Tagged: 0x6a737d (final) Ethernet Technology Consortium",
+                        "value":"0x0203"
+                        }
+                    },
+                "prev_count":"249",
+                "type":"next page",
+                "value":"0x000000000203"
+                }
+            }
+        },
+    "lane":0,
+    "module":"ANEG",
+    "time":82803104823,
+    "type":"trace"
+}

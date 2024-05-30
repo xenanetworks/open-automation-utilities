@@ -32,6 +32,8 @@ class TesterState:
         self.con_info: str = ""
         self.username: str = ""
         self.obj: t.Optional[L23Tester] = None
+        self.version_major: int = 465
+        self.version_minor: int = 0
 
 
 class ModuleState:
@@ -66,7 +68,7 @@ class LTState:
 class LoopFuncState:
     def __init__(self) -> None:
         self.func: t.Optional[t.Callable] = None
-        self.interval: int = 1
+        self.interval: float = 1.0
         self.kw: dict = {}
 
 
@@ -90,7 +92,7 @@ class CmdContext:
         self._fn_state: LoopFuncState = LoopFuncState()
         self._anlt_low_state: AnltLowState = AnltLowState()
 
-    def get_coro_interval(self) -> int:
+    def get_coro_interval(self) -> float:
         return self._fn_state.interval
 
     def has_loop_coro(self) -> bool:
@@ -99,11 +101,12 @@ class CmdContext:
     def get_loop_coro(self) -> tuple[t.Optional[t.Callable], dict]:
         return self._fn_state.func, self._fn_state.kw
 
-    def set_loop_coro(self, coro: t.Optional[t.Callable], dic: dict) -> None:
+    def set_loop_coro(self, coro: t.Optional[t.Callable], interval: float, dic: dict) -> None:
         self._fn_state.func = coro
+        self._fn_state.interval = interval
         self._fn_state.kw = dic
 
-    clear_loop_coro = partialmethod(set_loop_coro, None, {})
+    clear_loop_coro = partialmethod(set_loop_coro, None, 0, {})
 
     def prompt(self, base_prompt: str = "", end_prompt: str = ">") -> str:
         s = self.retrieve_tester_serial()
@@ -159,13 +162,15 @@ class CmdContext:
         self._anlt_low_state = AnltLowState()
 
     def store_current_tester(
-        self, username: str, con_info: str, tester: L23Tester
+        self, username: str, con_info: str, tester: L23Tester, version_major: int, version_minor: int
     ) -> None:
         self.clear_all()
         self._tr_state.con_info = con_info
         self._tr_state.serial = str(tester.info.serial_number)
         self._tr_state.username = username
         self._tr_state.obj = tester
+        self._tr_state.version_major = version_major
+        self._tr_state.version_minor = version_minor
 
     def get_all_ports(self) -> dict[str, GenericL23Port]:
         return self.obtain_physical_ports("*", False)
@@ -227,6 +232,9 @@ class CmdContext:
 
     def retrieve_tester(self) -> t.Optional[L23Tester]:
         return self._tr_state.obj
+    
+    def retrieve_tester_version(self) -> list[int]:
+        return [self._tr_state.version_major, self._tr_state.version_minor]
 
     def retrieve_port_str(self) -> str:
         return self._pt_state.port_str

@@ -47,7 +47,11 @@ async def connect(
     real_port_list = [i.strip() for i in ports.split(",")] if ports else []
     tester = await L23Tester(device, username, password, tcp, enable_logging=False)
     con_info = f"{device}:{tcp}"
-    storage.store_current_tester(username, con_info, tester)
+    resp = await tester.version_no.get()
+    _version_major = resp.chassis_major_version
+    resp = await tester.version_no_minor.get()
+    _version_minor = resp.chassis_minor_version
+    storage.store_current_tester(username, con_info, tester, _version_major, _version_minor)
     count = 0
     first_id = ""
     for id_str in real_port_list:

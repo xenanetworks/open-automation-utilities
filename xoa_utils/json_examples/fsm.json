@@ -1,0 +1,14 @@
+{
+    "entry":{
+        "entry_discriminator":"fsm",
+        "entry_value":{
+            "current":"IDLE",
+            "event":"EVENT_RESET_DEASSERT",
+            "new":"INITIALIZE"
+        }
+    },
+    "lane":0,
+    "module":"LT",
+    "time":82685303770,
+    "type":"fsm"
+}
