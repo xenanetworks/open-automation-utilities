@@ -116,13 +116,13 @@ class AnegBpEntryValueModel(BaseModel):
 
 # entry_discriminator: aneg_np, entry_value.direction
 class FormattedMessageModel(BaseModel):
-    message: str
+    message: Optional[str] = None
     value: str
 
 class UnformattedMessageModel(BaseModel):
     ability: List[str]
     fec: List[str]
-    message: str
+    message: Optional[str] = None
     value: str
 
 class AnegNpFieldModel(BaseModel):
