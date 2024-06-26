@@ -120,8 +120,8 @@ class FormattedMessageModel(BaseModel):
     value: str
 
 class UnformattedMessageModel(BaseModel):
-    ability: List[str]
-    fec: List[str]
+    ability: Optional[List[str]] = None
+    fec: Optional[List[str]] = None
     message: Optional[str] = None
     value: str
 

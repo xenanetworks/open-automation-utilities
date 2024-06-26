@@ -438,7 +438,16 @@ async def log(ctx: ac.Context, filename: str, read: bool, keep: str, serdes: str
                             log_ufmt_fec = data.pkt.fields.unformatted_message.fec
                             log_ufmt_ab = data.pkt.fields.unformatted_message.ability
 
-                            b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Unformatted message:\n{'':<37}Value:{log_ufmt_v}, Msg:{log_ufmt_msg}\n{'':<37}FEC:    {log_ufmt_fec}\n{'':<37}ABILITY:{log_ufmt_ab}"
+                            b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Unformatted message:"
+                            
+                            if log_ufmt_v != None:
+                                b_str += f"\n{'':<37}Value:   {log_ufmt_v}"
+                            if log_ufmt_msg != None:
+                                b_str += f"\n{'':<37}Msg:     {log_ufmt_msg}"
+                            if log_ufmt_fec != None:
+                                b_str += f"\n{'':<37}FEC:     {log_ufmt_fec}"
+                            if log_ufmt_ab != None:
+                                b_str += f"\n{'':<37}ABILITY: {log_ufmt_ab}"
 
                 elif _entry_discriminator == EntryDiscriminatorEnum.lt.name:
                     if "log" in _entry_value.keys():
