@@ -15,6 +15,7 @@ class EntryDiscriminatorEnum(str, Enum):
     aneg_bp = 'aneg_bp'
     aneg_np = 'aneg_np'
     alg_result = 'alg_result'
+    log = 'log'
 
 class LogModuleEnum(str, Enum):
     ANEG = 'ANEG'
@@ -47,8 +48,12 @@ class AlgLogModel(BaseModel):
 class CmdEntryValueModel(BaseModel):
     cmds: List[AlgLogModel]
 
-class LogEntryValueModel(BaseModel):
+class LogResultValueModel(BaseModel):
     result: CmdEntryValueModel
+
+# entry_discriminator: log
+class LogEntryValueModel(BaseModel):
+    log: str
 
 # entry_discriminator: fsm
 class FSMEntryValueModel(BaseModel):

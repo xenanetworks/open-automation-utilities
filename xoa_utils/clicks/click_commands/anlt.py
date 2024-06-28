@@ -375,7 +375,7 @@ async def log(ctx: ac.Context, filename: str, read: bool, keep: str, serdes: str
                 elif _entry_discriminator == EntryDiscriminatorEnum.alg_result.name:
                     log_log = ""
                     if _entry_value != None:
-                        data = LogEntryValueModel(**_entry_value)
+                        data = LogResultValueModel(**_entry_value)
                         for cmd in data.result.cmds:
                             if cmd.result != None:
                                 log_log += f"cmd: {cmd.cmd}, result: {cmd.result}, prbs: bits={cmd.prbs[0].bits:} errors={cmd.prbs[0].errors} ber={_ber_styler(cmd.prbs[0].result)}, flags: {cmd.flags}\n{'':<37}"
@@ -466,6 +466,11 @@ async def log(ctx: ac.Context, filename: str, read: bool, keep: str, serdes: str
                         log_pkt_status = data.pkt.fields.status.model_dump()
 
                         b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, LOCKED={log_pkt_locked}, TRAINED={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"
+
+                elif _entry_discriminator == EntryDiscriminatorEnum.log.name:
+                    data = LogEntryValueModel(**_entry_value)
+                    log_str = data.log
+                    b_str = f"{common:<32}{'DBG:':<5} {log_str}"
 
                 if b_str:
                     real.append(b_str)
@@ -637,215 +642,215 @@ async def log_ctrl(
 # @ac.option("-p", "--polls", type=ac.INT, help=h.HELP_ANLT_LOG_SERDES, default=10)
 # @ac.pass_context
 # async def anlt_log2(ctx: ac.Context, filename: str, read: bool, keep: str, serdes: str, polls: int) -> str:
-    """
-    AN/LT logging v2
-    """
+#     """
+#     AN/LT logging v2
+#     """
 
-    def _filter_log(log: str, keep: str, serdes: list[int]) -> list[dict]:
-        all_logs = []
-        for lg in log.split("\n"):
-            try:
-                content = json.loads(lg)
-                log_serdes = content["lane"]
-                module = content["module"]
+#     def _filter_log(log: str, keep: str, serdes: list[int]) -> list[dict]:
+#         all_logs = []
+#         for lg in log.split("\n"):
+#             try:
+#                 content = json.loads(lg)
+#                 log_serdes = content["lane"]
+#                 module = content["module"]
 
-                serdes_in = (serdes and log_serdes in serdes) or (not serdes)
-                keep_in = any(
-                    (
-                        keep == "an" and LogModuleEnum.ANEG.name in module,
-                        keep == "lt" and LogModuleEnum.LT.name in module,
-                        keep == "all",
-                    )
-                )
-                if serdes_in and keep_in:
-                    all_logs.append(content)
+#                 serdes_in = (serdes and log_serdes in serdes) or (not serdes)
+#                 keep_in = any(
+#                     (
+#                         keep == "an" and LogModuleEnum.ANEG.name in module,
+#                         keep == "lt" and LogModuleEnum.LT.name in module,
+#                         keep == "all",
+#                     )
+#                 )
+#                 if serdes_in and keep_in:
+#                     all_logs.append(content)
 
-            except Exception:
-                pass
-        return all_logs
+#             except Exception:
+#                 pass
+#         return all_logs
 
-    def _dict_get(dic: dict, *keys: str) -> t.Any:
-        current = dic
-        for k in keys:
-            current = current.get(k, "")
-            if current == "":
-                break
-        return current
+#     def _dict_get(dic: dict, *keys: str) -> t.Any:
+#         current = dic
+#         for k in keys:
+#             current = current.get(k, "")
+#             if current == "":
+#                 break
+#         return current
     
-    def _flatten(dic: dict[str, str]) -> str:
-        return "".join((f"{k}: {v:<7}" for k, v in dic.items()))
+#     def _flatten(dic: dict[str, str]) -> str:
+#         return "".join((f"{k}: {v:<7}" for k, v in dic.items()))
 
-    def _ascii_styler(str: str, fg_style: list[ASCIIStyle]) -> str:
-        style = "".join(s.value for s in fg_style)
-        return f"{style}{str}{ASCIIStyle.END.value}"
+#     def _ascii_styler(str: str, fg_style: list[ASCIIStyle]) -> str:
+#         style = "".join(s.value for s in fg_style)
+#         return f"{style}{str}{ASCIIStyle.END.value}"
 
-    def _direction_styler(str: str) -> str:
-        if str == "tx":
-            str = _ascii_styler(
-                str.upper(), [ASCIIStyle.DARKBLUE_BG]
-            )
-        else:
-            str = _ascii_styler(
-                str.upper(), [ASCIIStyle.DARKGREEN_BG]
-            )
-        return str
+#     def _direction_styler(str: str) -> str:
+#         if str == "tx":
+#             str = _ascii_styler(
+#                 str.upper(), [ASCIIStyle.DARKBLUE_BG]
+#             )
+#         else:
+#             str = _ascii_styler(
+#                 str.upper(), [ASCIIStyle.DARKGREEN_BG]
+#             )
+#         return str
 
-    def _true_false_styler(str: str) -> str:
-        if str == "true":
-            str = _ascii_styler(str, [ASCIIStyle.GREEN_BG])
-        else:
-            str = _ascii_styler(str, [ASCIIStyle.RED_BG])
-        return str
+#     def _true_false_styler(str: str) -> str:
+#         if str == "true":
+#             str = _ascii_styler(str, [ASCIIStyle.GREEN_BG])
+#         else:
+#             str = _ascii_styler(str, [ASCIIStyle.RED_BG])
+#         return str
     
-    def _an_page_styler(str: str) -> str:
-        if str == "base page":
-            str = _ascii_styler(str.title(), [ASCIIStyle.DARKBLUE_BG])
-        else:
-            str = _ascii_styler(str.title(), [ASCIIStyle.BLUE_BG])
-        return str
+#     def _an_page_styler(str: str) -> str:
+#         if str == "base page":
+#             str = _ascii_styler(str.title(), [ASCIIStyle.DARKBLUE_BG])
+#         else:
+#             str = _ascii_styler(str.title(), [ASCIIStyle.BLUE_BG])
+#         return str
     
-    def _ber_styler(str: str) -> str:
-        return _ascii_styler(str, [ASCIIStyle.YELLOW])
+#     def _ber_styler(str: str) -> str:
+#         return _ascii_styler(str, [ASCIIStyle.YELLOW])
     
-    def _beautify(filtered: list[dict]) -> str:
-        real = []
-        for i in filtered:
-            b_str = ""
+#     def _beautify(filtered: list[dict]) -> str:
+#         real = []
+#         for i in filtered:
+#             b_str = ""
 
-            data = BaseLogModel(**i)
-            log_time = data.time
-            log_m = data.module
-            log_serdes = data.lane
-            log_type = data.type
-            log_entry = data.entry
+#             data = BaseLogModel(**i)
+#             log_time = data.time
+#             log_m = data.module
+#             log_serdes = data.lane
+#             log_type = data.type
+#             log_entry = data.entry
 
-            serdes_str = f"(S{log_serdes})," if "LT" in log_m else ","
-            common = f"{log_time/1000000:.6f}, {log_m}{serdes_str}"
+#             serdes_str = f"(S{log_serdes})," if "LT" in log_m else ","
+#             common = f"{log_time/1000000:.6f}, {log_m}{serdes_str}"
 
-            _entry_data = EntryModel(**log_entry)
-            _entry_discriminator = _entry_data.entry_discriminator
-            _entry_value = _entry_data.entry_value
+#             _entry_data = EntryModel(**log_entry)
+#             _entry_discriminator = _entry_data.entry_discriminator
+#             _entry_value = _entry_data.entry_value
 
-            if _entry_discriminator == EntryDiscriminatorEnum.fsm.name:
-                data = FSMEntryValueModel(**_entry_value)
-                log_event = data.event
-                log_current = data.current
-                log_new = data.new
-                b_str = f"{common:<32}{'FSM:':<5}({log_event}) {log_current} -> {log_new}"
+#             if _entry_discriminator == EntryDiscriminatorEnum.fsm.name:
+#                 data = FSMEntryValueModel(**_entry_value)
+#                 log_event = data.event
+#                 log_current = data.current
+#                 log_new = data.new
+#                 b_str = f"{common:<32}{'FSM:':<5}({log_event}) {log_current} -> {log_new}"
 
-            elif _entry_discriminator == EntryDiscriminatorEnum.alg_result.name:
-                log_log = ""
-                if _entry_value != None:
-                    data = LogEntryValueModel(**_entry_value)
-                    for cmd in data.log.cmds:
-                        if cmd.result != None:
-                            log_log += f"cmd: {cmd.cmd}, result: {cmd.result}, prbs: bits={cmd.prbs[0].bits:} errors={cmd.prbs[0].errors} ber={_ber_styler(cmd.prbs[0].result)}, flags: {cmd.flags}\n{'':<37}"
-                        else:
-                            log_log += f"cmd: {cmd.cmd}"
-                else:
-                    log_log = ""
-                b_str = f"{common:<32}{'MSG:':<5}{log_log}"
+#             elif _entry_discriminator == EntryDiscriminatorEnum.alg_result.name:
+#                 log_log = ""
+#                 if _entry_value != None:
+#                     data = LogResultValueModel(**_entry_value)
+#                     for cmd in data.log.cmds:
+#                         if cmd.result != None:
+#                             log_log += f"cmd: {cmd.cmd}, result: {cmd.result}, prbs: bits={cmd.prbs[0].bits:} errors={cmd.prbs[0].errors} ber={_ber_styler(cmd.prbs[0].result)}, flags: {cmd.flags}\n{'':<37}"
+#                         else:
+#                             log_log += f"cmd: {cmd.cmd}"
+#                 else:
+#                     log_log = ""
+#                 b_str = f"{common:<32}{'MSG:':<5}{log_log}"
 
-            elif _entry_discriminator == EntryDiscriminatorEnum.aneg_bp.name:
-                if "log" in _entry_value.keys():
-                    data = AnegLogEntryValueModel(**_entry_value)
-                    log_log = data.log
-                    b_str = f"{common:<32}{'MSG:':<5}{log_log}"
-                else:
-                    data = AnegBpEntryValueModel(**_entry_value)
-                    log_direction = _direction_styler(data.direction)
-                    log_value = data.pkt.value
-                    log_ptype = _an_page_styler(data.pkt.type)
-                    log_prev_count = data.pkt.prev_count
+#             elif _entry_discriminator == EntryDiscriminatorEnum.aneg_bp.name:
+#                 if "log" in _entry_value.keys():
+#                     data = AnegLogEntryValueModel(**_entry_value)
+#                     log_log = data.log
+#                     b_str = f"{common:<32}{'MSG:':<5}{log_log}"
+#                 else:
+#                     data = AnegBpEntryValueModel(**_entry_value)
+#                     log_direction = _direction_styler(data.direction)
+#                     log_value = data.pkt.value
+#                     log_ptype = _an_page_styler(data.pkt.type)
+#                     log_prev_count = data.pkt.prev_count
 
-                    log_np = data.pkt.fields.NP
-                    log_ack = data.pkt.fields.Ack
-                    log_rf = data.pkt.fields.RF
-                    log_tn = data.pkt.fields.TN
-                    log_en = data.pkt.fields.EN
-                    log_c = data.pkt.fields.C
-                    log_fec = data.pkt.fields.fec
-                    log_ab = data.pkt.fields.ability
+#                     log_np = data.pkt.fields.NP
+#                     log_ack = data.pkt.fields.Ack
+#                     log_rf = data.pkt.fields.RF
+#                     log_tn = data.pkt.fields.TN
+#                     log_en = data.pkt.fields.EN
+#                     log_c = data.pkt.fields.C
+#                     log_fec = data.pkt.fields.fec
+#                     log_ab = data.pkt.fields.ability
 
-                    b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}\n{'':<37}FEC:    {log_fec}\n{'':<37}ABILITY:{log_ab}"
+#                     b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}\n{'':<37}FEC:    {log_fec}\n{'':<37}ABILITY:{log_ab}"
 
-            elif _entry_discriminator == EntryDiscriminatorEnum.aneg_np.name:
-                if "log" in _entry_value.keys():
-                    data = AnegLogEntryValueModel(**_entry_value)
-                    log_log = data.log
-                    b_str = f"{common:<32}{'MSG:':<5}{log_log}"
-                else:
-                    data = AnegNpEntryValueModel(**_entry_value)
-                    log_direction = _direction_styler(data.direction)
-                    log_value = data.pkt.value
-                    log_ptype = _an_page_styler(data.pkt.type)
-                    log_prev_count = data.pkt.prev_count
+#             elif _entry_discriminator == EntryDiscriminatorEnum.aneg_np.name:
+#                 if "log" in _entry_value.keys():
+#                     data = AnegLogEntryValueModel(**_entry_value)
+#                     log_log = data.log
+#                     b_str = f"{common:<32}{'MSG:':<5}{log_log}"
+#                 else:
+#                     data = AnegNpEntryValueModel(**_entry_value)
+#                     log_direction = _direction_styler(data.direction)
+#                     log_value = data.pkt.value
+#                     log_ptype = _an_page_styler(data.pkt.type)
+#                     log_prev_count = data.pkt.prev_count
 
-                    log_np = data.pkt.fields.NP
-                    log_ack = data.pkt.fields.Ack
-                    log_mp = data.pkt.fields.MP
-                    log_ack2 = data.pkt.fields.Ack2
-                    log_t = data.pkt.fields.T
+#                     log_np = data.pkt.fields.NP
+#                     log_ack = data.pkt.fields.Ack
+#                     log_mp = data.pkt.fields.MP
+#                     log_ack2 = data.pkt.fields.Ack2
+#                     log_t = data.pkt.fields.T
                     
-                    if (data.pkt.fields.formatted_message != None):
-                        log_fmt_v = data.pkt.fields.formatted_message.value
-                        log_fmt_msg = data.pkt.fields.formatted_message.message
+#                     if (data.pkt.fields.formatted_message != None):
+#                         log_fmt_v = data.pkt.fields.formatted_message.value
+#                         log_fmt_msg = data.pkt.fields.formatted_message.message
 
-                        b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Formatted message:\n{'':<37}Value:{log_fmt_v}, Msg:{log_fmt_msg}"
+#                         b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Formatted message:\n{'':<37}Value:{log_fmt_v}, Msg:{log_fmt_msg}"
 
-                    elif (data.pkt.fields.unformatted_message != None):
-                        log_ufmt_v = data.pkt.fields.unformatted_message.value
-                        log_ufmt_msg = data.pkt.fields.unformatted_message.message
-                        log_ufmt_fec = data.pkt.fields.unformatted_message.fec
-                        log_ufmt_ab = data.pkt.fields.unformatted_message.ability
+#                     elif (data.pkt.fields.unformatted_message != None):
+#                         log_ufmt_v = data.pkt.fields.unformatted_message.value
+#                         log_ufmt_msg = data.pkt.fields.unformatted_message.message
+#                         log_ufmt_fec = data.pkt.fields.unformatted_message.fec
+#                         log_ufmt_ab = data.pkt.fields.unformatted_message.ability
 
-                        b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Unformatted message:\n{'':<37}Value:{log_ufmt_v}, Msg:{log_ufmt_msg}\n{'':<37}FEC:    {log_ufmt_fec}\n{'':<37}ABILITY:{log_ufmt_ab}"
+#                         b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Unformatted message:\n{'':<37}Value:{log_ufmt_v}, Msg:{log_ufmt_msg}\n{'':<37}FEC:    {log_ufmt_fec}\n{'':<37}ABILITY:{log_ufmt_ab}"
 
-            elif _entry_discriminator == EntryDiscriminatorEnum.lt.name:
-                if "log" in _entry_value.keys():
-                    data = LTLogEntryValueModel(**_entry_value)
-                    log_log = data.log
-                    b_str = f"{common:<32}{'MSG:':<5}{log_log}"
-                else:
-                    data = LTEntryValueModel(**_entry_value)
-                    log_direction = _direction_styler(data.direction)
-                    log_value = data.pkt.value
-                    log_prev_count = data.pkt.prev_count
+#             elif _entry_discriminator == EntryDiscriminatorEnum.lt.name:
+#                 if "log" in _entry_value.keys():
+#                     data = LTLogEntryValueModel(**_entry_value)
+#                     log_log = data.log
+#                     b_str = f"{common:<32}{'MSG:':<5}{log_log}"
+#                 else:
+#                     data = LTEntryValueModel(**_entry_value)
+#                     log_direction = _direction_styler(data.direction)
+#                     log_value = data.pkt.value
+#                     log_prev_count = data.pkt.prev_count
 
-                    log_pkt_locked = _true_false_styler(data.pkt.fields.locked)
-                    log_pkt_done = _true_false_styler(data.pkt.fields.done)
-                    log_pkt_ctrl = data.pkt.fields.control.model_dump()
-                    log_pkt_status = data.pkt.fields.status.model_dump()
+#                     log_pkt_locked = _true_false_styler(data.pkt.fields.locked)
+#                     log_pkt_done = _true_false_styler(data.pkt.fields.done)
+#                     log_pkt_ctrl = data.pkt.fields.control.model_dump()
+#                     log_pkt_status = data.pkt.fields.status.model_dump()
 
-                    b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, LOCKED={log_pkt_locked}, TRAINED={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"
+#                     b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, LOCKED={log_pkt_locked}, TRAINED={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"
 
-            if b_str:
-                real.append(b_str)
-            # print(b_str)
-        return "\n".join(real)
+#             if b_str:
+#                 real.append(b_str)
+#             # print(b_str)
+#         return "\n".join(real)
 
-    async def log2(
-        storage: CmdContext, filename: str, read: bool, keep: str, serdes: list[int]
-    ) -> str:
-        if read:
-            with open(filename, "r") as f:
-                log_str = f.read()
-        else:
-            port_obj = storage.retrieve_port()
-            log_str = await anlt_utils.anlt_log(port_obj)
-        filtered = _filter_log(log_str, keep, serdes)
-        string = _beautify(filtered)
-        if not read and filename and log_str:
-            with open(filename, "a") as f:
-                f.write(f"{log_str}\n")
-        return string
+#     async def log2(
+#         storage: CmdContext, filename: str, read: bool, keep: str, serdes: list[int]
+#     ) -> str:
+#         if read:
+#             with open(filename, "r") as f:
+#                 log_str = f.read()
+#         else:
+#             port_obj = storage.retrieve_port()
+#             log_str = await anlt_utils.anlt_log(port_obj)
+#         filtered = _filter_log(log_str, keep, serdes)
+#         string = _beautify(filtered)
+#         if not read and filename and log_str:
+#             with open(filename, "a") as f:
+#                 f.write(f"{log_str}\n")
+#         return string
 
-    real_serdes_list = [int(i.strip()) for i in serdes.split(",")] if serdes else []
-    if read:
-        return await log2(storage=None, filename=filename, read=read, keep=keep, serdes=real_serdes_list)
-    else:
-        kw = {"filename": filename, "read": read, "keep": keep, "serdes": real_serdes_list}
-        storage: CmdContext = ctx.obj
-        _interval = 1/polls
-        storage.set_loop_coro(coro=log2, interval=_interval, dic=kw)
-        return ""
+#     real_serdes_list = [int(i.strip()) for i in serdes.split(",")] if serdes else []
+#     if read:
+#         return await log2(storage=None, filename=filename, read=read, keep=keep, serdes=real_serdes_list)
+#     else:
+#         kw = {"filename": filename, "read": read, "keep": keep, "serdes": real_serdes_list}
+#         storage: CmdContext = ctx.obj
+#         _interval = 1/polls
+#         storage.set_loop_coro(coro=log2, interval=_interval, dic=kw)
+#         return ""
