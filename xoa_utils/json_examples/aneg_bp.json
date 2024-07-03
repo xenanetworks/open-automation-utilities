@@ -1,0 +1,71 @@
+{"entry":{
+    "entry_discriminator":"aneg_bp",
+    "entry_value":{
+        "log":"TRANSMIT_DISABLE - ANEG restart",
+        "pkt":{
+            "fields":null
+            }
+        }
+    },
+    "lane":0,
+    "module":"ANEG",
+    "time":82815787223,
+    "type":"trace"
+}
+
+{
+    "entry":{
+        "entry_discriminator":"aneg_bp",
+        "entry_value":{
+            "direction":"tx",
+            "pkt":{
+                "fields":{
+                    "Ack":"0x00",
+                    "C":"0x00",
+                    "EN":"0x00",
+                    "NP":"0x01",
+                    "RF":"0x00",
+                    "TN":"0x15",
+                    "ability":["400GBASE_KR4_CR4"],
+                    "fec":[]
+                    },
+                "prev_count":"65535",
+                "type":"base page",
+                "value":"0x008000158001"
+            }
+        }
+    },
+    "lane":0,
+    "module":"ANEG",
+    "time":82803036992,
+    "type":"trace"
+}
+
+{
+    "entry":{
+        "entry_discriminator":"aneg_bp",
+        "entry_value":{
+            "direction":"rx",
+            "pkt":{
+                "errors":["S=0x1f, must be 0001 (IEEE 802.3 Selector)"],
+                "fields":{
+                    "Ack":"0x01",
+                    "C":"0x07",
+                    "EN":"0x1f",
+                    "NP":"0x01",
+                    "RF":"0x01",
+                    "TN":"0x1f",
+                    "ability":["1GBASE_KX","10GBASE_KX4","10GBASE_KR","40GBASE_KR4"],
+                    "fec":["10G BASE_R FEC Capable","10G BASE-R FEC","25G RS-FEC","25G BASE-R FEC","100G RS-FEC-Int"]
+                    },
+                "prev_count":"0",
+                "type":"base page",
+                "value":"0xFC0001FFFFFF"
+                }
+            }
+        },
+    "lane":0,
+    "module":"ANEG",
+    "time":82815787250,
+    "type":"trace"
+}

@@ -1,0 +1,78 @@
+{
+    "entry":{
+        "entry_discriminator":"log",
+        "entry_value":{
+            "log":{
+                "cmds":[
+                    {
+                        "ber":["1","4","6"],
+                        "cmd":"SET PRESET_1",
+                        "flags":["DONE","LOCK"],
+                        "prbs":[
+                            {
+                                "bits":5007011360,
+                                "errors":10,
+                                "result":"1.997e-09"
+                            }],
+                        "result":"success"
+                    },
+                    {
+                        "ber":["35544","72"],
+                        "cmd":"SET PRESET_2",
+                        "flags":["DONE","LOCK"],
+                        "prbs":[
+                            {
+                                "bits":1001499840,
+                                "errors":72,
+                                "result":"7.189e-08"
+                            }],
+                        "result":"success"
+                    },
+                    {
+                        "ber":["5156","1","3","4"],
+                        "cmd":"SET PRESET_3",
+                        "flags":["DONE","LOCK"],
+                        "prbs":[
+                            {
+                                "bits":3004823520,
+                                "errors":8,
+                                "result":"2.662e-09"
+                            }],
+                        "result":"success"
+                    },
+                    {
+                        "ber":["18582","20262"],
+                        "cmd":"SET PRESET_4",
+                        "flags":["DONE","LOCK"],
+                        "prbs":[
+                            {
+                                "bits":3004857920,
+                                "errors":20262,
+                                "result":"6.743e-06"
+                            }],
+                        "result":"success"
+                    },
+                    {
+                        "ber":["131478","15","0","1"],
+                        "cmd":"SET PRESET_1",
+                        "flags":["DONE","LOCK"],
+                        "prbs":[
+                            {
+                                "bits":3004097120,
+                                "errors":16,
+                                "result":"5.326e-09"
+                            }],
+                        "result":"success"
+                    },
+                    {
+                        "cmd":"LOCAL_TRAINED"
+                    }
+                ]
+            }
+        }
+    },
+    "lane":2,
+    "module":"LT_ALG0",
+    "time":82803581287,
+    "type":"trace"
+}

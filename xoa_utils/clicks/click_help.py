@@ -64,6 +64,10 @@ lt:  keep lt only"
 HELP_ANLT_LOG_SERDES = "Specifies which serdes of LT logs to keep. If you don't know how many\
 serdes the port has, use 'anlt log', default to all serdes."
 
+HELP_ANLT_LOG_POLLS = "Polls per second, default to 10."
+
+HELP_ANLT_READ = "Load and read log file."
+
 HELP_STRICT_ON = "Should enable ANLT strict mode, default to --on."
 
 HELP_LOG_CONTROL_DEBUG_ON = "Debug log out, default to --debug, -D"
