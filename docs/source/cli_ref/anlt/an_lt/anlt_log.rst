@@ -17,9 +17,11 @@ Synopsis
     
     anlt log
     [-f, --filename <value: text>]
+    [-r, --read, <value: text>]
     [-k, --keep <value: text>]
     [-s, --serdes <value>]
-    [--read, <value: text>]
+    [-p, --polls <value>]
+    
 
 
 Arguments
@@ -33,7 +35,7 @@ Options
 
 Specifies the filename for the log messages to be stored.
 
-``--read -f`` (text)
+``-r, --read -f`` (text)
 
 Specifies the filepath of the log file to display.
 
@@ -55,6 +57,8 @@ Allowed values:
     
 Specifies which serdes of LT logs to keep. If you don't know how many serdes serdes the port has, use :doc:`../an_lt/anlt_log`, default to all serdes.
 
+``-s, --serdes`` (int)
+Polls per second, default to 10.
 
 Examples
 --------
