@@ -4,8 +4,13 @@ anlt logctrl
 Description
 -----------
 
-Control what types of ANLT log messages are sent by xenaserver. This command is different from the ``--keep`` option of :doc:`anlt_log`. ``anlt log-ctrl`` control the log message from its source, where ``anlt_log`` filters the messages for display output.
+Control what types of ANLT log messages are sent by xenaserver. This command is different from the ``--keep`` option of :doc:`anlt_log`. ``anlt log-ctrl`` control the log message from its source, where :doc:`anlt_log` filters the messages for display output.
 
+If no option is provided, the command will return the current status on the port.
+
+This command provide delta change to the log control, which means it only change the settings that you provide and will keep the others unchanged.
+
+In case you provide conflicting options, e.g. --debug (-D) and --no-debug (-d) at the same time, the command will always choose the "ON", which is dominant.
 
 Synopsis
 --------
@@ -34,64 +39,53 @@ Arguments
 Options
 -------
 
-``-D/-d, --debug/--no-debug``
+``-D, --debug``, Debug log ON
 
-Debug log out, default to ``--debug, -D``
+``-d, --no-debug``, Debug log OFF
 
+``-A, --an-trace``, Autoneg trace ON
 
-``-A/-a, --an-trace/--no-an-trace``
+``-a, --no-an-trace``, Autoneg trace OFF
 
-Auto-negotiation trace output, default to --an-trace, -A
+``-L, --lt-trace``, Link Training trace ON
 
+``-l, --no-lt-trace``, Link Training trace OFF
 
-``-L/-l, --lt-trace/--no-lt-trace``
+``-G, --alg-trace``, Link Training algorithm trace ON
 
-Link training algorithm trace, default to --lt-trace, -L
+``-g, --no-alg-trace``, Link Training algorithm trace OFF
 
+``-P, --fsm-port``, Port FSM trace ON
 
-``-G/-g, --alg-trace/--no-alg-trace``
+``-p, --no-fsm-port``, Port FSM trace OFF
 
-Link training algorithm trace output, default to --alg-trace, -G
+``-N, --fsm-an``, Autoneg FSM trace ON
 
+``-n, --no-fsm-an``, Autoneg FSM trace OFF
 
-``-P/-p, --fsm-port/--no-fsm-port``
+``-M, --fsm-an-stimuli``, Autoneg stimuli FSM trace ON
 
-Port state machine transitions output, default to --no-fsm-port, -p
+``-m, --no-fsm-an-stimuli``  Autoneg stimuli FSM trace OFF
 
+``-T, --fsm-lt``             Link Training FSM trace ON
 
-``-N/-n, --fsm-an/--no-fsm-an``
+``-t, --no-fsm-lt``          Link Training FSM trace OFF
 
-Auto-negotiation state machine transitions, default to --fsm-an, -N
+``-C, --fsm-lt-coeff``       Link Training coefficient FSM trace ON
 
+``-c, --no-fsm-lt-coeff``    Link Training coefficient FSM trace OFF
 
-``-M/-m, --fsm-an-stimuli/--no-fsm-an-stimuli``
+``-S, --fsm-lt-stimuli``     Link Training stimuli FSM trace ON
 
-Auto-negotiation stimuli state machine transitions, default to --no-fsm-an-stimuli, -m
+``-s, --no-fsm-lt-stimuli``  Link Training stimuli FSM trace OFF
 
+``-Z, --fsm-lt-alg0``        Link Training algorithm0 FSM trace ON
 
-``-T/-t, --fsm-lt/--no-fsm-lt``
+``-z, --no-fsm-lt-alg0``     Link Training algorithm0 FSM trace OFF
 
-Link training state machine transitions, default to --fsm-lt, -T
+``-O, --fsm-lt-algn1``       Link Training algorithmN1 FSM trace ON
 
-
-``-C/-c, --fsm-lt-coeff/--no-fsm-lt-coeff``
-
-Link training coefficient state machine transitions, default to --no-fsm-lt-coeff, -c
-
-
-``-S/-s, --fsm-lt-stimuli/--no-fsm-lt-stimuli``
-
-Link training stimuli state machine transitions, default to --no-fsm-lt-stimuli, -s
-
-
-``-Z/-z, --fsm-lt-alg0/--no-fsm-lt-alg0``
-
-Link training algorithm 0 state machine transitions, default to --fsm-lt-alg0, -Z
-
-
-``-O/-o, --fsm-lt-algn1/--no-fsm-lt-algn1``
-
-Link training algorithm -1 state machine transitions, default to --fsm-lt-algn1, -O
+``-o, --no-fsm-lt-algn1``    Link Training algorithmN1 FSM trace OFF
 
 
 
@@ -100,22 +94,53 @@ Examples
 
 .. code-block:: text
 
-    xoa-utils[123456][port0/2] > anlt logctrl
-    Port 0/2 log control:
-        Type debug:             on
-        Type AN trace:          on
-        Type LT trace:          on
-        Type ALG trace:         on
-        Type FSM port:          on
-        Type FSM AN:            on
-        Type FSM AN Stimuli:    off
-        Type FSM LT:            on
-        Type FSM LT Coeff:      off
-        Type FSM LT Stimuli:    off
-        Type FSM LT ALG  0:     on
-        Type FSM LT ALG -1:     on
+    xoa-utils[10401492][3/0] > anlt logctrl
 
-    xoa-utils[123456][port0/2] >
+    Port 3/0 log control:
+        Type debug:             on  -D
+        Type AN trace:          on  -A
+        Type LT trace:          on  -L
+        Type ALG trace:         on  -G
+        Type FSM port:          on  -P
+        Type FSM AN:            on  -N
+        Type FSM AN Stimuli:    off -m
+        Type FSM LT:            off -t
+        Type FSM LT Coeff:      off -c
+        Type FSM LT Stimuli:    off -s
+        Type FSM LT ALG  0:     off -z
+        Type FSM LT ALG -1:     off -o
+
+    xoa-utils[10401492][3/0] > anlt logctrl -M
+
+    Port 3/0 log control:
+        Type debug:             on  -D
+        Type AN trace:          on  -A
+        Type LT trace:          on  -L
+        Type ALG trace:         on  -G
+        Type FSM port:          on  -P
+        Type FSM AN:            on  -N
+        Type FSM AN Stimuli:    on  -M
+        Type FSM LT:            off -t
+        Type FSM LT Coeff:      off -c
+        Type FSM LT Stimuli:    off -s
+        Type FSM LT ALG  0:     off -z
+        Type FSM LT ALG -1:     off -o
+
+    xoa-utils[10401492][3/0] > anlt logctrl -d
+
+    Port 3/0 log control:
+        Type debug:             off -d
+        Type AN trace:          on  -A
+        Type LT trace:          on  -L
+        Type ALG trace:         on  -G
+        Type FSM port:          on  -P
+        Type FSM AN:            on  -N
+        Type FSM AN Stimuli:    on  -M
+        Type FSM LT:            off -t
+        Type FSM LT Coeff:      off -c
+        Type FSM LT Stimuli:    off -s
+        Type FSM LT ALG  0:     off -z
+        Type FSM LT ALG -1:     off -o
 
 
 

@@ -427,16 +427,27 @@ def format_log_control(
         ) -> str:
     return f"""
 Port {storage.retrieve_port_str()} log control:
-    Type debug:             {'on' if debug else 'off'}
-    Type AN trace:          {'on' if an_trace else 'off'}
-    Type LT trace:          {'on' if lt_trace else 'off'}
-    Type ALG trace:         {'on' if alg_trace else 'off'}
-    Type FSM port:          {'on' if fsm_port else 'off'}
-    Type FSM AN:            {'on' if fsm_an else 'off'}
-    Type FSM AN Stimuli:    {'on' if fsm_an_stimuli else 'off'}
-    Type FSM LT:            {'on' if fsm_lt else 'off'}
-    Type FSM LT Coeff:      {'on' if fsm_lt_coeff else 'off'}
-    Type FSM LT Stimuli:    {'on' if fsm_lt_stimuli else 'off'}
-    Type FSM LT ALG  0:     {'on' if fsm_lt_alg0 else 'off'}
-    Type FSM LT ALG -1:     {'on' if fsm_lt_algn1 else 'off'}
+    Type debug:             {'on  -D' if debug else 'off -d'}
+    Type AN trace:          {'on  -A' if an_trace else 'off -a'}
+    Type LT trace:          {'on  -L' if lt_trace else 'off -l'}
+    Type ALG trace:         {'on  -G' if alg_trace else 'off -g'}
+    Type FSM port:          {'on  -P' if fsm_port else 'off -p'}
+    Type FSM AN:            {'on  -N' if fsm_an else 'off -n'}
+    Type FSM AN Stimuli:    {'on  -M' if fsm_an_stimuli else 'off -m'}
+    Type FSM LT:            {'on  -T' if fsm_lt else 'off -t'}
+    Type FSM LT Coeff:      {'on  -C' if fsm_lt_coeff else 'off -c'}
+    Type FSM LT Stimuli:    {'on  -S' if fsm_lt_stimuli else 'off -s'}
+    Type FSM LT ALG  0:     {'on  -Z' if fsm_lt_alg0 else 'off -z'}
+    Type FSM LT ALG -1:     {'on  -O' if fsm_lt_algn1 else 'off -o'}
 """
+
+def dominant_and_recessive(original: bool, dominant: bool, recessive: bool) -> bool:
+    if dominant == True and recessive == True:
+        return True
+    elif dominant == True and recessive == False:
+        return True
+    elif dominant == False and recessive == True:
+        return False
+    else:
+        return original
+    

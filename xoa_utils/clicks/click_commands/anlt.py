@@ -8,7 +8,8 @@ from xoa_utils.clis import (
     format_recovery,
     format_port_status,
     format_strict,
-    format_log_control
+    format_log_control,
+    dominant_and_recessive,
 )
 from xoa_driver.enums import AnLtLogControl
 from xoa_utils.clicks.click_commands.group import xoa_util
@@ -539,22 +540,46 @@ async def strict(context: ac.Context, on: bool) -> str:
 # command: log-ctrl
 # --------------------------
 @anlt.command(cls=cb.XenaCommand, name="logctrl")
-@ac.option("-D/-d", "--debug/--no-debug", type=ac.BOOL, help=h.HELP_LOG_CONTROL_DEBUG_ON, default=True)
-@ac.option("-A/-a", "--an-trace/--no-an-trace", type=ac.BOOL, help=h.HELP_LOG_CONTROL_AN_TRACE_ON, default=True)
-@ac.option("-L/-l", "--lt-trace/--no-lt-trace", type=ac.BOOL, help=h.HELP_LOG_CONTROL_LT_TRACE_ON, default=True)
-@ac.option("-G/-g", "--alg-trace/--no-alg-trace", type=ac.BOOL, help=h.HELP_LOG_CONTROL_ALG_TRACE_ON, default=True)
-@ac.option("-P/-p", "--fsm-port/--no-fsm-port", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_PORT_ON, default=False)
-@ac.option("-N/-n", "--fsm-an/--no-fsm-an", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_AN_ON, default=True)
-@ac.option("-M/-m", "--fsm-an-stimuli/--no-fsm-an-stimuli", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_AN_STIMULI_ON, default=False)
-@ac.option("-T/-t", "--fsm-lt/--no-fsm-lt", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_ON, default=True)
-@ac.option("-C/-c", "--fsm-lt-coeff/--no-fsm-lt-coeff", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_COEFF_ON, default=False)
-@ac.option("-S/-s", "--fsm-lt-stimuli/--no-fsm-lt-stimuli", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_STIMULI_ON, default=False)
-@ac.option("-Z/-z", "--fsm-lt-alg0/--no-fsm-lt-alg0", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_ALG0_ON, default=True)
-@ac.option("-O/-o", "--fsm-lt-algn1/--no-fsm-lt-algn1", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_ALGN1_ON, default=True)
+@ac.option("-D", "--debug", help=h.HELP_LOG_CONTROL_DEBUG_ON, is_flag=True)
+@ac.option("-d", "--no-debug", help=h.HELP_LOG_CONTROL_DEBUG_OFF, is_flag=True)
+
+@ac.option("-A", "--an-trace", help=h.HELP_LOG_CONTROL_AN_TRACE_ON, is_flag=True)
+@ac.option("-a", "--no-an-trace", help=h.HELP_LOG_CONTROL_AN_TRACE_OFF, is_flag=True)
+
+@ac.option("-L", "--lt-trace", help=h.HELP_LOG_CONTROL_LT_TRACE_ON, is_flag=True)
+@ac.option("-l", "--no-lt-trace", help=h.HELP_LOG_CONTROL_LT_TRACE_OFF, is_flag=True)
+
+@ac.option("-G", "--alg-trace", help=h.HELP_LOG_CONTROL_ALG_TRACE_ON, is_flag=True)
+@ac.option("-g", "--no-alg-trace", help=h.HELP_LOG_CONTROL_ALG_TRACE_OFF, is_flag=True)
+
+@ac.option("-P", "--fsm-port", help=h.HELP_LOG_CONTROL_FSM_PORT_ON, is_flag=True)
+@ac.option("-p", "--no-fsm-port", help=h.HELP_LOG_CONTROL_FSM_PORT_OFF, is_flag=True)
+
+@ac.option("-N", "--fsm-an", help=h.HELP_LOG_CONTROL_FSM_AN_ON, is_flag=True)
+@ac.option("-n", "--no-fsm-an", help=h.HELP_LOG_CONTROL_FSM_AN_OFF, is_flag=True)
+
+@ac.option("-M", "--fsm-an-stimuli", help=h.HELP_LOG_CONTROL_FSM_AN_STIMULI_ON, is_flag=True)
+@ac.option("-m", "--no-fsm-an-stimuli", help=h.HELP_LOG_CONTROL_FSM_AN_STIMULI_OFF, is_flag=True)
+
+@ac.option("-T", "--fsm-lt", help=h.HELP_LOG_CONTROL_FSM_LT_ON, is_flag=True)
+@ac.option("-t", "--no-fsm-lt", help=h.HELP_LOG_CONTROL_FSM_LT_OFF, is_flag=True)
+
+@ac.option("-C", "--fsm-lt-coeff", help=h.HELP_LOG_CONTROL_FSM_LT_COEFF_ON, is_flag=True)
+@ac.option("-c", "--no-fsm-lt-coeff", help=h.HELP_LOG_CONTROL_FSM_LT_COEFF_OFF, is_flag=True)
+
+@ac.option("-S", "--fsm-lt-stimuli", help=h.HELP_LOG_CONTROL_FSM_LT_STIMULI_ON, is_flag=True)
+@ac.option("-s", "--no-fsm-lt-stimuli", help=h.HELP_LOG_CONTROL_FSM_LT_STIMULI_OFF, is_flag=True)
+
+@ac.option("-Z", "--fsm-lt-alg0", help=h.HELP_LOG_CONTROL_FSM_LT_ALG0_ON, is_flag=True)
+@ac.option("-z", "--no-fsm-lt-alg0", help=h.HELP_LOG_CONTROL_FSM_LT_ALG0_OFF, is_flag=True)
+
+@ac.option("-O", "--fsm-lt-algn1", help=h.HELP_LOG_CONTROL_FSM_LT_ALGN1_ON, is_flag=True)
+@ac.option("-o", "--no-fsm-lt-algn1", help=h.HELP_LOG_CONTROL_FSM_LT_ALGN1_OFF, is_flag=True)
+
 @ac.pass_context
 async def log_ctrl(
     context: ac.Context, 
-    debug: bool, 
+    debug: bool,
     an_trace: bool, 
     lt_trace: bool, 
     alg_trace: bool,
@@ -566,291 +591,90 @@ async def log_ctrl(
     fsm_lt_stimuli: bool,
     fsm_lt_alg0: bool,
     fsm_lt_algn1: bool,
+    no_debug: bool,
+    no_an_trace: bool, 
+    no_lt_trace: bool, 
+    no_alg_trace: bool,
+    no_fsm_port: bool,
+    no_fsm_an: bool,
+    no_fsm_an_stimuli: bool,
+    no_fsm_lt: bool,
+    no_fsm_lt_coeff: bool,
+    no_fsm_lt_stimuli: bool,
+    no_fsm_lt_alg0: bool,
+    no_fsm_lt_algn1: bool,
     ) -> str:
-    """
-    AN/LT log output
-
-        Control what types of ANLT log messages are sent by xenaserver.
-
-        anlt logctrl -DALGPNmTcsZO
-    """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
     types = []
-    if debug:
+
+    # read from the server to get the current status
+    resp = await anlt_utils.anlt_log_control_get(port_obj)
+    _debug = resp["debug"]
+    _an_trace = resp["an_trace"]
+    _lt_trace = resp["lt_trace"]
+    _alg_trace = resp["alg_trace"]
+    _fsm_port = resp["fsm_port"]
+    _fsm_an = resp["fsm_an"]
+    _fsm_an_stimuli = resp["fsm_an_stimuli"]
+    _fsm_lt = resp["fsm_lt"]
+    _fsm_lt_coeff = resp["fsm_lt_coeff"]
+    _fsm_lt_stimuli = resp["fsm_lt_stimuli"]
+    _fsm_lt_alg0 = resp["fsm_lt_alg0"]
+    _fsm_lt_algn1 = resp["fsm_lt_algn1"]
+
+    _debug = dominant_and_recessive(_debug, debug, no_debug)
+    _an_trace = dominant_and_recessive(_an_trace, an_trace, no_an_trace)
+    _lt_trace = dominant_and_recessive(_lt_trace, lt_trace, no_lt_trace)
+    _alg_trace = dominant_and_recessive(_alg_trace, alg_trace, no_alg_trace)
+    _fsm_port = dominant_and_recessive(_fsm_port, fsm_port, no_fsm_port)
+    _fsm_an = dominant_and_recessive(_fsm_an, fsm_an, no_fsm_an)
+    _fsm_an_stimuli = dominant_and_recessive(_fsm_an_stimuli, fsm_an_stimuli, no_fsm_an_stimuli)
+    _fsm_lt = dominant_and_recessive(_fsm_lt, fsm_lt, no_fsm_lt)
+    _fsm_lt_coeff = dominant_and_recessive(_fsm_lt_coeff, fsm_lt_coeff, no_fsm_lt_coeff)
+    _fsm_lt_stimuli = dominant_and_recessive(_fsm_lt_stimuli, fsm_lt_stimuli, no_fsm_lt_stimuli)
+    _fsm_lt_alg0 = dominant_and_recessive(_fsm_lt_alg0, fsm_lt_alg0, no_fsm_lt_alg0)
+    _fsm_lt_algn1 = dominant_and_recessive(_fsm_lt_algn1, fsm_lt_algn1, no_fsm_lt_algn1)
+
+    if _debug:
         types.append(AnLtLogControl.LOG_TYPE_DEBUG)
-    if an_trace:
+    if _an_trace:
         types.append(AnLtLogControl.LOG_TYPE_AN_TRACE)
-    if lt_trace:
+    if _lt_trace:
         types.append(AnLtLogControl.LOG_TYPE_LT_TRACE)
-    if alg_trace:
+    if _alg_trace:
         types.append(AnLtLogControl.LOG_TYPE_ALG_TRACE)
-    if fsm_port:
+    if _fsm_port:
         types.append(AnLtLogControl.LOG_TYPE_FSM_PORT)
-    if fsm_an:
+    if _fsm_an:
         types.append(AnLtLogControl.LOG_TYPE_FSM_ANEG)
-    if fsm_an_stimuli:
+    if _fsm_an_stimuli:
         types.append(AnLtLogControl.LOG_TYPE_FSM_ANEG_STIMULI)
-    if fsm_lt:
+    if _fsm_lt:
         types.append(AnLtLogControl.LOG_TYPE_FSM_LT)
-    if fsm_lt_coeff:
+    if _fsm_lt_coeff:
         types.append(AnLtLogControl.LOG_TYPE_FSM_LT_COEFF)
-    if fsm_lt_stimuli:
+    if _fsm_lt_stimuli:
         types.append(AnLtLogControl.LOG_TYPE_FSM_LT_STIMULI)
-    if fsm_lt_alg0:
+    if _fsm_lt_alg0:
         types.append(AnLtLogControl.LOG_TYPE_FSM_LT_ALG0)
-    if fsm_lt_algn1:
+    if _fsm_lt_algn1:
         types.append(AnLtLogControl.LOG_TYPE_FSM_LT_ALG1)
 
-
     await anlt_utils.anlt_log_control(port_obj, types)
+    resp = await anlt_utils.anlt_log_control_get(port_obj)
     return format_log_control(
         storage, 
-        debug, 
-        an_trace, 
-        lt_trace, 
-        alg_trace,
-        fsm_port,
-        fsm_an,
-        fsm_an_stimuli,
-        fsm_lt,
-        fsm_lt_coeff,
-        fsm_lt_stimuli,
-        fsm_lt_alg0,
-        fsm_lt_algn1
+        resp["debug"], 
+        resp["an_trace"], 
+        resp["lt_trace"], 
+        resp["alg_trace"],
+        resp["fsm_port"],
+        resp["fsm_an"],
+        resp["fsm_an_stimuli"],
+        resp["fsm_lt"],
+        resp["fsm_lt_coeff"],
+        resp["fsm_lt_stimuli"],
+        resp["fsm_lt_alg0"],
+        resp["fsm_lt_algn1"]
         )
-
-
-# # --------------------------
-# # command: log2
-# # --------------------------
-# @anlt.command(cls=cb.XenaCommand, name="log2")
-# @ac.option(
-#     "-f", "--filename", type=ac.STRING, help=h.HELP_ANLT_LOG_FILENAME, default=""
-# )
-# @ac.option(
-#     "-r", "--read", is_flag=True, help="Read log file", default=False
-# )
-# @ac.option(
-#     "-k",
-#     "--keep",
-#     type=ac.Choice(["all", "an", "lt"]),
-#     help=h.HELP_ANLT_LOG_KEEP,
-#     default="all",
-# )
-# @ac.option("-s", "--serdes", type=ac.STRING, help=h.HELP_ANLT_LOG_SERDES, default="")
-# @ac.option("-p", "--polls", type=ac.INT, help=h.HELP_ANLT_LOG_SERDES, default=10)
-# @ac.pass_context
-# async def anlt_log2(ctx: ac.Context, filename: str, read: bool, keep: str, serdes: str, polls: int) -> str:
-#     """
-#     AN/LT logging v2
-#     """
-
-#     def _filter_log(log: str, keep: str, serdes: list[int]) -> list[dict]:
-#         all_logs = []
-#         for lg in log.split("\n"):
-#             try:
-#                 content = json.loads(lg)
-#                 log_serdes = content["lane"]
-#                 module = content["module"]
-
-#                 serdes_in = (serdes and log_serdes in serdes) or (not serdes)
-#                 keep_in = any(
-#                     (
-#                         keep == "an" and LogModuleEnum.ANEG.name in module,
-#                         keep == "lt" and LogModuleEnum.LT.name in module,
-#                         keep == "all",
-#                     )
-#                 )
-#                 if serdes_in and keep_in:
-#                     all_logs.append(content)
-
-#             except Exception:
-#                 pass
-#         return all_logs
-
-#     def _dict_get(dic: dict, *keys: str) -> t.Any:
-#         current = dic
-#         for k in keys:
-#             current = current.get(k, "")
-#             if current == "":
-#                 break
-#         return current
-    
-#     def _flatten(dic: dict[str, str]) -> str:
-#         return "".join((f"{k}: {v:<7}" for k, v in dic.items()))
-
-#     def _ascii_styler(str: str, fg_style: list[ASCIIStyle]) -> str:
-#         style = "".join(s.value for s in fg_style)
-#         return f"{style}{str}{ASCIIStyle.END.value}"
-
-#     def _direction_styler(str: str) -> str:
-#         if str == "tx":
-#             str = _ascii_styler(
-#                 str.upper(), [ASCIIStyle.DARKBLUE_BG]
-#             )
-#         else:
-#             str = _ascii_styler(
-#                 str.upper(), [ASCIIStyle.DARKGREEN_BG]
-#             )
-#         return str
-
-#     def _true_false_styler(str: str) -> str:
-#         if str == "true":
-#             str = _ascii_styler(str, [ASCIIStyle.GREEN_BG])
-#         else:
-#             str = _ascii_styler(str, [ASCIIStyle.RED_BG])
-#         return str
-    
-#     def _an_page_styler(str: str) -> str:
-#         if str == "base page":
-#             str = _ascii_styler(str.title(), [ASCIIStyle.DARKBLUE_BG])
-#         else:
-#             str = _ascii_styler(str.title(), [ASCIIStyle.BLUE_BG])
-#         return str
-    
-#     def _ber_styler(str: str) -> str:
-#         return _ascii_styler(str, [ASCIIStyle.YELLOW])
-    
-#     def _beautify(filtered: list[dict]) -> str:
-#         real = []
-#         for i in filtered:
-#             b_str = ""
-
-#             data = BaseLogModel(**i)
-#             log_time = data.time
-#             log_m = data.module
-#             log_serdes = data.lane
-#             log_type = data.type
-#             log_entry = data.entry
-
-#             serdes_str = f"(S{log_serdes})," if "LT" in log_m else ","
-#             common = f"{log_time/1000000:.6f}, {log_m}{serdes_str}"
-
-#             _entry_data = EntryModel(**log_entry)
-#             _entry_discriminator = _entry_data.entry_discriminator
-#             _entry_value = _entry_data.entry_value
-
-#             if _entry_discriminator == EntryDiscriminatorEnum.fsm.name:
-#                 data = FSMEntryValueModel(**_entry_value)
-#                 log_event = data.event
-#                 log_current = data.current
-#                 log_new = data.new
-#                 b_str = f"{common:<32}{'FSM:':<5}({log_event}) {log_current} -> {log_new}"
-
-#             elif _entry_discriminator == EntryDiscriminatorEnum.alg_result.name:
-#                 log_log = ""
-#                 if _entry_value != None:
-#                     data = LogResultValueModel(**_entry_value)
-#                     for cmd in data.log.cmds:
-#                         if cmd.result != None:
-#                             log_log += f"cmd: {cmd.cmd}, result: {cmd.result}, prbs: bits={cmd.prbs[0].bits:} errors={cmd.prbs[0].errors} ber={_ber_styler(cmd.prbs[0].result)}, flags: {cmd.flags}\n{'':<37}"
-#                         else:
-#                             log_log += f"cmd: {cmd.cmd}"
-#                 else:
-#                     log_log = ""
-#                 b_str = f"{common:<32}{'MSG:':<5}{log_log}"
-
-#             elif _entry_discriminator == EntryDiscriminatorEnum.aneg_bp.name:
-#                 if "log" in _entry_value.keys():
-#                     data = AnegLogEntryValueModel(**_entry_value)
-#                     log_log = data.log
-#                     b_str = f"{common:<32}{'MSG:':<5}{log_log}"
-#                 else:
-#                     data = AnegBpEntryValueModel(**_entry_value)
-#                     log_direction = _direction_styler(data.direction)
-#                     log_value = data.pkt.value
-#                     log_ptype = _an_page_styler(data.pkt.type)
-#                     log_prev_count = data.pkt.prev_count
-
-#                     log_np = data.pkt.fields.NP
-#                     log_ack = data.pkt.fields.Ack
-#                     log_rf = data.pkt.fields.RF
-#                     log_tn = data.pkt.fields.TN
-#                     log_en = data.pkt.fields.EN
-#                     log_c = data.pkt.fields.C
-#                     log_fec = data.pkt.fields.fec
-#                     log_ab = data.pkt.fields.ability
-
-#                     b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, RF:{int(log_rf, 0)}, TN:{int(log_tn, 0)}, EN:{int(log_en ,0)}, C:{int(log_c, 0)}\n{'':<37}FEC:    {log_fec}\n{'':<37}ABILITY:{log_ab}"
-
-#             elif _entry_discriminator == EntryDiscriminatorEnum.aneg_np.name:
-#                 if "log" in _entry_value.keys():
-#                     data = AnegLogEntryValueModel(**_entry_value)
-#                     log_log = data.log
-#                     b_str = f"{common:<32}{'MSG:':<5}{log_log}"
-#                 else:
-#                     data = AnegNpEntryValueModel(**_entry_value)
-#                     log_direction = _direction_styler(data.direction)
-#                     log_value = data.pkt.value
-#                     log_ptype = _an_page_styler(data.pkt.type)
-#                     log_prev_count = data.pkt.prev_count
-
-#                     log_np = data.pkt.fields.NP
-#                     log_ack = data.pkt.fields.Ack
-#                     log_mp = data.pkt.fields.MP
-#                     log_ack2 = data.pkt.fields.Ack2
-#                     log_t = data.pkt.fields.T
-                    
-#                     if (data.pkt.fields.formatted_message != None):
-#                         log_fmt_v = data.pkt.fields.formatted_message.value
-#                         log_fmt_msg = data.pkt.fields.formatted_message.message
-
-#                         b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Formatted message:\n{'':<37}Value:{log_fmt_v}, Msg:{log_fmt_msg}"
-
-#                     elif (data.pkt.fields.unformatted_message != None):
-#                         log_ufmt_v = data.pkt.fields.unformatted_message.value
-#                         log_ufmt_msg = data.pkt.fields.unformatted_message.message
-#                         log_ufmt_fec = data.pkt.fields.unformatted_message.fec
-#                         log_ufmt_ab = data.pkt.fields.unformatted_message.ability
-
-#                         b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, {log_ptype}\n{'':<37}NP:{int(log_np, 0)}, ACK:{int(log_ack, 0)}, MP:{int(log_mp, 0)}, ACK2:{int(log_ack2, 0)}, T:{int(log_t ,0)}\n{'':<37}Unformatted message:\n{'':<37}Value:{log_ufmt_v}, Msg:{log_ufmt_msg}\n{'':<37}FEC:    {log_ufmt_fec}\n{'':<37}ABILITY:{log_ufmt_ab}"
-
-#             elif _entry_discriminator == EntryDiscriminatorEnum.lt.name:
-#                 if "log" in _entry_value.keys():
-#                     data = LTLogEntryValueModel(**_entry_value)
-#                     log_log = data.log
-#                     b_str = f"{common:<32}{'MSG:':<5}{log_log}"
-#                 else:
-#                     data = LTEntryValueModel(**_entry_value)
-#                     log_direction = _direction_styler(data.direction)
-#                     log_value = data.pkt.value
-#                     log_prev_count = data.pkt.prev_count
-
-#                     log_pkt_locked = _true_false_styler(data.pkt.fields.locked)
-#                     log_pkt_done = _true_false_styler(data.pkt.fields.done)
-#                     log_pkt_ctrl = data.pkt.fields.control.model_dump()
-#                     log_pkt_status = data.pkt.fields.status.model_dump()
-
-#                     b_str = f"{common:<32}{(log_direction + ':'):<14}{log_value}, LOCKED={log_pkt_locked}, TRAINED={log_pkt_done}\n{'':<37}{_flatten(log_pkt_ctrl)}\n{'':<37}{_flatten(log_pkt_status)}"
-
-#             if b_str:
-#                 real.append(b_str)
-#             # print(b_str)
-#         return "\n".join(real)
-
-#     async def log2(
-#         storage: CmdContext, filename: str, read: bool, keep: str, serdes: list[int]
-#     ) -> str:
-#         if read:
-#             with open(filename, "r") as f:
-#                 log_str = f.read()
-#         else:
-#             port_obj = storage.retrieve_port()
-#             log_str = await anlt_utils.anlt_log(port_obj)
-#         filtered = _filter_log(log_str, keep, serdes)
-#         string = _beautify(filtered)
-#         if not read and filename and log_str:
-#             with open(filename, "a") as f:
-#                 f.write(f"{log_str}\n")
-#         return string
-
-#     real_serdes_list = [int(i.strip()) for i in serdes.split(",")] if serdes else []
-#     if read:
-#         return await log2(storage=None, filename=filename, read=read, keep=keep, serdes=real_serdes_list)
-#     else:
-#         kw = {"filename": filename, "read": read, "keep": keep, "serdes": real_serdes_list}
-#         storage: CmdContext = ctx.obj
-#         _interval = 1/polls
-#         storage.set_loop_coro(coro=log2, interval=_interval, dic=kw)
-#         return ""
