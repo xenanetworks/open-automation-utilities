@@ -45,11 +45,11 @@ default to --on."
 HELP_AN_CONFIG_LOOPBACK = "Should loopback be allowed in auto-negotiation, \
 default to --no-loopback."
 
-HELP_LT_CONFIG_MODE = "The mode for link training on the working port, default to --mode auto."
+HELP_LT_CONFIG_MODE = "The mode for Link Training on the working port, default to --mode auto."
 
-HELP_LT_TIMEOUT_MODE = "The timeout mode for link training (auto) on the working port, default to --timeout enable."
+HELP_LT_TIMEOUT_MODE = "The timeout mode for Link Training (auto) on the working port, default to --timeout enable."
 
-HELP_LT_CONFIG_ON = "Enable or disable link training on the working port, default to --on."
+HELP_LT_CONFIG_ON = "Enable or disable Link Training on the working port, default to --on."
 
 HELP_LT_CONFIG_PRESET0 = "Should the Out-of-Sync use IEEE values (--preset0 ieee) or existing tap values (--preset0 existing), default to --preset0 ieee."
 
@@ -70,26 +70,38 @@ HELP_ANLT_READ = "Load and read log file."
 
 HELP_STRICT_ON = "Should enable ANLT strict mode, default to --on."
 
-HELP_LOG_CONTROL_DEBUG_ON = "Debug log out, default to --debug, -D"
+HELP_LOG_CONTROL_DEBUG_ON = "Debug log ON"
+HELP_LOG_CONTROL_DEBUG_OFF = "Debug log OFF"
 
-HELP_LOG_CONTROL_AN_TRACE_ON = "Auto-negotiation trace output, default to --an-trace, -A"
+HELP_LOG_CONTROL_AN_TRACE_ON = "Autoneg trace ON"
+HELP_LOG_CONTROL_AN_TRACE_OFF = "Autoneg trace OFF"
 
-HELP_LOG_CONTROL_LT_TRACE_ON = "Link training algorithm trace, default to --lt-trace, -L"
+HELP_LOG_CONTROL_LT_TRACE_ON = "Link Training trace ON"
+HELP_LOG_CONTROL_LT_TRACE_OFF = "Link Training trace OFF"
 
-HELP_LOG_CONTROL_ALG_TRACE_ON = "Link training algorithm trace output, default to --alg-trace, -G"
+HELP_LOG_CONTROL_ALG_TRACE_ON = "Link Training algorithm trace ON"
+HELP_LOG_CONTROL_ALG_TRACE_OFF = "Link Training algorithm trace OFF"
 
-HELP_LOG_CONTROL_FSM_PORT_ON = "Port state machine transitions output, default to --no-fsm-port, -p"
+HELP_LOG_CONTROL_FSM_PORT_ON = "Port FSM trace ON"
+HELP_LOG_CONTROL_FSM_PORT_OFF = "Port FSM trace OFF"
 
-HELP_LOG_CONTROL_FSM_AN_ON = "Auto-negotiation state machine transitions, default to --fsm-an, -N"
+HELP_LOG_CONTROL_FSM_AN_ON = "Autoneg FSM trace ON"
+HELP_LOG_CONTROL_FSM_AN_OFF = "Autoneg FSM trace OFF"
 
-HELP_LOG_CONTROL_FSM_AN_STIMULI_ON = "Auto-negotiation stimuli state machine transitions, default to --no-fsm-an-stimuli, -m"
+HELP_LOG_CONTROL_FSM_AN_STIMULI_ON = "Autoneg stimuli FSM trace ON"
+HELP_LOG_CONTROL_FSM_AN_STIMULI_OFF = "Autoneg stimuli FSM trace OFF"
 
-HELP_LOG_CONTROL_FSM_LT_ON = "Link training state machine transitions, default to --fsm-lt, -T"
+HELP_LOG_CONTROL_FSM_LT_ON = "Link Training FSM trace ON"
+HELP_LOG_CONTROL_FSM_LT_OFF = "Link Training FSM trace OFF"
 
-HELP_LOG_CONTROL_FSM_LT_COEFF_ON = "Link training coefficient state machine transitions, default to --no-fsm-lt-coeff, -c"
+HELP_LOG_CONTROL_FSM_LT_COEFF_ON = "Link Training coefficient FSM trace ON"
+HELP_LOG_CONTROL_FSM_LT_COEFF_OFF = "Link Training coefficient FSM trace OFF"
 
-HELP_LOG_CONTROL_FSM_LT_STIMULI_ON = "Link training stimuli state machine transitions, default to --no-fsm-lt-stimuli, -s"
+HELP_LOG_CONTROL_FSM_LT_STIMULI_ON = "Link Training stimuli FSM trace ON"
+HELP_LOG_CONTROL_FSM_LT_STIMULI_OFF = "Link Training stimuli FSM trace OFF"
 
-HELP_LOG_CONTROL_FSM_LT_ALG0_ON = "Link training algorithm 0 state machine transitions, default to --fsm-lt-alg0, -Z"
+HELP_LOG_CONTROL_FSM_LT_ALG0_ON = "Link Training algorithm0 FSM trace ON"
+HELP_LOG_CONTROL_FSM_LT_ALG0_OFF = "Link Training algorithm0 FSM trace OFF"
 
-HELP_LOG_CONTROL_FSM_LT_ALGN1_ON = "Link training algorithm -1 state machine transitions, default to --fsm-lt-algn1, -O"
+HELP_LOG_CONTROL_FSM_LT_ALGN1_ON = "Link Training algorithmN1 FSM trace ON"
+HELP_LOG_CONTROL_FSM_LT_ALGN1_OFF = "Link Training algorithmN1 FSM trace OFF"

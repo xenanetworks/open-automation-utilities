@@ -22,4 +22,5 @@ from xoa_utils.clis.cli_utils import (
     format_debug_init,
     format_strict,
     format_log_control,
+    dominant_and_recessive,
 )

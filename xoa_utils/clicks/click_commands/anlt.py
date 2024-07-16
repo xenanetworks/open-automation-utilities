@@ -8,7 +8,8 @@ from xoa_utils.clis import (
     format_recovery,
     format_port_status,
     format_strict,
-    format_log_control
+    format_log_control,
+    dominant_and_recessive,
 )
 from xoa_driver.enums import AnLtLogControl
 from xoa_utils.clicks.click_commands.group import xoa_util
@@ -539,25 +540,46 @@ async def strict(context: ac.Context, on: bool) -> str:
 # command: log-ctrl
 # --------------------------
 @anlt.command(cls=cb.XenaCommand, name="logctrl")
-@ac.option("-D/-d", "--debug/--no-debug", type=ac.BOOL, help=h.HELP_LOG_CONTROL_DEBUG_ON, default=False)
-@ac.option("-A/-a", "--an-trace/--no-an-trace", type=ac.BOOL, help=h.HELP_LOG_CONTROL_AN_TRACE_ON, default=True)
-@ac.option("-L/-l", "--lt-trace/--no-lt-trace", type=ac.BOOL, help=h.HELP_LOG_CONTROL_LT_TRACE_ON, default=True)
+@ac.option("-D", "--debug", help=h.HELP_LOG_CONTROL_DEBUG_ON, is_flag=True)
+@ac.option("-d", "--no-debug", help=h.HELP_LOG_CONTROL_DEBUG_OFF, is_flag=True)
 
-@ac.option("-G/-g", "--alg-trace/--no-alg-trace", type=ac.BOOL, help=h.HELP_LOG_CONTROL_ALG_TRACE_ON, default=True)
+@ac.option("-A", "--an-trace", help=h.HELP_LOG_CONTROL_AN_TRACE_ON, is_flag=True)
+@ac.option("-a", "--no-an-trace", help=h.HELP_LOG_CONTROL_AN_TRACE_OFF, is_flag=True)
 
-@ac.option("-P/-p", "--fsm-port/--no-fsm-port", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_PORT_ON, default=False)
-@ac.option("-N/-n", "--fsm-an/--no-fsm-an", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_AN_ON, default=True)
-@ac.option("-M/-m", "--fsm-an-stimuli/--no-fsm-an-stimuli", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_AN_STIMULI_ON, default=False)
-@ac.option("-T/-t", "--fsm-lt/--no-fsm-lt", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_ON, default=True)
+@ac.option("-L", "--lt-trace", help=h.HELP_LOG_CONTROL_LT_TRACE_ON, is_flag=True)
+@ac.option("-l", "--no-lt-trace", help=h.HELP_LOG_CONTROL_LT_TRACE_OFF, is_flag=True)
 
-@ac.option("-C/-c", "--fsm-lt-coeff/--no-fsm-lt-coeff", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_COEFF_ON, default=True)
-@ac.option("-S/-s", "--fsm-lt-stimuli/--no-fsm-lt-stimuli", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_STIMULI_ON, default=False)
-@ac.option("-Z/-z", "--fsm-lt-alg0/--no-fsm-lt-alg0", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_ALG0_ON, default=True)
-@ac.option("-O/-o", "--fsm-lt-algn1/--no-fsm-lt-algn1", type=ac.BOOL, help=h.HELP_LOG_CONTROL_FSM_LT_ALGN1_ON, default=True)
+@ac.option("-G", "--alg-trace", help=h.HELP_LOG_CONTROL_ALG_TRACE_ON, is_flag=True)
+@ac.option("-g", "--no-alg-trace", help=h.HELP_LOG_CONTROL_ALG_TRACE_OFF, is_flag=True)
+
+@ac.option("-P", "--fsm-port", help=h.HELP_LOG_CONTROL_FSM_PORT_ON, is_flag=True)
+@ac.option("-p", "--no-fsm-port", help=h.HELP_LOG_CONTROL_FSM_PORT_OFF, is_flag=True)
+
+@ac.option("-N", "--fsm-an", help=h.HELP_LOG_CONTROL_FSM_AN_ON, is_flag=True)
+@ac.option("-n", "--no-fsm-an", help=h.HELP_LOG_CONTROL_FSM_AN_OFF, is_flag=True)
+
+@ac.option("-M", "--fsm-an-stimuli", help=h.HELP_LOG_CONTROL_FSM_AN_STIMULI_ON, is_flag=True)
+@ac.option("-m", "--no-fsm-an-stimuli", help=h.HELP_LOG_CONTROL_FSM_AN_STIMULI_OFF, is_flag=True)
+
+@ac.option("-T", "--fsm-lt", help=h.HELP_LOG_CONTROL_FSM_LT_ON, is_flag=True)
+@ac.option("-t", "--no-fsm-lt", help=h.HELP_LOG_CONTROL_FSM_LT_OFF, is_flag=True)
+
+@ac.option("-C", "--fsm-lt-coeff", help=h.HELP_LOG_CONTROL_FSM_LT_COEFF_ON, is_flag=True)
+@ac.option("-c", "--no-fsm-lt-coeff", help=h.HELP_LOG_CONTROL_FSM_LT_COEFF_OFF, is_flag=True)
+
+@ac.option("-S", "--fsm-lt-stimuli", help=h.HELP_LOG_CONTROL_FSM_LT_STIMULI_ON, is_flag=True)
+@ac.option("-s", "--no-fsm-lt-stimuli", help=h.HELP_LOG_CONTROL_FSM_LT_STIMULI_OFF, is_flag=True)
+
+@ac.option("-Z", "--fsm-lt-alg0", help=h.HELP_LOG_CONTROL_FSM_LT_ALG0_ON, is_flag=True)
+@ac.option("-z", "--no-fsm-lt-alg0", help=h.HELP_LOG_CONTROL_FSM_LT_ALG0_OFF, is_flag=True)
+
+@ac.option("-O", "--fsm-lt-algn1", help=h.HELP_LOG_CONTROL_FSM_LT_ALGN1_ON, is_flag=True)
+@ac.option("-o", "--no-fsm-lt-algn1", help=h.HELP_LOG_CONTROL_FSM_LT_ALGN1_OFF, is_flag=True)
+
 @ac.pass_context
 async def log_ctrl(
     context: ac.Context, 
-    debug: bool, 
+    debug: bool,
     an_trace: bool, 
     lt_trace: bool, 
     alg_trace: bool,
@@ -569,56 +591,90 @@ async def log_ctrl(
     fsm_lt_stimuli: bool,
     fsm_lt_alg0: bool,
     fsm_lt_algn1: bool,
+    no_debug: bool,
+    no_an_trace: bool, 
+    no_lt_trace: bool, 
+    no_alg_trace: bool,
+    no_fsm_port: bool,
+    no_fsm_an: bool,
+    no_fsm_an_stimuli: bool,
+    no_fsm_lt: bool,
+    no_fsm_lt_coeff: bool,
+    no_fsm_lt_stimuli: bool,
+    no_fsm_lt_alg0: bool,
+    no_fsm_lt_algn1: bool,
     ) -> str:
-    """
-    AN/LT log output
-
-        Control what types of ANLT log messages are sent by xenaserver.
-
-        anlt logctrl -DALGPNmTcsZO
-    """
     storage: CmdContext = context.obj
     port_obj = storage.retrieve_port()
     types = []
-    if debug:
+
+    # read from the server to get the current status
+    resp = await anlt_utils.anlt_log_control_get(port_obj)
+    _debug = resp["debug"]
+    _an_trace = resp["an_trace"]
+    _lt_trace = resp["lt_trace"]
+    _alg_trace = resp["alg_trace"]
+    _fsm_port = resp["fsm_port"]
+    _fsm_an = resp["fsm_an"]
+    _fsm_an_stimuli = resp["fsm_an_stimuli"]
+    _fsm_lt = resp["fsm_lt"]
+    _fsm_lt_coeff = resp["fsm_lt_coeff"]
+    _fsm_lt_stimuli = resp["fsm_lt_stimuli"]
+    _fsm_lt_alg0 = resp["fsm_lt_alg0"]
+    _fsm_lt_algn1 = resp["fsm_lt_algn1"]
+
+    _debug = dominant_and_recessive(_debug, debug, no_debug)
+    _an_trace = dominant_and_recessive(_an_trace, an_trace, no_an_trace)
+    _lt_trace = dominant_and_recessive(_lt_trace, lt_trace, no_lt_trace)
+    _alg_trace = dominant_and_recessive(_alg_trace, alg_trace, no_alg_trace)
+    _fsm_port = dominant_and_recessive(_fsm_port, fsm_port, no_fsm_port)
+    _fsm_an = dominant_and_recessive(_fsm_an, fsm_an, no_fsm_an)
+    _fsm_an_stimuli = dominant_and_recessive(_fsm_an_stimuli, fsm_an_stimuli, no_fsm_an_stimuli)
+    _fsm_lt = dominant_and_recessive(_fsm_lt, fsm_lt, no_fsm_lt)
+    _fsm_lt_coeff = dominant_and_recessive(_fsm_lt_coeff, fsm_lt_coeff, no_fsm_lt_coeff)
+    _fsm_lt_stimuli = dominant_and_recessive(_fsm_lt_stimuli, fsm_lt_stimuli, no_fsm_lt_stimuli)
+    _fsm_lt_alg0 = dominant_and_recessive(_fsm_lt_alg0, fsm_lt_alg0, no_fsm_lt_alg0)
+    _fsm_lt_algn1 = dominant_and_recessive(_fsm_lt_algn1, fsm_lt_algn1, no_fsm_lt_algn1)
+
+    if _debug:
         types.append(AnLtLogControl.LOG_TYPE_DEBUG)
-    if an_trace:
+    if _an_trace:
         types.append(AnLtLogControl.LOG_TYPE_AN_TRACE)
-    if lt_trace:
+    if _lt_trace:
         types.append(AnLtLogControl.LOG_TYPE_LT_TRACE)
-    if alg_trace:
+    if _alg_trace:
         types.append(AnLtLogControl.LOG_TYPE_ALG_TRACE)
-    if fsm_port:
+    if _fsm_port:
         types.append(AnLtLogControl.LOG_TYPE_FSM_PORT)
-    if fsm_an:
+    if _fsm_an:
         types.append(AnLtLogControl.LOG_TYPE_FSM_ANEG)
-    if fsm_an_stimuli:
+    if _fsm_an_stimuli:
         types.append(AnLtLogControl.LOG_TYPE_FSM_ANEG_STIMULI)
-    if fsm_lt:
+    if _fsm_lt:
         types.append(AnLtLogControl.LOG_TYPE_FSM_LT)
-    if fsm_lt_coeff:
+    if _fsm_lt_coeff:
         types.append(AnLtLogControl.LOG_TYPE_FSM_LT_COEFF)
-    if fsm_lt_stimuli:
+    if _fsm_lt_stimuli:
         types.append(AnLtLogControl.LOG_TYPE_FSM_LT_STIMULI)
-    if fsm_lt_alg0:
+    if _fsm_lt_alg0:
         types.append(AnLtLogControl.LOG_TYPE_FSM_LT_ALG0)
-    if fsm_lt_algn1:
+    if _fsm_lt_algn1:
         types.append(AnLtLogControl.LOG_TYPE_FSM_LT_ALG1)
 
-
     await anlt_utils.anlt_log_control(port_obj, types)
+    resp = await anlt_utils.anlt_log_control_get(port_obj)
     return format_log_control(
         storage, 
-        debug, 
-        an_trace, 
-        lt_trace, 
-        alg_trace,
-        fsm_port,
-        fsm_an,
-        fsm_an_stimuli,
-        fsm_lt,
-        fsm_lt_coeff,
-        fsm_lt_stimuli,
-        fsm_lt_alg0,
-        fsm_lt_algn1
+        resp["debug"], 
+        resp["an_trace"], 
+        resp["lt_trace"], 
+        resp["alg_trace"],
+        resp["fsm_port"],
+        resp["fsm_an"],
+        resp["fsm_an_stimuli"],
+        resp["fsm_lt"],
+        resp["fsm_lt_coeff"],
+        resp["fsm_lt_stimuli"],
+        resp["fsm_lt_alg0"],
+        resp["fsm_lt_algn1"]
         )
