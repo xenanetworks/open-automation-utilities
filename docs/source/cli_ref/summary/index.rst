@@ -56,7 +56,7 @@ Summary
       - ``anlt strict --on``
     * - :doc:`../anlt/an_lt/anlt_log_control`
       - Control what should be logged in ANLT by xenaserver
-      - ``anlt logctrl -DALGPNmTcsZO``
+      - ``anlt logctrl``
     
 
 .. list-table:: AN Command Summary
