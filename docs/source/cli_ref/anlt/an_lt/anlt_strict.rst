@@ -25,7 +25,7 @@ Options
 
 ``--on/--off``
 
-Should enable ANLT strict mode, default to ``--on``.
+Should enable AN/LT strict mode, default to ``--on``.
 
 
 Examples
@@ -34,7 +34,7 @@ Examples
 .. code-block:: text
 
     xoa-utils[123456][port0/2] > anlt strict --on
-    Port 0/2 ANLT strict mode: on
+    Port 0/2 AN/LT strict mode: on
 
     xoa-utils[123456][port0/2] >
 

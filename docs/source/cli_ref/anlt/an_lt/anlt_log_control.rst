@@ -4,7 +4,7 @@ anlt logctrl
 Description
 -----------
 
-Control what types of ANLT log messages are sent by xenaserver. This command is different from the ``--keep`` option of :doc:`anlt_log`. ``anlt log-ctrl`` control the log message from its source, where :doc:`anlt_log` filters the messages for display output.
+Control what types of AN/LT log messages are sent by xenaserver. This command is different from the ``--keep`` option of :doc:`anlt_log`. ``anlt log-ctrl`` control the log message from its source, where :doc:`anlt_log` filters the messages for display output.
 
 If no option is provided, the command will return the current status on the port.
 

@@ -18,7 +18,7 @@ Glossary of Terms
     XOA
         Xena OpenAutomation
 
-    ANLT
+    AN/LT
         Auto-Negotiation and Link Training
 
     AN
@@ -27,5 +27,5 @@ Glossary of Terms
     LT
         Link Training
 
-    Xena ANLT Utility
+    Xena AN/LT Utility
         Xena Auto-Negotiation and Link Training Utility

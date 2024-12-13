@@ -15,7 +15,7 @@ Timestamp
 
 The timestamp unit is in seconds, for example, ``171406.514179`` represents 171406.514179 seconds. The granularity is in microseconds.
 
-When analyzing your ANLT log trace, focus on the relative time difference between messages rather than solely concentrating on the absolute time value. The absolute time value describes the elapsed time since the chassis was started.
+When analyzing your AN/LT log trace, focus on the relative time difference between messages rather than solely concentrating on the absolute time value. The absolute time value describes the elapsed time since the chassis was started.
 
 Protocol
 --------
@@ -33,9 +33,9 @@ Message Type
 
 ``MSG``: log message type.
 
-``TX``: ANLT test frame transmitted by the port to the remote port.
+``TX``: AN/LT test frame transmitted by the port to the remote port.
 
-``RX``: ANLT test frame from the remote port received by the port.
+``RX``: AN/LT test frame from the remote port received by the port.
 
 Message Content
 ----------------

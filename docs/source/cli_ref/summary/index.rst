@@ -55,7 +55,7 @@ Summary
       - Enable/disable ANLt strict mode
       - ``anlt strict --on``
     * - :doc:`../anlt/an_lt/anlt_log_control`
-      - Control what should be logged in ANLT by xenaserver
+      - Control what should be logged in AN/LT by xenaserver
       - ``anlt logctrl``
     
 

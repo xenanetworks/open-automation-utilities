@@ -4,7 +4,7 @@ anlt log
 Description
 -----------
 
-Show ANLT protocol trace log and save to a file.
+Show AN/LT protocol trace log and save to a file.
 
 To **quit** the continuous display mode, press :kbd:`Control-z`.
 

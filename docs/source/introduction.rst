@@ -1,15 +1,15 @@
 Introduction
 ============
 
-Xena OpenAutomation ANLT Utility (:term:`Xena ANLT Utility`) is an application that provides users with a command-line user interface to do interactive testing (e.g. ANLT testing). It provides a set of CLI commands to manage and configure test ports, collect statistics, and save logs. Xena ANLT Utility uses `xoa-driver <https://pypi.org/project/xoa-driver/>`_ to communicate to Xena ANLT Testers.
+Xena OpenAutomation AN/LT Utility (:term:`Xena AN/LT Utility`) is an application that provides users with a command-line user interface to do interactive testing (e.g. AN/LT testing). It provides a set of CLI commands to manage and configure test ports, collect statistics, and save logs. Xena AN/LT Utility uses `xoa-driver <https://pypi.org/project/xoa-driver/>`_ to communicate to Xena AN/LT Testers.
 
 .. figure:: /_static/xoa_utils_sys.png
     :scale: 30 %
     :align: center
 
-    `Xena ANLT Utility System`
+    `Xena AN/LT Utility System`
 
-The CLI commands of Xena ANLT Utility are categorized into the following families:
+The CLI commands of Xena AN/LT Utility are categorized into the following families:
 
 * `Auto-Negotiation and Link Training`_
 
@@ -21,7 +21,7 @@ The CLI commands of Xena ANLT Utility are categorized into the following familie
 
 .. seealso::
 
-    You can view a list of Xena ANLT Utility CLI commands in :doc:`Summary of Xena ANLT Utility CLI commands </cli_ref/summary/index>`
+    You can view a list of Xena AN/LT Utility CLI commands in :doc:`Summary of Xena AN/LT Utility CLI commands </cli_ref/summary/index>`
 
     .. figure:: /_static/cli_summary_preview.png
         :align: center
@@ -32,7 +32,7 @@ The CLI commands of Xena ANLT Utility are categorized into the following familie
 Auto-Negotiation and Link Training
 ------------------------------------
 
-Auto-Negotiation and Link Training (:term:`ANLT`) provides functions to help you fine-tune the protocol to its optimal state, test interoperability between different vendors, and protocol compliance for different implementations.
+Auto-Negotiation and Link Training (:term:`AN/LT`) provides functions to help you fine-tune the protocol to its optimal state, test interoperability between different vendors, and protocol compliance for different implementations.
 
 Auto-negotiation (:term:`AN`) was originally designed for Ethernet over twisted pair up to 1G. Beyond exchanging speed capabilities for the link participants, AN has evolved for today's Ethernet to include additional configuration information for establishing reliable and consistent connections. AN allows the devices at the end points of a link to negotiate common transmission parameters capabilities like speed and duplex mode, exchange extended page information and media signaling support. At higher speeds and signaling the choice of FEC may be relevant. It is during auto negotiation the end points of a link share their capabilities and choose the highest performance transmission mode they both support.
 
@@ -75,7 +75,7 @@ Auto Negotiation and Link Training are in principle two **independent** processe
     Read more about `Auto Negotiation and Link Training on NRZ and PAM4 based Ethernet Interfaces <https://xenanetworks.com/whitepaper/autoneg-link-training/>`_.
 
 
-In Xena ANLT Utility, you can find the following functionalities to do auto-negotiation and link training interactive tests.
+In Xena AN/LT Utility, you can find the following functionalities to do auto-negotiation and link training interactive tests.
 
 AN Functionalities
 ^^^^^^^^^^^^^^^^^^^^
