@@ -4,7 +4,7 @@ Executable for Windows
 Generate SSH Key
 -----------------
 
-ANLT Utility requires an SSH key pair to run as a SSH service. To generate a SSH key pair, please open Command Prompt or PowerShell on Windows.
+AN/LT Utility requires an SSH key pair to run as a SSH service. To generate a SSH key pair, please open Command Prompt or PowerShell on Windows.
 
 
 .. code-block:: doscon
@@ -52,20 +52,20 @@ Download Windows Executable
 
 Download :download:`xoa-utils-win-x64-<version>.zip <https://github.com/xenanetworks/open-automation-utilities/releases>`. 
 
-Start ANLT Utility
+Start AN/LT Utility
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Unzip the file and run ``xoa-utils-win-x64-<version>.exe``. The executable includes Python itself, `xoa-driver <https://pypi.org/project/xoa-driver/>`_, and all the dependencies.
 
 .. important::
     
-    There is **no need to install Python or any Python packages** on your PC to run the ANLT Utility Windows executable, but remember **you still need to generate the SSH key**.
+    There is **no need to install Python or any Python packages** on your PC to run the AN/LT Utility Windows executable, but remember **you still need to generate the SSH key**.
 
 
 .. code-block:: doscon
 
     > xoa-utils
-    (PID: 12345) ANLT Utility SSH Service (1.1.0) running on 0.0.0.0:22622.
+    (PID: 12345) AN/LT Utility SSH Service (1.1.0) running on 0.0.0.0:22622.
 
 
 .. note::

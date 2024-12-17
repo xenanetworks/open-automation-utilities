@@ -1,11 +1,11 @@
 Installation
 ===================
 
-ANLT Utility is made into a Python package, `xoa-utils <https://pypi.org/project/xoa-utils/>`_ for easy installation and upgrade for all platforms. **However, it requires you to have knowledge about Python and the operating system you are using**.
+AN/LT Utility is made into a Python package, `xoa-utils <https://pypi.org/project/xoa-utils/>`_ for easy installation and upgrade for all platforms. **However, it requires you to have knowledge about Python and the operating system you are using**.
 
 The table below shows the distribution methods for each platform.
 
-.. list-table:: ANLT Utility Distribution
+.. list-table:: AN/LT Utility Distribution
     :widths: 33 33 33
     :header-rows: 1
 

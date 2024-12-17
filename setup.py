@@ -39,7 +39,7 @@ def main():
             "pdoc>=12.3.1",
             "pytest>=7.2.1",
             "psutil>=5.9.4",
-            "xoa-driver>=2.7.0",
+            "xoa-driver>=2.8.1",
             "pydantic>=2.6.4",
         ],
         classifiers=[

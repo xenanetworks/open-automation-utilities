@@ -4,27 +4,27 @@
 Step-by-Step Guide
 ===================
 
-This section provides a step-by-step guide on how to use ANLT Utility to do interactive ANLT test.
+This section provides a step-by-step guide on how to use AN/LT Utility to do interactive AN/LT test.
 
 .. note::
 
     ⚡️ You can use **tab key** to auto-complete a command to speed up your input speed.
 
 
-SSH to ANLT Utility
+SSH to AN/LT Utility
 -----------------------
 
-After running the ANLT Utility SSH Server, use another console to SSH to ANLT Utility.
+After running the AN/LT Utility SSH Server, use another console to SSH to AN/LT Utility.
 
 .. tab:: Windows
     :new-set:
 
     .. code-block:: doscon
-        :caption: SSH to ANLT Utility.
+        :caption: SSH to AN/LT Utility.
 
         > ssh yourname@localhost -p 22622
 
-        Hello yourname, welcome to Xena OpenAutomation ANLT Utility server (2.2.0)
+        Hello yourname, welcome to Xena OpenAutomation AN/LT Utility server (2.2.0)
 
         xoa-utils > 
 
@@ -32,11 +32,11 @@ After running the ANLT Utility SSH Server, use another console to SSH to ANLT Ut
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: SSH to ANLT Utility.
+        :caption: SSH to AN/LT Utility.
 
         $ ssh yourname@localhost -p 22622
 
-        Hello yourname, welcome to Xena OpenAutomation ANLT Utility server (2.2.0)
+        Hello yourname, welcome to Xena OpenAutomation AN/LT Utility server (2.2.0)
 
         xoa-utils >  
 
@@ -66,10 +66,10 @@ Then, reserve a port on the tester using the command :doc:`../cli_ref/mgmt/port`
     xoa-utils[123456] > port 0/0
 
 
-Start ANLT Logging
-------------------
+Start AN/LT Logging
+-------------------
 
-Start ANLT logging by :doc:`../cli_ref/anlt/an_lt/anlt_log`.
+Start AN/LT logging by :doc:`../cli_ref/anlt/an_lt/anlt_log`.
 
 .. code-block:: text
 
@@ -77,22 +77,22 @@ Start ANLT logging by :doc:`../cli_ref/anlt/an_lt/anlt_log`.
 
 .. note::
 
-    This commands **continuously displays** the log messages on the screen so you can keep track of your ANLT actions.
+    This commands **continuously displays** the log messages on the screen so you can keep track of your AN/LT actions.
     
     To **quit** the continuous display mode, press :kbd:`Control-z`.
 
 
-Use one terminal to view the ANLT protocol trace, and use another to execute ANLT commands, as shown in the screenshot below.
+Use one terminal to view the AN/LT protocol trace, and use another to execute AN/LT commands, as shown in the screenshot below.
 
 .. figure:: ../_static/start_logging.png
     :width: 100 %
     :align: center
 
 
-Set ANLT Shadow Configuration
------------------------------
+Set AN/LT Shadow Configuration
+------------------------------
 
-After disabling link recovery on the port, you can start setting ANLT shadow configuration using :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, :doc:`../cli_ref/anlt/lt/lt_im`, and :doc:`../cli_ref/anlt/lt/lt_alg` as the example shown below.
+After disabling link recovery on the port, you can start setting AN/LT shadow configuration using :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, :doc:`../cli_ref/anlt/lt/lt_im`, and :doc:`../cli_ref/anlt/lt/lt_alg` as the example shown below.
 
 
 .. code-block:: text
@@ -109,14 +109,14 @@ After disabling link recovery on the port, you can start setting ANLT shadow con
 
 .. important::
 
-    :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, and :doc:`../cli_ref/anlt/lt/lt_im` **only change the shadow ANLT configuration**. **To apply the configuration**, you need to run :doc:`../cli_ref/anlt/an_lt/anlt_start`, otherwise your changes will not take effect on the tester.
+    :doc:`../cli_ref/anlt/an/an_config`, :doc:`../cli_ref/anlt/lt/lt_config`, and :doc:`../cli_ref/anlt/lt/lt_im` **only change the shadow AN/LT configuration**. **To apply the configuration**, you need to run :doc:`../cli_ref/anlt/an_lt/anlt_start`, otherwise your changes will not take effect on the tester.
 
 
 
-Start ANLT
-----------
+Start AN/LT
+-----------
 
-After configuring the ANLT shadow configuration, you should execute :doc:`../cli_ref/anlt/an_lt/anlt_start` to **apply the shadow configuration and let the ANLT tester to start the ANLT procedure**.
+After configuring the AN/LT shadow configuration, you should execute :doc:`../cli_ref/anlt/an_lt/anlt_start` to **apply the shadow configuration and let the AN/LT tester to start the AN/LT procedure**.
 
 .. seealso::
 
@@ -126,7 +126,7 @@ After configuring the ANLT shadow configuration, you should execute :doc:`../cli
 
     xoa-utils[123456][0/0] > anlt start
 
-Use one terminal to view the ANLT protocol trace, and use another to execute ANLT commands, as shown in the sreenshot below.
+Use one terminal to view the AN/LT protocol trace, and use another to execute AN/LT commands, as shown in the sreenshot below.
     
 .. figure:: ../_static/start_anlt.png
     :width: 100 %
@@ -229,10 +229,10 @@ Check LT statistics by :doc:`../cli_ref/anlt/lt/lt_status`.
             coeff at limit          :          0   0       0   0       0   0       0   0       0   0
 
 
-Stop ANLT and Restart
+Stop AN/LT and Restart
 ----------------------
 
-To stop and start ANLT again:
+To stop and start AN/LT again:
 
 .. code-block:: text
 

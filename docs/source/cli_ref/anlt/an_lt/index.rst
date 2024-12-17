@@ -1,4 +1,4 @@
-ANLT Group
+AN/LT Group
 ======================
 
 Commands for AN/LT.

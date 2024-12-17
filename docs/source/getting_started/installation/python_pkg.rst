@@ -5,7 +5,7 @@ Python Package for macOS/Linux/Windows
 Generate SSH Key
 -----------------
 
-ANLT Utility requires an SSH key pair to run as a SSH service. To generate a SSH key pair, please open Command Prompt/PowerShell (Windows) or Terminal (macOS/Linux)
+AN/LT Utility requires an SSH key pair to run as a SSH service. To generate a SSH key pair, please open Command Prompt/PowerShell (Windows) or Terminal (macOS/Linux)
 
 .. code-block:: doscon
 
@@ -50,15 +50,15 @@ Python Package for Win/macOS/Linux
 
 .. note::
 
-    Skip this section, if you are a Windows (x64) user and don't want to install ANLT Utility as a Python package but simply want the **.exe** application,
+    Skip this section, if you are a Windows (x64) user and don't want to install AN/LT Utility as a Python package but simply want the **.exe** application,
 
 
-ANLT Utility is available to install via the `Python Package Index <https://pypi.org/>`_. You can also install from the source file. The steps below will guide you through 
+AN/LT Utility is available to install via the `Python Package Index <https://pypi.org/>`_. You can also install from the source file. The steps below will guide you through 
 
 Prerequisites
 ^^^^^^^^^^^^^
 
-Before installing ANLT Utility, please make sure your environment has installed:
+Before installing AN/LT Utility, please make sure your environment has installed:
     
 * `Install Python`_ (requires **Python >= 3.8**)
 * `Install PIP`_
@@ -68,10 +68,10 @@ Install Python
 
 .. important:: 
 
-    ANLT Utility requires Python >= 3.8.
+    AN/LT Utility requires Python >= 3.8.
 
 
-ANLT Utility requires that you `download and install Python3 <https://www.python.org/downloads/>`_ on your system.
+AN/LT Utility requires that you `download and install Python3 <https://www.python.org/downloads/>`_ on your system.
 
 .. note::
 
@@ -147,11 +147,11 @@ If you don't have ``pip`` installed, you can:
 Install From PyPi Repository
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``pip`` is the recommended installer for ANLT Utility. The most common usage of ``pip`` is to install from the `Python Package Index <https://pypi.org/>`_ using `Requirement Specifiers <https://pip.pypa.io/en/stable/cli/pip_install/#requirement-specifiers>`_.
+``pip`` is the recommended installer for AN/LT Utility. The most common usage of ``pip`` is to install from the `Python Package Index <https://pypi.org/>`_ using `Requirement Specifiers <https://pip.pypa.io/en/stable/cli/pip_install/#requirement-specifiers>`_.
 
 .. note::
     
-    If you install ANLT Utility using ``pip install xoa-utils``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically installed.
+    If you install AN/LT Utility using ``pip install xoa-utils``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically installed.
 
 .. important::
 
@@ -166,7 +166,7 @@ If Install To Global Namespace
     :new-set:
 
     .. code-block:: doscon
-        :caption: Install ANLT Utility in Windows environment from PyPI.
+        :caption: Install AN/LT Utility in Windows environment from PyPI.
 
         > pip install xoa-utils            # latest version
         > pip install xoa-utils==1.0.0     # specific version
@@ -175,7 +175,7 @@ If Install To Global Namespace
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: Install ANLT Utility in macOS/Linux environment from PyPI.
+        :caption: Install AN/LT Utility in macOS/Linux environment from PyPI.
 
         $ pip install xoa-utils            # latest version
         $ pip install xoa-utils==1.0.0     # specific version
@@ -187,14 +187,14 @@ If Install To Global Namespace
 If Install To Virtual Environment
 """"""""""""""""""""""""""""""""""
 
-Install ANLT Utility in a virtual environment, so it does not pollute your global namespace. 
+Install AN/LT Utility in a virtual environment, so it does not pollute your global namespace. 
 
 For example, your project folder is called ``/my_xoa_project``.
 
 .. tab:: Windows
 
     .. code-block:: doscon
-        :caption: Install ANLT Utility in a virtual environment in Windows from PyPI.
+        :caption: Install AN/LT Utility in a virtual environment in Windows from PyPI.
 
         [my_xoa_project]> python -m venv .\env
         [my_xoa_project]> .env\Scripts\activate
@@ -206,7 +206,7 @@ For example, your project folder is called ``/my_xoa_project``.
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: Install ANLT Utility in a virtual environment in macOS/Linux from PyPI.
+        :caption: Install AN/LT Utility in a virtual environment in macOS/Linux from PyPI.
 
         [my_xoa_project]$ python3 -m venv ./env
         [my_xoa_project]$ source ./env/bin/activate
@@ -234,33 +234,33 @@ Afterwards, your project folder will be:
 Upgrade From PyPi Repository
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To upgrade ANLT Utility package from PyPI:
+To upgrade AN/LT Utility package from PyPI:
 
 .. tab:: Windows
     :new-set:
     
     .. code-block:: doscon
-        :caption: Upgrade ANLT Utility in Windows environment from PyPI.
+        :caption: Upgrade AN/LT Utility in Windows environment from PyPI.
 
         > pip install xoa-utils --upgrade
 
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: Upgrade ANLT Utility in macOS/Linux environment from PyPI.
+        :caption: Upgrade AN/LT Utility in macOS/Linux environment from PyPI.
 
         $ pip install xoa-utils --upgrade
 
 
 .. note::
     
-    If you upgrade ANLT Utility using ``pip install --upgrade xoa-utils``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically upgraded.
+    If you upgrade AN/LT Utility using ``pip install --upgrade xoa-utils``, XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) will be automatically upgraded.
 
 
 Install Manually From Source
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you don't have internet access, you can install ANLT Utility manually from source, the steps are:
+If you don't have internet access, you can install AN/LT Utility manually from source, the steps are:
 
 **Step 1**, make sure Python packages `wheel <https://wheel.readthedocs.io/en/stable/>`_ and  `setuptools <https://setuptools.pypa.io/en/latest/index.html>`_ are installed on your system. Install ``wheel`` and ``setuptools`` using ``pip``:
 
@@ -279,20 +279,20 @@ If you don't have internet access, you can install ANLT Utility manually from so
 
         $ pip install wheel setuptools
 
-**Step 2**, download the ANLT Utility source distribution from `ANLT Utility Releases <https://github.com/xenanetworks/open-automation-core/releases>`_. Unzip the archive and run the ``setup.py`` script to install the package:
+**Step 2**, download the AN/LT Utility source distribution from `AN/LT Utility Releases <https://github.com/xenanetworks/open-automation-core/releases>`_. Unzip the archive and run the ``setup.py`` script to install the package:
 
 .. tab:: Windows
     :new-set:
 
     .. code-block:: doscon
-        :caption: Install ANLT Utility in Windows environment from source.
+        :caption: Install AN/LT Utility in Windows environment from source.
 
         [xoa_core]> python setup.py install
 
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: Install ANLT Utility in macOS/Linux environment from source.
+        :caption: Install AN/LT Utility in macOS/Linux environment from source.
 
         [xoa_core]$ python3 setup.py install
 
@@ -303,44 +303,44 @@ If you don't have internet access, you can install ANLT Utility manually from so
     :new-set:
 
     .. code-block:: doscon
-        :caption: Build ANLT Utility wheel in Windows environment for distribution.
+        :caption: Build AN/LT Utility wheel in Windows environment for distribution.
 
         [xoa_core]> python setup.py bdist_wheel
 
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: Build ANLT Utility wheel in macOS/Linux environment for distribution.
+        :caption: Build AN/LT Utility wheel in macOS/Linux environment for distribution.
 
         [xoa_core]$ python3 setup.py bdist_wheel
 
 .. important::
 
-    If you install ANLT Utility from the source code, you need to install XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) separately. This is because XOA Python API is treated as a 3rd-party dependency of ANLT Utility. You can go to `XOA Python API <https://github.com/xenanetworks/open-automation-python-api>`_ repository to learn how to install it.
+    If you install AN/LT Utility from the source code, you need to install XOA Python API (PyPI package name `xoa_driver <https://pypi.org/project/xoa-python-api/>`_) separately. This is because XOA Python API is treated as a 3rd-party dependency of AN/LT Utility. You can go to `XOA Python API <https://github.com/xenanetworks/open-automation-python-api>`_ repository to learn how to install it.
 
 
-Start ANLT Utility
+Start AN/LT Utility
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-After installing the package and ensuring the SSH key in place, you can start ANLT Utility simply by typing ``xoa-utils``
+After installing the package and ensuring the SSH key in place, you can start AN/LT Utility simply by typing ``xoa-utils``
 
 .. tab:: Windows
     :new-set:
 
     .. code-block:: doscon
-        :caption: Start ANLT Utility SSH service.
+        :caption: Start AN/LT Utility SSH service.
 
         > xoa-utils
-        (PID: 12345) ANLT Utility SSH Service (1.1.0) running on 0.0.0.0:22622.
+        (PID: 12345) AN/LT Utility SSH Service (1.1.0) running on 0.0.0.0:22622.
 
 
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: Start ANLT Utility SSH service.
+        :caption: Start AN/LT Utility SSH service.
 
         $ xoa-utils
-        (PID: 12345) ANLT Utility SSH Service (1.1.0) running on 0.0.0.0:22622.
+        (PID: 12345) AN/LT Utility SSH Service (1.1.0) running on 0.0.0.0:22622.
 
 .. note::
 
@@ -359,7 +359,7 @@ We recommend install and use the `pip-autoremove <https://github.com/invl/pip-au
     :new-set:
 
     .. code-block:: doscon
-        :caption: Uninstall ANLT Utility in Windows environment.
+        :caption: Uninstall AN/LT Utility in Windows environment.
 
         > pip install pip-autoremove
         > pip-autoremove xoa-utils -y
@@ -367,7 +367,7 @@ We recommend install and use the `pip-autoremove <https://github.com/invl/pip-au
 .. tab:: macOS/Linux
 
     .. code-block:: console
-        :caption: Uninstall ANLT Utility in macOS/Linux environment.
+        :caption: Uninstall AN/LT Utility in macOS/Linux environment.
 
         $ pip install pip-autoremove
         $ pip-autoremove xoa-utils -y

@@ -68,7 +68,7 @@ HELP_ANLT_LOG_POLLS = "Polls per second, default to 10."
 
 HELP_ANLT_READ = "Load and read log file."
 
-HELP_STRICT_ON = "Should enable ANLT strict mode, default to --on."
+HELP_STRICT_ON = "Should enable AN/LT strict mode, default to --on."
 
 HELP_LOG_CONTROL_DEBUG_ON = "Debug log ON"
 HELP_LOG_CONTROL_DEBUG_OFF = "Debug log OFF"

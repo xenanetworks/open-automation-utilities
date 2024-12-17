@@ -1,5 +1,5 @@
-Interpreting ANLT Log
-=====================
+Interpreting AN/LT Log
+======================
 
 .. toctree::
 

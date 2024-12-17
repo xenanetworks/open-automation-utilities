@@ -165,8 +165,8 @@ def format_port_status(status: dict, storage: "CmdContext") -> str:
 
     return f"""
 {_ascii_styler("[ACTUAL CONFIG]", [ASCIIStyle.DARKGREEN_BG])}
-    ANLT auto-restart on link down         : {status['restart_link_down']}
-    ANLT auto-restart on LT failure        : {status['restart_lt_fail']}
+    AN/LT auto-restart on link down         : {status['restart_link_down']}
+    AN/LT auto-restart on LT failure        : {status['restart_lt_fail']}
     
     Serdes count          : {status['serdes_count']}
 
@@ -293,7 +293,7 @@ def format_recovery(storage: CmdContext, link_down: bool, lt_fail: bool) -> str:
     _link_down = "on" if link_down else "off"
     _lt_fail = "on" if lt_fail else "off"
     return f"""
-Port {storage.retrieve_port_str()} ANLT Auto-Restart: 
+Port {storage.retrieve_port_str()} AN/LT Auto-Restart: 
     When link down detected:             {_link_down}
     When link training failure detected: {_lt_fail}
 """
@@ -408,7 +408,7 @@ def format_debug_init(dic: dict) -> str:
 
 def format_strict(storage: CmdContext, on: bool) -> str:
     enable = "on" if on else "off"
-    return f"Port {storage.retrieve_port_str()} ANLT strict mode: {enable}\n"
+    return f"Port {storage.retrieve_port_str()} AN/LT strict mode: {enable}\n"
 
 def format_log_control(
         storage: CmdContext, 
