@@ -8,6 +8,7 @@ Xena AN/LT Utility (:term:`Xena AN/LT Utility`) provides an **interactive shell*
 -----------
 
 .. toctree::
+   :numbered:
    :maxdepth: 2
    :caption: Table of Content
 
